@@ -2,9 +2,9 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
-  <title>AI SDK Chat - Gemini + NVIDIA</title>
+  <title>AI Chat - Gemini + NVIDIA</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -14,14 +14,39 @@
   />
 
   <style>
+    :root {
+      --bg: #0d0d0d;
+      --panel: #111111;
+      --panel-soft: #18181b;
+      --border: rgba(255,255,255,0.10);
+      --text: #ececec;
+      --muted: #a1a1aa;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
     body {
-      background-color: #0d0d0d;
-      color: #ececec;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
       font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
     .sidebar {
       background-color: #000000;
+    }
+
+    .right-panel {
+      background-color: rgba(24, 24, 27, 0.72);
+      backdrop-filter: blur(16px);
     }
 
     .input-box {
@@ -31,6 +56,7 @@
 
     .custom-scrollbar::-webkit-scrollbar {
       width: 5px;
+      height: 5px;
     }
 
     .custom-scrollbar::-webkit-scrollbar-thumb {
@@ -62,6 +88,7 @@
       padding: 12px;
       overflow-x: auto;
       margin: 12px 0;
+      white-space: pre;
     }
 
     .message-content code {
@@ -75,13 +102,141 @@
       background: transparent;
       padding: 0;
     }
+
+    .safe-bottom {
+      padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    }
+
+    .mobile-only {
+      display: none;
+    }
+
+    .desktop-only {
+      display: inline-flex;
+    }
+
+    #mobileOverlay {
+      display: none;
+    }
+
+    @media (max-width: 1024px) {
+      body {
+        overflow: hidden;
+      }
+
+      .mobile-only {
+        display: inline-flex;
+      }
+
+      .desktop-only {
+        display: none !important;
+      }
+
+      #leftSidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: min(82vw, 320px);
+        z-index: 60;
+        transform: translateX(-105%);
+        transition: transform 0.24s ease;
+      }
+
+      #leftSidebar.open {
+        transform: translateX(0);
+      }
+
+      #rightSidebar {
+        position: fixed;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: min(92vw, 390px);
+        z-index: 60;
+        transform: translateX(105%);
+        transition: transform 0.24s ease;
+      }
+
+      #rightSidebar.open {
+        transform: translateX(0);
+      }
+
+      #mobileOverlay.show {
+        display: block;
+      }
+
+      #mainArea {
+        width: 100%;
+      }
+
+      #chatWindow {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+
+      .chat-bubble {
+        max-width: 94% !important;
+      }
+
+      .app-header {
+        padding: 0.75rem;
+      }
+
+      .input-wrap {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .header-model-title {
+        max-width: 48vw;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .quick-pill-text {
+        display: none;
+      }
+
+      .input-box {
+        border-radius: 24px;
+      }
+
+      #chatWindow {
+        padding-top: 1rem;
+      }
+
+      .welcome-title {
+        font-size: 1.8rem;
+      }
+    }
   </style>
 </head>
 
 <body class="h-screen flex overflow-hidden">
 
+  <!-- MOBILE OVERLAY -->
+  <div
+    id="mobileOverlay"
+    onclick="closeDrawers()"
+    class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50"
+  ></div>
+
   <!-- SIDEBAR SINISTRA -->
-  <aside class="sidebar w-64 flex flex-col p-3 border-r border-white/10">
+  <aside
+    id="leftSidebar"
+    class="sidebar w-64 flex flex-col p-3 border-r border-white/10 custom-scrollbar overflow-y-auto"
+  >
+
+    <div class="flex items-center justify-between mb-2 lg:hidden">
+      <div class="text-xs uppercase tracking-widest text-zinc-500 font-bold">Menu</div>
+      <button onclick="closeDrawers()" class="h-9 w-9 rounded-full bg-zinc-900 hover:bg-zinc-800">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
 
     <button
       onclick="newChat()"
@@ -103,10 +258,26 @@
 
       <div
         class="flex items-center gap-3 p-3 rounded-lg hover:bg-zinc-800 cursor-pointer"
-        onclick="alert('Placeholder: qui puoi aggiungere generazione immagini o gallery.')"
+        onclick="alert('.')"
       >
         <i class="fa-regular fa-image"></i>
-        Immagini
+       
+      </div>
+
+      <div
+        class="flex items-center gap-3 p-3 rounded-lg hover:bg-zinc-800 cursor-pointer"
+        onclick="selectQuickModel('instant')"
+      >
+        <i class="fa-solid fa-bolt text-yellow-400"></i>
+        Instant - Gemma 4
+      </div>
+
+      <div
+        class="flex items-center gap-3 p-3 rounded-lg hover:bg-zinc-800 cursor-pointer"
+        onclick="selectQuickModel('think')"
+      >
+        <i class="fa-solid fa-brain text-purple-400"></i>
+        Think - GPT-OSS 120B
       </div>
 
       <div class="mt-10 pt-10 border-t border-white/10 space-y-1">
@@ -134,30 +305,43 @@
     </nav>
 
     <div class="text-[10px] text-zinc-600 leading-relaxed mt-4">
-      Test locale. In produzione usa un backend per proteggere le API key.
+      Test locale. In produzione usa sempre un backend per proteggere le API key.
     </div>
 
   </aside>
 
   <!-- MAIN -->
-  <main class="flex-1 flex flex-col relative">
+  <main id="mainArea" class="flex-1 flex flex-col relative min-w-0">
 
     <!-- HEADER -->
-    <header class="p-4 flex justify-between items-center bg-zinc-900/20 border-b border-white/5">
+    <header class="app-header p-4 flex justify-between items-center bg-zinc-900/30 border-b border-white/5">
 
-      <div class="flex flex-col gap-1">
-        <div class="flex items-center gap-2">
-          <span class="text-zinc-500 text-sm">Modello:</span>
-          <span id="currentModelDisplay" class="text-white text-sm font-bold">Seleziona...</span>
-        </div>
+      <div class="flex items-center gap-3 min-w-0">
 
-        <div class="text-[10px] text-zinc-600">
-          Provider attivo:
-          <span id="currentProviderDisplay" class="text-zinc-400">-</span>
+        <button
+          onclick="openLeftDrawer()"
+          class="mobile-only h-9 w-9 rounded-full bg-zinc-800 border border-white/10 items-center justify-center"
+          title="Menu"
+        >
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="flex flex-col gap-1 min-w-0">
+          <div class="flex items-center gap-2 min-w-0">
+            <span class="text-zinc-500 text-sm hidden sm:inline">Modello:</span>
+            <span id="currentModelDisplay" class="header-model-title text-white text-sm font-bold">
+              Seleziona...
+            </span>
+          </div>
+
+          <div class="text-[10px] text-zinc-600">
+            Provider:
+            <span id="currentProviderDisplay" class="text-zinc-400">-</span>
+          </div>
         </div>
       </div>
 
-      <div class="flex items-center gap-4">
+      <div class="flex items-center gap-2 sm:gap-4">
 
         <div
           id="connectionStatus"
@@ -166,16 +350,42 @@
           Idle
         </div>
 
+        <button
+          onclick="selectQuickModel('instant')"
+          class="desktop-only text-xs px-3 py-1.5 rounded-full bg-yellow-500/10 text-yellow-300 border border-yellow-500/20 hover:bg-yellow-500/20"
+          title="Gemma 4 Instant"
+        >
+          <i class="fa-solid fa-bolt mr-1"></i>
+          Instant
+        </button>
+
+        <button
+          onclick="selectQuickModel('think')"
+          class="desktop-only text-xs px-3 py-1.5 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 hover:bg-purple-500/20"
+          title="GPT-OSS 120B Think"
+        >
+          <i class="fa-solid fa-brain mr-1"></i>
+          Think
+        </button>
+
         <i
           id="legacyToggle"
           onclick="toggleLegacy()"
-          class="fa-solid fa-play text-zinc-600 cursor-pointer transition-all"
+          class="fa-solid fa-play text-zinc-600 cursor-pointer transition-all hidden sm:inline-block"
           title="Legacy Mode"
         ></i>
 
-        <span class="text-xl cursor-default" id="lockStatus" title="API key lato client: non sicuro in produzione">
+        <span class="text-xl cursor-default hidden sm:inline-block" id="lockStatus" title="API key lato client: non sicuro in produzione">
           🔓
         </span>
+
+        <button
+          onclick="openRightDrawer()"
+          class="mobile-only h-9 w-9 rounded-full bg-zinc-800 border border-white/10 items-center justify-center"
+          title="Configurazione"
+        >
+          <i class="fa-solid fa-sliders"></i>
+        </button>
 
       </div>
     </header>
@@ -184,10 +394,36 @@
     <div id="chatWindow" class="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar">
 
       <div id="welcomeScreen" class="h-full flex flex-col items-center justify-center text-center space-y-4">
-        <h2 class="text-3xl font-semibold">A cosa stai lavorando?</h2>
+        <h2 class="welcome-title text-3xl font-semibold">A cosa stai lavorando?</h2>
         <p class="text-zinc-500 max-w-md">
           Inserisci una API key, scegli un modello e fai una domanda.
         </p>
+
+        <div class="flex flex-wrap items-center justify-center gap-2 max-w-xl">
+          <button
+            onclick="selectQuickModel('instant')"
+            class="text-xs px-4 py-2 rounded-full bg-yellow-500/10 text-yellow-300 border border-yellow-500/20 hover:bg-yellow-500/20"
+          >
+            <i class="fa-solid fa-bolt mr-1"></i>
+            Instant Gemma 4
+          </button>
+
+          <button
+            onclick="selectQuickModel('think')"
+            class="text-xs px-4 py-2 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 hover:bg-purple-500/20"
+          >
+            <i class="fa-solid fa-brain mr-1"></i>
+            Think GPT-OSS 120B
+          </button>
+
+          <button
+            onclick="openRightDrawer()"
+            class="text-xs px-4 py-2 rounded-full bg-zinc-800 text-zinc-300 border border-white/10 hover:bg-zinc-700"
+          >
+            <i class="fa-solid fa-key mr-1"></i>
+            Configura API
+          </button>
+        </div>
 
         <div class="text-xs text-zinc-600 max-w-xl leading-relaxed border border-white/5 bg-zinc-900/50 rounded-2xl p-4">
           <b class="text-zinc-400">Attenzione:</b>
@@ -200,7 +436,7 @@
     </div>
 
     <!-- INPUT -->
-    <div class="p-4 pb-8">
+    <div class="input-wrap p-4 safe-bottom">
 
       <div class="max-w-3xl mx-auto input-box rounded-3xl p-3 flex flex-col shadow-2xl">
 
@@ -213,12 +449,13 @@
           class="bg-transparent border-none focus:ring-0 text-white w-full resize-none p-2 max-h-48 custom-scrollbar"
         ></textarea>
 
-        <div class="flex justify-between items-center mt-2 px-2">
+        <div class="flex justify-between items-center mt-2 px-2 gap-2">
 
-          <div class="flex gap-4 text-zinc-500 items-center">
+          <div class="flex gap-2 sm:gap-3 text-zinc-500 items-center flex-wrap">
 
-            <label class="cursor-pointer hover:text-white" title="Allega file">
+            <label class="cursor-pointer hover:text-white h-8 px-2 rounded-full bg-zinc-900/80 border border-white/5 flex items-center gap-2" title="Allega file">
               <i class="fa-solid fa-paperclip"></i>
+              <span class="text-[11px] hidden sm:inline">File</span>
               <input
                 type="file"
                 id="fileInput"
@@ -228,8 +465,39 @@
               />
             </label>
 
+            <label class="cursor-pointer hover:text-white h-8 px-2 rounded-full bg-zinc-900/80 border border-white/5 flex items-center gap-2" title="Allega foto">
+              <i class="fa-regular fa-image"></i>
+              <span class="text-[11px] hidden sm:inline">Foto</span>
+              <input
+                type="file"
+                id="photoInput"
+                hidden
+                multiple
+                accept="image/*"
+                onchange="handleFileSelect(event)"
+              />
+            </label>
+
+            <button
+              onclick="selectQuickModel('instant')"
+              class="h-8 px-2 sm:px-3 rounded-full bg-yellow-500/10 text-yellow-300 border border-yellow-500/20 text-[11px] hover:bg-yellow-500/20"
+              title="Instant: Gemma 4"
+            >
+              <i class="fa-solid fa-bolt"></i>
+              <span class="quick-pill-text ml-1">Instant</span>
+            </button>
+
+            <button
+              onclick="selectQuickModel('think')"
+              class="h-8 px-2 sm:px-3 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 text-[11px] hover:bg-purple-500/20"
+              title="Think: GPT-OSS 120B"
+            >
+              <i class="fa-solid fa-brain"></i>
+              <span class="quick-pill-text ml-1">Think</span>
+            </button>
+
             <i
-              class="fa-solid fa-microphone hover:text-white cursor-pointer"
+              class="fa-solid fa-microphone hover:text-white cursor-pointer h-8 w-8 rounded-full bg-zinc-900/80 border border-white/5 flex items-center justify-center"
               onclick="alert('Placeholder: qui puoi integrare Web Speech API o Whisper.')"
               title="Placeholder microfono"
             ></i>
@@ -239,7 +507,7 @@
               class="text-[10px] hover:text-white"
               title="Rimuovi allegati"
             >
-              clear files
+              clear
             </button>
 
           </div>
@@ -247,7 +515,7 @@
           <button
             id="sendBtn"
             onclick="handleSend()"
-            class="bg-white text-black h-8 w-8 rounded-full flex items-center justify-center hover:bg-zinc-300 disabled:opacity-40 disabled:cursor-not-allowed"
+            class="bg-white text-black h-9 w-9 rounded-full flex items-center justify-center hover:bg-zinc-300 disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
           >
             <i class="fa-solid fa-arrow-up"></i>
           </button>
@@ -261,11 +529,20 @@
   </main>
 
   <!-- SIDEBAR DESTRA -->
-  <aside class="w-80 border-l border-white/10 p-4 bg-zinc-900/40 custom-scrollbar overflow-y-auto">
+  <aside
+    id="rightSidebar"
+    class="right-panel w-80 border-l border-white/10 p-4 custom-scrollbar overflow-y-auto"
+  >
 
-    <h3 class="text-xs font-bold text-zinc-500 uppercase mb-4 tracking-widest">
-      Configurazione API
-    </h3>
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="text-xs font-bold text-zinc-500 uppercase tracking-widest">
+        Configurazione API
+      </h3>
+
+      <button onclick="closeDrawers()" class="lg:hidden h-9 w-9 rounded-full bg-zinc-800 hover:bg-zinc-700">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
 
     <div class="space-y-4">
 
@@ -289,31 +566,43 @@
         />
       </div>
 
-      <div>
-        <label class="text-[10px] text-zinc-500 block mb-1">Temperature</label>
-        <input
-          type="number"
-          id="temperature"
-          min="0"
-          max="2"
-          step="0.1"
-          value="0.7"
-          class="w-full bg-zinc-800 border border-zinc-700 rounded-md p-2 text-xs outline-none focus:border-purple-500"
-        />
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="text-[10px] text-zinc-500 block mb-1">Temperature</label>
+          <input
+            type="number"
+            id="temperature"
+            min="0"
+            max="2"
+            step="0.1"
+            value="0.7"
+            class="w-full bg-zinc-800 border border-zinc-700 rounded-md p-2 text-xs outline-none focus:border-purple-500"
+          />
+        </div>
+
+        <div>
+          <label class="text-[10px] text-zinc-500 block mb-1">Max tokens</label>
+          <input
+            type="number"
+            id="maxTokens"
+            min="64"
+            max="32768"
+            step="64"
+            value="2048"
+            class="w-full bg-zinc-800 border border-zinc-700 rounded-md p-2 text-xs outline-none focus:border-purple-500"
+          />
+        </div>
       </div>
 
-      <div>
-        <label class="text-[10px] text-zinc-500 block mb-1">Max output tokens</label>
+      <label class="flex items-center gap-2 text-xs text-zinc-400 select-none">
         <input
-          type="number"
-          id="maxTokens"
-          min="64"
-          max="8192"
-          step="64"
-          value="2048"
-          class="w-full bg-zinc-800 border border-zinc-700 rounded-md p-2 text-xs outline-none focus:border-purple-500"
+          id="saveLocal"
+          type="checkbox"
+          class="accent-white"
+          onchange="persistSettings()"
         />
-      </div>
+        Salva impostazioni in locale
+      </label>
 
     </div>
 
@@ -328,12 +617,12 @@
         class="w-full bg-zinc-800 border border-zinc-700 rounded-md p-2 text-xs outline-none"
       >
         <option value="google">Google Gemini</option>
-        <option value="nvidia">NVIDIA Build</option>
+        <option value="nvidia">NVIDIA Build / NIM</option>
       </select>
 
       <input
         id="customModelId"
-        placeholder="es: gemini-2.5-flash oppure meta/llama-3.1-70b-instruct"
+        placeholder="es: gemini-2.5-flash oppure openai/gpt-oss-120b"
         class="w-full bg-zinc-800 border border-zinc-700 rounded-md p-2 text-xs outline-none"
       />
 
@@ -354,34 +643,34 @@
 
     <div class="mt-8 text-[10px] text-zinc-600 leading-relaxed">
       Se un modello dà errore 404/400, probabilmente l’ID non è disponibile
-      per la tua API key o per quel provider. Copia l’ID esatto dalla dashboard
+      per la tua API key o per quel provider. Copia sempre l’ID esatto dalla dashboard
       Google AI Studio o NVIDIA Build.
     </div>
 
   </aside>
 
   <!-- PRICING MODAL -->
-  <div id="pricingModal" class="fixed inset-0 bg-black/90 hidden items-center justify-center z-50 backdrop-blur-md">
+  <div id="pricingModal" class="fixed inset-0 bg-black/90 hidden items-center justify-center z-[80] backdrop-blur-md p-4">
 
-    <div class="bg-zinc-900 border border-white/10 w-[450px] rounded-3xl p-8 shadow-2xl">
+    <div class="bg-zinc-900 border border-white/10 w-full max-w-[450px] rounded-3xl p-8 shadow-2xl">
 
       <h2 class="text-2xl font-bold mb-4">Costi richieste API</h2>
 
       <div class="space-y-4 text-sm">
 
-        <div class="flex justify-between border-b border-white/5 pb-2">
+        <div class="flex justify-between border-b border-white/5 pb-2 gap-4">
           <span class="text-zinc-400">Google Gemini</span>
-          <span class="text-green-400">Dipende dal modello</span>
+          <span class="text-green-400 text-right">Dipende dal modello</span>
         </div>
 
-        <div class="flex justify-between border-b border-white/5 pb-2">
+        <div class="flex justify-between border-b border-white/5 pb-2 gap-4">
           <span class="text-zinc-400">NVIDIA Build / NIM</span>
-          <span class="text-blue-400">Dipende dal modello</span>
+          <span class="text-blue-400 text-right">Dipende dal modello</span>
         </div>
 
-        <div class="flex justify-between border-b border-white/5 pb-2">
+        <div class="flex justify-between border-b border-white/5 pb-2 gap-4">
           <span class="text-zinc-400">File inline</span>
-          <span class="text-zinc-500">Consumano token/payload</span>
+          <span class="text-zinc-500 text-right">Consumano token/payload</span>
         </div>
 
       </div>
@@ -403,9 +692,9 @@
   </div>
 
   <!-- SETTINGS MODAL -->
-  <div id="settingsModal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50">
+  <div id="settingsModal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-[80] p-4">
 
-    <div class="bg-zinc-900 border border-white/10 w-[500px] rounded-2xl p-6 shadow-2xl">
+    <div class="bg-zinc-900 border border-white/10 w-full max-w-[500px] rounded-2xl p-6 shadow-2xl">
 
       <h2 class="text-xl font-bold mb-4">System Prompt</h2>
 
@@ -431,56 +720,236 @@
     /************************************************************
      * MODELLI
      *
-     * IMPORTANTE:
-     * Gli ID dei modelli cambiano nel tempo.
-     * Se un modello non funziona, controlla il nome esatto nella
-     * dashboard Google AI Studio o NVIDIA Build.
+     * Nota:
+     * - Google Gemini usa provider "google".
+     * - NVIDIA Build / NIM usa provider "nvidia".
+     * - Molti modelli "Gemma", "GPT-OSS", "DeepSeek", "Qwen",
+     *   "Mistral", "Nemotron", ecc. qui sono configurati come NVIDIA
+     *   perché passano dall'endpoint OpenAI-compatible NVIDIA.
      ************************************************************/
 
     const models = [
+      /***********************
+       * GOOGLE GEMINI
+       ***********************/
       {
         id: "gemini-2.5-flash",
         name: "Gemini 2.5 Flash",
         provider: "google",
-        status: "online"
+        status: "online",
+        group: "Google"
       },
       {
         id: "gemini-2.5-flash-lite",
         name: "Gemini 2.5 Flash Lite",
         provider: "google",
-        status: "online"
+        status: "online",
+        group: "Google"
+      },
+      {
+        id: "gemini-2.5-pro",
+        name: "Gemini 2.5 Pro",
+        provider: "google",
+        status: "check",
+        group: "Google"
       },
       {
         id: "gemini-3-flash-preview",
         name: "Gemini 3 Flash Preview",
         provider: "google",
-        status: "preview"
+        status: "preview",
+        group: "Google"
       },
 
-      /*
-       * NVIDIA Build / NIM
-       * Usa gli ID esatti mostrati sul sito NVIDIA Build.
-       * Quelli qui sotto sono esempi comuni/placeholder.
-       */
+      /***********************
+       * QUICK MODELS
+       ***********************/
+      {
+        id: "google/gemma-4-31b-it",
+        name: "Instant - Gemma 4 31B IT",
+        provider: "nvidia",
+        status: "instant",
+        group: "Quick"
+      },
+      {
+        id: "openai/gpt-oss-120b",
+        name: "Think - GPT-OSS 120B",
+        provider: "nvidia",
+        status: "think",
+        group: "Quick"
+      },
+
+      /***********************
+       * NVIDIA / OPEN MODELS
+       ***********************/
+      {
+        id: "openai/gpt-oss-20b",
+        name: "GPT-OSS 20B",
+        provider: "nvidia",
+        status: "check",
+        group: "OpenAI OSS"
+      },
       {
         id: "meta/llama-3.1-70b-instruct",
         name: "Llama 3.1 70B Instruct",
         provider: "nvidia",
-        status: "check"
-      },
-      {
-        id: "mistralai/mixtral-8x7b-instruct-v0.1",
-        name: "Mixtral 8x7B Instruct",
-        provider: "nvidia",
-        status: "check"
+        status: "check",
+        group: "Meta"
       },
       {
         id: "nvidia/llama-3.1-nemotron-70b-instruct",
         name: "Nemotron 70B Instruct",
         provider: "nvidia",
-        status: "check"
+        status: "check",
+        group: "NVIDIA"
+      },
+      {
+        id: "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+        name: "Nemotron 3 Nano Omni 30B A3B Reasoning",
+        provider: "nvidia",
+        status: "check",
+        group: "NVIDIA"
+      },
+      {
+        id: "nvidia/nemotron-3-super-120b-a12b",
+        name: "Nemotron 3 Super 120B A12B",
+        provider: "nvidia",
+        status: "check",
+        group: "NVIDIA"
+      },
+      {
+        id: "nvidia/ising-calibration-1-35b-a3b",
+        name: "Ising Calibration 1 35B A3B",
+        provider: "nvidia",
+        status: "check",
+        group: "NVIDIA"
+      },
+
+      /***********************
+       * MISTRAL
+       ***********************/
+      {
+        id: "mistralai/mistral-medium-3.5-128b",
+        name: "Mistral Medium 3.5 128B",
+        provider: "nvidia",
+        status: "check",
+        group: "Mistral"
+      },
+      {
+        id: "mistralai/mistral-small-4-119b-2603",
+        name: "Mistral Small 4 119B 2603",
+        provider: "nvidia",
+        status: "check",
+        group: "Mistral"
+      },
+      {
+        id: "mistralai/mixtral-8x7b-instruct-v0.1",
+        name: "Mixtral 8x7B Instruct",
+        provider: "nvidia",
+        status: "check",
+        group: "Mistral"
+      },
+
+      /***********************
+       * DEEPSEEK
+       ***********************/
+      {
+        id: "deepseek-ai/deepseek-v4-flash",
+        name: "DeepSeek V4 Flash",
+        provider: "nvidia",
+        status: "check",
+        group: "DeepSeek"
+      },
+      {
+        id: "deepseek-ai/deepseek-v4-pro",
+        name: "DeepSeek V4 Pro",
+        provider: "nvidia",
+        status: "check",
+        group: "DeepSeek"
+      },
+
+      /***********************
+       * Z.AI / GLM
+       ***********************/
+      {
+        id: "z-ai/glm-5.1",
+        name: "GLM 5.1",
+        provider: "nvidia",
+        status: "check",
+        group: "Z.AI"
+      },
+      {
+        id: "z-ai/glm-4.7",
+        name: "GLM 4.7",
+        provider: "nvidia",
+        status: "check",
+        group: "Z.AI"
+      },
+
+      /***********************
+       * QWEN
+       ***********************/
+      {
+        id: "qwen/qwen3.5-122b-a10b",
+        name: "Qwen 3.5 122B A10B",
+        provider: "nvidia",
+        status: "check",
+        group: "Qwen"
+      },
+      {
+        id: "qwen/qwen3.5-397b-a17b",
+        name: "Qwen 3.5 397B A17B",
+        provider: "nvidia",
+        status: "check",
+        group: "Qwen"
+      },
+
+      /***********************
+       * MINIMAX
+       ***********************/
+      {
+        id: "minimaxai/minimax-m2.7",
+        name: "MiniMax M2.7",
+        provider: "nvidia",
+        status: "check",
+        group: "MiniMax"
+      },
+      {
+        id: "minimaxai/minimax-m2.5",
+        name: "MiniMax M2.5",
+        provider: "nvidia",
+        status: "check",
+        group: "MiniMax"
+      },
+
+      /***********************
+       * STEPFUN
+       ***********************/
+      {
+        id: "stepfun-ai/step-3.5-flash",
+        name: "StepFun Step 3.5 Flash",
+        provider: "nvidia",
+        status: "check",
+        group: "StepFun"
       }
     ];
+
+    const quickModels = {
+      instant: {
+        id: "google/gemma-4-31b-it",
+        name: "Instant - Gemma 4 31B IT",
+        provider: "nvidia",
+        status: "instant",
+        group: "Quick"
+      },
+      think: {
+        id: "openai/gpt-oss-120b",
+        name: "Think - GPT-OSS 120B",
+        provider: "nvidia",
+        status: "think",
+        group: "Quick"
+      }
+    };
 
     let selectedModel = models[0];
     let legacyMode = false;
@@ -493,8 +962,9 @@
      ************************************************************/
 
     function init() {
+      restoreSettings();
       initModels();
-      selectModel(models[0]);
+      selectModel(selectedModel || models[0]);
 
       const input = document.getElementById("userInput");
 
@@ -509,24 +979,57 @@
           handleSend();
         }
       });
+
+      window.addEventListener("resize", handleResponsiveResize);
+
+      const persistIds = [
+        "googleKey",
+        "nvidiaKey",
+        "temperature",
+        "maxTokens",
+        "systemPrompt"
+      ];
+
+      persistIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener("input", persistSettings);
+        }
+      });
+
+      handleResponsiveResize();
     }
 
     function initModels() {
       const container = document.getElementById("modelList");
       container.innerHTML = "";
 
+      let currentGroup = "";
+
       models.forEach(model => {
+        if (model.group && model.group !== currentGroup) {
+          currentGroup = model.group;
+
+          const groupTitle = document.createElement("div");
+          groupTitle.className = "text-[10px] text-zinc-600 uppercase tracking-widest mt-4 mb-1 px-2";
+          groupTitle.textContent = currentGroup;
+          container.appendChild(groupTitle);
+        }
+
         const div = document.createElement("div");
 
         div.className =
-          "model-list-item flex items-center justify-between p-2 rounded-lg cursor-pointer transition text-xs border border-transparent";
+          "model-list-item flex items-center justify-between gap-2 p-2 rounded-lg cursor-pointer transition text-xs border border-transparent";
+
+        div.dataset.modelId = model.id;
+        div.dataset.provider = model.provider;
 
         div.innerHTML = `
-          <div class="flex flex-col">
-            <span>${escapeHtml(model.name)}</span>
-            <span class="text-[9px] text-zinc-600">${escapeHtml(model.provider)} · ${escapeHtml(model.id)}</span>
+          <div class="flex flex-col min-w-0">
+            <span class="truncate">${escapeHtml(model.name)}</span>
+            <span class="text-[9px] text-zinc-600 truncate">${escapeHtml(model.provider)} · ${escapeHtml(model.id)}</span>
           </div>
-          <span class="text-[9px] px-1 rounded ${getStatusClass(model.status)}">
+          <span class="text-[9px] px-1 rounded shrink-0 ${getStatusClass(model.status)}">
             ${escapeHtml(model.status.toUpperCase())}
           </span>
         `;
@@ -541,25 +1044,40 @@
       if (status === "online") return "bg-green-900/30 text-green-500";
       if (status === "preview") return "bg-blue-900/30 text-blue-500";
       if (status === "beta") return "bg-purple-900/30 text-purple-500";
+      if (status === "instant") return "bg-yellow-900/30 text-yellow-400";
+      if (status === "think") return "bg-purple-900/30 text-purple-400";
+      if (status === "custom") return "bg-white/10 text-white";
       return "bg-zinc-800 text-zinc-500";
     }
 
     function selectModel(model) {
       selectedModel = model;
 
-      document.getElementById("currentModelDisplay").innerText = model.name;
+      document.getElementById("currentModelDisplay").innerText = model.name || model.id;
       document.getElementById("currentProviderDisplay").innerText = model.provider;
 
       document.querySelectorAll(".model-list-item").forEach(item => {
         item.classList.remove("bg-zinc-800", "border-white/10");
       });
 
-      const items = Array.from(document.querySelectorAll(".model-list-item"));
-      const index = models.indexOf(model);
+      const active = Array.from(document.querySelectorAll(".model-list-item"))
+        .find(item => item.dataset.modelId === model.id && item.dataset.provider === model.provider);
 
-      if (items[index]) {
-        items[index].classList.add("bg-zinc-800", "border-white/10");
+      if (active) {
+        active.classList.add("bg-zinc-800", "border-white/10");
       }
+
+      persistSettings();
+      closeDrawers();
+    }
+
+    function selectQuickModel(type) {
+      const model = quickModels[type];
+
+      if (!model) return;
+
+      const existing = models.find(item => item.id === model.id && item.provider === model.provider);
+      selectModel(existing || model);
     }
 
     function useCustomModel() {
@@ -575,7 +1093,8 @@
         id,
         name: id,
         provider,
-        status: "custom"
+        status: "custom",
+        group: "Custom"
       };
 
       document.getElementById("currentModelDisplay").innerText = id;
@@ -584,6 +1103,84 @@
       document.querySelectorAll(".model-list-item").forEach(item => {
         item.classList.remove("bg-zinc-800", "border-white/10");
       });
+
+      persistSettings();
+      closeDrawers();
+    }
+
+    /************************************************************
+     * RESPONSIVE DRAWERS
+     ************************************************************/
+
+    function openLeftDrawer() {
+      document.getElementById("leftSidebar").classList.add("open");
+      document.getElementById("rightSidebar").classList.remove("open");
+      document.getElementById("mobileOverlay").classList.add("show");
+    }
+
+    function openRightDrawer() {
+      document.getElementById("rightSidebar").classList.add("open");
+      document.getElementById("leftSidebar").classList.remove("open");
+      document.getElementById("mobileOverlay").classList.add("show");
+    }
+
+    function closeDrawers() {
+      document.getElementById("leftSidebar").classList.remove("open");
+      document.getElementById("rightSidebar").classList.remove("open");
+      document.getElementById("mobileOverlay").classList.remove("show");
+    }
+
+    function handleResponsiveResize() {
+      if (window.innerWidth > 1024) {
+        closeDrawers();
+      }
+    }
+
+    /************************************************************
+     * LOCAL STORAGE
+     ************************************************************/
+
+    function persistSettings() {
+      const saveLocal = document.getElementById("saveLocal");
+
+      if (!saveLocal || !saveLocal.checked) {
+        localStorage.removeItem("aiChatSettings");
+        return;
+      }
+
+      const payload = {
+        googleKey: document.getElementById("googleKey").value,
+        nvidiaKey: document.getElementById("nvidiaKey").value,
+        temperature: document.getElementById("temperature").value,
+        maxTokens: document.getElementById("maxTokens").value,
+        systemPrompt: document.getElementById("systemPrompt").value,
+        selectedModel
+      };
+
+      localStorage.setItem("aiChatSettings", JSON.stringify(payload));
+    }
+
+    function restoreSettings() {
+      const raw = localStorage.getItem("aiChatSettings");
+
+      if (!raw) return;
+
+      try {
+        const data = JSON.parse(raw);
+
+        document.getElementById("saveLocal").checked = true;
+        document.getElementById("googleKey").value = data.googleKey || "";
+        document.getElementById("nvidiaKey").value = data.nvidiaKey || "";
+        document.getElementById("temperature").value = data.temperature || "0.7";
+        document.getElementById("maxTokens").value = data.maxTokens || "2048";
+        document.getElementById("systemPrompt").value = data.systemPrompt || "";
+
+        if (data.selectedModel && data.selectedModel.id) {
+          selectedModel = data.selectedModel;
+        }
+      } catch (error) {
+        console.warn("Impossibile ripristinare impostazioni:", error);
+      }
     }
 
     /************************************************************
@@ -594,6 +1191,7 @@
       const modal = document.getElementById("pricingModal");
       modal.classList.remove("hidden");
       modal.classList.add("flex");
+      closeDrawers();
     }
 
     function closePricing() {
@@ -604,10 +1202,12 @@
 
     function openSettings() {
       document.getElementById("settingsModal").classList.replace("hidden", "flex");
+      closeDrawers();
     }
 
     function closeSettings() {
       document.getElementById("settingsModal").classList.replace("flex", "hidden");
+      persistSettings();
     }
 
     function toggleLegacy() {
@@ -625,6 +1225,7 @@
 
     function handleFileSelect(event) {
       const files = Array.from(event.target.files || []);
+
       selectedFiles = [...selectedFiles, ...files];
 
       renderFilePreview();
@@ -643,11 +1244,16 @@
         const item = document.createElement("div");
 
         item.className =
-          "bg-zinc-800 text-[10px] px-2 py-1 rounded-md border border-white/10 flex items-center gap-2";
+          "bg-zinc-800 text-[10px] px-2 py-1 rounded-md border border-white/10 flex items-center gap-2 max-w-full";
+
+        const isImage = file.type && file.type.startsWith("image/");
 
         item.innerHTML = `
-          <span>📎 ${escapeHtml(file.name)} <span class="text-zinc-500">(${formatBytes(file.size)})</span></span>
-          <button class="cursor-pointer text-red-400 hover:text-red-300" onclick="removeFile(${index})">✕</button>
+          <span class="truncate max-w-[220px]">
+            ${isImage ? "🖼️" : "📎"} ${escapeHtml(file.name)}
+            <span class="text-zinc-500">(${formatBytes(file.size)})</span>
+          </span>
+          <button class="cursor-pointer text-red-400 hover:text-red-300 shrink-0" onclick="removeFile(${index})">✕</button>
         `;
 
         preview.appendChild(item);
@@ -668,7 +1274,10 @@
       if (!bytes) return "0 B";
 
       const units = ["B", "KB", "MB", "GB"];
-      const index = Math.floor(Math.log(bytes) / Math.log(1024));
+      const index = Math.min(
+        Math.floor(Math.log(bytes) / Math.log(1024)),
+        units.length - 1
+      );
 
       return `${(bytes / Math.pow(1024, index)).toFixed(1)} ${units[index]}`;
     }
@@ -707,19 +1316,29 @@
         type.startsWith("text/") ||
         type === "application/json" ||
         type === "application/xml" ||
+        type === "application/javascript" ||
         name.endsWith(".txt") ||
         name.endsWith(".md") ||
         name.endsWith(".csv") ||
         name.endsWith(".json") ||
+        name.endsWith(".xml") ||
         name.endsWith(".js") ||
+        name.endsWith(".jsx") ||
         name.endsWith(".ts") ||
+        name.endsWith(".tsx") ||
         name.endsWith(".html") ||
         name.endsWith(".css") ||
         name.endsWith(".py") ||
         name.endsWith(".java") ||
         name.endsWith(".cpp") ||
         name.endsWith(".c") ||
-        name.endsWith(".php")
+        name.endsWith(".cs") ||
+        name.endsWith(".php") ||
+        name.endsWith(".go") ||
+        name.endsWith(".rs") ||
+        name.endsWith(".sql") ||
+        name.endsWith(".yaml") ||
+        name.endsWith(".yml")
       );
     }
 
@@ -737,11 +1356,12 @@
       wrapper.className = `flex ${role === "user" ? "justify-end" : "justify-start"}`;
 
       const bubble = document.createElement("div");
+      bubble.classList.add("chat-bubble");
 
-      bubble.className =
+      bubble.className +=
         role === "user"
-          ? "max-w-[85%] p-4 rounded-2xl bg-zinc-800 text-white"
-          : "max-w-[85%] p-4 rounded-2xl text-zinc-200";
+          ? " max-w-[85%] p-4 rounded-2xl bg-zinc-800 text-white"
+          : " max-w-[85%] p-4 rounded-2xl text-zinc-200 bg-transparent";
 
       const label = role === "user" ? "Tu" : "AI";
 
@@ -931,14 +1551,13 @@
       const url =
         `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(modelId)}:generateContent`;
 
+      const contents = [];
+
       /*
-       * Costruisco la cronologia nel formato Gemini.
        * Gemini usa role:
        * - user
        * - model
        */
-      const contents = [];
-
       for (const msg of chatHistory) {
         contents.push({
           role: msg.role === "assistant" ? "model" : "user",
@@ -960,9 +1579,8 @@
 
       /*
        * File inline per Gemini.
-       *
-       * Funziona bene per immagini, PDF piccoli, txt, json ecc.
-       * Per file grandi conviene usare File API lato backend.
+       * Funziona per immagini e diversi file supportati.
+       * Per file grandi conviene File API lato backend.
        */
       for (const file of files) {
         const base64 = await fileToBase64(file);
@@ -999,18 +1617,11 @@
       }
 
       /*
-       * PLACEHOLDER PRODUZIONE:
+       * PRODUZIONE:
+       * Non chiamare direttamente Google dal browser.
+       * Usa un backend:
        *
-       * In produzione NON chiamare direttamente Google dal browser.
-       * Fai invece:
-       *
-       * const response = await fetch("/api/gemini", {
-       *   method: "POST",
-       *   headers: { "Content-Type": "application/json" },
-       *   body: JSON.stringify({ modelId, contents, systemPrompt })
-       * });
-       *
-       * E nel backend aggiungi la API key.
+       * fetch("/api/gemini", ...)
        */
 
       const response = await fetch(url, {
@@ -1077,12 +1688,10 @@
       let finalUserText = userText || "";
 
       /*
-       * NVIDIA chat/completions standard è testuale/OpenAI-compatible.
-       * Qui gestisco file testuali incollandoli nel prompt.
-       *
-       * PLACEHOLDER:
-       * Per immagini/PDF/multimodale devi usare un modello NVIDIA che supporta
-       * input multimodale e il formato richiesto da quel modello.
+       * NVIDIA chat/completions standard è principalmente testuale.
+       * Qui i file testuali vengono incollati nel prompt.
+       * Per immagini/PDF/multimodale serve il formato specifico del modello
+       * e, idealmente, un backend.
        */
       if (files.length > 0) {
         finalUserText += "\n\n--- FILE ALLEGATI ---\n";
@@ -1094,17 +1703,27 @@
             finalUserText +=
               `\n\n[File: ${file.name}]\n` +
               "```text\n" +
-              content.slice(0, 20000) +
+              content.slice(0, 30000) +
               "\n```";
 
-            if (content.length > 20000) {
-              finalUserText += "\n[File troncato a 20000 caratteri]\n";
+            if (content.length > 30000) {
+              finalUserText += "\n[File troncato a 30000 caratteri]\n";
             }
+
+          } else if (file.type && file.type.startsWith("image/")) {
+            /*
+             * Placeholder: alcuni modelli NVIDIA supportano input vision,
+             * ma il formato varia. Per non rompere la compatibilità testuale,
+             * qui avviso il modello.
+             */
+            finalUserText +=
+              `\n\n[Immagine allegata: ${file.name}, type: ${file.type || "unknown"}]\n` +
+              "Nota: questa demo non invia immagini binarie a NVIDIA. Implementare multimodale lato backend se il modello lo supporta.\n";
 
           } else {
             finalUserText +=
               `\n\n[File non testuale: ${file.name}, type: ${file.type || "unknown"}]\n` +
-              "Placeholder: per questo file serve implementare upload/vision/multimodale lato backend.\n";
+              "Placeholder: per questo file serve upload/estrazione lato backend.\n";
           }
         }
       }
@@ -1139,16 +1758,11 @@
       };
 
       /*
-       * PLACEHOLDER PRODUZIONE:
-       *
-       * In produzione NON chiamare direttamente NVIDIA dal browser.
+       * PRODUZIONE:
+       * Non chiamare direttamente NVIDIA dal browser.
        * Usa un backend:
        *
-       * const response = await fetch("/api/nvidia", {
-       *   method: "POST",
-       *   headers: { "Content-Type": "application/json" },
-       *   body: JSON.stringify({ modelId, messages })
-       * });
+       * fetch("/api/nvidia", ...)
        */
 
       const response = await fetch("https://integrate.api.nvidia.com/v1/chat/completions", {
@@ -1200,12 +1814,31 @@
 
       document.getElementById("chatWindow").innerHTML = `
         <div id="welcomeScreen" class="h-full flex flex-col items-center justify-center text-center space-y-4">
-          <h2 class="text-3xl font-semibold">A cosa stai lavorando?</h2>
+          <h2 class="welcome-title text-3xl font-semibold">A cosa stai lavorando?</h2>
           <p class="text-zinc-500 max-w-md">Nuova sessione avviata.</p>
+
+          <div class="flex flex-wrap items-center justify-center gap-2 max-w-xl">
+            <button
+              onclick="selectQuickModel('instant')"
+              class="text-xs px-4 py-2 rounded-full bg-yellow-500/10 text-yellow-300 border border-yellow-500/20 hover:bg-yellow-500/20"
+            >
+              <i class="fa-solid fa-bolt mr-1"></i>
+              Instant Gemma 4
+            </button>
+
+            <button
+              onclick="selectQuickModel('think')"
+              class="text-xs px-4 py-2 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 hover:bg-purple-500/20"
+            >
+              <i class="fa-solid fa-brain mr-1"></i>
+              Think GPT-OSS 120B
+            </button>
+          </div>
         </div>
       `;
 
       renderFilePreview();
+      closeDrawers();
     }
 
     init();
