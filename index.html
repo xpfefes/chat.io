@@ -248,28 +248,13 @@
 
     <nav class="flex-1 space-y-1 text-sm text-zinc-400">
 
-      <div
-        onclick="focusSearchNotImplemented()"
-        class="flex items-center gap-3 p-3 rounded-lg hover:bg-zinc-800 cursor-pointer"
-      >
-        <i class="fa-solid fa-magnifying-glass"></i>
-        Cerca chat
-      </div>
-
-      <div
-        class="flex items-center gap-3 p-3 rounded-lg hover:bg-zinc-800 cursor-pointer"
-        onclick="alert('.')"
-      >
-        <i class="fa-regular fa-image"></i>
-       
-      </div>
 
       <div
         class="flex items-center gap-3 p-3 rounded-lg hover:bg-zinc-800 cursor-pointer"
         onclick="selectQuickModel('instant')"
       >
         <i class="fa-solid fa-bolt text-yellow-400"></i>
-        Instant - Gemma 4
+      Rapido ᯓ★ (per everyday task)
       </div>
 
       <div
@@ -277,7 +262,7 @@
         onclick="selectQuickModel('think')"
       >
         <i class="fa-solid fa-brain text-purple-400"></i>
-        Think - GPT-OSS 120B
+       Pensa 𖡎 (For Complex Task)
       </div>
 
       <div class="mt-10 pt-10 border-t border-white/10 space-y-1">
@@ -298,7 +283,7 @@
           class="flex items-center gap-3 p-3 rounded-lg hover:bg-zinc-800 cursor-pointer text-white"
         >
           <i class="fa-solid fa-gear text-zinc-400"></i>
-          Impostazioni
+          Impostazioni ⚙︎
         </div>
 
       </div>
@@ -353,7 +338,7 @@
         <button
           onclick="selectQuickModel('instant')"
           class="desktop-only text-xs px-3 py-1.5 rounded-full bg-yellow-500/10 text-yellow-300 border border-yellow-500/20 hover:bg-yellow-500/20"
-          title="Gemma 4 Instant"
+          title="Rapido ⚡︎"
         >
           <i class="fa-solid fa-bolt mr-1"></i>
           Instant
@@ -362,7 +347,7 @@
         <button
           onclick="selectQuickModel('think')"
           class="desktop-only text-xs px-3 py-1.5 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 hover:bg-purple-500/20"
-          title="GPT-OSS 120B Think"
+          title="Pensa 𖡎"
         >
           <i class="fa-solid fa-brain mr-1"></i>
           Think
@@ -405,7 +390,7 @@
             class="text-xs px-4 py-2 rounded-full bg-yellow-500/10 text-yellow-300 border border-yellow-500/20 hover:bg-yellow-500/20"
           >
             <i class="fa-solid fa-bolt mr-1"></i>
-            Instant Gemma 4
+           Rapido ⚡︎
           </button>
 
           <button
@@ -413,7 +398,7 @@
             class="text-xs px-4 py-2 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 hover:bg-purple-500/20"
           >
             <i class="fa-solid fa-brain mr-1"></i>
-            Think GPT-OSS 120B
+           Pensa 𖡎
           </button>
 
           <button
@@ -421,7 +406,7 @@
             class="text-xs px-4 py-2 rounded-full bg-zinc-800 text-zinc-300 border border-white/10 hover:bg-zinc-700"
           >
             <i class="fa-solid fa-key mr-1"></i>
-            Configura API
+            API ✦
           </button>
         </div>
 
@@ -479,28 +464,22 @@
             </label>
 
             <button
-              onclick="selectQuickModel('rapido')"
+              onclick="selectQuickModel('instant')"
               class="h-8 px-2 sm:px-3 rounded-full bg-yellow-500/10 text-yellow-300 border border-yellow-500/20 text-[11px] hover:bg-yellow-500/20"
-              title="rapido: Gemma 4"
+              title="  Rapido ⚡︎ "
             >
               <i class="fa-solid fa-bolt"></i>
               <span class="quick-pill-text ml-1">Instant</span>
             </button>
 
             <button
-              onclick="selectQuickModel('pensa')"
+              onclick="selectQuickModel('think')"
               class="h-8 px-2 sm:px-3 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 text-[11px] hover:bg-purple-500/20"
-              title="pensa: GPT"
+              title="Pensa 𖡎"
             >
               <i class="fa-solid fa-brain"></i>
               <span class="quick-pill-text ml-1">Think</span>
             </button>
-
-            <i
-              class="fa-solid fa-microphone hover:text-white cursor-pointer h-8 w-8 rounded-full bg-zinc-900/80 border border-white/5 flex items-center justify-center"
-              onclick="alert('Placeholder: qui puoi integrare Web Speech API o Whisper.')"
-              title="Placeholder microfono"
-            ></i>
 
             <button
               onclick="clearFiles()"
@@ -536,7 +515,7 @@
 
     <div class="flex items-center justify-between mb-4">
       <h3 class="text-xs font-bold text-zinc-500 uppercase tracking-widest">
-        Configurazione API
+        API ✦
       </h3>
 
       <button onclick="closeDrawers()" class="lg:hidden h-9 w-9 rounded-full bg-zinc-800 hover:bg-zinc-700">
@@ -601,7 +580,7 @@
           class="accent-white"
           onchange="persistSettings()"
         />
-        Salva impostazioni in locale
+        Salva impostazioni 
       </label>
 
     </div>
@@ -636,7 +615,7 @@
     </div>
 
     <h3 class="text-xs font-bold text-zinc-500 uppercase mt-8 mb-4 tracking-widest">
-      Modelli disponibili
+      Modelli pre impostati 
     </h3>
 
     <div class="space-y-1" id="modelList"></div>
@@ -701,7 +680,7 @@
       <textarea
         id="systemPrompt"
         rows="8"
-        placeholder="Es: Rispondi come un ingegnere software ..."
+        placeholder="Es: Rispondi come un ingegnere software."
         class="w-full bg-zinc-800 border border-zinc-700 rounded-xl p-4 text-sm text-white outline-none focus:border-blue-500"
       ></textarea>
 
@@ -1458,7 +1437,7 @@
       input.style.height = "auto";
       clearFiles();
 
-      const aiBubble = appendMessage("ai", "Sto pensando✦˚...", { loading: true });
+      const aiBubble = appendMessage("ai", "✦ ", { loading: true });
 
       setLoading(true);
 
@@ -1823,7 +1802,7 @@
               class="text-xs px-4 py-2 rounded-full bg-yellow-500/10 text-yellow-300 border border-yellow-500/20 hover:bg-yellow-500/20"
             >
               <i class="fa-solid fa-bolt mr-1"></i>
-              Instant Gemma 4
+             Rapido ✦
             </button>
 
             <button
@@ -1831,7 +1810,7 @@
               class="text-xs px-4 py-2 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 hover:bg-purple-500/20"
             >
               <i class="fa-solid fa-brain mr-1"></i>
-              Think GPT-OSS 120B
+              Pensa ✦
             </button>
           </div>
         </div>
