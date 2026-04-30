@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-
-  <title>AI Chat-SDK - Gemini + NVIDIA</title>
+  <title>AI Chat-SDK - Gemini</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -218,19 +217,16 @@
 
 <body class="h-screen flex overflow-hidden">
 
-  <!-- MOBILE OVERLAY -->
   <div
     id="mobileOverlay"
     onclick="closeDrawers()"
     class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50"
   ></div>
 
-  <!-- SIDEBAR SINISTRA -->
   <aside
     id="leftSidebar"
     class="sidebar w-64 flex flex-col p-3 border-r border-white/10 custom-scrollbar overflow-y-auto"
   >
-
     <div class="flex items-center justify-between mb-2 lg:hidden">
       <div class="text-xs uppercase tracking-widest text-zinc-500 font-bold">Menu</div>
       <button onclick="closeDrawers()" class="h-9 w-9 rounded-full bg-zinc-900 hover:bg-zinc-800">
@@ -243,18 +239,16 @@
       class="flex items-center gap-3 p-3 rounded-lg hover:bg-zinc-800 transition mb-2 border border-white/5"
     >
       <i class="fa-regular fa-pen-to-square"></i>
-      <span class="text-sm font-medium">Nuova chat</span>
+      <span class="text-sm font-medium">New chat</span>
     </button>
 
     <nav class="flex-1 space-y-1 text-sm text-zinc-400">
-
-
       <div
         class="flex items-center gap-3 p-3 rounded-lg hover:bg-zinc-800 cursor-pointer"
         onclick="selectQuickModel('instant')"
       >
         <i class="fa-solid fa-bolt text-yellow-400"></i>
-      Rapido ᯓ★ (per everyday task)
+        fast ᯓ★ (everyday task)
       </div>
 
       <div
@@ -262,11 +256,10 @@
         onclick="selectQuickModel('think')"
       >
         <i class="fa-solid fa-brain text-purple-400"></i>
-       Pensa 𖡎 (For Complex Task)
+        Heavy 𖡎 (Complex Task)
       </div>
 
       <div class="mt-10 pt-10 border-t border-white/10 space-y-1">
-
         <div
           onclick="openPricing()"
           class="flex justify-between items-center p-3 rounded-lg hover:bg-zinc-800 cursor-pointer"
@@ -285,24 +278,17 @@
           <i class="fa-solid fa-gear text-zinc-400"></i>
           Impostazioni ⚙︎
         </div>
-
       </div>
     </nav>
 
     <div class="text-[10px] text-zinc-600 leading-relaxed mt-4">
       Test locale. In produzione usa sempre un backend per proteggere le API key.
     </div>
-
   </aside>
 
-  <!-- MAIN -->
   <main id="mainArea" class="flex-1 flex flex-col relative min-w-0">
-
-    <!-- HEADER -->
     <header class="app-header p-4 flex justify-between items-center bg-zinc-900/30 border-b border-white/5">
-
       <div class="flex items-center gap-3 min-w-0">
-
         <button
           onclick="openLeftDrawer()"
           class="mobile-only h-9 w-9 rounded-full bg-zinc-800 border border-white/10 items-center justify-center"
@@ -327,7 +313,6 @@
       </div>
 
       <div class="flex items-center gap-2 sm:gap-4">
-
         <div
           id="connectionStatus"
           class="text-xs px-2 py-1 rounded-full bg-zinc-800 text-zinc-400 border border-white/5"
@@ -338,7 +323,7 @@
         <button
           onclick="selectQuickModel('instant')"
           class="desktop-only text-xs px-3 py-1.5 rounded-full bg-yellow-500/10 text-yellow-300 border border-yellow-500/20 hover:bg-yellow-500/20"
-          title="Rapido ⚡︎"
+          title="Fast⚡︎"
         >
           <i class="fa-solid fa-bolt mr-1"></i>
           Instant
@@ -347,7 +332,7 @@
         <button
           onclick="selectQuickModel('think')"
           class="desktop-only text-xs px-3 py-1.5 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 hover:bg-purple-500/20"
-          title="Pensa 𖡎"
+          title="Heavy 𖡎"
         >
           <i class="fa-solid fa-brain mr-1"></i>
           Think
@@ -371,13 +356,10 @@
         >
           <i class="fa-solid fa-sliders"></i>
         </button>
-
       </div>
     </header>
 
-    <!-- CHAT WINDOW -->
     <div id="chatWindow" class="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar">
-
       <div id="welcomeScreen" class="h-full flex flex-col items-center justify-center text-center space-y-4">
         <h2 class="welcome-title text-3xl font-semibold">A cosa stai lavorando?</h2>
         <p class="text-zinc-500 max-w-md">
@@ -390,7 +372,7 @@
             class="text-xs px-4 py-2 rounded-full bg-yellow-500/10 text-yellow-300 border border-yellow-500/20 hover:bg-yellow-500/20"
           >
             <i class="fa-solid fa-bolt mr-1"></i>
-           Rapido ⚡︎
+            Rapido ⚡︎
           </button>
 
           <button
@@ -398,7 +380,7 @@
             class="text-xs px-4 py-2 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 hover:bg-purple-500/20"
           >
             <i class="fa-solid fa-brain mr-1"></i>
-           Pensa 𖡎
+            Pensa 𖡎
           </button>
 
           <button
@@ -413,18 +395,13 @@
         <div class="text-xs text-zinc-600 max-w-xl leading-relaxed border border-white/5 bg-zinc-900/50 rounded-2xl p-4">
           <b class="text-zinc-400">Attenzione:</b>
           questo esempio chiama direttamente le API dal browser.
-          Per un progetto vero crea un backend tipo
-          <code>/api/chat</code> che custodisce le chiavi.
+          Per un progetto vero crea un backend tipo <code>/api/chat</code> che custodisce le chiavi.
         </div>
       </div>
-
     </div>
 
-    <!-- INPUT -->
     <div class="input-wrap p-4 safe-bottom">
-
       <div class="max-w-3xl mx-auto input-box rounded-3xl p-3 flex flex-col shadow-2xl">
-
         <div id="filePreview" class="flex flex-wrap gap-2 mb-2 px-2"></div>
 
         <textarea
@@ -435,9 +412,7 @@
         ></textarea>
 
         <div class="flex justify-between items-center mt-2 px-2 gap-2">
-
           <div class="flex gap-2 sm:gap-3 text-zinc-500 items-center flex-wrap">
-
             <label class="cursor-pointer hover:text-white h-8 px-2 rounded-full bg-zinc-900/80 border border-white/5 flex items-center gap-2" title="Allega file">
               <i class="fa-solid fa-paperclip"></i>
               <span class="text-[11px] hidden sm:inline">File</span>
@@ -466,7 +441,7 @@
             <button
               onclick="selectQuickModel('instant')"
               class="h-8 px-2 sm:px-3 rounded-full bg-yellow-500/10 text-yellow-300 border border-yellow-500/20 text-[11px] hover:bg-yellow-500/20"
-              title="  Rapido ⚡︎ "
+              title="Rapido ⚡︎"
             >
               <i class="fa-solid fa-bolt"></i>
               <span class="quick-pill-text ml-1">Instant</span>
@@ -488,7 +463,6 @@
             >
               clear
             </button>
-
           </div>
 
           <button
@@ -498,21 +472,15 @@
           >
             <i class="fa-solid fa-arrow-up"></i>
           </button>
-
         </div>
-
       </div>
-
     </div>
-
   </main>
 
-  <!-- SIDEBAR DESTRA -->
   <aside
     id="rightSidebar"
     class="right-panel w-80 border-l border-white/10 p-4 custom-scrollbar overflow-y-auto"
   >
-
     <div class="flex items-center justify-between mb-4">
       <h3 class="text-xs font-bold text-zinc-500 uppercase tracking-widest">
         API ✦
@@ -524,7 +492,6 @@
     </div>
 
     <div class="space-y-4">
-
       <div>
         <label class="text-[10px] text-zinc-500 block mb-1">Google AI Studio API Key</label>
         <input
@@ -532,16 +499,6 @@
           id="googleKey"
           placeholder="AIza..."
           class="w-full bg-zinc-800 border border-zinc-700 rounded-md p-2 text-xs outline-none focus:border-blue-500"
-        />
-      </div>
-
-      <div>
-        <label class="text-[10px] text-zinc-500 block mb-1">NVIDIA Build / NIM API Key</label>
-        <input
-          type="password"
-          id="nvidiaKey"
-          placeholder="nvapi-..."
-          class="w-full bg-zinc-800 border border-zinc-700 rounded-md p-2 text-xs outline-none focus:border-green-500"
         />
       </div>
 
@@ -580,9 +537,8 @@
           class="accent-white"
           onchange="persistSettings()"
         />
-        Salva impostazioni 
+        Salva impostazioni
       </label>
-
     </div>
 
     <h3 class="text-xs font-bold text-zinc-500 uppercase mt-8 mb-4 tracking-widest">
@@ -590,18 +546,9 @@
     </h3>
 
     <div class="space-y-3">
-
-      <select
-        id="customProvider"
-        class="w-full bg-zinc-800 border border-zinc-700 rounded-md p-2 text-xs outline-none"
-      >
-        <option value="google">Google Gemini</option>
-        <option value="nvidia">NVIDIA Build / NIM</option>
-      </select>
-
       <input
         id="customModelId"
-        placeholder="es: gemini-2.5-flash oppure openai/gpt-oss-120b"
+        placeholder="es: gemini-2.5-flash oppure gemini-2.5-pro"
         class="w-full bg-zinc-800 border border-zinc-700 rounded-md p-2 text-xs outline-none"
       />
 
@@ -611,47 +558,34 @@
       >
         Usa modello custom
       </button>
-
     </div>
 
     <h3 class="text-xs font-bold text-zinc-500 uppercase mt-8 mb-4 tracking-widest">
-      Modelli pre impostati 
+      Modelli pre impostati
     </h3>
 
     <div class="space-y-1" id="modelList"></div>
 
     <div class="mt-8 text-[10px] text-zinc-600 leading-relaxed">
-      Se un modello dà errore 404/400, probabilmente l’ID non è disponibile
-      per la tua API key o per quel provider. Copia sempre l’ID esatto dalla dashboard
-      Google AI Studio o NVIDIA Build.
+      Se un modello dà errore 404 o 400, probabilmente l’ID non è disponibile
+      per la tua API key. Copia sempre l’ID esatto dalla dashboard Google AI Studio.
     </div>
-
   </aside>
 
-  <!-- PRICING MODAL -->
   <div id="pricingModal" class="fixed inset-0 bg-black/90 hidden items-center justify-center z-[80] backdrop-blur-md p-4">
-
     <div class="bg-zinc-900 border border-white/10 w-full max-w-[450px] rounded-3xl p-8 shadow-2xl">
-
       <h2 class="text-2xl font-bold mb-4">Costi richieste API</h2>
 
       <div class="space-y-4 text-sm">
-
         <div class="flex justify-between border-b border-white/5 pb-2 gap-4">
           <span class="text-zinc-400">Google Gemini</span>
           <span class="text-green-400 text-right">Dipende dal modello</span>
         </div>
 
         <div class="flex justify-between border-b border-white/5 pb-2 gap-4">
-          <span class="text-zinc-400">NVIDIA Build / NIM</span>
-          <span class="text-blue-400 text-right">Dipende dal modello</span>
-        </div>
-
-        <div class="flex justify-between border-b border-white/5 pb-2 gap-4">
           <span class="text-zinc-400">File inline</span>
           <span class="text-zinc-500 text-right">Consumano token/payload</span>
         </div>
-
       </div>
 
       <p class="text-[10px] text-zinc-600 mt-6 italic">
@@ -665,16 +599,11 @@
       >
         Chiudi
       </button>
-
     </div>
-
   </div>
 
-  <!-- SETTINGS MODAL -->
   <div id="settingsModal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-[80] p-4">
-
-    <div class="bg-zinc-900 border border-white/10 w-full max-w-[500px] rounded-2xl p-6 shadow-2xl">
-
+    <div class="bg-zinc-900 border border-white/10 w-full max-w-[560px] rounded-2xl p-6 shadow-2xl">
       <h2 class="text-xl font-bold mb-4">System Prompt</h2>
 
       <textarea
@@ -684,27 +613,52 @@
         class="w-full bg-zinc-800 border border-zinc-700 rounded-xl p-4 text-sm text-white outline-none focus:border-blue-500"
       ></textarea>
 
+      <div class="mt-4 space-y-3">
+        <label class="flex items-center gap-2 text-sm text-zinc-300 select-none">
+          <input
+            id="followUpAi"
+            type="checkbox"
+            class="accent-white"
+            onchange="persistSettings()"
+          />
+          Follow-up AI
+        </label>
+
+        <div class="rounded-xl border border-white/10 bg-zinc-950/50 p-3">
+          <div class="flex items-center justify-between gap-3 mb-2">
+            <div class="text-xs uppercase tracking-widest text-zinc-500 font-bold">Feedback temporaneo</div>
+            <button
+              onclick="clearTemporaryFeedback()"
+              class="text-[10px] px-2 py-1 rounded-md bg-zinc-800 border border-white/10 text-zinc-300 hover:bg-zinc-700"
+            >
+              Pulisci
+            </button>
+          </div>
+          <div id="feedbackPreview" class="text-xs text-zinc-400 leading-relaxed whitespace-pre-wrap">
+            Nessun feedback temporaneo.
+          </div>
+        </div>
+      </div>
+
       <button
         onclick="closeSettings()"
         class="w-full mt-4 bg-white text-black font-bold py-3 rounded-xl"
       >
         Salva
       </button>
-
     </div>
-
   </div>
+
+  <div id="toastLayer" class="fixed bottom-4 right-4 z-[120] space-y-2 pointer-events-none"></div>
 
   <script>
     /************************************************************
      * MODELLI
      *
      * Nota:
-     * - Google Gemini usa provider "google".
-     * - NVIDIA Build / NIM usa provider "nvidia".
-     * - Molti modelli "Gemma", "GPT-OSS", "DeepSeek", "Qwen",
-     *   "Mistral", "Nemotron", ecc. qui sono configurati come NVIDIA
-     *   perché passano dall'endpoint OpenAI-compatible NVIDIA.
+     * - Ho lasciato i blocchi Google che mi hai passato.
+     * - Il gruppo "NVIDIA" è stato rinominato in "X".
+     * - Qui non c'è nessun provider NVIDIA.
      ************************************************************/
 
     const models = [
@@ -751,165 +705,43 @@
         group: "Quick"
       },
       {
-        id: "openai/gpt-oss-120b",
-        name: "Think - GPT-OSS 120B",
-        provider: "nvidia",
+        id: "gemini-3.1-flash-lite-preview",
+        name: "Gemini-3.1 flash lite",
+        provider: "google",
         status: "think",
         group: "Quick"
       },
 
       /***********************
-       * NVIDIA / OPEN MODELS
+       * X / OPEN MODELS
        ***********************/
       {
-        id: "openai/gpt-oss-20b",
-        name: "GPT-OSS 20B",
-        provider: "nvidia",
+        id: "gemma-4-26b-a4b-it",
+        name: "gemma-4-26b-a4b-it",
+        provider: "google",
         status: "check",
-        group: "OpenAI OSS"
+        group: "OpeOSS"
       },
       {
-        id: "meta/llama-3.1-70b-instruct",
-        name: "Llama 3.1 70B Instruct",
-        provider: "nvidia",
+        id: "gemini-flash-latest",
+        name: "gemini-flash-latest",
+        provider: "google",
         status: "check",
         group: "Meta"
       },
       {
-        id: "nvidia/llama-3.1-nemotron-70b-instruct",
-        name: "Nemotron 70B Instruct",
-        provider: "nvidia",
+        id: "gemini-2.0-flash-lite",
+        name: "gemini-2.0-flash-lite",
+        provider: "google",
         status: "check",
-        group: "NVIDIA"
+        group: "Legacy"
       },
       {
-        id: "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
-        name: "Nemotron 3 Nano Omni 30B A3B Reasoning",
-        provider: "nvidia",
+        id: "gemini-3.1-pro-preview",
+        name: "gemini-3.1-pro-preview",
+        provider: "google",
         status: "check",
-        group: "NVIDIA"
-      },
-      {
-        id: "nvidia/nemotron-3-super-120b-a12b",
-        name: "Nemotron 3 Super 120B A12B",
-        provider: "nvidia",
-        status: "check",
-        group: "NVIDIA"
-      },
-      {
-        id: "nvidia/ising-calibration-1-35b-a3b",
-        name: "Ising Calibration 1 35B A3B",
-        provider: "nvidia",
-        status: "check",
-        group: "NVIDIA"
-      },
-
-      /***********************
-       * MISTRAL
-       ***********************/
-      {
-        id: "mistralai/mistral-medium-3.5-128b",
-        name: "Mistral Medium 3.5 128B",
-        provider: "nvidia",
-        status: "check",
-        group: "Mistral"
-      },
-      {
-        id: "mistralai/mistral-small-4-119b-2603",
-        name: "Mistral Small 4 119B 2603",
-        provider: "nvidia",
-        status: "check",
-        group: "Mistral"
-      },
-      {
-        id: "mistralai/mixtral-8x7b-instruct-v0.1",
-        name: "Mixtral 8x7B Instruct",
-        provider: "nvidia",
-        status: "check",
-        group: "Mistral"
-      },
-
-      /***********************
-       * DEEPSEEK
-       ***********************/
-      {
-        id: "deepseek-ai/deepseek-v4-flash",
-        name: "DeepSeek V4 Flash",
-        provider: "nvidia",
-        status: "check",
-        group: "DeepSeek"
-      },
-      {
-        id: "deepseek-ai/deepseek-v4-pro",
-        name: "DeepSeek V4 Pro",
-        provider: "nvidia",
-        status: "check",
-        group: "DeepSeek"
-      },
-
-      /***********************
-       * Z.AI / GLM
-       ***********************/
-      {
-        id: "z-ai/glm-5.1",
-        name: "GLM 5.1",
-        provider: "nvidia",
-        status: "check",
-        group: "Z.AI"
-      },
-      {
-        id: "z-ai/glm-4.7",
-        name: "GLM 4.7",
-        provider: "nvidia",
-        status: "check",
-        group: "Z.AI"
-      },
-
-      /***********************
-       * QWEN
-       ***********************/
-      {
-        id: "qwen/qwen3.5-122b-a10b",
-        name: "Qwen 3.5 122B A10B",
-        provider: "nvidia",
-        status: "check",
-        group: "Qwen"
-      },
-      {
-        id: "qwen/qwen3.5-397b-a17b",
-        name: "Qwen 3.5 397B A17B",
-        provider: "nvidia",
-        status: "check",
-        group: "Qwen"
-      },
-
-      /***********************
-       * MINIMAX
-       ***********************/
-      {
-        id: "minimaxai/minimax-m2.7",
-        name: "MiniMax M2.7",
-        provider: "nvidia",
-        status: "check",
-        group: "MiniMax"
-      },
-      {
-        id: "minimaxai/minimax-m2.5",
-        name: "MiniMax M2.5",
-        provider: "nvidia",
-        status: "check",
-        group: "MiniMax"
-      },
-
-      /***********************
-       * STEPFUN
-       ***********************/
-      {
-        id: "stepfun-ai/step-3.5-flash",
-        name: "StepFun Step 3.5 Flash",
-        provider: "nvidia",
-        status: "check",
-        group: "StepFun"
+        group: "X"
       }
     ];
 
@@ -922,11 +754,11 @@
         group: "Quick"
       },
       think: {
-        id: "openai/gpt-oss-120b",
-        name: "Think - GPT-OSS 120B",
-        provider: "nvidia",
-        status: "think",
-        group: "Quick"
+        id: "gemini-2.5-pro",
+        name: "Gemini 2.5 Pro",
+        provider: "google",
+        status: "check",
+        group: "Google"
       }
     };
 
@@ -935,15 +767,19 @@
     let selectedFiles = [];
     let chatHistory = [];
     let isLoading = false;
+    let latestAssistantBubble = null;
+    let temporaryFeedbackNotes = "";
 
     /************************************************************
      * INIT
      ************************************************************/
 
+    window.addEventListener("DOMContentLoaded", init);
+
     function init() {
-      restoreSettings();
       initModels();
-      selectModel(selectedModel || models[0]);
+      restoreSettings();
+      syncSelectedModelUI(selectedModel);
 
       const input = document.getElementById("userInput");
 
@@ -963,19 +799,20 @@
 
       const persistIds = [
         "googleKey",
-        "nvidiaKey",
         "temperature",
         "maxTokens",
-        "systemPrompt"
+        "systemPrompt",
+        "followUpAi"
       ];
 
       persistIds.forEach(id => {
         const el = document.getElementById(id);
-        if (el) {
-          el.addEventListener("input", persistSettings);
-        }
+        if (!el) return;
+        el.addEventListener("input", persistSettings);
+        el.addEventListener("change", persistSettings);
       });
 
+      updateFeedbackPreview();
       handleResponsiveResize();
     }
 
@@ -996,7 +833,6 @@
         }
 
         const div = document.createElement("div");
-
         div.className =
           "model-list-item flex items-center justify-between gap-2 p-2 rounded-lg cursor-pointer transition text-xs border border-transparent";
 
@@ -1009,12 +845,11 @@
             <span class="text-[9px] text-zinc-600 truncate">${escapeHtml(model.provider)} · ${escapeHtml(model.id)}</span>
           </div>
           <span class="text-[9px] px-1 rounded shrink-0 ${getStatusClass(model.status)}">
-            ${escapeHtml(model.status.toUpperCase())}
+            ${escapeHtml(String(model.status).toUpperCase())}
           </span>
         `;
 
-        div.onclick = () => selectModel(model);
-
+        div.onclick = () => setSelectedModel(model);
         container.appendChild(div);
       });
     }
@@ -1029,11 +864,26 @@
       return "bg-zinc-800 text-zinc-500";
     }
 
-    function selectModel(model) {
-      selectedModel = model;
+    function setSelectedModel(model, options = {}) {
+      const { persist = true, close = true } = options;
 
+      selectedModel = {
+        id: model.id,
+        name: model.name || model.id,
+        provider: model.provider || "google",
+        status: model.status || "custom",
+        group: model.group || "Custom"
+      };
+
+      syncSelectedModelUI(selectedModel);
+
+      if (persist) persistSettings();
+      if (close) closeDrawers();
+    }
+
+    function syncSelectedModelUI(model) {
       document.getElementById("currentModelDisplay").innerText = model.name || model.id;
-      document.getElementById("currentProviderDisplay").innerText = model.provider;
+      document.getElementById("currentProviderDisplay").innerText = model.provider || "google";
 
       document.querySelectorAll(".model-list-item").forEach(item => {
         item.classList.remove("bg-zinc-800", "border-white/10");
@@ -1045,22 +895,17 @@
       if (active) {
         active.classList.add("bg-zinc-800", "border-white/10");
       }
-
-      persistSettings();
-      closeDrawers();
     }
 
     function selectQuickModel(type) {
       const model = quickModels[type];
-
       if (!model) return;
 
       const existing = models.find(item => item.id === model.id && item.provider === model.provider);
-      selectModel(existing || model);
+      setSelectedModel(existing || model);
     }
 
     function useCustomModel() {
-      const provider = document.getElementById("customProvider").value;
       const id = document.getElementById("customModelId").value.trim();
 
       if (!id) {
@@ -1068,23 +913,13 @@
         return;
       }
 
-      selectedModel = {
+      setSelectedModel({
         id,
         name: id,
-        provider,
+        provider: "google",
         status: "custom",
         group: "Custom"
-      };
-
-      document.getElementById("currentModelDisplay").innerText = id;
-      document.getElementById("currentProviderDisplay").innerText = provider;
-
-      document.querySelectorAll(".model-list-item").forEach(item => {
-        item.classList.remove("bg-zinc-800", "border-white/10");
       });
-
-      persistSettings();
-      closeDrawers();
     }
 
     /************************************************************
@@ -1129,10 +964,10 @@
 
       const payload = {
         googleKey: document.getElementById("googleKey").value,
-        nvidiaKey: document.getElementById("nvidiaKey").value,
         temperature: document.getElementById("temperature").value,
         maxTokens: document.getElementById("maxTokens").value,
         systemPrompt: document.getElementById("systemPrompt").value,
+        followUpAi: document.getElementById("followUpAi").checked,
         selectedModel
       };
 
@@ -1141,7 +976,6 @@
 
     function restoreSettings() {
       const raw = localStorage.getItem("aiChatSettings");
-
       if (!raw) return;
 
       try {
@@ -1149,10 +983,10 @@
 
         document.getElementById("saveLocal").checked = true;
         document.getElementById("googleKey").value = data.googleKey || "";
-        document.getElementById("nvidiaKey").value = data.nvidiaKey || "";
         document.getElementById("temperature").value = data.temperature || "0.7";
         document.getElementById("maxTokens").value = data.maxTokens || "2048";
         document.getElementById("systemPrompt").value = data.systemPrompt || "";
+        document.getElementById("followUpAi").checked = !!data.followUpAi;
 
         if (data.selectedModel && data.selectedModel.id) {
           selectedModel = data.selectedModel;
@@ -1181,21 +1015,61 @@
 
     function openSettings() {
       document.getElementById("settingsModal").classList.replace("hidden", "flex");
+      updateFeedbackPreview();
       closeDrawers();
     }
 
     function closeSettings() {
       document.getElementById("settingsModal").classList.replace("flex", "hidden");
       persistSettings();
+      updateFeedbackPreview();
     }
 
     function toggleLegacy() {
       legacyMode = !legacyMode;
       document.getElementById("legacyToggle").classList.toggle("legacy-active");
+      showToast(legacyMode ? "Legacy mode attivo" : "Legacy mode spento");
     }
 
-    function focusSearchNotImplemented() {
-      alert("Placeholder: qui puoi implementare ricerca nella cronologia.");
+    function clearTemporaryFeedback() {
+      temporaryFeedbackNotes = "";
+      updateFeedbackPreview();
+      showToast("Feedback temporaneo pulito");
+    }
+
+    function updateFeedbackPreview() {
+      const el = document.getElementById("feedbackPreview");
+      if (!el) return;
+
+      el.textContent = temporaryFeedbackNotes.trim()
+        ? temporaryFeedbackNotes.trim()
+        : "Nessun feedback temporaneo.";
+    }
+
+    /************************************************************
+     * TOAST
+     ************************************************************/
+
+    function showToast(message) {
+      const layer = document.getElementById("toastLayer");
+      const toast = document.createElement("div");
+
+      toast.className =
+        "pointer-events-none max-w-[320px] rounded-xl border border-white/10 bg-zinc-900/95 px-3 py-2 text-xs text-zinc-200 shadow-2xl opacity-0 translate-y-2 transition-all";
+
+      toast.textContent = message;
+
+      layer.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove("opacity-0", "translate-y-2");
+        toast.classList.add("opacity-100", "translate-y-0");
+      });
+
+      setTimeout(() => {
+        toast.classList.add("opacity-0", "translate-y-2");
+        setTimeout(() => toast.remove(), 220);
+      }, 2200);
     }
 
     /************************************************************
@@ -1204,14 +1078,8 @@
 
     function handleFileSelect(event) {
       const files = Array.from(event.target.files || []);
-
       selectedFiles = [...selectedFiles, ...files];
-
       renderFilePreview();
-
-      /*
-       * Reset input così puoi riselezionare lo stesso file.
-       */
       event.target.value = "";
     }
 
@@ -1221,7 +1089,6 @@
 
       selectedFiles.forEach((file, index) => {
         const item = document.createElement("div");
-
         item.className =
           "bg-zinc-800 text-[10px] px-2 py-1 rounded-md border border-white/10 flex items-center gap-2 max-w-full";
 
@@ -1261,7 +1128,7 @@
       return `${(bytes / Math.pow(1024, index)).toFixed(1)} ${units[index]}`;
     }
 
-    async function fileToBase64(file) {
+    function fileToBase64(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
 
@@ -1276,13 +1143,12 @@
       });
     }
 
-    async function fileToText(file) {
+    function fileToText(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
 
         reader.onload = () => resolve(String(reader.result));
         reader.onerror = reject;
-
         reader.readAsText(file);
       });
     }
@@ -1337,16 +1203,20 @@
       const bubble = document.createElement("div");
       bubble.classList.add("chat-bubble");
 
-      bubble.className +=
-        role === "user"
-          ? " max-w-[85%] p-4 rounded-2xl bg-zinc-800 text-white"
-          : " max-w-[85%] p-4 rounded-2xl text-zinc-200 bg-transparent";
+      if (role === "ai") {
+        bubble.classList.add("assistant-bubble");
+      }
+
+      bubble.className += role === "user"
+        ? " max-w-[85%] p-4 rounded-2xl bg-zinc-800 text-white"
+        : " max-w-[85%] p-4 rounded-2xl text-zinc-200 bg-transparent";
 
       const label = role === "user" ? "Tu" : "AI";
 
       bubble.innerHTML = `
         <div class="text-[10px] text-zinc-500 mb-1">${label}</div>
         <div class="message-content text-sm leading-relaxed">${renderText(text)}</div>
+        ${role === "ai" ? '<div class="assistant-actions-host mt-3"></div>' : ''}
       `;
 
       if (options.loading) {
@@ -1366,27 +1236,95 @@
       bubble.dataset.loading = "false";
 
       const content = bubble.querySelector(".message-content");
-
       if (content) {
         content.innerHTML = renderText(text);
       }
 
       if (isError) {
         bubble.classList.add("border", "border-red-500/30", "bg-red-950/10");
+        const host = bubble.querySelector(".assistant-actions-host");
+        if (host) host.innerHTML = "";
+      } else if (bubble.classList.contains("assistant-bubble")) {
+        renderAssistantControls(bubble);
       }
 
       const chatWindow = document.getElementById("chatWindow");
       chatWindow.scrollTop = chatWindow.scrollHeight;
     }
 
-    function renderText(text) {
-      /*
-       * Renderer semplice:
-       * - escape HTML
-       * - code block ``` ```
-       * - newline -> <br>
-       */
+    function renderAssistantControls(bubble) {
+      const host = bubble.querySelector(".assistant-actions-host");
+      if (!host) return;
 
+      host.innerHTML = `
+        <div class="flex flex-wrap gap-2">
+          <button
+            class="text-[11px] px-3 py-1.5 rounded-full bg-zinc-800 text-zinc-200 border border-white/10 hover:bg-zinc-700"
+            onclick="regenerateBubble(this)"
+          >
+            Rigenera
+          </button>
+
+          <button
+            class="text-[11px] px-3 py-1.5 rounded-full bg-yellow-500/10 text-yellow-300 border border-yellow-500/20 hover:bg-yellow-500/20"
+            onclick="regenerateBubble(this, 'instant')"
+          >
+            <i class="fa-solid fa-bolt mr-1"></i> Instant
+          </button>
+
+          <button
+            class="text-[11px] px-3 py-1.5 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 hover:bg-purple-500/20"
+            onclick="regenerateBubble(this, 'think')"
+          >
+            <i class="fa-solid fa-brain mr-1"></i> Think
+          </button>
+
+          <button
+            class="text-[11px] px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 hover:bg-emerald-500/20"
+            onclick="rateBubble(this, 'like')"
+          >
+            👍 Like
+          </button>
+
+          <button
+            class="text-[11px] px-3 py-1.5 rounded-full bg-rose-500/10 text-rose-300 border border-rose-500/20 hover:bg-rose-500/20"
+            onclick="rateBubble(this, 'dislike')"
+          >
+            👎 Dislike
+          </button>
+        </div>
+
+        <div class="feedback-panel hidden mt-3 p-3 rounded-xl border border-white/10 bg-zinc-950/60">
+          <div class="text-[10px] text-zinc-500 mb-2">
+            Scrivi come dovrebbe migliorare la prossima risposta.
+          </div>
+
+          <textarea
+            class="feedback-input w-full bg-zinc-800 border border-zinc-700 rounded-xl p-2 text-xs text-white outline-none resize-none"
+            rows="3"
+            placeholder="Es: più sintetico, più tecnico, meno emoji..."
+          ></textarea>
+
+          <div class="flex gap-2 mt-2">
+            <button
+              class="text-xs px-3 py-2 rounded-lg bg-white text-black font-semibold"
+              onclick="submitFeedback(this)"
+            >
+              Invia feedback
+            </button>
+
+            <button
+              class="text-xs px-3 py-2 rounded-lg bg-zinc-800 text-zinc-300 border border-white/10"
+              onclick="hideFeedback(this)"
+            >
+              Annulla
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderText(text) {
       let safe = escapeHtml(String(text || ""));
 
       safe = safe.replace(/```([\s\S]*?)```/g, function(_, code) {
@@ -1409,6 +1347,121 @@
     }
 
     /************************************************************
+     * FEEDBACK + REGNERA
+     ************************************************************/
+
+    function rateBubble(button, reaction) {
+      const bubble = button.closest(".assistant-bubble");
+      if (!bubble) return;
+
+      const panel = bubble.querySelector(".feedback-panel");
+
+      if (reaction === "like") {
+        bubble.dataset.reaction = "like";
+        if (panel) panel.classList.add("hidden");
+        showToast("Feedback positivo salvato ✦");
+        return;
+      }
+
+      if (panel) {
+        panel.classList.remove("hidden");
+        const input = bubble.querySelector(".feedback-input");
+        if (input) input.focus();
+      }
+
+      bubble.dataset.reaction = "dislike";
+    }
+
+    function hideFeedback(button) {
+      const bubble = button.closest(".assistant-bubble");
+      if (!bubble) return;
+
+      const panel = bubble.querySelector(".feedback-panel");
+      if (panel) panel.classList.add("hidden");
+    }
+
+    function submitFeedback(button) {
+      const bubble = button.closest(".assistant-bubble");
+      if (!bubble) return;
+
+      const input = bubble.querySelector(".feedback-input");
+      const panel = bubble.querySelector(".feedback-panel");
+      const text = (input?.value || "").trim();
+
+      if (!text) {
+        showToast("Scrivi un feedback breve, frate ✍️");
+        return;
+      }
+
+      const clean = `- ${text}`;
+
+      if (temporaryFeedbackNotes.trim()) {
+        temporaryFeedbackNotes += "\n" + clean;
+      } else {
+        temporaryFeedbackNotes = clean;
+      }
+
+      updateFeedbackPreview();
+
+      if (panel) panel.classList.add("hidden");
+      if (input) input.value = "";
+
+      showToast("Feedback aggiunto al prompt temporaneo ✦");
+    }
+
+    function regenerateBubble(button, mode = null) {
+      const bubble = button.closest(".assistant-bubble");
+      if (!bubble) return;
+
+      if (bubble !== latestAssistantBubble) {
+        showToast("Rigenera disponibile solo sull’ultimo messaggio");
+        return;
+      }
+
+      const requestMeta = bubble.__requestMeta;
+      if (!requestMeta) {
+        showToast("Nessun dato per rigenerare");
+        return;
+      }
+
+      const model = getModelForMode(mode);
+      const oldBubble = bubble;
+
+      if (model && model.id) {
+        setSelectedModel(model, { persist: true, close: false });
+      }
+
+      setLoading(true, "Rigenerando...");
+
+      callGoogleGemini(requestMeta.historySnapshot, model?.id || selectedModel.id)
+        .then(answer => {
+          updateMessage(oldBubble, answer || "[Risposta vuota]");
+          oldBubble.__requestMeta = requestMeta;
+          chatHistory[chatHistory.length - 1] = {
+            role: "assistant",
+            text: answer || ""
+          };
+          showToast(mode ? `Rigenerato con ${mode === "instant" ? "Instant" : "Think"}` : "Rigenerato");
+        })
+        .catch(error => {
+          console.error(error);
+          updateMessage(oldBubble, "Errore API:\n\n" + formatApiError(error), true);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
+
+    function getModelForMode(mode) {
+      if (!mode) return selectedModel;
+
+      const quick = quickModels[mode];
+      if (!quick) return selectedModel;
+
+      return models.find(m => m.id === quick.id && m.provider === quick.provider) || quick;
+    }
+
+    /************************************************************
      * SEND
      ************************************************************/
 
@@ -1421,63 +1474,57 @@
       if (!text && selectedFiles.length === 0) return;
 
       const filesForRequest = [...selectedFiles];
-
-      let visibleMessage = text || "";
-
-      if (filesForRequest.length > 0) {
-        visibleMessage +=
-          "\n\n" +
-          "Allegati: " +
-          filesForRequest.map(file => file.name).join(", ");
-      }
+      const visibleMessage = text || (filesForRequest.length ? "Allegati" : "");
 
       appendMessage("user", visibleMessage);
+
+      const userEntry = {
+        role: "user",
+        text,
+        files: filesForRequest
+      };
+
+      chatHistory.push(userEntry);
 
       input.value = "";
       input.style.height = "auto";
       clearFiles();
 
-      const aiBubble = appendMessage("ai", "✦ ", { loading: true });
+      const aiBubble = appendMessage("ai", "✦", { loading: true });
+      latestAssistantBubble = aiBubble;
 
-      setLoading(true);
+      const historySnapshot = chatHistory.map(item => ({
+        role: item.role,
+        text: item.text,
+        files: item.files || []
+      }));
+
+      aiBubble.__requestMeta = {
+        historySnapshot
+      };
+
+      setLoading(true, "Calling API...");
 
       try {
-        let answer = "";
-
-        if (selectedModel.provider === "google") {
-          answer = await callGoogleGemini(text, filesForRequest);
-        } else if (selectedModel.provider === "nvidia") {
-          answer = await callNvidiaBuild(text, filesForRequest);
-        } else {
-          throw new Error("Provider non supportato: " + selectedModel.provider);
-        }
-
+        const answer = await callGoogleGemini(historySnapshot, selectedModel.id);
         updateMessage(aiBubble, answer || "[Risposta vuota]");
-
-        chatHistory.push({
-          role: "user",
-          text: visibleMessage
-        });
+        aiBubble.__requestMeta = {
+          historySnapshot
+        };
 
         chatHistory.push({
           role: "assistant",
           text: answer || ""
         });
-
       } catch (error) {
         console.error(error);
-
-        updateMessage(
-          aiBubble,
-          "Errore API:\n\n" + formatApiError(error),
-          true
-        );
+        updateMessage(aiBubble, "Errore API:\n\n" + formatApiError(error), true);
       } finally {
         setLoading(false);
       }
     }
 
-    function setLoading(value) {
+    function setLoading(value, label = "Calling API...") {
       isLoading = value;
 
       const btn = document.getElementById("sendBtn");
@@ -1486,7 +1533,7 @@
       btn.disabled = value;
 
       if (value) {
-        status.innerText = "Calling API...";
+        status.innerText = label;
         status.className =
           "text-xs px-2 py-1 rounded-full bg-blue-950/40 text-blue-300 border border-blue-500/20";
       } else {
@@ -1498,85 +1545,101 @@
 
     function formatApiError(error) {
       if (!error) return "Errore sconosciuto.";
-
       if (typeof error === "string") return error;
-
       return error.message || JSON.stringify(error, null, 2);
     }
 
     /************************************************************
      * GOOGLE GEMINI API
-     *
-     * REST endpoint:
-     * POST https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent
-     *
-     * Header:
-     * x-goog-api-key: API_KEY
      ************************************************************/
 
-    async function callGoogleGemini(userText, files) {
+    function buildEffectiveSystemPrompt() {
+      const parts = [];
+
+      const basePrompt = document.getElementById("systemPrompt").value.trim();
+      if (basePrompt) parts.push(basePrompt);
+
+      if (document.getElementById("followUpAi").checked) {
+        parts.push(
+          "Dopo la risposta, aggiungi una singola domanda di follow-up breve e utile. Non essere invadente."
+        );
+      }
+
+      if (temporaryFeedbackNotes.trim()) {
+        parts.push(
+          "Feedback temporaneo per migliorare le risposte:\n" + temporaryFeedbackNotes.trim()
+        );
+      }
+
+      return parts.join("\n\n");
+    }
+
+    async function buildGeminiContents(historySnapshot) {
+      const contents = [];
+
+      for (const msg of historySnapshot) {
+        if (!msg || !msg.role) continue;
+
+        const parts = [];
+        const text = String(msg.text || "").trim();
+
+        if (text) {
+          parts.push({ text });
+        }
+
+        const files = Array.isArray(msg.files) ? msg.files : [];
+
+        for (const file of files) {
+          if (!file) continue;
+
+          if (file.type && file.type.startsWith("image/")) {
+            const base64 = await fileToBase64(file);
+            parts.push({
+              inlineData: {
+                mimeType: file.type || "image/png",
+                data: base64
+              }
+            });
+          } else if (isTextLikeFile(file)) {
+            const content = await fileToText(file);
+            parts.push({
+              text:
+                `\n\n[File: ${file.name}]\n` +
+                "```text\n" +
+                content.slice(0, 30000) +
+                "\n```" +
+                (content.length > 30000 ? "\n[File troncato a 30000 caratteri]" : "")
+            });
+          } else {
+            parts.push({
+              text: `\n\n[File allegato: ${file.name}, type: ${file.type || "unknown"}]`
+            });
+          }
+        }
+
+        contents.push({
+          role: msg.role === "assistant" ? "model" : "user",
+          parts: parts.length ? parts : [{ text: " " }]
+        });
+      }
+
+      return contents;
+    }
+
+    async function callGoogleGemini(historySnapshot, modelId) {
       const apiKey = document.getElementById("googleKey").value.trim();
 
       if (!apiKey) {
         throw new Error("Manca Google AI Studio API Key.");
       }
 
-      const systemPrompt = document.getElementById("systemPrompt").value.trim();
       const temperature = Number(document.getElementById("temperature").value || 0.7);
       const maxTokens = Number(document.getElementById("maxTokens").value || 2048);
-
-      const modelId = selectedModel.id;
 
       const url =
         `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(modelId)}:generateContent`;
 
-      const contents = [];
-
-      /*
-       * Gemini usa role:
-       * - user
-       * - model
-       */
-      for (const msg of chatHistory) {
-        contents.push({
-          role: msg.role === "assistant" ? "model" : "user",
-          parts: [
-            {
-              text: msg.text
-            }
-          ]
-        });
-      }
-
-      const currentParts = [];
-
-      if (userText) {
-        currentParts.push({
-          text: userText
-        });
-      }
-
-      /*
-       * File inline per Gemini.
-       * Funziona per immagini e diversi file supportati.
-       * Per file grandi conviene File API lato backend.
-       */
-      for (const file of files) {
-        const base64 = await fileToBase64(file);
-
-        currentParts.push({
-          inlineData: {
-            mimeType: file.type || "application/octet-stream",
-            data: base64
-          }
-        });
-      }
-
-      contents.push({
-        role: "user",
-        parts: currentParts
-      });
-
+      const contents = await buildGeminiContents(historySnapshot);
       const body = {
         contents,
         generationConfig: {
@@ -1584,6 +1647,8 @@
           maxOutputTokens: maxTokens
         }
       };
+
+      const systemPrompt = buildEffectiveSystemPrompt();
 
       if (systemPrompt) {
         body.systemInstruction = {
@@ -1594,14 +1659,6 @@
           ]
         };
       }
-
-      /*
-       * PRODUZIONE:
-       * Non chiamare direttamente Google dal browser.
-       * Usa un backend:
-       *
-       * fetch("/api/gemini", ...)
-       */
 
       const response = await fetch(url, {
         method: "POST",
@@ -1642,146 +1699,6 @@
     }
 
     /************************************************************
-     * NVIDIA BUILD / NIM API
-     *
-     * Endpoint OpenAI-compatible:
-     * POST https://integrate.api.nvidia.com/v1/chat/completions
-     *
-     * Header:
-     * Authorization: Bearer API_KEY
-     ************************************************************/
-
-    async function callNvidiaBuild(userText, files) {
-      const apiKey = document.getElementById("nvidiaKey").value.trim();
-
-      if (!apiKey) {
-        throw new Error("Manca NVIDIA Build / NIM API Key.");
-      }
-
-      const systemPrompt = document.getElementById("systemPrompt").value.trim();
-      const temperature = Number(document.getElementById("temperature").value || 0.7);
-      const maxTokens = Number(document.getElementById("maxTokens").value || 2048);
-
-      const modelId = selectedModel.id;
-
-      let finalUserText = userText || "";
-
-      /*
-       * NVIDIA chat/completions standard è principalmente testuale.
-       * Qui i file testuali vengono incollati nel prompt.
-       * Per immagini/PDF/multimodale serve il formato specifico del modello
-       * e, idealmente, un backend.
-       */
-      if (files.length > 0) {
-        finalUserText += "\n\n--- FILE ALLEGATI ---\n";
-
-        for (const file of files) {
-          if (isTextLikeFile(file)) {
-            const content = await fileToText(file);
-
-            finalUserText +=
-              `\n\n[File: ${file.name}]\n` +
-              "```text\n" +
-              content.slice(0, 30000) +
-              "\n```";
-
-            if (content.length > 30000) {
-              finalUserText += "\n[File troncato a 30000 caratteri]\n";
-            }
-
-          } else if (file.type && file.type.startsWith("image/")) {
-            /*
-             * Placeholder: alcuni modelli NVIDIA supportano input vision,
-             * ma il formato varia. Per non rompere la compatibilità testuale,
-             * qui avviso il modello.
-             */
-            finalUserText +=
-              `\n\n[Immagine allegata: ${file.name}, type: ${file.type || "unknown"}]\n` +
-              "Nota: questa demo non invia immagini binarie a NVIDIA. Implementare multimodale lato backend se il modello lo supporta.\n";
-
-          } else {
-            finalUserText +=
-              `\n\n[File non testuale: ${file.name}, type: ${file.type || "unknown"}]\n` +
-              "Placeholder: per questo file serve upload/estrazione lato backend.\n";
-          }
-        }
-      }
-
-      const messages = [];
-
-      if (systemPrompt) {
-        messages.push({
-          role: "system",
-          content: systemPrompt
-        });
-      }
-
-      for (const msg of chatHistory) {
-        messages.push({
-          role: msg.role === "assistant" ? "assistant" : "user",
-          content: msg.text
-        });
-      }
-
-      messages.push({
-        role: "user",
-        content: finalUserText
-      });
-
-      const body = {
-        model: modelId,
-        messages,
-        temperature,
-        max_tokens: maxTokens,
-        stream: false
-      };
-
-      /*
-       * PRODUZIONE:
-       * Non chiamare direttamente NVIDIA dal browser.
-       * Usa un backend:
-       *
-       * fetch("/api/nvidia", ...)
-       */
-
-      const response = await fetch("https://integrate.api.nvidia.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${apiKey}`
-        },
-        body: JSON.stringify(body)
-      });
-
-      const data = await response.json().catch(() => null);
-
-      if (!response.ok) {
-        throw new Error(
-          data?.error?.message ||
-          data?.message ||
-          `NVIDIA API error ${response.status}: ${response.statusText}`
-        );
-      }
-
-      return extractNvidiaText(data);
-    }
-
-    function extractNvidiaText(data) {
-      const content = data?.choices?.[0]?.message?.content;
-
-      if (typeof content === "string") return content;
-
-      if (Array.isArray(content)) {
-        return content
-          .map(item => item.text || item.content || "")
-          .filter(Boolean)
-          .join("\n");
-      }
-
-      return JSON.stringify(data, null, 2);
-    }
-
-    /************************************************************
      * NEW CHAT
      ************************************************************/
 
@@ -1790,6 +1707,8 @@
 
       chatHistory = [];
       selectedFiles = [];
+      temporaryFeedbackNotes = "";
+      latestAssistantBubble = null;
 
       document.getElementById("chatWindow").innerHTML = `
         <div id="welcomeScreen" class="h-full flex flex-col items-center justify-center text-center space-y-4">
@@ -1802,7 +1721,7 @@
               class="text-xs px-4 py-2 rounded-full bg-yellow-500/10 text-yellow-300 border border-yellow-500/20 hover:bg-yellow-500/20"
             >
               <i class="fa-solid fa-bolt mr-1"></i>
-             Rapido ✦
+              Rapido ✦
             </button>
 
             <button
@@ -1817,11 +1736,10 @@
       `;
 
       renderFilePreview();
+      updateFeedbackPreview();
       closeDrawers();
+      showToast("Nuova chat avviata");
     }
-
-    init();
   </script>
-
 </body>
 </html>
