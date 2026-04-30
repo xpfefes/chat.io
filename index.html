@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
-  <title>AI Chat - Gemini + NVIDIA</title>
+  <title>AI Chat-SDK - Gemini + NVIDIA</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -479,18 +479,18 @@
             </label>
 
             <button
-              onclick="selectQuickModel('instant')"
+              onclick="selectQuickModel('rapido')"
               class="h-8 px-2 sm:px-3 rounded-full bg-yellow-500/10 text-yellow-300 border border-yellow-500/20 text-[11px] hover:bg-yellow-500/20"
-              title="Instant: Gemma 4"
+              title="rapido: Gemma 4"
             >
               <i class="fa-solid fa-bolt"></i>
               <span class="quick-pill-text ml-1">Instant</span>
             </button>
 
             <button
-              onclick="selectQuickModel('think')"
+              onclick="selectQuickModel('pensa')"
               class="h-8 px-2 sm:px-3 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 text-[11px] hover:bg-purple-500/20"
-              title="Think: GPT-OSS 120B"
+              title="pensa: GPT"
             >
               <i class="fa-solid fa-brain"></i>
               <span class="quick-pill-text ml-1">Think</span>
@@ -701,7 +701,7 @@
       <textarea
         id="systemPrompt"
         rows="8"
-        placeholder="Es: Rispondi come un ingegnere software senior..."
+        placeholder="Es: Rispondi come un ingegnere software ..."
         class="w-full bg-zinc-800 border border-zinc-700 rounded-xl p-4 text-sm text-white outline-none focus:border-blue-500"
       ></textarea>
 
@@ -767,7 +767,7 @@
       {
         id: "google/gemma-4-31b-it",
         name: "Instant - Gemma 4 31B IT",
-        provider: "nvidia",
+        provider: "google",
         status: "instant",
         group: "Quick"
       },
@@ -938,7 +938,7 @@
       instant: {
         id: "google/gemma-4-31b-it",
         name: "Instant - Gemma 4 31B IT",
-        provider: "nvidia",
+        provider: "google",
         status: "instant",
         group: "Quick"
       },
@@ -1458,7 +1458,7 @@
       input.style.height = "auto";
       clearFiles();
 
-      const aiBubble = appendMessage("ai", "Sto pensando...", { loading: true });
+      const aiBubble = appendMessage("ai", "Sto pensando✦˚...", { loading: true });
 
       setLoading(true);
 
