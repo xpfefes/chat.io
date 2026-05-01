@@ -12,8 +12,6 @@
     :root {
       --bg: #0d0d0d;
       --panel: #111111;
-      --panel-soft: #18181b;
-      --border: rgba(255,255,255,0.10);
       --text: #ececec;
       --muted: #a1a1aa;
     }
@@ -55,11 +53,6 @@
     }
 
     .model-list-item:hover { background-color: #1a1a1a; }
-
-    .legacy-active {
-      color: #facc15;
-      transform: rotate(90deg);
-    }
 
     #filePreview:empty { display: none; }
 
@@ -194,7 +187,7 @@
         onclick="selectQuickModel('instant')"
       >
         <i class="fa-solid fa-bolt text-yellow-400"></i>
-        fast ᯓ★ (everyday task)
+        Rapido
       </div>
 
       <div
@@ -202,21 +195,18 @@
         onclick="selectQuickModel('think')"
       >
         <i class="fa-solid fa-brain text-purple-400"></i>
-        Heavy 𖡎 (Complex Task)
+        Heavy
+      </div>
+
+      <div
+        class="flex items-center gap-3 p-3 rounded-lg hover:bg-zinc-800 cursor-pointer"
+        onclick="selectQuickModel('preview')"
+      >
+        <i class="fa-solid fa-flask text-cyan-400"></i>
+        Preview
       </div>
 
       <div class="mt-10 pt-10 border-t border-white/10 space-y-1">
-        <div
-          onclick="openPricing()"
-          class="flex justify-between items-center p-3 rounded-lg hover:bg-zinc-800 cursor-pointer"
-        >
-          <span class="flex items-center gap-3">
-            <i class="fa-solid fa-layer-group"></i>
-            Piani e tariffe
-          </span>
-          <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-        </div>
-
         <div
           onclick="openSettings()"
           class="flex items-center gap-3 p-3 rounded-lg hover:bg-zinc-800 cursor-pointer text-white"
@@ -267,31 +257,29 @@
         <button
           onclick="selectQuickModel('instant')"
           class="desktop-only text-xs px-3 py-1.5 rounded-full bg-yellow-500/10 text-yellow-300 border border-yellow-500/20 hover:bg-yellow-500/20"
-          title="Fast⚡︎"
+          title="Rapido"
         >
           <i class="fa-solid fa-bolt mr-1"></i>
-          Instant
+          Rapido
         </button>
 
         <button
           onclick="selectQuickModel('think')"
           class="desktop-only text-xs px-3 py-1.5 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 hover:bg-purple-500/20"
-          title="Heavy 𖡎"
+          title="Heavy"
         >
           <i class="fa-solid fa-brain mr-1"></i>
-          Think
+          Heavy
         </button>
 
-        <i
-          id="legacyToggle"
-          onclick="toggleLegacy()"
-          class="fa-solid fa-play text-zinc-600 cursor-pointer transition-all hidden sm:inline-block"
-          title="Legacy Mode"
-        ></i>
-
-        <span class="text-xl cursor-default hidden sm:inline-block" id="lockStatus" title="API key lato client: non sicuro in produzione">
-          🔓
-        </span>
+        <button
+          onclick="selectQuickModel('preview')"
+          class="desktop-only text-xs px-3 py-1.5 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 hover:bg-cyan-500/20"
+          title="Preview"
+        >
+          <i class="fa-solid fa-flask mr-1"></i>
+          Preview
+        </button>
 
         <button
           onclick="openRightDrawer()"
@@ -324,7 +312,15 @@
             class="text-xs px-4 py-2 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 hover:bg-purple-500/20"
           >
             <i class="fa-solid fa-brain mr-1"></i>
-            Pensa 𖡎
+            Heavy 𖡎
+          </button>
+
+          <button
+            onclick="selectQuickModel('preview')"
+            class="text-xs px-4 py-2 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 hover:bg-cyan-500/20"
+          >
+            <i class="fa-solid fa-flask mr-1"></i>
+            Preview
           </button>
 
           <button
@@ -360,31 +356,53 @@
             <label class="cursor-pointer hover:text-white h-8 px-2 rounded-full bg-zinc-900/80 border border-white/5 flex items-center gap-2" title="Allega file">
               <i class="fa-solid fa-paperclip"></i>
               <span class="text-[11px] hidden sm:inline">File</span>
-              <input type="file" id="fileInput" hidden multiple onchange="handleFileSelect(event)" />
+              <input
+                type="file"
+                id="fileInput"
+                hidden
+                multiple
+                onchange="handleFileSelect(event)"
+              />
             </label>
 
             <label class="cursor-pointer hover:text-white h-8 px-2 rounded-full bg-zinc-900/80 border border-white/5 flex items-center gap-2" title="Allega foto">
               <i class="fa-regular fa-image"></i>
               <span class="text-[11px] hidden sm:inline">Foto</span>
-              <input type="file" id="photoInput" hidden multiple accept="image/*" onchange="handleFileSelect(event)" />
+              <input
+                type="file"
+                id="photoInput"
+                hidden
+                multiple
+                accept="image/*"
+                onchange="handleFileSelect(event)"
+              />
             </label>
 
             <button
               onclick="selectQuickModel('instant')"
               class="h-8 px-2 sm:px-3 rounded-full bg-yellow-500/10 text-yellow-300 border border-yellow-500/20 text-[11px] hover:bg-yellow-500/20"
-              title="Rapido ⚡︎"
+              title="Rapido"
             >
               <i class="fa-solid fa-bolt"></i>
-              <span class="quick-pill-text ml-1">Instant</span>
+              <span class="quick-pill-text ml-1">Rapido</span>
             </button>
 
             <button
               onclick="selectQuickModel('think')"
               class="h-8 px-2 sm:px-3 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 text-[11px] hover:bg-purple-500/20"
-              title="Pensa 𖡎"
+              title="Heavy"
             >
               <i class="fa-solid fa-brain"></i>
-              <span class="quick-pill-text ml-1">Think</span>
+              <span class="quick-pill-text ml-1">Heavy</span>
+            </button>
+
+            <button
+              onclick="selectQuickModel('preview')"
+              class="h-8 px-2 sm:px-3 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 text-[11px] hover:bg-cyan-500/20"
+              title="Preview"
+            >
+              <i class="fa-solid fa-flask"></i>
+              <span class="quick-pill-text ml-1">Preview</span>
             </button>
 
             <button onclick="clearFiles()" class="text-[10px] hover:text-white" title="Rimuovi allegati">
@@ -462,13 +480,46 @@
     </div>
 
     <h3 class="text-xs font-bold text-zinc-500 uppercase mt-8 mb-4 tracking-widest">
+      Modelli rapidi
+    </h3>
+
+    <div class="space-y-3">
+      <div class="space-y-2">
+        <label class="text-[10px] text-zinc-500 block">Rapido</label>
+        <input
+          id="instantCustomModelId"
+          placeholder="Default: gemini-2.5-flash"
+          class="w-full bg-zinc-800 border border-zinc-700 rounded-xl p-3 text-sm text-white outline-none focus:border-yellow-500"
+        />
+      </div>
+
+      <div class="space-y-2">
+        <label class="text-[10px] text-zinc-500 block">Heavy</label>
+        <input
+          id="thinkCustomModelId"
+          placeholder="Default: gemma-4-26b-a4b-it"
+          class="w-full bg-zinc-800 border border-zinc-700 rounded-xl p-3 text-sm text-white outline-none focus:border-purple-500"
+        />
+      </div>
+
+      <div class="space-y-2">
+        <label class="text-[10px] text-zinc-500 block">Preview</label>
+        <input
+          id="previewCustomModelId"
+          placeholder="Default: gemini-3-flash-preview"
+          class="w-full bg-zinc-800 border border-zinc-700 rounded-xl p-3 text-sm text-white outline-none focus:border-cyan-500"
+        />
+      </div>
+    </div>
+
+    <h3 class="text-xs font-bold text-zinc-500 uppercase mt-8 mb-4 tracking-widest">
       Modello custom
     </h3>
 
     <div class="space-y-3">
       <input
         id="customModelId"
-        placeholder="es: gemini-2.5-flash oppure gemma-4-31b-it"
+        placeholder="es: gemini-2.5-pro oppure gemma-4-26b-a4b-it"
         class="w-full bg-zinc-800 border border-zinc-700 rounded-md p-2 text-xs outline-none"
       />
 
@@ -492,56 +543,11 @@
     </div>
   </aside>
 
-  <div id="pricingModal" class="fixed inset-0 bg-black/90 hidden items-center justify-center z-[80] backdrop-blur-md p-4">
-    <div class="bg-zinc-900 border border-white/10 w-full max-w-[450px] rounded-3xl p-8 shadow-2xl">
-      <h2 class="text-2xl font-bold mb-4">Costi richieste API</h2>
-
-      <div class="space-y-4 text-sm">
-        <div class="flex justify-between border-b border-white/5 pb-2 gap-4">
-          <span class="text-zinc-400">Google Gemini</span>
-          <span class="text-green-400 text-right">Dipende dal modello</span>
-        </div>
-
-        <div class="flex justify-between border-b border-white/5 pb-2 gap-4">
-          <span class="text-zinc-400">File inline</span>
-          <span class="text-zinc-500 text-right">Consumano token/payload</span>
-        </div>
-      </div>
-
-      <p class="text-[10px] text-zinc-600 mt-6 italic">
-        I costi dipendono direttamente dal consumo delle tue API key personali.
-        Controlla sempre dashboard e rate limit ufficiali.
-      </p>
-
-      <button onclick="closePricing()" class="w-full mt-6 bg-zinc-100 text-black font-bold py-3 rounded-xl">
-        Chiudi
-      </button>
-    </div>
-  </div>
-
   <div id="settingsModal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-[80] p-4">
     <div class="bg-zinc-900 border border-white/10 w-full max-w-[620px] rounded-2xl p-6 shadow-2xl custom-scrollbar overflow-y-auto max-h-[90vh]">
       <h2 class="text-xl font-bold mb-4">Impostazioni AI</h2>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="space-y-2">
-          <label class="text-[10px] text-zinc-500 block">Modello custom rapido</label>
-          <input
-            id="instantCustomModelId"
-            placeholder="Default: gemini-3.1-flash-lite-preview"
-            class="w-full bg-zinc-800 border border-zinc-700 rounded-xl p-3 text-sm text-white outline-none focus:border-blue-500"
-          />
-        </div>
-
-        <div class="space-y-2">
-          <label class="text-[10px] text-zinc-500 block">Modello custom heavy</label>
-          <input
-            id="thinkCustomModelId"
-            placeholder="Default: google/gemma-4-31b-it"
-            class="w-full bg-zinc-800 border border-zinc-700 rounded-xl p-3 text-sm text-white outline-none focus:border-purple-500"
-          />
-        </div>
-
         <div class="space-y-2 md:col-span-2">
           <label class="text-[10px] text-zinc-500 block">System prompt base</label>
           <textarea
@@ -602,28 +608,15 @@
   <div id="toastLayer" class="fixed bottom-4 right-4 z-[120] space-y-2 pointer-events-none"></div>
 
   <script>
-    /************************************************************
-     * MODELLI
-     ************************************************************/
-
     const models = [
-      /***********************
-       * GOOGLE GEMINI
-       ***********************/
       { id: "gemini-2.5-flash", name: "Gemini 2.5 Flash", provider: "google", status: "online", group: "Google" },
       { id: "gemini-2.5-flash-lite", name: "Gemini 2.5 Flash Lite", provider: "google", status: "online", group: "Google" },
       { id: "gemini-2.5-pro", name: "Gemini 2.5 Pro", provider: "google", status: "check", group: "Google" },
       { id: "gemini-3-flash-preview", name: "Gemini 3 Flash Preview", provider: "google", status: "preview", group: "Google" },
 
-      /***********************
-       * QUICK MODELS
-       ***********************/
       { id: "google/gemma-4-31b-it", name: "Instant - Gemma 4 31B IT", provider: "google", status: "instant", group: "Quick" },
       { id: "gemini-3.1-flash-lite-preview", name: "Gemini-3.1 flash lite", provider: "google", status: "think", group: "Quick" },
 
-      /***********************
-       * X / OPEN MODELS
-       ***********************/
       { id: "gemma-4-26b-a4b-it", name: "gemma-4-26b-a4b-it", provider: "google", status: "check", group: "OpeOSS" },
       { id: "gemini-flash-latest", name: "gemini-flash-latest", provider: "google", status: "check", group: "Meta" },
       { id: "gemini-2.0-flash-lite", name: "gemini-2.0-flash-lite", provider: "google", status: "check", group: "Legacy" },
@@ -631,9 +624,9 @@
     ];
 
     const defaults = {
-      instant: "gemini-3.1-flash-lite-preview",
-      think: "google/gemma-4-31b-it",
-      legacy: "gemma-4-26b-a4b-it"
+      instant: "gemini-2.5-flash",
+      think: "gemma-4-26b-a4b-it",
+      preview: "gemini-3-flash-preview"
     };
 
     let selectedModel = null;
@@ -642,9 +635,17 @@
     let isLoading = false;
     let latestAssistantBubble = null;
     let temporaryFeedbackNotes = "";
-    let legacyMode = false;
 
     window.addEventListener("DOMContentLoaded", init);
+
+    function el(id) {
+      return document.getElementById(id);
+    }
+
+    function val(id, fallback = "") {
+      const node = el(id);
+      return node ? node.value : fallback;
+    }
 
     function init() {
       initModels();
@@ -662,7 +663,7 @@
     }
 
     function bindEvents() {
-      const input = document.getElementById("userInput");
+      const input = el("userInput");
 
       input.addEventListener("input", () => {
         input.style.height = "auto";
@@ -686,17 +687,18 @@
         "responseStyle",
         "styleCustomPrompt",
         "instantCustomModelId",
-        "thinkCustomModelId"
+        "thinkCustomModelId",
+        "previewCustomModelId"
       ].forEach(id => {
-        const el = document.getElementById(id);
-        if (!el) return;
-        el.addEventListener("input", persistSettings);
-        el.addEventListener("change", persistSettings);
+        const node = el(id);
+        if (!node) return;
+        node.addEventListener("input", persistSettings);
+        node.addEventListener("change", persistSettings);
       });
     }
 
     function initModels() {
-      const container = document.getElementById("modelList");
+      const container = el("modelList");
       container.innerHTML = "";
 
       let currentGroup = "";
@@ -730,7 +732,7 @@
 
     function getStatusClass(status) {
       if (status === "online") return "bg-green-900/30 text-green-500";
-      if (status === "preview") return "bg-blue-900/30 text-blue-500";
+      if (status === "preview") return "bg-cyan-900/30 text-cyan-400";
       if (status === "beta") return "bg-purple-900/30 text-purple-500";
       if (status === "instant") return "bg-yellow-900/30 text-yellow-400";
       if (status === "think") return "bg-purple-900/30 text-purple-400";
@@ -752,14 +754,16 @@
     }
 
     function getQuickModelId(type) {
-      const customIdEl = type === "instant"
-        ? document.getElementById("instantCustomModelId")
-        : document.getElementById("thinkCustomModelId");
+      const fieldMap = {
+        instant: "instantCustomModelId",
+        think: "thinkCustomModelId",
+        preview: "previewCustomModelId"
+      };
 
-      const customId = (customIdEl?.value || "").trim();
+      const customId = (val(fieldMap[type], "") || "").trim();
       if (customId) return customId;
 
-      return type === "instant" ? defaults.instant : defaults.think;
+      return defaults[type] || defaults.instant;
     }
 
     function setSelectedModel(model, options = {}) {
@@ -780,8 +784,8 @@
     }
 
     function syncSelectedModelUI(model) {
-      document.getElementById("currentModelDisplay").innerText = model.name || model.id;
-      document.getElementById("currentProviderDisplay").innerText = model.provider || "google";
+      el("currentModelDisplay").innerText = model.name || model.id;
+      el("currentProviderDisplay").innerText = model.provider || "google";
 
       document.querySelectorAll(".model-list-item").forEach(item => {
         item.classList.remove("bg-zinc-800", "border-white/10");
@@ -795,13 +799,16 @@
 
     function selectQuickModel(type) {
       const modelId = getQuickModelId(type);
-      const model = resolveModelById(modelId, type === "instant" ? "Rapido custom" : "Heavy custom");
+      const model = resolveModelById(
+        modelId,
+        type === "instant" ? "Rapido custom" : type === "think" ? "Heavy custom" : "Preview custom"
+      );
       setSelectedModel(model);
-      showToast(type === "instant" ? "Quick rapido selezionato" : "Quick heavy selezionato");
+      showToast(type === "instant" ? "Rapido selezionato" : type === "think" ? "Heavy selezionato" : "Preview selezionato");
     }
 
     function useCustomModel() {
-      const id = document.getElementById("customModelId").value.trim();
+      const id = val("customModelId", "").trim();
 
       if (!id) {
         alert("Inserisci un model ID.");
@@ -819,69 +826,42 @@
       showToast("Modello custom attivato");
     }
 
-    /************************************************************
-     * DRAWERS
-     ************************************************************/
-
     function openLeftDrawer() {
-      document.getElementById("leftSidebar").classList.add("open");
-      document.getElementById("rightSidebar").classList.remove("open");
-      document.getElementById("mobileOverlay").classList.add("show");
+      el("leftSidebar").classList.add("open");
+      el("rightSidebar").classList.remove("open");
+      el("mobileOverlay").classList.add("show");
     }
 
     function openRightDrawer() {
-      document.getElementById("rightSidebar").classList.add("open");
-      document.getElementById("leftSidebar").classList.remove("open");
-      document.getElementById("mobileOverlay").classList.add("show");
+      el("rightSidebar").classList.add("open");
+      el("leftSidebar").classList.remove("open");
+      el("mobileOverlay").classList.add("show");
     }
 
     function closeDrawers() {
-      document.getElementById("leftSidebar").classList.remove("open");
-      document.getElementById("rightSidebar").classList.remove("open");
-      document.getElementById("mobileOverlay").classList.remove("show");
+      el("leftSidebar").classList.remove("open");
+      el("rightSidebar").classList.remove("open");
+      el("mobileOverlay").classList.remove("show");
     }
 
     function handleResponsiveResize() {
       if (window.innerWidth > 1024) closeDrawers();
     }
 
-    function openPricing() {
-      const modal = document.getElementById("pricingModal");
-      modal.classList.remove("hidden");
-      modal.classList.add("flex");
-      closeDrawers();
-    }
-
-    function closePricing() {
-      const modal = document.getElementById("pricingModal");
-      modal.classList.add("hidden");
-      modal.classList.remove("flex");
-    }
-
     function openSettings() {
-      document.getElementById("settingsModal").classList.replace("hidden", "flex");
+      el("settingsModal").classList.replace("hidden", "flex");
       updateFeedbackPreview();
       closeDrawers();
     }
 
     function closeSettings() {
-      document.getElementById("settingsModal").classList.replace("flex", "hidden");
+      el("settingsModal").classList.replace("flex", "hidden");
       persistSettings();
       updateFeedbackPreview();
     }
 
-    function toggleLegacy() {
-      legacyMode = !legacyMode;
-      document.getElementById("legacyToggle").classList.toggle("legacy-active");
-      showToast(legacyMode ? "Legacy mode attivo" : "Legacy mode spento");
-    }
-
-    /************************************************************
-     * LOCAL STORAGE
-     ************************************************************/
-
     function persistSettings() {
-      const saveLocal = document.getElementById("saveLocal");
+      const saveLocal = el("saveLocal");
 
       if (!saveLocal || !saveLocal.checked) {
         localStorage.removeItem("aiChatSettings");
@@ -889,14 +869,15 @@
       }
 
       const payload = {
-        googleKey: document.getElementById("googleKey").value,
-        temperature: document.getElementById("temperature").value,
-        maxTokens: document.getElementById("maxTokens").value,
-        systemPrompt: document.getElementById("systemPrompt").value,
-        responseStyle: document.getElementById("responseStyle").value,
-        styleCustomPrompt: document.getElementById("styleCustomPrompt").value,
-        instantCustomModelId: document.getElementById("instantCustomModelId").value,
-        thinkCustomModelId: document.getElementById("thinkCustomModelId").value,
+        googleKey: val("googleKey", ""),
+        temperature: val("temperature", "0.7"),
+        maxTokens: val("maxTokens", "2048"),
+        systemPrompt: val("systemPrompt", ""),
+        responseStyle: val("responseStyle", "short"),
+        styleCustomPrompt: val("styleCustomPrompt", ""),
+        instantCustomModelId: val("instantCustomModelId", ""),
+        thinkCustomModelId: val("thinkCustomModelId", ""),
+        previewCustomModelId: val("previewCustomModelId", ""),
         selectedModel
       };
 
@@ -906,22 +887,23 @@
     function restoreSettings() {
       const raw = localStorage.getItem("aiChatSettings");
       if (!raw) {
-        document.getElementById("responseStyle").value = "short";
+        el("responseStyle").value = "short";
         return;
       }
 
       try {
         const data = JSON.parse(raw);
 
-        document.getElementById("saveLocal").checked = true;
-        document.getElementById("googleKey").value = data.googleKey || "";
-        document.getElementById("temperature").value = data.temperature || "0.7";
-        document.getElementById("maxTokens").value = data.maxTokens || "2048";
-        document.getElementById("systemPrompt").value = data.systemPrompt || "";
-        document.getElementById("responseStyle").value = data.responseStyle || "short";
-        document.getElementById("styleCustomPrompt").value = data.styleCustomPrompt || "";
-        document.getElementById("instantCustomModelId").value = data.instantCustomModelId || "";
-        document.getElementById("thinkCustomModelId").value = data.thinkCustomModelId || "";
+        el("saveLocal").checked = true;
+        el("googleKey").value = data.googleKey || "";
+        el("temperature").value = data.temperature || "0.7";
+        el("maxTokens").value = data.maxTokens || "2048";
+        el("systemPrompt").value = data.systemPrompt || "";
+        el("responseStyle").value = data.responseStyle || "short";
+        el("styleCustomPrompt").value = data.styleCustomPrompt || "";
+        el("instantCustomModelId").value = data.instantCustomModelId || "";
+        el("thinkCustomModelId").value = data.thinkCustomModelId || "";
+        el("previewCustomModelId").value = data.previewCustomModelId || "";
 
         if (data.selectedModel && data.selectedModel.id) {
           selectedModel = data.selectedModel;
@@ -931,12 +913,8 @@
       }
     }
 
-    /************************************************************
-     * TOAST
-     ************************************************************/
-
     function showToast(message) {
-      const layer = document.getElementById("toastLayer");
+      const layer = el("toastLayer");
       const toast = document.createElement("div");
 
       toast.className =
@@ -956,10 +934,6 @@
       }, 2200);
     }
 
-    /************************************************************
-     * FILES
-     ************************************************************/
-
     function handleFileSelect(event) {
       const files = Array.from(event.target.files || []);
       selectedFiles = [...selectedFiles, ...files];
@@ -968,7 +942,7 @@
     }
 
     function renderFilePreview() {
-      const preview = document.getElementById("filePreview");
+      const preview = el("filePreview");
       preview.innerHTML = "";
 
       selectedFiles.forEach((file, index) => {
@@ -1064,13 +1038,9 @@
       );
     }
 
-    /************************************************************
-     * MESSAGGI
-     ************************************************************/
-
     function appendMessage(role, text, options = {}) {
-      const chatWindow = document.getElementById("chatWindow");
-      const welcome = document.getElementById("welcomeScreen");
+      const chatWindow = el("chatWindow");
+      const welcome = el("welcomeScreen");
       if (welcome) welcome.remove();
 
       const wrapper = document.createElement("div");
@@ -1087,8 +1057,12 @@
       bubble.innerHTML = `
         <div class="text-[10px] text-zinc-500 mb-1">${label}</div>
         <div class="message-content text-sm leading-relaxed">${renderText(text)}</div>
-        ${role === "ai" ? '<div class="assistant-actions-host mt-3"></div>' : ''}
+        ${role === "ai" ? '<div class="assistant-actions-host mt-3"></div><div class="feedback-panel hidden mt-3 p-3 rounded-xl border border-white/10 bg-zinc-950/60"></div>' : ''}
       `;
+
+      if (role === "ai") {
+        bubble.classList.add("assistant-bubble");
+      }
 
       if (options.loading) {
         bubble.dataset.loading = "true";
@@ -1113,11 +1087,13 @@
         bubble.classList.add("border", "border-red-500/30", "bg-red-950/10");
         const host = bubble.querySelector(".assistant-actions-host");
         if (host) host.innerHTML = "";
+        const panel = bubble.querySelector(".feedback-panel");
+        if (panel) panel.remove();
       } else if (bubble.classList.contains("assistant-bubble")) {
         renderAssistantControls(bubble);
       }
 
-      const chatWindow = document.getElementById("chatWindow");
+      const chatWindow = el("chatWindow");
       chatWindow.scrollTop = chatWindow.scrollHeight;
     }
 
@@ -1137,22 +1113,6 @@
           </button>
 
           <button
-            class="text-[11px] px-3 py-1.5 rounded-full bg-yellow-500/10 text-yellow-300 border border-yellow-500/20 hover:bg-yellow-500/20 inline-flex items-center gap-2"
-            onclick="regenerateFromBubble(this, 'instant')"
-          >
-            <i class="fa-solid fa-bolt text-white"></i>
-            ⚡ Instant
-          </button>
-
-          <button
-            class="text-[11px] px-3 py-1.5 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 hover:bg-purple-500/20 inline-flex items-center gap-2"
-            onclick="regenerateFromBubble(this, 'think')"
-          >
-            <i class="fa-solid fa-brain text-white"></i>
-            🧠 Think
-          </button>
-
-          <button
             class="text-[11px] px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 hover:bg-emerald-500/20 inline-flex items-center gap-2"
             onclick="openFeedbackPanel(this, 'like')"
           >
@@ -1168,33 +1128,14 @@
             👎 Dislike
           </button>
         </div>
-
-        <div class="feedback-panel hidden mt-3 p-3 rounded-xl border border-white/10 bg-zinc-950/60">
-          <div class="feedback-title text-[11px] text-zinc-300 mb-2"></div>
-
-          <textarea
-            class="feedback-input w-full bg-zinc-800 border border-zinc-700 rounded-xl p-2 text-xs text-white outline-none resize-none"
-            rows="3"
-            placeholder=""
-          ></textarea>
-
-          <div class="flex gap-2 mt-2">
-            <button
-              class="text-xs px-3 py-2 rounded-lg bg-white text-black font-semibold"
-              onclick="submitFeedback(this)"
-            >
-              Invia feedback
-            </button>
-
-            <button
-              class="text-xs px-3 py-2 rounded-lg bg-zinc-800 text-zinc-300 border border-white/10"
-              onclick="hideFeedback(this)"
-            >
-              Annulla
-            </button>
-          </div>
-        </div>
       `;
+
+      let panel = bubble.querySelector(".feedback-panel");
+      if (!panel) {
+        panel = document.createElement("div");
+        panel.className = "feedback-panel hidden mt-3 p-3 rounded-xl border border-white/10 bg-zinc-950/60";
+        bubble.appendChild(panel);
+      }
     }
 
     function openFeedbackPanel(button, mode) {
@@ -1202,13 +1143,36 @@
       if (!bubble) return;
 
       const panel = bubble.querySelector(".feedback-panel");
-      const title = bubble.querySelector(".feedback-title");
-      const input = bubble.querySelector(".feedback-input");
-
-      if (!panel || !title || !input) return;
+      if (!panel) return;
 
       bubble.dataset.feedbackMode = mode;
       panel.classList.remove("hidden");
+
+      panel.innerHTML = `
+        <div class="feedback-title text-[11px] text-zinc-300 mb-2"></div>
+        <textarea
+          class="feedback-input w-full bg-zinc-800 border border-zinc-700 rounded-xl p-2 text-xs text-white outline-none resize-none"
+          rows="3"
+          placeholder=""
+        ></textarea>
+        <div class="flex gap-2 mt-2">
+          <button
+            class="text-xs px-3 py-2 rounded-lg bg-white text-black font-semibold"
+            onclick="submitFeedback(this)"
+          >
+            Invia feedback
+          </button>
+          <button
+            class="text-xs px-3 py-2 rounded-lg bg-zinc-800 text-zinc-300 border border-white/10"
+            onclick="hideFeedback(this)"
+          >
+            Annulla
+          </button>
+        </div>
+      `;
+
+      const title = panel.querySelector(".feedback-title");
+      const input = panel.querySelector(".feedback-input");
 
       if (mode === "like") {
         title.textContent = "Cosa ti è piaciuto?";
@@ -1263,41 +1227,23 @@
     }
 
     function updateFeedbackPreview() {
-      const el = document.getElementById("feedbackPreview");
-      if (!el) return;
+      const preview = el("feedbackPreview");
+      if (!preview) return;
 
-      el.textContent = temporaryFeedbackNotes.trim()
+      preview.textContent = temporaryFeedbackNotes.trim()
         ? temporaryFeedbackNotes.trim()
         : "Nessun feedback temporaneo.";
     }
 
-    /************************************************************
-     * STILE RISPOSTA
-     ************************************************************/
-
     function getStyleInstruction() {
-      const style = document.getElementById("responseStyle").value;
-      const custom = document.getElementById("styleCustomPrompt").value.trim();
+      const style = val("responseStyle", "short");
+      const custom = val("styleCustomPrompt", "").trim();
 
-      if (style === "short") {
-        return "Rispondi in modo breve, diretto e pulito. Niente divagazioni inutili.";
-      }
-
-      if (style === "long") {
-        return "Rispondi in modo completo, ben spiegato e strutturato. Usa esempi quando servono.";
-      }
-
-      if (style === "genz") {
-        return "Rispondi con tono Gen Z leggero e naturale, ma resta chiaro e utile. Un pizzico di slang va bene, senza esagerare.";
-      }
-
-      if (style === "professional") {
-        return "Rispondi in modo professionale, preciso, ordinato e tecnico quando necessario.";
-      }
-
-      if (style === "custom" && custom) {
-        return custom;
-      }
+      if (style === "short") return "Rispondi in modo breve, diretto e pulito. Niente divagazioni inutili.";
+      if (style === "long") return "Rispondi in modo completo, ben spiegato e strutturato. Usa esempi quando servono.";
+      if (style === "genz") return "Rispondi con tono Gen Z leggero e naturale, ma resta chiaro e utile. Un pizzico di slang va bene, senza esagerare.";
+      if (style === "professional") return "Rispondi in modo professionale, preciso, ordinato e tecnico quando necessario.";
+      if (style === "custom" && custom) return custom;
 
       return "";
     }
@@ -1305,7 +1251,7 @@
     function buildEffectiveSystemPrompt() {
       const pieces = [];
 
-      const basePrompt = document.getElementById("systemPrompt").value.trim();
+      const basePrompt = val("systemPrompt", "").trim();
       if (basePrompt) pieces.push(basePrompt);
 
       const stylePrompt = getStyleInstruction();
@@ -1317,10 +1263,6 @@
 
       return pieces.join("\n\n");
     }
-
-    /************************************************************
-     * GOOGLE GEMINI
-     ************************************************************/
 
     async function buildGeminiContents(historySnapshot) {
       const contents = [];
@@ -1373,14 +1315,14 @@
     }
 
     async function callGoogleGemini(historySnapshot, modelId, allowFallback = true) {
-      const apiKey = document.getElementById("googleKey").value.trim();
+      const apiKey = val("googleKey", "").trim();
 
       if (!apiKey) {
         throw new Error("Manca Google AI Studio API Key.");
       }
 
-      const temperature = Number(document.getElementById("temperature").value || 0.7);
-      const maxTokens = Number(document.getElementById("maxTokens").value || 2048);
+      const temperature = Number(val("temperature", "0.7") || 0.7);
+      const maxTokens = Number(val("maxTokens", "2048") || 2048);
 
       const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(modelId)}:generateContent`;
       const contents = await buildGeminiContents(historySnapshot);
@@ -1414,9 +1356,9 @@
       if (!response.ok) {
         const message = data?.error?.message || `Google API error ${response.status}: ${response.statusText}`;
 
-        if (allowFallback && modelId !== defaults.legacy) {
+        if (allowFallback && modelId !== defaults.think) {
           showToast("Fallback su gemma-4-26b-a4b-it");
-          return callGoogleGemini(historySnapshot, defaults.legacy, false);
+          return callGoogleGemini(historySnapshot, defaults.think, false);
         }
 
         throw new Error(message);
@@ -1442,10 +1384,6 @@
       return JSON.stringify(data, null, 2);
     }
 
-    /************************************************************
-     * SEND + REGEN
-     ************************************************************/
-
     function prepareUserVisibleMessage(text, files) {
       let visibleMessage = text || "";
 
@@ -1459,7 +1397,7 @@
     async function handleSend() {
       if (isLoading) return;
 
-      const input = document.getElementById("userInput");
+      const input = el("userInput");
       const text = input.value.trim();
 
       if (!text && selectedFiles.length === 0) return;
@@ -1499,7 +1437,6 @@
         const answer = await callGoogleGemini(requestSnapshot, selectedModel.id);
 
         updateMessage(aiBubble, answer || "[Risposta vuota]");
-        aiBubble.__meta.requestSnapshot = requestSnapshot;
 
         chatHistory.push({
           role: "assistant",
@@ -1518,8 +1455,8 @@
     function setLoading(value, label = "Calling API...") {
       isLoading = value;
 
-      const btn = document.getElementById("sendBtn");
-      const status = document.getElementById("connectionStatus");
+      const btn = el("sendBtn");
+      const status = el("connectionStatus");
 
       btn.disabled = value;
 
@@ -1538,15 +1475,14 @@
       return error.message || JSON.stringify(error, null, 2);
     }
 
-    async function regenerateFromBubble(button, mode = null) {
+    async function regenerateFromBubble(button) {
       const bubble = button.closest(".assistant-bubble");
       if (!bubble || !bubble.__meta) {
         showToast("Nessun dato per rigenerare");
         return;
       }
 
-      const targetModel = getModelForMode(mode);
-      setSelectedModel(targetModel, { persist: true, close: false });
+      const targetModel = selectedModel || resolveModelById(defaults.instant);
       setLoading(true, "Rigenerando...");
 
       try {
@@ -1558,7 +1494,7 @@
           text: answer || ""
         };
 
-        showToast(mode === "instant" ? "Rigenerato con Instant" : mode === "think" ? "Rigenerato con Think" : "Rigenerato");
+        showToast("Rigenerato");
       } catch (error) {
         console.error(error);
         updateMessage(bubble, "Errore API:\n\n" + formatApiError(error), true);
@@ -1566,16 +1502,6 @@
         setLoading(false);
       }
     }
-
-    function getModelForMode(mode) {
-      if (mode === "instant") return resolveModelById(getQuickModelId("instant"));
-      if (mode === "think") return resolveModelById(getQuickModelId("think"));
-      return selectedModel || resolveModelById(defaults.instant);
-    }
-
-    /************************************************************
-     * NEW CHAT
-     ************************************************************/
 
     function newChat() {
       if (!confirm("Vuoi cancellare la chat attuale?")) return;
@@ -1585,7 +1511,7 @@
       temporaryFeedbackNotes = "";
       latestAssistantBubble = null;
 
-      document.getElementById("chatWindow").innerHTML = `
+      el("chatWindow").innerHTML = `
         <div id="welcomeScreen" class="h-full flex flex-col items-center justify-center text-center space-y-4">
           <h2 class="welcome-title text-3xl font-semibold">A cosa stai lavorando?</h2>
           <p class="text-zinc-500 max-w-md">Nuova sessione avviata.</p>
@@ -1596,7 +1522,11 @@
             </button>
 
             <button onclick="selectQuickModel('think')" class="text-xs px-4 py-2 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 hover:bg-purple-500/20">
-              <i class="fa-solid fa-brain mr-1"></i> Pensa ✦
+              <i class="fa-solid fa-brain mr-1"></i> Heavy ✦
+            </button>
+
+            <button onclick="selectQuickModel('preview')" class="text-xs px-4 py-2 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 hover:bg-cyan-500/20">
+              <i class="fa-solid fa-flask mr-1"></i> Preview ✦
             </button>
           </div>
         </div>
@@ -1607,10 +1537,6 @@
       closeDrawers();
       showToast("Nuova chat avviata");
     }
-
-    /************************************************************
-     * UTIL
-     ************************************************************/
 
     function escapeHtml(value) {
       return String(value)
