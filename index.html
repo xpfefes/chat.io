@@ -12,6 +12,8 @@
     :root {
       --bg: #0d0d0d;
       --panel: #111111;
+      --panel-soft: #18181b;
+      --border: rgba(255,255,255,0.10);
       --text: #ececec;
       --muted: #a1a1aa;
     }
@@ -25,25 +27,47 @@
     }
 
     body {
-      background: var(--bg);
+      background-color: var(--bg);
       color: var(--text);
       font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
-    .sidebar { background: #000; }
-    .right-panel { background: rgba(24,24,27,.72); backdrop-filter: blur(16px); }
-    .input-box { background: #1a1a1a; border: 1px solid #333; }
-    .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
-    .custom-scrollbar::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
-    .model-list-item:hover { background: #1a1a1a; }
-    .legacy-active { color: #facc15; transform: rotate(90deg); }
+    .sidebar { background-color: #000000; }
+
+    .right-panel {
+      background-color: rgba(24, 24, 27, 0.72);
+      backdrop-filter: blur(16px);
+    }
+
+    .input-box {
+      background-color: #1a1a1a;
+      border: 1px solid #333;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #333;
+      border-radius: 10px;
+    }
+
+    .model-list-item:hover { background-color: #1a1a1a; }
+
+    .legacy-active {
+      color: #facc15;
+      transform: rotate(90deg);
+    }
+
     #filePreview:empty { display: none; }
+
     textarea { outline: none; }
-    .safe-bottom { padding-bottom: max(1rem, env(safe-area-inset-bottom)); }
 
     .message-content pre {
       background: #111;
-      border: 1px solid rgba(255,255,255,.08);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 12px;
       padding: 12px;
       overflow-x: auto;
@@ -52,10 +76,10 @@
     }
 
     .message-content code {
-      background: rgba(255,255,255,.08);
+      background: rgba(255, 255, 255, 0.08);
       padding: 2px 5px;
       border-radius: 5px;
-      font-size: .85em;
+      font-size: 0.85em;
     }
 
     .message-content pre code {
@@ -63,8 +87,13 @@
       padding: 0;
     }
 
+    .safe-bottom {
+      padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    }
+
     .mobile-only { display: none; }
     .desktop-only { display: inline-flex; }
+
     #mobileOverlay { display: none; }
 
     @media (max-width: 1024px) {
@@ -81,7 +110,7 @@
         width: min(82vw, 320px);
         z-index: 60;
         transform: translateX(-105%);
-        transition: transform .24s ease;
+        transition: transform 0.24s ease;
       }
 
       #leftSidebar.open { transform: translateX(0); }
@@ -94,10 +123,11 @@
         width: min(92vw, 390px);
         z-index: 60;
         transform: translateX(105%);
-        transition: transform .24s ease;
+        transition: transform 0.24s ease;
       }
 
       #rightSidebar.open { transform: translateX(0); }
+
       #mobileOverlay.show { display: block; }
 
       #mainArea { width: 100%; }
@@ -109,8 +139,12 @@
 
       .chat-bubble { max-width: 94% !important; }
 
-      .app-header { padding: .75rem; }
-      .input-wrap { padding-left: .75rem; padding-right: .75rem; }
+      .app-header { padding: 0.75rem; }
+
+      .input-wrap {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+      }
     }
 
     @media (max-width: 640px) {
@@ -122,18 +156,23 @@
       }
 
       .quick-pill-text { display: none; }
+
       .input-box { border-radius: 24px; }
+
       #chatWindow { padding-top: 1rem; }
+
       .welcome-title { font-size: 1.8rem; }
     }
   </style>
 </head>
 
 <body class="h-screen flex overflow-hidden">
-
   <div id="mobileOverlay" onclick="closeDrawers()" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50"></div>
 
-  <aside id="leftSidebar" class="sidebar w-64 flex flex-col p-3 border-r border-white/10 custom-scrollbar overflow-y-auto">
+  <aside
+    id="leftSidebar"
+    class="sidebar w-64 flex flex-col p-3 border-r border-white/10 custom-scrollbar overflow-y-auto"
+  >
     <div class="flex items-center justify-between mb-2 lg:hidden">
       <div class="text-xs uppercase tracking-widest text-zinc-500 font-bold">Menu</div>
       <button onclick="closeDrawers()" class="h-9 w-9 rounded-full bg-zinc-900 hover:bg-zinc-800">
@@ -141,24 +180,36 @@
       </button>
     </div>
 
-    <button onclick="newChat()" class="flex items-center gap-3 p-3 rounded-lg hover:bg-zinc-800 transition mb-2 border border-white/5">
+    <button
+      onclick="newChat()"
+      class="flex items-center gap-3 p-3 rounded-lg hover:bg-zinc-800 transition mb-2 border border-white/5"
+    >
       <i class="fa-regular fa-pen-to-square"></i>
       <span class="text-sm font-medium">New chat</span>
     </button>
 
     <nav class="flex-1 space-y-1 text-sm text-zinc-400">
-      <div class="flex items-center gap-3 p-3 rounded-lg hover:bg-zinc-800 cursor-pointer" onclick="selectQuickModel('instant')">
+      <div
+        class="flex items-center gap-3 p-3 rounded-lg hover:bg-zinc-800 cursor-pointer"
+        onclick="selectQuickModel('instant')"
+      >
         <i class="fa-solid fa-bolt text-yellow-400"></i>
         fast ᯓ★ (everyday task)
       </div>
 
-      <div class="flex items-center gap-3 p-3 rounded-lg hover:bg-zinc-800 cursor-pointer" onclick="selectQuickModel('think')">
+      <div
+        class="flex items-center gap-3 p-3 rounded-lg hover:bg-zinc-800 cursor-pointer"
+        onclick="selectQuickModel('think')"
+      >
         <i class="fa-solid fa-brain text-purple-400"></i>
         Heavy 𖡎 (Complex Task)
       </div>
 
       <div class="mt-10 pt-10 border-t border-white/10 space-y-1">
-        <div onclick="openPricing()" class="flex justify-between items-center p-3 rounded-lg hover:bg-zinc-800 cursor-pointer">
+        <div
+          onclick="openPricing()"
+          class="flex justify-between items-center p-3 rounded-lg hover:bg-zinc-800 cursor-pointer"
+        >
           <span class="flex items-center gap-3">
             <i class="fa-solid fa-layer-group"></i>
             Piani e tariffe
@@ -166,7 +217,10 @@
           <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
         </div>
 
-        <div onclick="openSettings()" class="flex items-center gap-3 p-3 rounded-lg hover:bg-zinc-800 cursor-pointer text-white">
+        <div
+          onclick="openSettings()"
+          class="flex items-center gap-3 p-3 rounded-lg hover:bg-zinc-800 cursor-pointer text-white"
+        >
           <i class="fa-solid fa-gear text-zinc-400"></i>
           Impostazioni ⚙︎
         </div>
@@ -181,7 +235,11 @@
   <main id="mainArea" class="flex-1 flex flex-col relative min-w-0">
     <header class="app-header p-4 flex justify-between items-center bg-zinc-900/30 border-b border-white/5">
       <div class="flex items-center gap-3 min-w-0">
-        <button onclick="openLeftDrawer()" class="mobile-only h-9 w-9 rounded-full bg-zinc-800 border border-white/10 items-center justify-center" title="Menu">
+        <button
+          onclick="openLeftDrawer()"
+          class="mobile-only h-9 w-9 rounded-full bg-zinc-800 border border-white/10 items-center justify-center"
+          title="Menu"
+        >
           <i class="fa-solid fa-bars"></i>
         </button>
 
@@ -192,29 +250,54 @@
           </div>
 
           <div class="text-[10px] text-zinc-600">
-            Provider: <span id="currentProviderDisplay" class="text-zinc-400">-</span>
+            Provider:
+            <span id="currentProviderDisplay" class="text-zinc-400">-</span>
           </div>
         </div>
       </div>
 
       <div class="flex items-center gap-2 sm:gap-4">
-        <div id="connectionStatus" class="text-xs px-2 py-1 rounded-full bg-zinc-800 text-zinc-400 border border-white/5">
+        <div
+          id="connectionStatus"
+          class="text-xs px-2 py-1 rounded-full bg-zinc-800 text-zinc-400 border border-white/5"
+        >
           Idle
         </div>
 
-        <button onclick="selectQuickModel('instant')" class="desktop-only text-xs px-3 py-1.5 rounded-full bg-yellow-500/10 text-yellow-300 border border-yellow-500/20 hover:bg-yellow-500/20" title="Fast⚡︎">
-          <i class="fa-solid fa-bolt mr-1"></i> Instant
+        <button
+          onclick="selectQuickModel('instant')"
+          class="desktop-only text-xs px-3 py-1.5 rounded-full bg-yellow-500/10 text-yellow-300 border border-yellow-500/20 hover:bg-yellow-500/20"
+          title="Fast⚡︎"
+        >
+          <i class="fa-solid fa-bolt mr-1"></i>
+          Instant
         </button>
 
-        <button onclick="selectQuickModel('think')" class="desktop-only text-xs px-3 py-1.5 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 hover:bg-purple-500/20" title="Heavy 𖡎">
-          <i class="fa-solid fa-brain mr-1"></i> Think
+        <button
+          onclick="selectQuickModel('think')"
+          class="desktop-only text-xs px-3 py-1.5 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 hover:bg-purple-500/20"
+          title="Heavy 𖡎"
+        >
+          <i class="fa-solid fa-brain mr-1"></i>
+          Think
         </button>
 
-        <i id="legacyToggle" onclick="toggleLegacy()" class="fa-solid fa-play text-zinc-600 cursor-pointer transition-all hidden sm:inline-block" title="Legacy Mode"></i>
+        <i
+          id="legacyToggle"
+          onclick="toggleLegacy()"
+          class="fa-solid fa-play text-zinc-600 cursor-pointer transition-all hidden sm:inline-block"
+          title="Legacy Mode"
+        ></i>
 
-        <span class="text-xl cursor-default hidden sm:inline-block" id="lockStatus" title="API key lato client: non sicuro in produzione">🔓</span>
+        <span class="text-xl cursor-default hidden sm:inline-block" id="lockStatus" title="API key lato client: non sicuro in produzione">
+          🔓
+        </span>
 
-        <button onclick="openRightDrawer()" class="mobile-only h-9 w-9 rounded-full bg-zinc-800 border border-white/10 items-center justify-center" title="Configurazione">
+        <button
+          onclick="openRightDrawer()"
+          class="mobile-only h-9 w-9 rounded-full bg-zinc-800 border border-white/10 items-center justify-center"
+          title="Configurazione"
+        >
           <i class="fa-solid fa-sliders"></i>
         </button>
       </div>
@@ -228,16 +311,28 @@
         </p>
 
         <div class="flex flex-wrap items-center justify-center gap-2 max-w-xl">
-          <button onclick="selectQuickModel('instant')" class="text-xs px-4 py-2 rounded-full bg-yellow-500/10 text-yellow-300 border border-yellow-500/20 hover:bg-yellow-500/20">
-            <i class="fa-solid fa-bolt mr-1"></i> Rapido ⚡︎
+          <button
+            onclick="selectQuickModel('instant')"
+            class="text-xs px-4 py-2 rounded-full bg-yellow-500/10 text-yellow-300 border border-yellow-500/20 hover:bg-yellow-500/20"
+          >
+            <i class="fa-solid fa-bolt mr-1"></i>
+            Rapido ⚡︎
           </button>
 
-          <button onclick="selectQuickModel('think')" class="text-xs px-4 py-2 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 hover:bg-purple-500/20">
-            <i class="fa-solid fa-brain mr-1"></i> Pensa 𖡎
+          <button
+            onclick="selectQuickModel('think')"
+            class="text-xs px-4 py-2 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 hover:bg-purple-500/20"
+          >
+            <i class="fa-solid fa-brain mr-1"></i>
+            Pensa 𖡎
           </button>
 
-          <button onclick="openRightDrawer()" class="text-xs px-4 py-2 rounded-full bg-zinc-800 text-zinc-300 border border-white/10 hover:bg-zinc-700">
-            <i class="fa-solid fa-key mr-1"></i> API ✦
+          <button
+            onclick="openRightDrawer()"
+            class="text-xs px-4 py-2 rounded-full bg-zinc-800 text-zinc-300 border border-white/10 hover:bg-zinc-700"
+          >
+            <i class="fa-solid fa-key mr-1"></i>
+            API ✦
           </button>
         </div>
 
@@ -274,18 +369,34 @@
               <input type="file" id="photoInput" hidden multiple accept="image/*" onchange="handleFileSelect(event)" />
             </label>
 
-            <button onclick="selectQuickModel('instant')" class="h-8 px-2 sm:px-3 rounded-full bg-yellow-500/10 text-yellow-300 border border-yellow-500/20 text-[11px] hover:bg-yellow-500/20" title="Rapido ⚡︎">
-              <i class="fa-solid fa-bolt"></i> <span class="quick-pill-text ml-1">Instant</span>
+            <button
+              onclick="selectQuickModel('instant')"
+              class="h-8 px-2 sm:px-3 rounded-full bg-yellow-500/10 text-yellow-300 border border-yellow-500/20 text-[11px] hover:bg-yellow-500/20"
+              title="Rapido ⚡︎"
+            >
+              <i class="fa-solid fa-bolt"></i>
+              <span class="quick-pill-text ml-1">Instant</span>
             </button>
 
-            <button onclick="selectQuickModel('think')" class="h-8 px-2 sm:px-3 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 text-[11px] hover:bg-purple-500/20" title="Pensa 𖡎">
-              <i class="fa-solid fa-brain"></i> <span class="quick-pill-text ml-1">Think</span>
+            <button
+              onclick="selectQuickModel('think')"
+              class="h-8 px-2 sm:px-3 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 text-[11px] hover:bg-purple-500/20"
+              title="Pensa 𖡎"
+            >
+              <i class="fa-solid fa-brain"></i>
+              <span class="quick-pill-text ml-1">Think</span>
             </button>
 
-            <button onclick="clearFiles()" class="text-[10px] hover:text-white" title="Rimuovi allegati">clear</button>
+            <button onclick="clearFiles()" class="text-[10px] hover:text-white" title="Rimuovi allegati">
+              clear
+            </button>
           </div>
 
-          <button id="sendBtn" onclick="handleSend()" class="bg-white text-black h-9 w-9 rounded-full flex items-center justify-center hover:bg-zinc-300 disabled:opacity-40 disabled:cursor-not-allowed shrink-0">
+          <button
+            id="sendBtn"
+            onclick="handleSend()"
+            class="bg-white text-black h-9 w-9 rounded-full flex items-center justify-center hover:bg-zinc-300 disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
+          >
             <i class="fa-solid fa-arrow-up"></i>
           </button>
         </div>
@@ -293,9 +404,13 @@
     </div>
   </main>
 
-  <aside id="rightSidebar" class="right-panel w-80 border-l border-white/10 p-4 custom-scrollbar overflow-y-auto">
+  <aside
+    id="rightSidebar"
+    class="right-panel w-80 border-l border-white/10 p-4 custom-scrollbar overflow-y-auto"
+  >
     <div class="flex items-center justify-between mb-4">
       <h3 class="text-xs font-bold text-zinc-500 uppercase tracking-widest">API ✦</h3>
+
       <button onclick="closeDrawers()" class="lg:hidden h-9 w-9 rounded-full bg-zinc-800 hover:bg-zinc-700">
         <i class="fa-solid fa-xmark"></i>
       </button>
@@ -347,42 +462,33 @@
     </div>
 
     <h3 class="text-xs font-bold text-zinc-500 uppercase mt-8 mb-4 tracking-widest">
-      Modelli preimpostati
+      Modello custom
+    </h3>
+
+    <div class="space-y-3">
+      <input
+        id="customModelId"
+        placeholder="es: gemini-2.5-flash oppure gemma-4-31b-it"
+        class="w-full bg-zinc-800 border border-zinc-700 rounded-md p-2 text-xs outline-none"
+      />
+
+      <button
+        onclick="useCustomModel()"
+        class="w-full bg-zinc-100 text-black font-bold py-2 rounded-lg text-xs hover:bg-white"
+      >
+        Usa modello custom
+      </button>
+    </div>
+
+    <h3 class="text-xs font-bold text-zinc-500 uppercase mt-8 mb-4 tracking-widest">
+      Modelli pre impostati
     </h3>
 
     <div class="space-y-1" id="modelList"></div>
 
-    <h3 class="text-xs font-bold text-zinc-500 uppercase mt-8 mb-4 tracking-widest">
-      Modelli custom
-    </h3>
-
-    <div class="space-y-3">
-      <div>
-        <label class="text-[10px] text-zinc-500 block mb-1">Rapido custom</label>
-        <input
-          id="quickCustomModelId"
-          placeholder="es: gemini-3.1-flash-lite-preview"
-          class="w-full bg-zinc-800 border border-zinc-700 rounded-md p-2 text-xs outline-none"
-        />
-      </div>
-
-      <div>
-        <label class="text-[10px] text-zinc-500 block mb-1">Heavy custom</label>
-        <input
-          id="heavyCustomModelId"
-          placeholder="es: google/gemma-4-31b-it"
-          class="w-full bg-zinc-800 border border-zinc-700 rounded-md p-2 text-xs outline-none"
-        />
-      </div>
-
-      <button onclick="applyCustomQuickHeavy()" class="w-full bg-zinc-100 text-black font-bold py-2 rounded-lg text-xs hover:bg-white">
-        Salva custom rapido/heavy
-      </button>
-    </div>
-
     <div class="mt-8 text-[10px] text-zinc-600 leading-relaxed">
-      Se un modello dà errore 404 o 400, probabilmente l’ID non è disponibile per la tua API key.
-      Il fallback heavy passa da <code>google/gemma-4-31b-it</code> a <code>gemma-4-26b-a4b-it</code>.
+      Se un modello dà errore 404 o 400, probabilmente l’ID non è disponibile
+      per la tua API key. Copia sempre l’ID esatto dalla dashboard Google AI Studio.
     </div>
   </aside>
 
@@ -414,46 +520,77 @@
   </div>
 
   <div id="settingsModal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-[80] p-4">
-    <div class="bg-zinc-900 border border-white/10 w-full max-w-[560px] rounded-2xl p-6 shadow-2xl">
-      <h2 class="text-xl font-bold mb-4">System Prompt</h2>
+    <div class="bg-zinc-900 border border-white/10 w-full max-w-[620px] rounded-2xl p-6 shadow-2xl custom-scrollbar overflow-y-auto max-h-[90vh]">
+      <h2 class="text-xl font-bold mb-4">Impostazioni AI</h2>
 
-      <textarea
-        id="systemPrompt"
-        rows="5"
-        placeholder="Es: Rispondi come un ingegnere software."
-        class="w-full bg-zinc-800 border border-zinc-700 rounded-xl p-4 text-sm text-white outline-none focus:border-blue-500"
-      ></textarea>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="space-y-2">
+          <label class="text-[10px] text-zinc-500 block">Modello custom rapido</label>
+          <input
+            id="instantCustomModelId"
+            placeholder="Default: gemini-3.1-flash-lite-preview"
+            class="w-full bg-zinc-800 border border-zinc-700 rounded-xl p-3 text-sm text-white outline-none focus:border-blue-500"
+          />
+        </div>
 
-      <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
-        <div>
-          <label class="text-[10px] text-zinc-500 block mb-1">Stile risposta</label>
-          <select id="responseStyle" class="w-full bg-zinc-800 border border-zinc-700 rounded-xl p-3 text-sm outline-none">
-            <option value="breve">Breve</option>
-            <option value="lungo">Lungo</option>
+        <div class="space-y-2">
+          <label class="text-[10px] text-zinc-500 block">Modello custom heavy</label>
+          <input
+            id="thinkCustomModelId"
+            placeholder="Default: google/gemma-4-31b-it"
+            class="w-full bg-zinc-800 border border-zinc-700 rounded-xl p-3 text-sm text-white outline-none focus:border-purple-500"
+          />
+        </div>
+
+        <div class="space-y-2 md:col-span-2">
+          <label class="text-[10px] text-zinc-500 block">System prompt base</label>
+          <textarea
+            id="systemPrompt"
+            rows="6"
+            placeholder="Es: Rispondi come un ingegnere software preciso e chiaro."
+            class="w-full bg-zinc-800 border border-zinc-700 rounded-xl p-3 text-sm text-white outline-none focus:border-blue-500 resize-none"
+          ></textarea>
+        </div>
+
+        <div class="space-y-2 md:col-span-2">
+          <label class="text-[10px] text-zinc-500 block">Stile risposta</label>
+          <select
+            id="responseStyle"
+            class="w-full bg-zinc-800 border border-zinc-700 rounded-xl p-3 text-sm text-white outline-none"
+          >
+            <option value="short">Breve</option>
+            <option value="long">Lungo</option>
             <option value="genz">Gen Z</option>
-            <option value="professionale">Professionale</option>
+            <option value="professional">Professionale</option>
             <option value="custom">Custom</option>
           </select>
         </div>
 
-        <div>
-          <label class="text-[10px] text-zinc-500 block mb-1">Custom style prompt</label>
-          <input
-            id="customStylePrompt"
-            placeholder="Es: tecnico, chiaro, con esempi brevi"
-            class="w-full bg-zinc-800 border border-zinc-700 rounded-xl p-3 text-sm outline-none"
-          />
+        <div class="space-y-2 md:col-span-2">
+          <label class="text-[10px] text-zinc-500 block">Prompt custom stile</label>
+          <textarea
+            id="styleCustomPrompt"
+            rows="4"
+            placeholder="Scrivi qui il tono e il comportamento desiderato..."
+            class="w-full bg-zinc-800 border border-zinc-700 rounded-xl p-3 text-sm text-white outline-none focus:border-blue-500 resize-none"
+          ></textarea>
         </div>
       </div>
 
       <div class="mt-4 rounded-xl border border-white/10 bg-zinc-950/50 p-3">
-        <div class="text-xs uppercase tracking-widest text-zinc-500 font-bold mb-2">Feedback temporaneo</div>
+        <div class="flex items-center justify-between gap-3 mb-2">
+          <div class="text-xs uppercase tracking-widest text-zinc-500 font-bold">Feedback temporaneo</div>
+          <button
+            onclick="clearTemporaryFeedback()"
+            class="text-[10px] px-2 py-1 rounded-md bg-zinc-800 border border-white/10 text-zinc-300 hover:bg-zinc-700"
+          >
+            Pulisci
+          </button>
+        </div>
+
         <div id="feedbackPreview" class="text-xs text-zinc-400 leading-relaxed whitespace-pre-wrap">
           Nessun feedback temporaneo.
         </div>
-        <button onclick="clearTemporaryFeedback()" class="mt-3 text-[10px] px-2 py-1 rounded-md bg-zinc-800 border border-white/10 text-zinc-300 hover:bg-zinc-700">
-          Pulisci feedback
-        </button>
       </div>
 
       <button onclick="closeSettings()" class="w-full mt-4 bg-white text-black font-bold py-3 rounded-xl">
@@ -470,103 +607,63 @@
      ************************************************************/
 
     const models = [
-      {
-        id: "gemini-2.5-flash",
-        name: "Gemini 2.5 Flash",
-        provider: "google",
-        status: "online",
-        group: "Google"
-      },
-      {
-        id: "gemini-2.5-flash-lite",
-        name: "Gemini 2.5 Flash Lite",
-        provider: "google",
-        status: "online",
-        group: "Google"
-      },
-      {
-        id: "gemini-2.5-pro",
-        name: "Gemini 2.5 Pro",
-        provider: "google",
-        status: "check",
-        group: "Google"
-      },
-      {
-        id: "gemini-3-flash-preview",
-        name: "Gemini 3 Flash Preview",
-        provider: "google",
-        status: "preview",
-        group: "Google"
-      },
+      /***********************
+       * GOOGLE GEMINI
+       ***********************/
+      { id: "gemini-2.5-flash", name: "Gemini 2.5 Flash", provider: "google", status: "online", group: "Google" },
+      { id: "gemini-2.5-flash-lite", name: "Gemini 2.5 Flash Lite", provider: "google", status: "online", group: "Google" },
+      { id: "gemini-2.5-pro", name: "Gemini 2.5 Pro", provider: "google", status: "check", group: "Google" },
+      { id: "gemini-3-flash-preview", name: "Gemini 3 Flash Preview", provider: "google", status: "preview", group: "Google" },
 
-      {
-        id: "gemini-3.1-flash-lite-preview",
-        name: "Gemini 3.1 Flash Lite",
-        provider: "google",
-        status: "instant",
-        group: "Quick"
-      },
-      {
-        id: "google/gemma-4-31b-it",
-        name: "Gemma 4 31B IT",
-        provider: "google",
-        status: "think",
-        group: "Quick"
-      },
+      /***********************
+       * QUICK MODELS
+       ***********************/
+      { id: "google/gemma-4-31b-it", name: "Instant - Gemma 4 31B IT", provider: "google", status: "instant", group: "Quick" },
+      { id: "gemini-3.1-flash-lite-preview", name: "Gemini-3.1 flash lite", provider: "google", status: "think", group: "Quick" },
 
-      {
-        id: "gemma-4-26b-a4b-it",
-        name: "gemma-4-26b-a4b-it",
-        provider: "google",
-        status: "check",
-        group: "X"
-      },
-      {
-        id: "gemini-flash-latest",
-        name: "gemini-flash-latest",
-        provider: "google",
-        status: "check",
-        group: "X"
-      },
-      {
-        id: "gemini-2.0-flash-lite",
-        name: "gemini-2.0-flash-lite",
-        provider: "google",
-        status: "check",
-        group: "X"
-      },
-      {
-        id: "gemini-3.1-pro-preview",
-        name: "gemini-3.1-pro-preview",
-        provider: "google",
-        status: "check",
-        group: "X"
-      }
+      /***********************
+       * X / OPEN MODELS
+       ***********************/
+      { id: "gemma-4-26b-a4b-it", name: "gemma-4-26b-a4b-it", provider: "google", status: "check", group: "OpeOSS" },
+      { id: "gemini-flash-latest", name: "gemini-flash-latest", provider: "google", status: "check", group: "Meta" },
+      { id: "gemini-2.0-flash-lite", name: "gemini-2.0-flash-lite", provider: "google", status: "check", group: "Legacy" },
+      { id: "gemini-3.1-pro-preview", name: "gemini-3.1-pro-preview", provider: "google", status: "check", group: "X" }
     ];
 
-    const quickDefaults = {
+    const defaults = {
       instant: "gemini-3.1-flash-lite-preview",
-      think: "google/gemma-4-31b-it"
+      think: "google/gemma-4-31b-it",
+      legacy: "gemma-4-26b-a4b-it"
     };
 
-    const legacyFallbackId = "gemma-4-26b-a4b-it";
-
-    let selectedModel = models[0];
-    let legacyMode = false;
+    let selectedModel = null;
     let selectedFiles = [];
     let chatHistory = [];
     let isLoading = false;
     let latestAssistantBubble = null;
     let temporaryFeedbackNotes = "";
+    let legacyMode = false;
 
     window.addEventListener("DOMContentLoaded", init);
 
     function init() {
       initModels();
       restoreSettings();
-      syncSelectedModelUI(selectedModel);
+      bindEvents();
 
+      if (!selectedModel) {
+        setSelectedModel(resolveModelById(defaults.instant), { persist: false, close: false });
+      } else {
+        syncSelectedModelUI(selectedModel);
+      }
+
+      updateFeedbackPreview();
+      handleResponsiveResize();
+    }
+
+    function bindEvents() {
       const input = document.getElementById("userInput");
+
       input.addEventListener("input", () => {
         input.style.height = "auto";
         input.style.height = Math.min(input.scrollHeight, 180) + "px";
@@ -587,20 +684,15 @@
         "maxTokens",
         "systemPrompt",
         "responseStyle",
-        "customStylePrompt",
-        "quickCustomModelId",
-        "heavyCustomModelId"
+        "styleCustomPrompt",
+        "instantCustomModelId",
+        "thinkCustomModelId"
       ].forEach(id => {
         const el = document.getElementById(id);
         if (!el) return;
         el.addEventListener("input", persistSettings);
         el.addEventListener("change", persistSettings);
       });
-
-      document.getElementById("responseStyle").addEventListener("change", toggleCustomStyleField);
-      toggleCustomStyleField();
-      updateFeedbackPreview();
-      handleResponsiveResize();
     }
 
     function initModels() {
@@ -646,6 +738,30 @@
       return "bg-zinc-800 text-zinc-500";
     }
 
+    function resolveModelById(id, fallbackName = null) {
+      const found = models.find(m => m.id === id);
+      if (found) return found;
+
+      return {
+        id,
+        name: fallbackName || id,
+        provider: "google",
+        status: "custom",
+        group: "Custom"
+      };
+    }
+
+    function getQuickModelId(type) {
+      const customIdEl = type === "instant"
+        ? document.getElementById("instantCustomModelId")
+        : document.getElementById("thinkCustomModelId");
+
+      const customId = (customIdEl?.value || "").trim();
+      if (customId) return customId;
+
+      return type === "instant" ? defaults.instant : defaults.think;
+    }
+
     function setSelectedModel(model, options = {}) {
       const { persist = true, close = true } = options;
 
@@ -671,54 +787,36 @@
         item.classList.remove("bg-zinc-800", "border-white/10");
       });
 
-      const active = Array.from(document.querySelectorAll(".model-list-item")).find(
-        item => item.dataset.modelId === model.id && item.dataset.provider === model.provider
-      );
+      const active = Array.from(document.querySelectorAll(".model-list-item"))
+        .find(item => item.dataset.modelId === model.id && item.dataset.provider === model.provider);
 
-      if (active) {
-        active.classList.add("bg-zinc-800", "border-white/10");
-      }
-    }
-
-    function getModeModel(mode) {
-      const customQuick = document.getElementById("quickCustomModelId").value.trim();
-      const customHeavy = document.getElementById("heavyCustomModelId").value.trim();
-
-      if (mode === "instant") {
-        const id = customQuick || quickDefaults.instant;
-        return findOrBuildModel(id, "instant", "Quick");
-      }
-
-      if (mode === "think") {
-        const id = legacyMode ? legacyFallbackId : (customHeavy || quickDefaults.think);
-        return findOrBuildModel(id, legacyMode ? "check" : "think", legacyMode ? "X" : "Quick");
-      }
-
-      return selectedModel;
-    }
-
-    function findOrBuildModel(id, status = "custom", group = "Custom") {
-      const existing = models.find(m => m.id === id && m.provider === "google");
-      if (existing) return existing;
-
-      return {
-        id,
-        name: id,
-        provider: "google",
-        status,
-        group
-      };
+      if (active) active.classList.add("bg-zinc-800", "border-white/10");
     }
 
     function selectQuickModel(type) {
-      const model = getModeModel(type);
+      const modelId = getQuickModelId(type);
+      const model = resolveModelById(modelId, type === "instant" ? "Rapido custom" : "Heavy custom");
       setSelectedModel(model);
-      showToast(type === "instant" ? "Modalità Rapido pronta" : "Modalità Heavy pronta");
+      showToast(type === "instant" ? "Quick rapido selezionato" : "Quick heavy selezionato");
     }
 
-    function applyCustomQuickHeavy() {
-      persistSettings();
-      showToast("Custom rapido/heavy salvati");
+    function useCustomModel() {
+      const id = document.getElementById("customModelId").value.trim();
+
+      if (!id) {
+        alert("Inserisci un model ID.");
+        return;
+      }
+
+      setSelectedModel({
+        id,
+        name: id,
+        provider: "google",
+        status: "custom",
+        group: "Custom"
+      });
+
+      showToast("Modello custom attivato");
     }
 
     /************************************************************
@@ -747,61 +845,6 @@
       if (window.innerWidth > 1024) closeDrawers();
     }
 
-    /************************************************************
-     * SETTINGS
-     ************************************************************/
-
-    function persistSettings() {
-      const saveLocal = document.getElementById("saveLocal");
-
-      if (!saveLocal || !saveLocal.checked) {
-        localStorage.removeItem("aiChatSettings");
-        return;
-      }
-
-      const payload = {
-        googleKey: document.getElementById("googleKey").value,
-        temperature: document.getElementById("temperature").value,
-        maxTokens: document.getElementById("maxTokens").value,
-        systemPrompt: document.getElementById("systemPrompt").value,
-        responseStyle: document.getElementById("responseStyle").value,
-        customStylePrompt: document.getElementById("customStylePrompt").value,
-        quickCustomModelId: document.getElementById("quickCustomModelId").value,
-        heavyCustomModelId: document.getElementById("heavyCustomModelId").value,
-        selectedModel,
-        legacyMode
-      };
-
-      localStorage.setItem("aiChatSettings", JSON.stringify(payload));
-    }
-
-    function restoreSettings() {
-      const raw = localStorage.getItem("aiChatSettings");
-      if (!raw) return;
-
-      try {
-        const data = JSON.parse(raw);
-
-        document.getElementById("saveLocal").checked = true;
-        document.getElementById("googleKey").value = data.googleKey || "";
-        document.getElementById("temperature").value = data.temperature || "0.7";
-        document.getElementById("maxTokens").value = data.maxTokens || "2048";
-        document.getElementById("systemPrompt").value = data.systemPrompt || "";
-        document.getElementById("responseStyle").value = data.responseStyle || "breve";
-        document.getElementById("customStylePrompt").value = data.customStylePrompt || "";
-        document.getElementById("quickCustomModelId").value = data.quickCustomModelId || "";
-        document.getElementById("heavyCustomModelId").value = data.heavyCustomModelId || "";
-        legacyMode = !!data.legacyMode;
-        document.getElementById("legacyToggle").classList.toggle("legacy-active", legacyMode);
-
-        if (data.selectedModel && data.selectedModel.id) {
-          selectedModel = data.selectedModel;
-        }
-      } catch (error) {
-        console.warn("Impossibile ripristinare impostazioni:", error);
-      }
-    }
-
     function openPricing() {
       const modal = document.getElementById("pricingModal");
       modal.classList.remove("hidden");
@@ -818,7 +861,6 @@
     function openSettings() {
       document.getElementById("settingsModal").classList.replace("hidden", "flex");
       updateFeedbackPreview();
-      toggleCustomStyleField();
       closeDrawers();
     }
 
@@ -830,41 +872,77 @@
 
     function toggleLegacy() {
       legacyMode = !legacyMode;
-      document.getElementById("legacyToggle").classList.toggle("legacy-active", legacyMode);
+      document.getElementById("legacyToggle").classList.toggle("legacy-active");
       showToast(legacyMode ? "Legacy mode attivo" : "Legacy mode spento");
-      persistSettings();
     }
 
-    function toggleCustomStyleField() {
-      const style = document.getElementById("responseStyle").value;
-      const custom = document.getElementById("customStylePrompt");
-      custom.disabled = style !== "custom";
-      custom.classList.toggle("opacity-50", style !== "custom");
-      custom.classList.toggle("cursor-not-allowed", style !== "custom");
+    /************************************************************
+     * LOCAL STORAGE
+     ************************************************************/
+
+    function persistSettings() {
+      const saveLocal = document.getElementById("saveLocal");
+
+      if (!saveLocal || !saveLocal.checked) {
+        localStorage.removeItem("aiChatSettings");
+        return;
+      }
+
+      const payload = {
+        googleKey: document.getElementById("googleKey").value,
+        temperature: document.getElementById("temperature").value,
+        maxTokens: document.getElementById("maxTokens").value,
+        systemPrompt: document.getElementById("systemPrompt").value,
+        responseStyle: document.getElementById("responseStyle").value,
+        styleCustomPrompt: document.getElementById("styleCustomPrompt").value,
+        instantCustomModelId: document.getElementById("instantCustomModelId").value,
+        thinkCustomModelId: document.getElementById("thinkCustomModelId").value,
+        selectedModel
+      };
+
+      localStorage.setItem("aiChatSettings", JSON.stringify(payload));
     }
 
-    function clearTemporaryFeedback() {
-      temporaryFeedbackNotes = "";
-      updateFeedbackPreview();
-      showToast("Feedback temporaneo pulito");
+    function restoreSettings() {
+      const raw = localStorage.getItem("aiChatSettings");
+      if (!raw) {
+        document.getElementById("responseStyle").value = "short";
+        return;
+      }
+
+      try {
+        const data = JSON.parse(raw);
+
+        document.getElementById("saveLocal").checked = true;
+        document.getElementById("googleKey").value = data.googleKey || "";
+        document.getElementById("temperature").value = data.temperature || "0.7";
+        document.getElementById("maxTokens").value = data.maxTokens || "2048";
+        document.getElementById("systemPrompt").value = data.systemPrompt || "";
+        document.getElementById("responseStyle").value = data.responseStyle || "short";
+        document.getElementById("styleCustomPrompt").value = data.styleCustomPrompt || "";
+        document.getElementById("instantCustomModelId").value = data.instantCustomModelId || "";
+        document.getElementById("thinkCustomModelId").value = data.thinkCustomModelId || "";
+
+        if (data.selectedModel && data.selectedModel.id) {
+          selectedModel = data.selectedModel;
+        }
+      } catch (error) {
+        console.warn("Impossibile ripristinare impostazioni:", error);
+      }
     }
 
-    function updateFeedbackPreview() {
-      const el = document.getElementById("feedbackPreview");
-      if (!el) return;
-
-      el.textContent = temporaryFeedbackNotes.trim()
-        ? temporaryFeedbackNotes.trim()
-        : "Nessun feedback temporaneo.";
-    }
+    /************************************************************
+     * TOAST
+     ************************************************************/
 
     function showToast(message) {
       const layer = document.getElementById("toastLayer");
       const toast = document.createElement("div");
 
-      toast.className = "pointer-events-none max-w-[320px] rounded-xl border border-white/10 bg-zinc-900/95 px-3 py-2 text-xs text-zinc-200 shadow-2xl opacity-0 translate-y-2 transition-all";
-      toast.textContent = message;
+      toast.className =
+        "pointer-events-none max-w-[320px] rounded-xl border border-white/10 bg-zinc-900/95 px-3 py-2 text-xs text-zinc-200 shadow-2xl opacity-0 translate-y-2 transition-all";
 
+      toast.textContent = message;
       layer.appendChild(toast);
 
       requestAnimationFrame(() => {
@@ -987,7 +1065,7 @@
     }
 
     /************************************************************
-     * CHAT
+     * MESSAGGI
      ************************************************************/
 
     function appendMessage(role, text, options = {}) {
@@ -1037,96 +1115,116 @@
         if (host) host.innerHTML = "";
       } else if (bubble.classList.contains("assistant-bubble")) {
         renderAssistantControls(bubble);
-      } else {
-        renderAssistantControls(bubble);
       }
 
       const chatWindow = document.getElementById("chatWindow");
       chatWindow.scrollTop = chatWindow.scrollHeight;
     }
 
-    function renderText(text) {
-      let safe = escapeHtml(String(text || ""));
-      safe = safe.replace(/```([\s\S]*?)```/g, (_, code) => `<pre><code>${code.trim()}</code></pre>`);
-      safe = safe.replace(/`([^`]+)`/g, "<code>$1</code>");
-      safe = safe.replace(/\n/g, "<br>");
-      return safe;
-    }
-
-    function escapeHtml(value) {
-      return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
-
     function renderAssistantControls(bubble) {
+      bubble.classList.add("assistant-bubble");
       const host = bubble.querySelector(".assistant-actions-host");
       if (!host) return;
 
       host.innerHTML = `
         <div class="flex flex-wrap gap-2">
-          <button class="text-[11px] px-3 py-1.5 rounded-full bg-zinc-800 text-zinc-200 border border-white/10 hover:bg-zinc-700" onclick="regenerateBubble(this)">
-            <i class="fa-solid fa-rotate-right mr-1"></i> Rigenera
+          <button
+            class="text-[11px] px-3 py-1.5 rounded-full bg-zinc-800 text-zinc-200 border border-white/10 hover:bg-zinc-700 inline-flex items-center gap-2"
+            onclick="regenerateFromBubble(this)"
+          >
+            <i class="fa-solid fa-rotate-right text-white"></i>
+            ♻️ Rigenera
           </button>
 
-          <button class="text-[11px] px-3 py-1.5 rounded-full bg-green-500/10 text-green-300 border border-green-500/20 hover:bg-green-500/20" onclick="openReactionFeedback(this, 'like')">
-            <i class="fa-regular fa-thumbs-up mr-1"></i> Piaciuto
+          <button
+            class="text-[11px] px-3 py-1.5 rounded-full bg-yellow-500/10 text-yellow-300 border border-yellow-500/20 hover:bg-yellow-500/20 inline-flex items-center gap-2"
+            onclick="regenerateFromBubble(this, 'instant')"
+          >
+            <i class="fa-solid fa-bolt text-white"></i>
+            ⚡ Instant
           </button>
 
-          <button class="text-[11px] px-3 py-1.5 rounded-full bg-rose-500/10 text-rose-300 border border-rose-500/20 hover:bg-rose-500/20" onclick="openReactionFeedback(this, 'dislike')">
-            <i class="fa-regular fa-thumbs-down mr-1"></i> Non mi piace
+          <button
+            class="text-[11px] px-3 py-1.5 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 hover:bg-purple-500/20 inline-flex items-center gap-2"
+            onclick="regenerateFromBubble(this, 'think')"
+          >
+            <i class="fa-solid fa-brain text-white"></i>
+            🧠 Think
+          </button>
+
+          <button
+            class="text-[11px] px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 hover:bg-emerald-500/20 inline-flex items-center gap-2"
+            onclick="openFeedbackPanel(this, 'like')"
+          >
+            <i class="fa-regular fa-thumbs-up text-white"></i>
+            👍 Like
+          </button>
+
+          <button
+            class="text-[11px] px-3 py-1.5 rounded-full bg-rose-500/10 text-rose-300 border border-rose-500/20 hover:bg-rose-500/20 inline-flex items-center gap-2"
+            onclick="openFeedbackPanel(this, 'dislike')"
+          >
+            <i class="fa-regular fa-thumbs-down text-white"></i>
+            👎 Dislike
           </button>
         </div>
 
         <div class="feedback-panel hidden mt-3 p-3 rounded-xl border border-white/10 bg-zinc-950/60">
-          <div class="text-[10px] text-zinc-500 mb-2 feedback-title">Cosa ti è piaciuto?</div>
+          <div class="feedback-title text-[11px] text-zinc-300 mb-2"></div>
 
           <textarea
             class="feedback-input w-full bg-zinc-800 border border-zinc-700 rounded-xl p-2 text-xs text-white outline-none resize-none"
             rows="3"
-            placeholder="Scrivi cosa migliorare o cosa tenere uguale..."
+            placeholder=""
           ></textarea>
 
           <div class="flex gap-2 mt-2">
-            <button class="text-xs px-3 py-2 rounded-lg bg-white text-black font-semibold" onclick="submitFeedback(this)">Invia feedback</button>
-            <button class="text-xs px-3 py-2 rounded-lg bg-zinc-800 text-zinc-300 border border-white/10" onclick="hideFeedback(this)">Annulla</button>
+            <button
+              class="text-xs px-3 py-2 rounded-lg bg-white text-black font-semibold"
+              onclick="submitFeedback(this)"
+            >
+              Invia feedback
+            </button>
+
+            <button
+              class="text-xs px-3 py-2 rounded-lg bg-zinc-800 text-zinc-300 border border-white/10"
+              onclick="hideFeedback(this)"
+            >
+              Annulla
+            </button>
           </div>
         </div>
       `;
     }
 
-    function openReactionFeedback(button, reaction) {
+    function openFeedbackPanel(button, mode) {
       const bubble = button.closest(".assistant-bubble");
       if (!bubble) return;
-
-      bubble.dataset.reaction = reaction;
 
       const panel = bubble.querySelector(".feedback-panel");
       const title = bubble.querySelector(".feedback-title");
       const input = bubble.querySelector(".feedback-input");
 
-      if (title) {
-        title.textContent = reaction === "like"
-          ? "Cosa ti è piaciuto?"
-          : "Cosa non ti è piaciuto?";
+      if (!panel || !title || !input) return;
+
+      bubble.dataset.feedbackMode = mode;
+      panel.classList.remove("hidden");
+
+      if (mode === "like") {
+        title.textContent = "Cosa ti è piaciuto?";
+        input.placeholder = "Es: spiegazione chiara, tono giusto, esempi utili...";
+      } else {
+        title.textContent = "Cosa va migliorato?";
+        input.placeholder = "Es: più breve, più tecnico, meno emoji, più preciso...";
       }
 
-      if (input) {
-        input.placeholder = reaction === "like"
-          ? "Es: risposta chiara, tono giusto, esempi utili..."
-          : "Es: troppo lungo, poco chiaro, serve più precisione...";
-      }
-
-      if (panel) panel.classList.remove("hidden");
-      if (input) input.focus();
+      input.focus();
     }
 
     function hideFeedback(button) {
       const bubble = button.closest(".assistant-bubble");
       if (!bubble) return;
+
       const panel = bubble.querySelector(".feedback-panel");
       if (panel) panel.classList.add("hidden");
     }
@@ -1137,49 +1235,226 @@
 
       const input = bubble.querySelector(".feedback-input");
       const panel = bubble.querySelector(".feedback-panel");
-      const reaction = bubble.dataset.reaction || "like";
+      const mode = bubble.dataset.feedbackMode || "dislike";
       const text = (input?.value || "").trim();
 
-      const prefix = reaction === "like" ? "[LIKE]" : "[DISLIKE]";
-      const note = text
-        ? `${prefix} ${text}`
-        : `${prefix} feedback senza testo`;
+      if (!text) {
+        showToast("Scrivi un feedback breve, frate ✍️");
+        return;
+      }
 
-      temporaryFeedbackNotes = temporaryFeedbackNotes.trim()
-        ? `${temporaryFeedbackNotes}\n${note}`
-        : note;
+      const entry = `${mode === "like" ? "PIACIUTO" : "DA MIGLIORARE"}: ${text}`;
+      temporaryFeedbackNotes = temporaryFeedbackNotes
+        ? `${temporaryFeedbackNotes}\n- ${entry}`
+        : `- ${entry}`;
 
       updateFeedbackPreview();
 
-      if (input) input.value = "";
       if (panel) panel.classList.add("hidden");
+      if (input) input.value = "";
 
-      showToast(reaction === "like" ? "Piaciuto salvato ✦" : "Dislike salvato ✦");
+      showToast("Feedback salvato nel prompt temporaneo ✦");
     }
 
-    function buildStyleInstruction() {
-      const style = document.getElementById("responseStyle").value;
-      const custom = document.getElementById("customStylePrompt").value.trim();
+    function clearTemporaryFeedback() {
+      temporaryFeedbackNotes = "";
+      updateFeedbackPreview();
+      showToast("Feedback temporaneo pulito");
+    }
 
-      const map = {
-        breve: "Rispondi in modo breve, diretto e pratico.",
-        lungo: "Rispondi in modo completo, ordinato e utile, con dettagli quando servono.",
-        genz: "Rispondi con tono Gen Z, naturale, rapido e leggermente slang ma leggibile.",
-        professionale: "Rispondi con tono professionale, preciso, chiaro e sobrio."
-      };
+    function updateFeedbackPreview() {
+      const el = document.getElementById("feedbackPreview");
+      if (!el) return;
 
-      if (style === "custom") {
-        return custom
-          ? `Istruzioni stile custom: ${custom}`
-          : "Istruzioni stile custom: mantieni un tono personale, chiaro e utile.";
-      }
-
-      return map[style] || map.breve;
+      el.textContent = temporaryFeedbackNotes.trim()
+        ? temporaryFeedbackNotes.trim()
+        : "Nessun feedback temporaneo.";
     }
 
     /************************************************************
-     * SEND
+     * STILE RISPOSTA
      ************************************************************/
+
+    function getStyleInstruction() {
+      const style = document.getElementById("responseStyle").value;
+      const custom = document.getElementById("styleCustomPrompt").value.trim();
+
+      if (style === "short") {
+        return "Rispondi in modo breve, diretto e pulito. Niente divagazioni inutili.";
+      }
+
+      if (style === "long") {
+        return "Rispondi in modo completo, ben spiegato e strutturato. Usa esempi quando servono.";
+      }
+
+      if (style === "genz") {
+        return "Rispondi con tono Gen Z leggero e naturale, ma resta chiaro e utile. Un pizzico di slang va bene, senza esagerare.";
+      }
+
+      if (style === "professional") {
+        return "Rispondi in modo professionale, preciso, ordinato e tecnico quando necessario.";
+      }
+
+      if (style === "custom" && custom) {
+        return custom;
+      }
+
+      return "";
+    }
+
+    function buildEffectiveSystemPrompt() {
+      const pieces = [];
+
+      const basePrompt = document.getElementById("systemPrompt").value.trim();
+      if (basePrompt) pieces.push(basePrompt);
+
+      const stylePrompt = getStyleInstruction();
+      if (stylePrompt) pieces.push(stylePrompt);
+
+      if (temporaryFeedbackNotes.trim()) {
+        pieces.push("Feedback temporaneo da applicare a questa sessione:\n" + temporaryFeedbackNotes.trim());
+      }
+
+      return pieces.join("\n\n");
+    }
+
+    /************************************************************
+     * GOOGLE GEMINI
+     ************************************************************/
+
+    async function buildGeminiContents(historySnapshot) {
+      const contents = [];
+
+      for (const msg of historySnapshot) {
+        if (!msg || !msg.role) continue;
+
+        const parts = [];
+        const text = String(msg.text || "").trim();
+
+        if (text) parts.push({ text });
+
+        const files = Array.isArray(msg.files) ? msg.files : [];
+
+        for (const file of files) {
+          if (!file) continue;
+
+          if (file.type && file.type.startsWith("image/")) {
+            const base64 = await fileToBase64(file);
+            parts.push({
+              inlineData: {
+                mimeType: file.type || "image/png",
+                data: base64
+              }
+            });
+          } else if (isTextLikeFile(file)) {
+            const content = await fileToText(file);
+            parts.push({
+              text:
+                `\n\n[File: ${file.name}]\n` +
+                "```text\n" +
+                content.slice(0, 30000) +
+                "\n```" +
+                (content.length > 30000 ? "\n[File troncato a 30000 caratteri]" : "")
+            });
+          } else {
+            parts.push({
+              text: `\n\n[File allegato: ${file.name}, type: ${file.type || "unknown"}]`
+            });
+          }
+        }
+
+        contents.push({
+          role: msg.role === "assistant" ? "model" : "user",
+          parts: parts.length ? parts : [{ text: " " }]
+        });
+      }
+
+      return contents;
+    }
+
+    async function callGoogleGemini(historySnapshot, modelId, allowFallback = true) {
+      const apiKey = document.getElementById("googleKey").value.trim();
+
+      if (!apiKey) {
+        throw new Error("Manca Google AI Studio API Key.");
+      }
+
+      const temperature = Number(document.getElementById("temperature").value || 0.7);
+      const maxTokens = Number(document.getElementById("maxTokens").value || 2048);
+
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(modelId)}:generateContent`;
+      const contents = await buildGeminiContents(historySnapshot);
+
+      const body = {
+        contents,
+        generationConfig: {
+          temperature,
+          maxOutputTokens: maxTokens
+        }
+      };
+
+      const systemPrompt = buildEffectiveSystemPrompt();
+      if (systemPrompt) {
+        body.systemInstruction = {
+          parts: [{ text: systemPrompt }]
+        };
+      }
+
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": apiKey
+        },
+        body: JSON.stringify(body)
+      });
+
+      const data = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        const message = data?.error?.message || `Google API error ${response.status}: ${response.statusText}`;
+
+        if (allowFallback && modelId !== defaults.legacy) {
+          showToast("Fallback su gemma-4-26b-a4b-it");
+          return callGoogleGemini(historySnapshot, defaults.legacy, false);
+        }
+
+        throw new Error(message);
+      }
+
+      return extractGeminiText(data);
+    }
+
+    function extractGeminiText(data) {
+      const parts = data?.candidates?.[0]?.content?.parts || [];
+
+      const text = parts
+        .map(part => part.text || "")
+        .filter(Boolean)
+        .join("\n");
+
+      if (text) return text;
+
+      if (data?.promptFeedback?.blockReason) {
+        return "Risposta bloccata. Motivo: " + data.promptFeedback.blockReason;
+      }
+
+      return JSON.stringify(data, null, 2);
+    }
+
+    /************************************************************
+     * SEND + REGEN
+     ************************************************************/
+
+    function prepareUserVisibleMessage(text, files) {
+      let visibleMessage = text || "";
+
+      if (files.length > 0) {
+        visibleMessage += "\n\nAllegati: " + files.map(file => file.name).join(", ");
+      }
+
+      return visibleMessage || "Allegato";
+    }
 
     async function handleSend() {
       if (isLoading) return;
@@ -1190,17 +1465,15 @@
       if (!text && selectedFiles.length === 0) return;
 
       const filesForRequest = [...selectedFiles];
-      const visibleMessage = text || (filesForRequest.length ? "Allegati" : "");
+      const visibleMessage = prepareUserVisibleMessage(text, filesForRequest);
 
       appendMessage("user", visibleMessage);
 
-      const userEntry = {
+      chatHistory.push({
         role: "user",
         text,
         files: filesForRequest
-      };
-
-      chatHistory.push(userEntry);
+      });
 
       input.value = "";
       input.style.height = "auto";
@@ -1209,27 +1482,31 @@
       const aiBubble = appendMessage("ai", "✦", { loading: true });
       latestAssistantBubble = aiBubble;
 
-      const historySnapshot = chatHistory.map(item => ({
-        role: item.role,
-        text: item.text,
-        files: item.files || []
+      const requestSnapshot = chatHistory.map(msg => ({
+        role: msg.role,
+        text: msg.text,
+        files: msg.files ? [...msg.files] : []
       }));
 
-      aiBubble.__requestMeta = {
-        historySnapshot
+      aiBubble.__meta = {
+        requestSnapshot,
+        assistantHistoryIndex: chatHistory.length
       };
 
       setLoading(true, "Calling API...");
 
       try {
-        const answer = await callGoogleGeminiSafe(historySnapshot, selectedModel);
+        const answer = await callGoogleGemini(requestSnapshot, selectedModel.id);
+
         updateMessage(aiBubble, answer || "[Risposta vuota]");
-        aiBubble.__requestMeta = { historySnapshot };
+        aiBubble.__meta.requestSnapshot = requestSnapshot;
 
         chatHistory.push({
           role: "assistant",
           text: answer || ""
         });
+
+        aiBubble.__meta.assistantHistoryIndex = chatHistory.length - 1;
       } catch (error) {
         console.error(error);
         updateMessage(aiBubble, "Errore API:\n\n" + formatApiError(error), true);
@@ -1261,186 +1538,39 @@
       return error.message || JSON.stringify(error, null, 2);
     }
 
-    /************************************************************
-     * GOOGLE GEMINI
-     ************************************************************/
-
-    function buildEffectiveSystemPrompt() {
-      const parts = [];
-
-      const basePrompt = document.getElementById("systemPrompt").value.trim();
-      if (basePrompt) parts.push(basePrompt);
-
-      parts.push(buildStyleInstruction());
-
-      if (temporaryFeedbackNotes.trim()) {
-        parts.push("Feedback temporaneo per migliorare le risposte:\n" + temporaryFeedbackNotes.trim());
-      }
-
-      return parts.join("\n\n");
-    }
-
-    async function buildGeminiContents(historySnapshot) {
-      const contents = [];
-
-      for (const msg of historySnapshot) {
-        if (!msg || !msg.role) continue;
-
-        const parts = [];
-        const text = String(msg.text || "").trim();
-
-        if (text) parts.push({ text });
-
-        const files = Array.isArray(msg.files) ? msg.files : [];
-        for (const file of files) {
-          if (!file) continue;
-
-          if (file.type && file.type.startsWith("image/")) {
-            const base64 = await fileToBase64(file);
-            parts.push({
-              inlineData: {
-                mimeType: file.type || "image/png",
-                data: base64
-              }
-            });
-          } else if (isTextLikeFile(file)) {
-            const content = await fileToText(file);
-            parts.push({
-              text:
-                `\n\n[File: ${file.name}]\n` +
-                "```text\n" +
-                content.slice(0, 30000) +
-                "\n```" +
-                (content.length > 30000 ? "\n[File troncato a 30000 caratteri]" : "")
-            });
-          } else {
-            parts.push({ text: `\n\n[File allegato: ${file.name}, type: ${file.type || "unknown"}]` });
-          }
-        }
-
-        contents.push({
-          role: msg.role === "assistant" ? "model" : "user",
-          parts: parts.length ? parts : [{ text: " " }]
-        });
-      }
-
-      return contents;
-    }
-
-    async function callGoogleGeminiSafe(historySnapshot, model) {
-      try {
-        return await callGoogleGemini(historySnapshot, model);
-      } catch (error) {
-        const canFallback =
-          model &&
-          model.id === "google/gemma-4-31b-it" &&
-          !legacyMode &&
-          (error?.status === 400 || error?.status === 404);
-
-        if (!canFallback) throw error;
-
-        showToast("Fallback legacy attivato");
-        const fallbackModel = findOrBuildModel(legacyFallbackId, "check", "X");
-        setSelectedModel(fallbackModel, { persist: true, close: false });
-        return await callGoogleGemini(historySnapshot, fallbackModel);
-      }
-    }
-
-    async function callGoogleGemini(historySnapshot, model) {
-      const apiKey = document.getElementById("googleKey").value.trim();
-      if (!apiKey) throw new Error("Manca Google AI Studio API Key.");
-
-      const temperature = Number(document.getElementById("temperature").value || 0.7);
-      const maxTokens = Number(document.getElementById("maxTokens").value || 2048);
-
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model.id)}:generateContent`;
-      const contents = await buildGeminiContents(historySnapshot);
-      const body = {
-        contents,
-        generationConfig: {
-          temperature,
-          maxOutputTokens: maxTokens
-        }
-      };
-
-      const systemPrompt = buildEffectiveSystemPrompt();
-      if (systemPrompt) {
-        body.systemInstruction = {
-          parts: [{ text: systemPrompt }]
-        };
-      }
-
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-goog-api-key": apiKey
-        },
-        body: JSON.stringify(body)
-      });
-
-      const data = await response.json().catch(() => null);
-
-      if (!response.ok) {
-        const err = new Error(
-          data?.error?.message || `Google API error ${response.status}: ${response.statusText}`
-        );
-        err.status = response.status;
-        throw err;
-      }
-
-      return extractGeminiText(data);
-    }
-
-    function extractGeminiText(data) {
-      const parts = data?.candidates?.[0]?.content?.parts || [];
-      const text = parts.map(part => part.text || "").filter(Boolean).join("\n");
-
-      if (text) return text;
-      if (data?.promptFeedback?.blockReason) return "Risposta bloccata. Motivo: " + data.promptFeedback.blockReason;
-      return JSON.stringify(data, null, 2);
-    }
-
-    /************************************************************
-     * RIGENERA
-     ************************************************************/
-
-    async function regenerateBubble(button, mode = null) {
+    async function regenerateFromBubble(button, mode = null) {
       const bubble = button.closest(".assistant-bubble");
-      if (!bubble) return;
-
-      if (bubble !== latestAssistantBubble) {
-        showToast("Rigenera solo sull’ultimo messaggio, bro");
+      if (!bubble || !bubble.__meta) {
+        showToast("Nessun dato per rigenerare");
         return;
       }
 
-      const meta = bubble.__requestMeta;
-      if (!meta || !meta.historySnapshot) {
-        showToast("Nessun contesto per rigenerare");
-        return;
-      }
-
-      const model = mode ? getModeModel(mode) : selectedModel;
-      setSelectedModel(model, { persist: true, close: false });
-
+      const targetModel = getModelForMode(mode);
+      setSelectedModel(targetModel, { persist: true, close: false });
       setLoading(true, "Rigenerando...");
 
       try {
-        const answer = await callGoogleGeminiSafe(meta.historySnapshot, model);
-        updateMessage(bubble, answer || "[Risposta vuota]");
+        const answer = await callGoogleGemini(bubble.__meta.requestSnapshot, targetModel.id);
 
-        chatHistory[chatHistory.length - 1] = {
+        updateMessage(bubble, answer || "[Risposta vuota]");
+        chatHistory[bubble.__meta.assistantHistoryIndex] = {
           role: "assistant",
           text: answer || ""
         };
 
-        showToast(mode ? `Rigenerato con ${mode === "instant" ? "Rapido" : "Heavy"}` : "Rigenerato");
+        showToast(mode === "instant" ? "Rigenerato con Instant" : mode === "think" ? "Rigenerato con Think" : "Rigenerato");
       } catch (error) {
         console.error(error);
         updateMessage(bubble, "Errore API:\n\n" + formatApiError(error), true);
       } finally {
         setLoading(false);
       }
+    }
+
+    function getModelForMode(mode) {
+      if (mode === "instant") return resolveModelById(getQuickModelId("instant"));
+      if (mode === "think") return resolveModelById(getQuickModelId("think"));
+      return selectedModel || resolveModelById(defaults.instant);
     }
 
     /************************************************************
@@ -1476,6 +1606,32 @@
       updateFeedbackPreview();
       closeDrawers();
       showToast("Nuova chat avviata");
+    }
+
+    /************************************************************
+     * UTIL
+     ************************************************************/
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function renderText(text) {
+      let safe = escapeHtml(String(text || ""));
+
+      safe = safe.replace(/```([\s\S]*?)```/g, function(_, code) {
+        return `<pre><code>${code.trim()}</code></pre>`;
+      });
+
+      safe = safe.replace(/`([^`]+)`/g, "<code>$1</code>");
+      safe = safe.replace(/\n/g, "<br>");
+
+      return safe;
     }
   </script>
 </body>
