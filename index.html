@@ -1,1564 +1,1503 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>AI Chat-SDK - Gemini</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+    <title>AI Chat - Gemini</title>
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css"/>
 
-  <style>
-    :root {
-      --bg: #0d0d0d;
-      --panel: #111111;
-      --text: #ececec;
-      --muted: #a1a1aa;
-    }
+    <style>
+        :root {
+            --bg: #09090b;
+            --panel: #0f0f0f;
+            --border: rgba(255, 255, 255, 0.06);
+            --text: #f4f4f5;
+            --muted: #71717a;
+            --accent: #6366f1;
+            --radius: 18px;
+        }
 
-    * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    html, body {
-      height: 100%;
-      width: 100%;
-      overflow: hidden;
-    }
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
 
-    body {
-      background-color: var(--bg);
-      color: var(--text);
-      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', 'SF Pro Display', system-ui, -apple-system, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
 
-    .sidebar { background-color: #000000; }
+        /* === SCROLLBAR === */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.14);
+        }
 
-    .right-panel {
-      background-color: rgba(24, 24, 27, 0.72);
-      backdrop-filter: blur(16px);
-    }
+        /* === SIDEBAR === */
+        .sidebar {
+            background: #050505;
+            border-right: 1px solid var(--border);
+        }
 
-    .input-box {
-      background-color: #1a1a1a;
-      border: 1px solid #333;
-    }
+        /* === RIGHT PANEL === */
+        .right-panel {
+            background: rgba(14, 14, 16, 0.85);
+            backdrop-filter: blur(20px) saturate(120%);
+            -webkit-backdrop-filter: blur(20px) saturate(120%);
+            border-left: 1px solid var(--border);
+        }
 
-    .custom-scrollbar::-webkit-scrollbar {
-      width: 5px;
-      height: 5px;
-    }
+        /* === INPUT BOX === */
+        .input-box {
+            background: rgba(24, 24, 27, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+        }
 
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #333;
-      border-radius: 10px;
-    }
+        /* === MODEL PILLS === */
+        .model-pill {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .model-pill:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        .model-pill:active {
+            transform: scale(0.96);
+        }
 
-    .model-list-item:hover { background-color: #1a1a1a; }
+        /* === SEND BUTTON === */
+        #sendBtn {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        #sendBtn:hover:not(:disabled) {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+        }
+        #sendBtn:active:not(:disabled) {
+            transform: scale(0.92);
+        }
 
-    #filePreview:empty { display: none; }
+        /* === MESSAGE BUBBLES === */
+        .bubble-user {
+            background: linear-gradient(135deg, #27272a 0%, #1f1f22 100%);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .bubble-ai {
+            background: transparent;
+        }
 
-    textarea { outline: none; }
+        /* === CODE BLOCKS === */
+        .message-content pre {
+            background: #0a0a0b;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            padding: 16px;
+            overflow-x: auto;
+            margin: 14px 0;
+            font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
+            font-size: 0.82em;
+            line-height: 1.6;
+        }
+        .message-content code {
+            background: rgba(255, 255, 255, 0.06);
+            padding: 2px 7px;
+            border-radius: 6px;
+            font-size: 0.85em;
+            font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
+        }
+        .message-content pre code {
+            background: transparent;
+            padding: 0;
+            border-radius: 0;
+            font-size: inherit;
+        }
 
-    .message-content pre {
-      background: #111;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 12px;
-      padding: 12px;
-      overflow-x: auto;
-      margin: 12px 0;
-      white-space: pre;
-    }
+        /* === RESPONSIVE === */
+        .mobile-only {
+            display: none;
+        }
+        .desktop-only {
+            display: inline-flex;
+        }
 
-    .message-content code {
-      background: rgba(255, 255, 255, 0.08);
-      padding: 2px 5px;
-      border-radius: 5px;
-      font-size: 0.85em;
-    }
+        @media (max-width: 1024px) {
+            body {
+                overflow: hidden;
+            }
+            .mobile-only {
+                display: inline-flex;
+            }
+            .desktop-only {
+                display: none !important;
+            }
 
-    .message-content pre code {
-      background: transparent;
-      padding: 0;
-    }
+            #leftSidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: min(82vw, 320px);
+                z-index: 60;
+                transform: translateX(-105%);
+                transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            #leftSidebar.open {
+                transform: translateX(0);
+            }
 
-    .safe-bottom {
-      padding-bottom: max(1rem, env(safe-area-inset-bottom));
-    }
+            #rightSidebar {
+                position: fixed;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                width: min(92vw, 390px);
+                z-index: 60;
+                transform: translateX(105%);
+                transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            #rightSidebar.open {
+                transform: translateX(0);
+            }
 
-    .mobile-only { display: none; }
-    .desktop-only { display: inline-flex; }
+            #mainArea {
+                width: 100%;
+            }
+            #chatWindow {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            .chat-bubble {
+                max-width: 94% !important;
+            }
+            .input-wrap {
+                padding: 0.75rem;
+            }
+        }
 
-    #mobileOverlay { display: none; }
+        @media (max-width: 640px) {
+            .header-model-title {
+                max-width: 45vw;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            .input-box {
+                border-radius: 22px;
+            }
+            #chatWindow {
+                padding: 1rem 0.5rem;
+            }
+        }
 
-    @media (max-width: 1024px) {
-      body { overflow: hidden; }
+        /* === ANIMATIONS === */
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .message-animate {
+            animation: fadeSlideIn 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-      .mobile-only { display: inline-flex; }
-      .desktop-only { display: none !important; }
+        @keyframes pulse-dot {
+            0%, 100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+        .typing-dot {
+            animation: pulse-dot 1.2s infinite;
+        }
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
 
-      #leftSidebar {
-        position: fixed;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        width: min(82vw, 320px);
-        z-index: 60;
-        transform: translateX(-105%);
-        transition: transform 0.24s ease;
-      }
-
-      #leftSidebar.open { transform: translateX(0); }
-
-      #rightSidebar {
-        position: fixed;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        width: min(92vw, 390px);
-        z-index: 60;
-        transform: translateX(105%);
-        transition: transform 0.24s ease;
-      }
-
-      #rightSidebar.open { transform: translateX(0); }
-
-      #mobileOverlay.show { display: block; }
-
-      #mainArea { width: 100%; }
-
-      #chatWindow {
-        padding-left: 1rem;
-        padding-right: 1rem;
-      }
-
-      .chat-bubble { max-width: 94% !important; }
-
-      .app-header { padding: 0.75rem; }
-
-      .input-wrap {
-        padding-left: 0.75rem;
-        padding-right: 0.75rem;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .header-model-title {
-        max-width: 48vw;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-
-      .quick-pill-text { display: none; }
-
-      .input-box { border-radius: 24px; }
-
-      #chatWindow { padding-top: 1rem; }
-
-      .welcome-title { font-size: 1.8rem; }
-    }
-  </style>
+        /* === MODAL === */
+        .modal-overlay {
+            animation: fadeIn 0.2s ease;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .modal-content {
+            animation: scaleIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.94) translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+    </style>
 </head>
 
 <body class="h-screen flex overflow-hidden">
-  <div id="mobileOverlay" onclick="closeDrawers()" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50"></div>
 
-  <aside
-    id="leftSidebar"
-    class="sidebar w-64 flex flex-col p-3 border-r border-white/10 custom-scrollbar overflow-y-auto"
-  >
-    <div class="flex items-center justify-between mb-2 lg:hidden">
-      <div class="text-xs uppercase tracking-widest text-zinc-500 font-bold">Menu</div>
-      <button onclick="closeDrawers()" class="h-9 w-9 rounded-full bg-zinc-900 hover:bg-zinc-800">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
+    <!-- ========== MOBILE OVERLAY ========== -->
+    <div id="mobileOverlay"
+         onclick="closeDrawers()"
+         class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 hidden">
     </div>
 
-    <button
-      onclick="newChat()"
-      class="flex items-center gap-3 p-3 rounded-lg hover:bg-zinc-800 transition mb-2 border border-white/5"
-    >
-      <i class="fa-regular fa-pen-to-square"></i>
-      <span class="text-sm font-medium">New chat</span>
-    </button>
+    <!-- ========== LEFT SIDEBAR ========== -->
+    <aside id="leftSidebar"
+           class="sidebar w-64 flex flex-col p-4 custom-scrollbar overflow-y-auto shrink-0">
 
-    <nav class="flex-1 space-y-1 text-sm text-zinc-400">
-      <div
-        class="flex items-center gap-3 p-3 rounded-lg hover:bg-zinc-800 cursor-pointer"
-        onclick="selectQuickModel('instant')"
-      >
-        <i class="fa-solid fa-bolt text-yellow-400"></i>
-        Rapido
-      </div>
-
-      <div
-        class="flex items-center gap-3 p-3 rounded-lg hover:bg-zinc-800 cursor-pointer"
-        onclick="selectQuickModel('think')"
-      >
-        <i class="fa-solid fa-brain text-purple-400"></i>
-        Heavy
-      </div>
-
-      <div
-        class="flex items-center gap-3 p-3 rounded-lg hover:bg-zinc-800 cursor-pointer"
-        onclick="selectQuickModel('preview')"
-      >
-        <i class="fa-solid fa-flask text-cyan-400"></i>
-        Preview
-      </div>
-
-      <div class="mt-10 pt-10 border-t border-white/10 space-y-1">
-        <div
-          onclick="openSettings()"
-          class="flex items-center gap-3 p-3 rounded-lg hover:bg-zinc-800 cursor-pointer text-white"
-        >
-          <i class="fa-solid fa-gear text-zinc-400"></i>
-          Impostazioni ⚙︎
-        </div>
-      </div>
-    </nav>
-
-    <div class="text-[10px] text-zinc-600 leading-relaxed mt-4">
-      Test locale. In produzione usa sempre un backend per proteggere le API key.
-    </div>
-  </aside>
-
-  <main id="mainArea" class="flex-1 flex flex-col relative min-w-0">
-    <header class="app-header p-4 flex justify-between items-center bg-zinc-900/30 border-b border-white/5">
-      <div class="flex items-center gap-3 min-w-0">
-        <button
-          onclick="openLeftDrawer()"
-          class="mobile-only h-9 w-9 rounded-full bg-zinc-800 border border-white/10 items-center justify-center"
-          title="Menu"
-        >
-          <i class="fa-solid fa-bars"></i>
-        </button>
-
-        <div class="flex flex-col gap-1 min-w-0">
-          <div class="flex items-center gap-2 min-w-0">
-            <span class="text-zinc-500 text-sm hidden sm:inline">Modello:</span>
-            <span id="currentModelDisplay" class="header-model-title text-white text-sm font-bold">Seleziona...</span>
-          </div>
-
-          <div class="text-[10px] text-zinc-600">
-            Provider:
-            <span id="currentProviderDisplay" class="text-zinc-400">-</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="flex items-center gap-2 sm:gap-4">
-        <div
-          id="connectionStatus"
-          class="text-xs px-2 py-1 rounded-full bg-zinc-800 text-zinc-400 border border-white/5"
-        >
-          Idle
-        </div>
-
-        <button
-          onclick="selectQuickModel('instant')"
-          class="desktop-only text-xs px-3 py-1.5 rounded-full bg-yellow-500/10 text-yellow-300 border border-yellow-500/20 hover:bg-yellow-500/20"
-          title="Rapido"
-        >
-          <i class="fa-solid fa-bolt mr-1"></i>
-          Rapido
-        </button>
-
-        <button
-          onclick="selectQuickModel('think')"
-          class="desktop-only text-xs px-3 py-1.5 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 hover:bg-purple-500/20"
-          title="Heavy"
-        >
-          <i class="fa-solid fa-brain mr-1"></i>
-          Heavy
-        </button>
-
-        <button
-          onclick="selectQuickModel('preview')"
-          class="desktop-only text-xs px-3 py-1.5 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 hover:bg-cyan-500/20"
-          title="Preview"
-        >
-          <i class="fa-solid fa-flask mr-1"></i>
-          Preview
-        </button>
-
-        <button
-          onclick="openRightDrawer()"
-          class="mobile-only h-9 w-9 rounded-full bg-zinc-800 border border-white/10 items-center justify-center"
-          title="Configurazione"
-        >
-          <i class="fa-solid fa-sliders"></i>
-        </button>
-      </div>
-    </header>
-
-    <div id="chatWindow" class="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar">
-      <div id="welcomeScreen" class="h-full flex flex-col items-center justify-center text-center space-y-4">
-        <h2 class="welcome-title text-3xl font-semibold">A cosa stai lavorando?</h2>
-        <p class="text-zinc-500 max-w-md">
-          Inserisci una API key, scegli un modello e fai una domanda.
-        </p>
-
-        <div class="flex flex-wrap items-center justify-center gap-2 max-w-xl">
-          <button
-            onclick="selectQuickModel('instant')"
-            class="text-xs px-4 py-2 rounded-full bg-yellow-500/10 text-yellow-300 border border-yellow-500/20 hover:bg-yellow-500/20"
-          >
-            <i class="fa-solid fa-bolt mr-1"></i>
-            Rapido ⚡︎
-          </button>
-
-          <button
-            onclick="selectQuickModel('think')"
-            class="text-xs px-4 py-2 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 hover:bg-purple-500/20"
-          >
-            <i class="fa-solid fa-brain mr-1"></i>
-            Heavy 𖡎
-          </button>
-
-          <button
-            onclick="selectQuickModel('preview')"
-            class="text-xs px-4 py-2 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 hover:bg-cyan-500/20"
-          >
-            <i class="fa-solid fa-flask mr-1"></i>
-            Preview
-          </button>
-
-          <button
-            onclick="openRightDrawer()"
-            class="text-xs px-4 py-2 rounded-full bg-zinc-800 text-zinc-300 border border-white/10 hover:bg-zinc-700"
-          >
-            <i class="fa-solid fa-key mr-1"></i>
-            API ✦
-          </button>
-        </div>
-
-        <div class="text-xs text-zinc-600 max-w-xl leading-relaxed border border-white/5 bg-zinc-900/50 rounded-2xl p-4">
-          <b class="text-zinc-400">Attenzione:</b>
-          questo esempio chiama direttamente le API dal browser.
-          Per un progetto vero crea un backend tipo <code>/api/chat</code> che custodisce le chiavi.
-        </div>
-      </div>
-    </div>
-
-    <div class="input-wrap p-4 safe-bottom">
-      <div class="max-w-3xl mx-auto input-box rounded-3xl p-3 flex flex-col shadow-2xl">
-        <div id="filePreview" class="flex flex-wrap gap-2 mb-2 px-2"></div>
-
-        <textarea
-          id="userInput"
-          rows="1"
-          placeholder="Fai una domanda..."
-          class="bg-transparent border-none focus:ring-0 text-white w-full resize-none p-2 max-h-48 custom-scrollbar"
-        ></textarea>
-
-        <div class="flex justify-between items-center mt-2 px-2 gap-2">
-          <div class="flex gap-2 sm:gap-3 text-zinc-500 items-center flex-wrap">
-            <label class="cursor-pointer hover:text-white h-8 px-2 rounded-full bg-zinc-900/80 border border-white/5 flex items-center gap-2" title="Allega file">
-              <i class="fa-solid fa-paperclip"></i>
-              <span class="text-[11px] hidden sm:inline">File</span>
-              <input
-                type="file"
-                id="fileInput"
-                hidden
-                multiple
-                onchange="handleFileSelect(event)"
-              />
-            </label>
-
-            <label class="cursor-pointer hover:text-white h-8 px-2 rounded-full bg-zinc-900/80 border border-white/5 flex items-center gap-2" title="Allega foto">
-              <i class="fa-regular fa-image"></i>
-              <span class="text-[11px] hidden sm:inline">Foto</span>
-              <input
-                type="file"
-                id="photoInput"
-                hidden
-                multiple
-                accept="image/*"
-                onchange="handleFileSelect(event)"
-              />
-            </label>
-
-            <button
-              onclick="selectQuickModel('instant')"
-              class="h-8 px-2 sm:px-3 rounded-full bg-yellow-500/10 text-yellow-300 border border-yellow-500/20 text-[11px] hover:bg-yellow-500/20"
-              title="Rapido"
-            >
-              <i class="fa-solid fa-bolt"></i>
-              <span class="quick-pill-text ml-1">Rapido</span>
+        <!-- Mobile close -->
+        <div class="flex items-center justify-between mb-5 lg:hidden">
+            <span class="text-[10px] uppercase tracking-[0.15em] text-zinc-600 font-semibold">Menu</span>
+            <button onclick="closeDrawers()"
+                    class="h-9 w-9 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-white/5 flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark text-zinc-400 text-sm"></i>
             </button>
+        </div>
 
-            <button
-              onclick="selectQuickModel('think')"
-              class="h-8 px-2 sm:px-3 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 text-[11px] hover:bg-purple-500/20"
-              title="Heavy"
-            >
-              <i class="fa-solid fa-brain"></i>
-              <span class="quick-pill-text ml-1">Heavy</span>
+        <!-- New Chat -->
+        <button onclick="newChat()"
+                class="flex items-center gap-3 p-3 rounded-2xl bg-zinc-900/50 hover:bg-zinc-900 border border-white/5 transition mb-5 w-full text-left group">
+            <div class="h-8 w-8 rounded-xl bg-white/5 flex items-center justify-center group-hover:bg-white/10 transition">
+                <i class="fa-solid fa-plus text-zinc-300 text-sm"></i>
+            </div>
+            <span class="text-sm font-medium text-zinc-200">Nuova chat</span>
+        </button>
+
+        <!-- Quick models -->
+        <div class="space-y-1">
+            <div onclick="selectQuickModel('instant')"
+                 class="flex items-center gap-3 p-3 rounded-xl hover:bg-zinc-900/70 cursor-pointer transition group">
+                <div class="h-7 w-7 rounded-lg bg-yellow-500/10 flex items-center justify-center group-hover:bg-yellow-500/20 transition">
+                    <i class="fa-solid fa-bolt text-yellow-400 text-xs"></i>
+                </div>
+                <span class="text-sm text-zinc-300">Rapido</span>
+                <span class="ml-auto text-[9px] text-zinc-600 bg-zinc-800/50 px-2 py-0.5 rounded-full">⚡</span>
+            </div>
+
+            <div onclick="selectQuickModel('think')"
+                 class="flex items-center gap-3 p-3 rounded-xl hover:bg-zinc-900/70 cursor-pointer transition group">
+                <div class="h-7 w-7 rounded-lg bg-purple-500/10 flex items-center justify-center group-hover:bg-purple-500/20 transition">
+                    <i class="fa-solid fa-brain text-purple-400 text-xs"></i>
+                </div>
+                <span class="text-sm text-zinc-300">Heavy</span>
+                <span class="ml-auto text-[9px] text-zinc-600 bg-zinc-800/50 px-2 py-0.5 rounded-full">🧠</span>
+            </div>
+
+            <div onclick="selectQuickModel('preview')"
+                 class="flex items-center gap-3 p-3 rounded-xl hover:bg-zinc-900/70 cursor-pointer transition group">
+                <div class="h-7 w-7 rounded-lg bg-cyan-500/10 flex items-center justify-center group-hover:bg-cyan-500/20 transition">
+                    <i class="fa-solid fa-flask text-cyan-400 text-xs"></i>
+                </div>
+                <span class="text-sm text-zinc-300">Preview</span>
+                <span class="ml-auto text-[9px] text-zinc-600 bg-zinc-800/50 px-2 py-0.5 rounded-full">🧪</span>
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="my-6 border-t border-white/5"></div>
+
+        <!-- Settings -->
+        <div onclick="openSettings()"
+             class="flex items-center gap-3 p-3 rounded-xl hover:bg-zinc-900/70 cursor-pointer transition group">
+            <div class="h-7 w-7 rounded-lg bg-zinc-800/80 flex items-center justify-center group-hover:bg-zinc-700 transition">
+                <i class="fa-solid fa-gear text-zinc-400 text-xs"></i>
+            </div>
+            <span class="text-sm text-zinc-300">Impostazioni</span>
+        </div>
+
+        <!-- Footer -->
+        <div class="mt-auto pt-6">
+            <div class="text-[10px] text-zinc-600 leading-relaxed bg-zinc-900/30 rounded-xl p-3 border border-white/5">
+                ⚠️ Test locale. In produzione usa sempre un backend per proteggere le API key.
+            </div>
+        </div>
+    </aside>
+
+    <!-- ========== MAIN AREA ========== -->
+    <main id="mainArea" class="flex-1 flex flex-col relative min-w-0">
+
+        <!-- Header -->
+        <header class="flex items-center justify-between px-4 py-3 border-b border-white/5 bg-zinc-950/60 backdrop-blur-md shrink-0">
+            <div class="flex items-center gap-3 min-w-0">
+                <!-- Mobile hamburger -->
+                <button onclick="openLeftDrawer()"
+                        class="mobile-only h-9 w-9 rounded-xl bg-zinc-800/80 border border-white/5 flex items-center justify-center hover:bg-zinc-700 transition">
+                    <i class="fa-solid fa-bars text-zinc-300 text-sm"></i>
+                </button>
+
+                <!-- Logo / Model info -->
+                <div class="flex items-center gap-2.5 min-w-0">
+                    <div class="h-7 w-7 rounded-lg bg-indigo-500/15 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-robot text-indigo-400 text-xs"></i>
+                    </div>
+                    <div class="flex flex-col min-w-0">
+                        <span id="currentModelDisplay"
+                              class="header-model-title text-sm font-semibold text-zinc-100">
+                            Seleziona modello
+                        </span>
+                        <span id="currentProviderDisplay" class="text-[10px] text-zinc-500">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right header actions -->
+            <div class="flex items-center gap-2">
+                <!-- Status dot -->
+                <div id="connectionStatus"
+                     class="flex items-center gap-1.5 text-[10px] px-2.5 py-1 rounded-full bg-zinc-800/70 text-zinc-400 border border-white/5">
+                    <span class="h-1.5 w-1.5 rounded-full bg-zinc-500"></span>
+                    Idle
+                </div>
+
+                <!-- Desktop quick model pills -->
+                <button onclick="selectQuickModel('instant')"
+                        class="desktop-only model-pill text-[11px] px-3 py-1.5 rounded-full bg-yellow-500/8 text-yellow-300/90 border border-yellow-500/15">
+                    <i class="fa-solid fa-bolt mr-1 text-[10px]"></i>Rapido
+                </button>
+                <button onclick="selectQuickModel('think')"
+                        class="desktop-only model-pill text-[11px] px-3 py-1.5 rounded-full bg-purple-500/8 text-purple-300/90 border border-purple-500/15">
+                    <i class="fa-solid fa-brain mr-1 text-[10px]"></i>Heavy
+                </button>
+                <button onclick="selectQuickModel('preview')"
+                        class="desktop-only model-pill text-[11px] px-3 py-1.5 rounded-full bg-cyan-500/8 text-cyan-300/90 border border-cyan-500/15">
+                    <i class="fa-solid fa-flask mr-1 text-[10px]"></i>Preview
+                </button>
+
+                <!-- Mobile settings -->
+                <button onclick="openRightDrawer()"
+                        class="mobile-only h-9 w-9 rounded-xl bg-zinc-800/80 border border-white/5 flex items-center justify-center hover:bg-zinc-700 transition">
+                    <i class="fa-solid fa-sliders text-zinc-300 text-sm"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Chat window -->
+        <div id="chatWindow"
+             class="flex-1 overflow-y-auto custom-scrollbar scroll-smooth">
+
+            <!-- Welcome screen -->
+            <div id="welcomeScreen"
+                 class="h-full flex flex-col items-center justify-center text-center px-6">
+
+                <!-- Logo -->
+                <div class="h-16 w-16 rounded-2xl bg-indigo-500/10 border border-indigo-500/15 flex items-center justify-center mb-6 shadow-lg shadow-indigo-500/5">
+                    <i class="fa-solid fa-wand-magic-sparkles text-2xl text-indigo-400"></i>
+                </div>
+
+                <h2 class="text-3xl sm:text-4xl font-bold text-zinc-100 tracking-tight mb-3">
+                    Ciao, come posso aiutarti?
+                </h2>
+                <p class="text-zinc-500 max-w-md mb-8 text-sm leading-relaxed">
+                    Inserisci una API key, scegli un modello e inizia a chattare.
+                </p>
+
+                <!-- Quick start pills -->
+                <div class="flex flex-wrap items-center justify-center gap-2.5 max-w-xl">
+                    <button onclick="selectQuickModel('instant')"
+                            class="model-pill text-xs px-5 py-2.5 rounded-full bg-yellow-500/8 text-yellow-300 border border-yellow-500/15 flex items-center gap-2">
+                        <i class="fa-solid fa-bolt"></i> Rapido
+                    </button>
+                    <button onclick="selectQuickModel('think')"
+                            class="model-pill text-xs px-5 py-2.5 rounded-full bg-purple-500/8 text-purple-300 border border-purple-500/15 flex items-center gap-2">
+                        <i class="fa-solid fa-brain"></i> Heavy
+                    </button>
+                    <button onclick="selectQuickModel('preview')"
+                            class="model-pill text-xs px-5 py-2.5 rounded-full bg-cyan-500/8 text-cyan-300 border border-cyan-500/15 flex items-center gap-2">
+                        <i class="fa-solid fa-flask"></i> Preview
+                    </button>
+                    <button onclick="openRightDrawer()"
+                            class="model-pill text-xs px-5 py-2.5 rounded-full bg-zinc-800/60 text-zinc-300 border border-white/5 flex items-center gap-2">
+                        <i class="fa-solid fa-key"></i> API Key
+                    </button>
+                </div>
+
+                <!-- Warning -->
+                <div class="mt-10 text-[11px] text-zinc-600 max-w-lg leading-relaxed bg-zinc-900/40 rounded-2xl p-4 border border-white/5">
+                    <b class="text-zinc-400">Attenzione:</b> questo esempio chiama direttamente le API dal browser. Per un progetto reale, crea un backend che custodisce le chiavi.
+                </div>
+            </div>
+        </div>
+
+        <!-- Input area -->
+        <div class="input-wrap px-4 pb-4 pt-2 shrink-0 safe-bottom">
+            <div class="max-w-3xl mx-auto input-box rounded-[22px] p-2.5 flex flex-col">
+
+                <!-- File preview -->
+                <div id="filePreview"
+                     class="flex flex-wrap gap-2 mb-2 px-1.5"></div>
+
+                <!-- Textarea -->
+                <textarea id="userInput"
+                          rows="1"
+                          placeholder="Scrivi un messaggio..."
+                          class="bg-transparent border-none focus:ring-0 focus:outline-none text-zinc-100 w-full resize-none p-2 max-h-48 custom-scrollbar placeholder:text-zinc-500 text-sm"></textarea>
+
+                <!-- Bottom row -->
+                <div class="flex items-center justify-between mt-1 px-1.5 gap-2">
+                    <!-- Left tools -->
+                    <div class="flex items-center gap-1.5 text-zinc-500">
+                        <!-- File attach -->
+                        <label class="cursor-pointer hover:text-zinc-300 h-8 w-8 rounded-xl bg-zinc-800/60 border border-white/5 flex items-center justify-center transition hover:bg-zinc-700/60"
+                               title="Allega file">
+                            <i class="fa-solid fa-paperclip text-xs"></i>
+                            <input type="file" id="fileInput" hidden multiple onchange="handleFileSelect(event)"/>
+                        </label>
+
+                        <!-- Photo attach -->
+                        <label class="cursor-pointer hover:text-zinc-300 h-8 w-8 rounded-xl bg-zinc-800/60 border border-white/5 flex items-center justify-center transition hover:bg-zinc-700/60"
+                               title="Allega foto">
+                            <i class="fa-regular fa-image text-xs"></i>
+                            <input type="file" id="photoInput" hidden multiple accept="image/*" onchange="handleFileSelect(event)"/>
+                        </label>
+
+                        <!-- Quick model selectors (compact) -->
+                        <button onclick="selectQuickModel('instant')"
+                                class="hidden sm:inline-flex h-8 px-2.5 rounded-xl bg-yellow-500/8 text-yellow-400/80 border border-yellow-500/15 text-[10px] items-center gap-1 hover:bg-yellow-500/15 transition"
+                                title="Rapido">
+                            <i class="fa-solid fa-bolt text-[9px]"></i> Rapido
+                        </button>
+                        <button onclick="selectQuickModel('think')"
+                                class="hidden sm:inline-flex h-8 px-2.5 rounded-xl bg-purple-500/8 text-purple-400/80 border border-purple-500/15 text-[10px] items-center gap-1 hover:bg-purple-500/15 transition"
+                                title="Heavy">
+                            <i class="fa-solid fa-brain text-[9px]"></i> Heavy
+                        </button>
+                        <button onclick="selectQuickModel('preview')"
+                                class="hidden sm:inline-flex h-8 px-2.5 rounded-xl bg-cyan-500/8 text-cyan-400/80 border border-cyan-500/15 text-[10px] items-center gap-1 hover:bg-cyan-500/15 transition"
+                                title="Preview">
+                            <i class="fa-solid fa-flask text-[9px]"></i> Preview
+                        </button>
+                    </div>
+
+                    <!-- Right: clear + send -->
+                    <div class="flex items-center gap-2">
+                        <button onclick="clearFiles()"
+                                class="text-[10px] text-zinc-600 hover:text-zinc-300 transition"
+                                title="Rimuovi allegati">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+
+                        <button id="sendBtn"
+                                onclick="handleSend()"
+                                class="bg-white text-black h-9 w-9 rounded-full flex items-center justify-center hover:bg-zinc-200 disabled:opacity-30 disabled:cursor-not-allowed shrink-0 transition"
+                                disabled>
+                            <i class="fa-solid fa-arrow-up text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ========== RIGHT SIDEBAR (Settings) ========== -->
+    <aside id="rightSidebar"
+           class="right-panel w-80 flex flex-col border-l border-white/10 p-5 custom-scrollbar overflow-y-auto shrink-0">
+
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-5">
+            <div class="flex items-center gap-2">
+                <div class="h-6 w-6 rounded-lg bg-indigo-500/15 flex items-center justify-center">
+                    <i class="fa-solid fa-sliders text-indigo-400 text-[10px]"></i>
+                </div>
+                <h3 class="text-[11px] font-bold text-zinc-400 uppercase tracking-[0.12em]">Configurazione</h3>
+            </div>
+            <button onclick="closeDrawers()"
+                    class="lg:hidden h-8 w-8 rounded-xl bg-zinc-800 hover:bg-zinc-700 flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark text-zinc-400 text-sm"></i>
             </button>
+        </div>
 
-            <button
-              onclick="selectQuickModel('preview')"
-              class="h-8 px-2 sm:px-3 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 text-[11px] hover:bg-cyan-500/20"
-              title="Preview"
-            >
-              <i class="fa-solid fa-flask"></i>
-              <span class="quick-pill-text ml-1">Preview</span>
+        <!-- API Key -->
+        <div class="space-y-1.5 mb-4">
+            <label class="text-[10px] text-zinc-500 font-medium">Google AI Studio API Key</label>
+            <div class="relative">
+                <input type="password" id="googleKey"
+                       placeholder="AIza..."
+                       class="w-full bg-zinc-900/70 border border-white/8 rounded-xl p-2.5 pr-8 text-xs text-zinc-200 outline-none focus:border-indigo-500/50 transition placeholder:text-zinc-600"/>
+                <i class="fa-solid fa-key absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-600 text-[10px]"></i>
+            </div>
+        </div>
+
+        <!-- Temp + Tokens -->
+        <div class="grid grid-cols-2 gap-3 mb-4">
+            <div class="space-y-1.5">
+                <label class="text-[10px] text-zinc-500 font-medium">Temperature</label>
+                <input type="number" id="temperature"
+                       min="0" max="2" step="0.1" value="0.7"
+                       class="w-full bg-zinc-900/70 border border-white/8 rounded-xl p-2.5 text-xs text-zinc-200 outline-none focus:border-purple-500/50 transition"/>
+            </div>
+            <div class="space-y-1.5">
+                <label class="text-[10px] text-zinc-500 font-medium">Max tokens</label>
+                <input type="number" id="maxTokens"
+                       min="64" max="32768" step="64" value="2048"
+                       class="w-full bg-zinc-900/70 border border-white/8 rounded-xl p-2.5 text-xs text-zinc-200 outline-none focus:border-purple-500/50 transition"/>
+            </div>
+        </div>
+
+        <!-- Save checkbox -->
+        <label class="flex items-center gap-2.5 text-xs text-zinc-400 select-none mb-5 cursor-pointer group">
+            <input id="saveLocal" type="checkbox" class="accent-white w-3.5 h-3.5 rounded" onchange="persistSettings()"/>
+            <span class="group-hover:text-zinc-300 transition">Salva impostazioni localmente</span>
+        </label>
+
+        <!-- Divider -->
+        <div class="border-t border-white/5 my-3"></div>
+
+        <!-- Quick model IDs -->
+        <h4 class="text-[10px] font-semibold text-zinc-500 uppercase tracking-[0.1em] mb-3">Modelli Rapidi</h4>
+        <div class="space-y-3 mb-4">
+            <div class="space-y-1.5">
+                <label class="text-[10px] text-zinc-500 flex items-center gap-1.5">
+                    <span class="h-1.5 w-1.5 rounded-full bg-yellow-500"></span> Rapido
+                </label>
+                <input id="instantCustomModelId"
+                       placeholder="gemini-2.5-flash"
+                       class="w-full bg-zinc-900/70 border border-white/8 rounded-xl p-2.5 text-xs text-zinc-200 outline-none focus:border-yellow-500/50 transition placeholder:text-zinc-600"/>
+            </div>
+            <div class="space-y-1.5">
+                <label class="text-[10px] text-zinc-500 flex items-center gap-1.5">
+                    <span class="h-1.5 w-1.5 rounded-full bg-purple-500"></span> Heavy
+                </label>
+                <input id="thinkCustomModelId"
+                       placeholder="gemma-4-26b-a4b-it"
+                       class="w-full bg-zinc-900/70 border border-white/8 rounded-xl p-2.5 text-xs text-zinc-200 outline-none focus:border-purple-500/50 transition placeholder:text-zinc-600"/>
+            </div>
+            <div class="space-y-1.5">
+                <label class="text-[10px] text-zinc-500 flex items-center gap-1.5">
+                    <span class="h-1.5 w-1.5 rounded-full bg-cyan-500"></span> Preview
+                </label>
+                <input id="previewCustomModelId"
+                       placeholder="gemini-3-flash-preview"
+                       class="w-full bg-zinc-900/70 border border-white/8 rounded-xl p-2.5 text-xs text-zinc-200 outline-none focus:border-cyan-500/50 transition placeholder:text-zinc-600"/>
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="border-t border-white/5 my-3"></div>
+
+        <!-- Custom model -->
+        <h4 class="text-[10px] font-semibold text-zinc-500 uppercase tracking-[0.1em] mb-3">Modello Custom</h4>
+        <div class="space-y-2.5 mb-4">
+            <input id="customModelId"
+                   placeholder="es: gemini-2.5-pro"
+                   class="w-full bg-zinc-900/70 border border-white/8 rounded-xl p-2.5 text-xs text-zinc-200 outline-none focus:border-white/20 transition placeholder:text-zinc-600"/>
+            <button onclick="useCustomModel()"
+                    class="w-full bg-zinc-100 text-black font-semibold py-2.5 rounded-xl text-xs hover:bg-white transition active:scale-[0.98]">
+                <i class="fa-solid fa-check mr-1"></i> Usa modello custom
             </button>
+        </div>
 
-            <button onclick="clearFiles()" class="text-[10px] hover:text-white" title="Rimuovi allegati">
-              clear
+        <!-- Divider -->
+        <div class="border-t border-white/5 my-3"></div>
+
+        <!-- Preset models -->
+        <h4 class="text-[10px] font-semibold text-zinc-500 uppercase tracking-[0.1em] mb-3">Modelli Preimpostati</h4>
+        <div class="space-y-0.5" id="modelList"></div>
+
+        <!-- Bottom tip -->
+        <div class="mt-auto pt-5">
+            <div class="text-[10px] text-zinc-600 leading-relaxed">
+                Se un modello dà errore, verifica che l'ID sia disponibile per la tua API key nella dashboard Google AI Studio.
+            </div>
+        </div>
+    </aside>
+
+    <!-- ========== SETTINGS MODAL ========== -->
+    <div id="settingsModal"
+         class="hidden fixed inset-0 z-[80] items-center justify-center p-4 modal-overlay">
+        <div class="absolute inset-0 bg-black/85 backdrop-blur-sm" onclick="closeSettings()"></div>
+        <div class="relative bg-zinc-900 border border-white/8 w-full max-w-[580px] rounded-2xl p-6 shadow-2xl custom-scrollbar overflow-y-auto max-h-[85vh] modal-content">
+
+            <div class="flex items-center justify-between mb-5">
+                <h2 class="text-lg font-bold text-zinc-100 flex items-center gap-2">
+                    <i class="fa-solid fa-gear text-indigo-400"></i> Impostazioni AI
+                </h2>
+                <button onclick="closeSettings()"
+                        class="h-8 w-8 rounded-xl bg-zinc-800 hover:bg-zinc-700 flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark text-zinc-400 text-sm"></i>
+                </button>
+            </div>
+
+            <!-- System prompt -->
+            <div class="space-y-1.5 mb-4">
+                <label class="text-[10px] text-zinc-500 font-medium">System Prompt</label>
+                <textarea id="systemPrompt" rows="4"
+                          placeholder="Es: Rispondi come un ingegnere software preciso e chiaro."
+                          class="w-full bg-zinc-800/70 border border-white/8 rounded-xl p-3 text-sm text-zinc-200 outline-none focus:border-indigo-500/50 transition resize-none placeholder:text-zinc-600"></textarea>
+            </div>
+
+            <!-- Response style -->
+            <div class="space-y-1.5 mb-4">
+                <label class="text-[10px] text-zinc-500 font-medium">Stile Risposta</label>
+                <select id="responseStyle"
+                        class="w-full bg-zinc-800/70 border border-white/8 rounded-xl p-3 text-sm text-zinc-200 outline-none focus:border-indigo-500/50 transition">
+                    <option value="short">Breve e diretto</option>
+                    <option value="long">Lungo e dettagliato</option>
+                    <option value="genz">Gen Z / Casual</option>
+                    <option value="professional">Professionale</option>
+                    <option value="custom">Custom</option>
+                </select>
+            </div>
+
+            <!-- Custom style prompt -->
+            <div class="space-y-1.5 mb-4">
+                <label class="text-[10px] text-zinc-500 font-medium">Prompt Stile Custom</label>
+                <textarea id="styleCustomPrompt" rows="3"
+                          placeholder="Descrivi il tono e comportamento desiderato..."
+                          class="w-full bg-zinc-800/70 border border-white/8 rounded-xl p-3 text-sm text-zinc-200 outline-none focus:border-indigo-500/50 transition resize-none placeholder:text-zinc-600"></textarea>
+            </div>
+
+            <!-- Feedback preview -->
+            <div class="rounded-xl border border-white/8 bg-zinc-950/60 p-4 mb-5">
+                <div class="flex items-center justify-between gap-3 mb-2">
+                    <span class="text-[10px] uppercase tracking-[0.1em] text-zinc-500 font-semibold">Feedback Temporaneo</span>
+                    <button onclick="clearTemporaryFeedback()"
+                            class="text-[10px] px-2.5 py-1 rounded-lg bg-zinc-800 border border-white/8 text-zinc-400 hover:bg-zinc-700 hover:text-zinc-200 transition">
+                        Pulisci
+                    </button>
+                </div>
+                <div id="feedbackPreview"
+                     class="text-xs text-zinc-500 leading-relaxed whitespace-pre-wrap min-h-[40px]">
+                    Nessun feedback.
+                </div>
+            </div>
+
+            <!-- Save button -->
+            <button onclick="closeSettings()"
+                    class="w-full bg-white text-black font-semibold py-3 rounded-xl text-sm hover:bg-zinc-200 transition active:scale-[0.98]">
+                <i class="fa-solid fa-check mr-1"></i> Salva impostazioni
             </button>
-          </div>
-
-          <button
-            id="sendBtn"
-            onclick="handleSend()"
-            class="bg-white text-black h-9 w-9 rounded-full flex items-center justify-center hover:bg-zinc-300 disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
-          >
-            <i class="fa-solid fa-arrow-up"></i>
-          </button>
         </div>
-      </div>
-    </div>
-  </main>
-
-  <aside
-    id="rightSidebar"
-    class="right-panel w-80 border-l border-white/10 p-4 custom-scrollbar overflow-y-auto"
-  >
-    <div class="flex items-center justify-between mb-4">
-      <h3 class="text-xs font-bold text-zinc-500 uppercase tracking-widest">API ✦</h3>
-
-      <button onclick="closeDrawers()" class="lg:hidden h-9 w-9 rounded-full bg-zinc-800 hover:bg-zinc-700">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
     </div>
 
-    <div class="space-y-4">
-      <div>
-        <label class="text-[10px] text-zinc-500 block mb-1">Google AI Studio API Key</label>
-        <input
-          type="password"
-          id="googleKey"
-          placeholder="AIza..."
-          class="w-full bg-zinc-800 border border-zinc-700 rounded-md p-2 text-xs outline-none focus:border-blue-500"
-        />
-      </div>
-
-      <div class="grid grid-cols-2 gap-3">
-        <div>
-          <label class="text-[10px] text-zinc-500 block mb-1">Temperature</label>
-          <input
-            type="number"
-            id="temperature"
-            min="0"
-            max="2"
-            step="0.1"
-            value="0.7"
-            class="w-full bg-zinc-800 border border-zinc-700 rounded-md p-2 text-xs outline-none focus:border-purple-500"
-          />
-        </div>
-
-        <div>
-          <label class="text-[10px] text-zinc-500 block mb-1">Max tokens</label>
-          <input
-            type="number"
-            id="maxTokens"
-            min="64"
-            max="32768"
-            step="64"
-            value="2048"
-            class="w-full bg-zinc-800 border border-zinc-700 rounded-md p-2 text-xs outline-none focus:border-purple-500"
-          />
-        </div>
-      </div>
-
-      <label class="flex items-center gap-2 text-xs text-zinc-400 select-none">
-        <input id="saveLocal" type="checkbox" class="accent-white" onchange="persistSettings()" />
-        Salva impostazioni
-      </label>
-    </div>
-
-    <h3 class="text-xs font-bold text-zinc-500 uppercase mt-8 mb-4 tracking-widest">
-      Modelli rapidi
-    </h3>
-
-    <div class="space-y-3">
-      <div class="space-y-2">
-        <label class="text-[10px] text-zinc-500 block">Rapido</label>
-        <input
-          id="instantCustomModelId"
-          placeholder="Default: gemini-2.5-flash"
-          class="w-full bg-zinc-800 border border-zinc-700 rounded-xl p-3 text-sm text-white outline-none focus:border-yellow-500"
-        />
-      </div>
-
-      <div class="space-y-2">
-        <label class="text-[10px] text-zinc-500 block">Heavy</label>
-        <input
-          id="thinkCustomModelId"
-          placeholder="Default: gemma-4-26b-a4b-it"
-          class="w-full bg-zinc-800 border border-zinc-700 rounded-xl p-3 text-sm text-white outline-none focus:border-purple-500"
-        />
-      </div>
-
-      <div class="space-y-2">
-        <label class="text-[10px] text-zinc-500 block">Preview</label>
-        <input
-          id="previewCustomModelId"
-          placeholder="Default: gemini-3-flash-preview"
-          class="w-full bg-zinc-800 border border-zinc-700 rounded-xl p-3 text-sm text-white outline-none focus:border-cyan-500"
-        />
-      </div>
-    </div>
-
-    <h3 class="text-xs font-bold text-zinc-500 uppercase mt-8 mb-4 tracking-widest">
-      Modello custom
-    </h3>
-
-    <div class="space-y-3">
-      <input
-        id="customModelId"
-        placeholder="es: gemini-2.5-pro oppure gemma-4-26b-a4b-it"
-        class="w-full bg-zinc-800 border border-zinc-700 rounded-md p-2 text-xs outline-none"
-      />
-
-      <button
-        onclick="useCustomModel()"
-        class="w-full bg-zinc-100 text-black font-bold py-2 rounded-lg text-xs hover:bg-white"
-      >
-        Usa modello custom
-      </button>
-    </div>
-
-    <h3 class="text-xs font-bold text-zinc-500 uppercase mt-8 mb-4 tracking-widest">
-      Modelli pre impostati
-    </h3>
-
-    <div class="space-y-1" id="modelList"></div>
-
-    <div class="mt-8 text-[10px] text-zinc-600 leading-relaxed">
-      Se un modello dà errore 404 o 400, probabilmente l’ID non è disponibile
-      per la tua API key. Copia sempre l’ID esatto dalla dashboard Google AI Studio.
-    </div>
-  </aside>
-
-  <div id="settingsModal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-[80] p-4">
-    <div class="bg-zinc-900 border border-white/10 w-full max-w-[620px] rounded-2xl p-6 shadow-2xl custom-scrollbar overflow-y-auto max-h-[90vh]">
-      <h2 class="text-xl font-bold mb-4">Impostazioni AI</h2>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="space-y-2 md:col-span-2">
-          <label class="text-[10px] text-zinc-500 block">System prompt base</label>
-          <textarea
-            id="systemPrompt"
-            rows="6"
-            placeholder="Es: Rispondi come un ingegnere software preciso e chiaro."
-            class="w-full bg-zinc-800 border border-zinc-700 rounded-xl p-3 text-sm text-white outline-none focus:border-blue-500 resize-none"
-          ></textarea>
-        </div>
-
-        <div class="space-y-2 md:col-span-2">
-          <label class="text-[10px] text-zinc-500 block">Stile risposta</label>
-          <select
-            id="responseStyle"
-            class="w-full bg-zinc-800 border border-zinc-700 rounded-xl p-3 text-sm text-white outline-none"
-          >
-            <option value="short">Breve</option>
-            <option value="long">Lungo</option>
-            <option value="genz">Gen Z</option>
-            <option value="professional">Professionale</option>
-            <option value="custom">Custom</option>
-          </select>
-        </div>
-
-        <div class="space-y-2 md:col-span-2">
-          <label class="text-[10px] text-zinc-500 block">Prompt custom stile</label>
-          <textarea
-            id="styleCustomPrompt"
-            rows="4"
-            placeholder="Scrivi qui il tono e il comportamento desiderato..."
-            class="w-full bg-zinc-800 border border-zinc-700 rounded-xl p-3 text-sm text-white outline-none focus:border-blue-500 resize-none"
-          ></textarea>
-        </div>
-      </div>
-
-      <div class="mt-4 rounded-xl border border-white/10 bg-zinc-950/50 p-3">
-        <div class="flex items-center justify-between gap-3 mb-2">
-          <div class="text-xs uppercase tracking-widest text-zinc-500 font-bold">Feedback temporaneo</div>
-          <button
-            onclick="clearTemporaryFeedback()"
-            class="text-[10px] px-2 py-1 rounded-md bg-zinc-800 border border-white/10 text-zinc-300 hover:bg-zinc-700"
-          >
-            Pulisci
-          </button>
-        </div>
-
-        <div id="feedbackPreview" class="text-xs text-zinc-400 leading-relaxed whitespace-pre-wrap">
-          Nessun feedback temporaneo.
-        </div>
-      </div>
-
-      <button onclick="closeSettings()" class="w-full mt-4 bg-white text-black font-bold py-3 rounded-xl">
-        Salva
-      </button>
-    </div>
-  </div>
-
-  <div id="toastLayer" class="fixed bottom-4 right-4 z-[120] space-y-2 pointer-events-none"></div>
-
-  <script>
-    const models = [
-      { id: "gemini-2.5-flash", name: "Gemini 2.5 Flash", provider: "google", status: "online", group: "Google" },
-      { id: "gemini-2.5-flash-lite", name: "Gemini 2.5 Flash Lite", provider: "google", status: "online", group: "Google" },
-      { id: "gemini-2.5-pro", name: "Gemini 2.5 Pro", provider: "google", status: "check", group: "Google" },
-      { id: "gemini-3-flash-preview", name: "Gemini 3 Flash Preview", provider: "google", status: "preview", group: "Google" },
-
-      { id: "google/gemma-4-31b-it", name: "Instant - Gemma 4 31B IT", provider: "google", status: "instant", group: "Quick" },
-      { id: "gemini-3.1-flash-lite-preview", name: "Gemini-3.1 flash lite", provider: "google", status: "think", group: "Quick" },
-
-      { id: "gemma-4-26b-a4b-it", name: "gemma-4-26b-a4b-it", provider: "google", status: "check", group: "OpeOSS" },
-      { id: "gemini-flash-latest", name: "gemini-flash-latest", provider: "google", status: "check", group: "Meta" },
-      { id: "gemini-2.0-flash-lite", name: "gemini-2.0-flash-lite", provider: "google", status: "check", group: "Legacy" },
-      { id: "gemini-3.1-pro-preview", name: "gemini-3.1-pro-preview", provider: "google", status: "check", group: "X" }
-    ];
-
-    const defaults = {
-      instant: "gemini-2.5-flash",
-      think: "gemma-4-26b-a4b-it",
-      preview: "gemini-3-flash-preview"
-    };
-
-    let selectedModel = null;
-    let selectedFiles = [];
-    let chatHistory = [];
-    let isLoading = false;
-    let latestAssistantBubble = null;
-    let temporaryFeedbackNotes = "";
-
-    window.addEventListener("DOMContentLoaded", init);
-
-    function el(id) {
-      return document.getElementById(id);
-    }
-
-    function val(id, fallback = "") {
-      const node = el(id);
-      return node ? node.value : fallback;
-    }
-
-    function init() {
-      initModels();
-      restoreSettings();
-      bindEvents();
-
-      if (!selectedModel) {
-        setSelectedModel(resolveModelById(defaults.instant), { persist: false, close: false });
-      } else {
-        syncSelectedModelUI(selectedModel);
-      }
-
-      updateFeedbackPreview();
-      handleResponsiveResize();
-    }
-
-    function bindEvents() {
-      const input = el("userInput");
-
-      input.addEventListener("input", () => {
-        input.style.height = "auto";
-        input.style.height = Math.min(input.scrollHeight, 180) + "px";
-      });
-
-      input.addEventListener("keydown", event => {
-        if (event.key === "Enter" && !event.shiftKey) {
-          event.preventDefault();
-          handleSend();
-        }
-      });
-
-      window.addEventListener("resize", handleResponsiveResize);
-
-      [
-        "googleKey",
-        "temperature",
-        "maxTokens",
-        "systemPrompt",
-        "responseStyle",
-        "styleCustomPrompt",
-        "instantCustomModelId",
-        "thinkCustomModelId",
-        "previewCustomModelId"
-      ].forEach(id => {
-        const node = el(id);
-        if (!node) return;
-        node.addEventListener("input", persistSettings);
-        node.addEventListener("change", persistSettings);
-      });
-    }
-
-    function initModels() {
-      const container = el("modelList");
-      container.innerHTML = "";
-
-      let currentGroup = "";
-
-      models.forEach(model => {
-        if (model.group && model.group !== currentGroup) {
-          currentGroup = model.group;
-          const groupTitle = document.createElement("div");
-          groupTitle.className = "text-[10px] text-zinc-600 uppercase tracking-widest mt-4 mb-1 px-2";
-          groupTitle.textContent = currentGroup;
-          container.appendChild(groupTitle);
-        }
-
-        const div = document.createElement("div");
-        div.className = "model-list-item flex items-center justify-between gap-2 p-2 rounded-lg cursor-pointer transition text-xs border border-transparent";
-        div.dataset.modelId = model.id;
-        div.dataset.provider = model.provider;
-
-        div.innerHTML = `
-          <div class="flex flex-col min-w-0">
-            <span class="truncate">${escapeHtml(model.name)}</span>
-            <span class="text-[9px] text-zinc-600 truncate">${escapeHtml(model.provider)} · ${escapeHtml(model.id)}</span>
-          </div>
-          <span class="text-[9px] px-1 rounded shrink-0 ${getStatusClass(model.status)}">${escapeHtml(String(model.status).toUpperCase())}</span>
-        `;
-
-        div.onclick = () => setSelectedModel(model);
-        container.appendChild(div);
-      });
-    }
-
-    function getStatusClass(status) {
-      if (status === "online") return "bg-green-900/30 text-green-500";
-      if (status === "preview") return "bg-cyan-900/30 text-cyan-400";
-      if (status === "beta") return "bg-purple-900/30 text-purple-500";
-      if (status === "instant") return "bg-yellow-900/30 text-yellow-400";
-      if (status === "think") return "bg-purple-900/30 text-purple-400";
-      if (status === "custom") return "bg-white/10 text-white";
-      return "bg-zinc-800 text-zinc-500";
-    }
-
-    function resolveModelById(id, fallbackName = null) {
-      const found = models.find(m => m.id === id);
-      if (found) return found;
-
-      return {
-        id,
-        name: fallbackName || id,
-        provider: "google",
-        status: "custom",
-        group: "Custom"
-      };
-    }
-
-    function getQuickModelId(type) {
-      const fieldMap = {
-        instant: "instantCustomModelId",
-        think: "thinkCustomModelId",
-        preview: "previewCustomModelId"
-      };
-
-      const customId = (val(fieldMap[type], "") || "").trim();
-      if (customId) return customId;
-
-      return defaults[type] || defaults.instant;
-    }
-
-    function setSelectedModel(model, options = {}) {
-      const { persist = true, close = true } = options;
-
-      selectedModel = {
-        id: model.id,
-        name: model.name || model.id,
-        provider: model.provider || "google",
-        status: model.status || "custom",
-        group: model.group || "Custom"
-      };
-
-      syncSelectedModelUI(selectedModel);
-
-      if (persist) persistSettings();
-      if (close) closeDrawers();
-    }
-
-    function syncSelectedModelUI(model) {
-      el("currentModelDisplay").innerText = model.name || model.id;
-      el("currentProviderDisplay").innerText = model.provider || "google";
-
-      document.querySelectorAll(".model-list-item").forEach(item => {
-        item.classList.remove("bg-zinc-800", "border-white/10");
-      });
-
-      const active = Array.from(document.querySelectorAll(".model-list-item"))
-        .find(item => item.dataset.modelId === model.id && item.dataset.provider === model.provider);
-
-      if (active) active.classList.add("bg-zinc-800", "border-white/10");
-    }
-
-    function selectQuickModel(type) {
-      const modelId = getQuickModelId(type);
-      const model = resolveModelById(
-        modelId,
-        type === "instant" ? "Rapido custom" : type === "think" ? "Heavy custom" : "Preview custom"
-      );
-      setSelectedModel(model);
-      showToast(type === "instant" ? "Rapido selezionato" : type === "think" ? "Heavy selezionato" : "Preview selezionato");
-    }
-
-    function useCustomModel() {
-      const id = val("customModelId", "").trim();
-
-      if (!id) {
-        alert("Inserisci un model ID.");
-        return;
-      }
-
-      setSelectedModel({
-        id,
-        name: id,
-        provider: "google",
-        status: "custom",
-        group: "Custom"
-      });
-
-      showToast("Modello custom attivato");
-    }
-
-    function openLeftDrawer() {
-      el("leftSidebar").classList.add("open");
-      el("rightSidebar").classList.remove("open");
-      el("mobileOverlay").classList.add("show");
-    }
-
-    function openRightDrawer() {
-      el("rightSidebar").classList.add("open");
-      el("leftSidebar").classList.remove("open");
-      el("mobileOverlay").classList.add("show");
-    }
-
-    function closeDrawers() {
-      el("leftSidebar").classList.remove("open");
-      el("rightSidebar").classList.remove("open");
-      el("mobileOverlay").classList.remove("show");
-    }
-
-    function handleResponsiveResize() {
-      if (window.innerWidth > 1024) closeDrawers();
-    }
-
-    function openSettings() {
-      el("settingsModal").classList.replace("hidden", "flex");
-      updateFeedbackPreview();
-      closeDrawers();
-    }
-
-    function closeSettings() {
-      el("settingsModal").classList.replace("flex", "hidden");
-      persistSettings();
-      updateFeedbackPreview();
-    }
-
-    function persistSettings() {
-      const saveLocal = el("saveLocal");
-
-      if (!saveLocal || !saveLocal.checked) {
-        localStorage.removeItem("aiChatSettings");
-        return;
-      }
-
-      const payload = {
-        googleKey: val("googleKey", ""),
-        temperature: val("temperature", "0.7"),
-        maxTokens: val("maxTokens", "2048"),
-        systemPrompt: val("systemPrompt", ""),
-        responseStyle: val("responseStyle", "short"),
-        styleCustomPrompt: val("styleCustomPrompt", ""),
-        instantCustomModelId: val("instantCustomModelId", ""),
-        thinkCustomModelId: val("thinkCustomModelId", ""),
-        previewCustomModelId: val("previewCustomModelId", ""),
-        selectedModel
-      };
-
-      localStorage.setItem("aiChatSettings", JSON.stringify(payload));
-    }
-
-    function restoreSettings() {
-      const raw = localStorage.getItem("aiChatSettings");
-      if (!raw) {
-        el("responseStyle").value = "short";
-        return;
-      }
-
-      try {
-        const data = JSON.parse(raw);
-
-        el("saveLocal").checked = true;
-        el("googleKey").value = data.googleKey || "";
-        el("temperature").value = data.temperature || "0.7";
-        el("maxTokens").value = data.maxTokens || "2048";
-        el("systemPrompt").value = data.systemPrompt || "";
-        el("responseStyle").value = data.responseStyle || "short";
-        el("styleCustomPrompt").value = data.styleCustomPrompt || "";
-        el("instantCustomModelId").value = data.instantCustomModelId || "";
-        el("thinkCustomModelId").value = data.thinkCustomModelId || "";
-        el("previewCustomModelId").value = data.previewCustomModelId || "";
-
-        if (data.selectedModel && data.selectedModel.id) {
-          selectedModel = data.selectedModel;
-        }
-      } catch (error) {
-        console.warn("Impossibile ripristinare impostazioni:", error);
-      }
-    }
-
-    function showToast(message) {
-      const layer = el("toastLayer");
-      const toast = document.createElement("div");
-
-      toast.className =
-        "pointer-events-none max-w-[320px] rounded-xl border border-white/10 bg-zinc-900/95 px-3 py-2 text-xs text-zinc-200 shadow-2xl opacity-0 translate-y-2 transition-all";
-
-      toast.textContent = message;
-      layer.appendChild(toast);
-
-      requestAnimationFrame(() => {
-        toast.classList.remove("opacity-0", "translate-y-2");
-        toast.classList.add("opacity-100", "translate-y-0");
-      });
-
-      setTimeout(() => {
-        toast.classList.add("opacity-0", "translate-y-2");
-        setTimeout(() => toast.remove(), 220);
-      }, 2200);
-    }
-
-    function handleFileSelect(event) {
-      const files = Array.from(event.target.files || []);
-      selectedFiles = [...selectedFiles, ...files];
-      renderFilePreview();
-      event.target.value = "";
-    }
-
-    function renderFilePreview() {
-      const preview = el("filePreview");
-      preview.innerHTML = "";
-
-      selectedFiles.forEach((file, index) => {
-        const item = document.createElement("div");
-        item.className = "bg-zinc-800 text-[10px] px-2 py-1 rounded-md border border-white/10 flex items-center gap-2 max-w-full";
-
-        const isImage = file.type && file.type.startsWith("image/");
-
-        item.innerHTML = `
-          <span class="truncate max-w-[220px]">
-            ${isImage ? "🖼️" : "📎"} ${escapeHtml(file.name)}
-            <span class="text-zinc-500">(${formatBytes(file.size)})</span>
-          </span>
-          <button class="cursor-pointer text-red-400 hover:text-red-300 shrink-0" onclick="removeFile(${index})">✕</button>
-        `;
-
-        preview.appendChild(item);
-      });
-    }
-
-    function removeFile(index) {
-      selectedFiles.splice(index, 1);
-      renderFilePreview();
-    }
-
-    function clearFiles() {
-      selectedFiles = [];
-      renderFilePreview();
-    }
-
-    function formatBytes(bytes) {
-      if (!bytes) return "0 B";
-
-      const units = ["B", "KB", "MB", "GB"];
-      const index = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1);
-
-      return `${(bytes / Math.pow(1024, index)).toFixed(1)} ${units[index]}`;
-    }
-
-    function fileToBase64(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => {
-          const result = reader.result;
-          const base64 = String(result).split(",")[1];
-          resolve(base64);
+    <!-- ========== TOAST ========== -->
+    <div id="toastLayer"
+         class="fixed bottom-6 right-6 z-[120] space-y-2 pointer-events-none flex flex-col items-end"></div>
+
+
+    <!-- ========== SCRIPTS ========== -->
+    <script>
+        // ──────────────────────────────────────────────
+        //  DATA
+        // ──────────────────────────────────────────────
+        const models = [
+            { id: "gemini-2.5-flash",             name: "Gemini 2.5 Flash",              provider: "google", status: "online",  group: "Google" },
+            { id: "gemini-2.5-flash-lite",        name: "Gemini 2.5 Flash Lite",         provider: "google", status: "online",  group: "Google" },
+            { id: "gemini-2.5-pro",               name: "Gemini 2.5 Pro",                provider: "google", status: "check",   group: "Google" },
+            { id: "gemini-3-flash-preview",       name: "Gemini 3 Flash Preview",        provider: "google", status: "preview", group: "Google" },
+            { id: "google/gemma-4-31b-it",        name: "Gemma 4 31B IT",                provider: "google", status: "instant", group: "Quick"  },
+            { id: "gemini-3.1-flash-lite-preview",name: "Gemini 3.1 Flash Lite Preview", provider: "google", status: "think",   group: "Quick"  },
+            { id: "gemma-4-26b-a4b-it",           name: "Gemma 4 26B",                   provider: "google", status: "check",   group: "Open"   },
+            { id: "gemini-flash-latest",          name: "Gemini Flash Latest",           provider: "google", status: "check",   group: "Meta"   },
+            { id: "gemini-2.0-flash-lite",        name: "Gemini 2.0 Flash Lite",         provider: "google", status: "check",   group: "Legacy" },
+            { id: "gemini-3.1-pro-preview",       name: "Gemini 3.1 Pro Preview",        provider: "google", status: "check",   group: "X"      }
+        ];
+
+        const defaults = {
+            instant: "gemini-2.5-flash",
+            think:   "gemma-4-26b-a4b-it",
+            preview: "gemini-3-flash-preview"
         };
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
-    }
 
-    function fileToText(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(String(reader.result));
-        reader.onerror = reject;
-        reader.readAsText(file);
-      });
-    }
+        // ──────────────────────────────────────────────
+        //  STATE
+        // ──────────────────────────────────────────────
+        let selectedModel      = null;
+        let selectedFiles      = [];
+        let chatHistory        = [];
+        let isLoading          = false;
+        let temporaryFeedback  = "";
 
-    function isTextLikeFile(file) {
-      const type = file.type || "";
-      const name = file.name.toLowerCase();
+        // ──────────────────────────────────────────────
+        //  HELPERS
+        // ──────────────────────────────────────────────
+        const $  = id => document.getElementById(id);
+        const v  = (id, fallback = "") => { const n = $(id); return n ? n.value : fallback; };
+        const $$ = (sel, ctx = document) => ctx.querySelectorAll(sel);
 
-      return (
-        type.startsWith("text/") ||
-        type === "application/json" ||
-        type === "application/xml" ||
-        type === "application/javascript" ||
-        name.endsWith(".txt") ||
-        name.endsWith(".md") ||
-        name.endsWith(".csv") ||
-        name.endsWith(".json") ||
-        name.endsWith(".xml") ||
-        name.endsWith(".js") ||
-        name.endsWith(".jsx") ||
-        name.endsWith(".ts") ||
-        name.endsWith(".tsx") ||
-        name.endsWith(".html") ||
-        name.endsWith(".css") ||
-        name.endsWith(".py") ||
-        name.endsWith(".java") ||
-        name.endsWith(".cpp") ||
-        name.endsWith(".c") ||
-        name.endsWith(".cs") ||
-        name.endsWith(".php") ||
-        name.endsWith(".go") ||
-        name.endsWith(".rs") ||
-        name.endsWith(".sql") ||
-        name.endsWith(".yaml") ||
-        name.endsWith(".yml")
-      );
-    }
-
-    function appendMessage(role, text, options = {}) {
-      const chatWindow = el("chatWindow");
-      const welcome = el("welcomeScreen");
-      if (welcome) welcome.remove();
-
-      const wrapper = document.createElement("div");
-      wrapper.className = `flex ${role === "user" ? "justify-end" : "justify-start"}`;
-
-      const bubble = document.createElement("div");
-      bubble.classList.add("chat-bubble");
-      bubble.className += role === "user"
-        ? " max-w-[85%] p-4 rounded-2xl bg-zinc-800 text-white"
-        : " max-w-[85%] p-4 rounded-2xl text-zinc-200 bg-transparent";
-
-      const label = role === "user" ? "Tu" : "AI";
-
-      bubble.innerHTML = `
-        <div class="text-[10px] text-zinc-500 mb-1">${label}</div>
-        <div class="message-content text-sm leading-relaxed">${renderText(text)}</div>
-        ${role === "ai" ? '<div class="assistant-actions-host mt-3"></div><div class="feedback-panel hidden mt-3 p-3 rounded-xl border border-white/10 bg-zinc-950/60"></div>' : ''}
-      `;
-
-      if (role === "ai") {
-        bubble.classList.add("assistant-bubble");
-      }
-
-      if (options.loading) {
-        bubble.dataset.loading = "true";
-        bubble.classList.add("animate-pulse");
-      }
-
-      wrapper.appendChild(bubble);
-      chatWindow.appendChild(wrapper);
-      chatWindow.scrollTop = chatWindow.scrollHeight;
-
-      return bubble;
-    }
-
-    function updateMessage(bubble, text, isError = false) {
-      bubble.classList.remove("animate-pulse");
-      bubble.dataset.loading = "false";
-
-      const content = bubble.querySelector(".message-content");
-      if (content) content.innerHTML = renderText(text);
-
-      if (isError) {
-        bubble.classList.add("border", "border-red-500/30", "bg-red-950/10");
-        const host = bubble.querySelector(".assistant-actions-host");
-        if (host) host.innerHTML = "";
-        const panel = bubble.querySelector(".feedback-panel");
-        if (panel) panel.remove();
-      } else if (bubble.classList.contains("assistant-bubble")) {
-        renderAssistantControls(bubble);
-      }
-
-      const chatWindow = el("chatWindow");
-      chatWindow.scrollTop = chatWindow.scrollHeight;
-    }
-
-    function renderAssistantControls(bubble) {
-      bubble.classList.add("assistant-bubble");
-      const host = bubble.querySelector(".assistant-actions-host");
-      if (!host) return;
-
-      host.innerHTML = `
-        <div class="flex flex-wrap gap-2">
-          <button
-            class="text-[11px] px-3 py-1.5 rounded-full bg-zinc-800 text-zinc-200 border border-white/10 hover:bg-zinc-700 inline-flex items-center gap-2"
-            onclick="regenerateFromBubble(this)"
-          >
-            <i class="fa-solid fa-rotate-right text-white"></i>
-            ♻️ Rigenera
-          </button>
-
-          <button
-            class="text-[11px] px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 hover:bg-emerald-500/20 inline-flex items-center gap-2"
-            onclick="openFeedbackPanel(this, 'like')"
-          >
-            <i class="fa-regular fa-thumbs-up text-white"></i>
-            👍 Like
-          </button>
-
-          <button
-            class="text-[11px] px-3 py-1.5 rounded-full bg-rose-500/10 text-rose-300 border border-rose-500/20 hover:bg-rose-500/20 inline-flex items-center gap-2"
-            onclick="openFeedbackPanel(this, 'dislike')"
-          >
-            <i class="fa-regular fa-thumbs-down text-white"></i>
-            👎 Dislike
-          </button>
-        </div>
-      `;
-
-      let panel = bubble.querySelector(".feedback-panel");
-      if (!panel) {
-        panel = document.createElement("div");
-        panel.className = "feedback-panel hidden mt-3 p-3 rounded-xl border border-white/10 bg-zinc-950/60";
-        bubble.appendChild(panel);
-      }
-    }
-
-    function openFeedbackPanel(button, mode) {
-      const bubble = button.closest(".assistant-bubble");
-      if (!bubble) return;
-
-      const panel = bubble.querySelector(".feedback-panel");
-      if (!panel) return;
-
-      bubble.dataset.feedbackMode = mode;
-      panel.classList.remove("hidden");
-
-      panel.innerHTML = `
-        <div class="feedback-title text-[11px] text-zinc-300 mb-2"></div>
-        <textarea
-          class="feedback-input w-full bg-zinc-800 border border-zinc-700 rounded-xl p-2 text-xs text-white outline-none resize-none"
-          rows="3"
-          placeholder=""
-        ></textarea>
-        <div class="flex gap-2 mt-2">
-          <button
-            class="text-xs px-3 py-2 rounded-lg bg-white text-black font-semibold"
-            onclick="submitFeedback(this)"
-          >
-            Invia feedback
-          </button>
-          <button
-            class="text-xs px-3 py-2 rounded-lg bg-zinc-800 text-zinc-300 border border-white/10"
-            onclick="hideFeedback(this)"
-          >
-            Annulla
-          </button>
-        </div>
-      `;
-
-      const title = panel.querySelector(".feedback-title");
-      const input = panel.querySelector(".feedback-input");
-
-      if (mode === "like") {
-        title.textContent = "Cosa ti è piaciuto?";
-        input.placeholder = "Es: spiegazione chiara, tono giusto, esempi utili...";
-      } else {
-        title.textContent = "Cosa va migliorato?";
-        input.placeholder = "Es: più breve, più tecnico, meno emoji, più preciso...";
-      }
-
-      input.focus();
-    }
-
-    function hideFeedback(button) {
-      const bubble = button.closest(".assistant-bubble");
-      if (!bubble) return;
-
-      const panel = bubble.querySelector(".feedback-panel");
-      if (panel) panel.classList.add("hidden");
-    }
-
-    function submitFeedback(button) {
-      const bubble = button.closest(".assistant-bubble");
-      if (!bubble) return;
-
-      const input = bubble.querySelector(".feedback-input");
-      const panel = bubble.querySelector(".feedback-panel");
-      const mode = bubble.dataset.feedbackMode || "dislike";
-      const text = (input?.value || "").trim();
-
-      if (!text) {
-        showToast("Scrivi un feedback breve, frate ✍️");
-        return;
-      }
-
-      const entry = `${mode === "like" ? "PIACIUTO" : "DA MIGLIORARE"}: ${text}`;
-      temporaryFeedbackNotes = temporaryFeedbackNotes
-        ? `${temporaryFeedbackNotes}\n- ${entry}`
-        : `- ${entry}`;
-
-      updateFeedbackPreview();
-
-      if (panel) panel.classList.add("hidden");
-      if (input) input.value = "";
-
-      showToast("Feedback salvato nel prompt temporaneo ✦");
-    }
-
-    function clearTemporaryFeedback() {
-      temporaryFeedbackNotes = "";
-      updateFeedbackPreview();
-      showToast("Feedback temporaneo pulito");
-    }
-
-    function updateFeedbackPreview() {
-      const preview = el("feedbackPreview");
-      if (!preview) return;
-
-      preview.textContent = temporaryFeedbackNotes.trim()
-        ? temporaryFeedbackNotes.trim()
-        : "Nessun feedback temporaneo.";
-    }
-
-    function getStyleInstruction() {
-      const style = val("responseStyle", "short");
-      const custom = val("styleCustomPrompt", "").trim();
-
-      if (style === "short") return "Rispondi in modo breve, diretto e pulito. Niente divagazioni inutili.";
-      if (style === "long") return "Rispondi in modo completo, ben spiegato e strutturato. Usa esempi quando servono.";
-      if (style === "genz") return "Rispondi con tono Gen Z leggero e naturale, ma resta chiaro e utile. Un pizzico di slang va bene, senza esagerare.";
-      if (style === "professional") return "Rispondi in modo professionale, preciso, ordinato e tecnico quando necessario.";
-      if (style === "custom" && custom) return custom;
-
-      return "";
-    }
-
-    function buildEffectiveSystemPrompt() {
-      const pieces = [];
-
-      const basePrompt = val("systemPrompt", "").trim();
-      if (basePrompt) pieces.push(basePrompt);
-
-      const stylePrompt = getStyleInstruction();
-      if (stylePrompt) pieces.push(stylePrompt);
-
-      if (temporaryFeedbackNotes.trim()) {
-        pieces.push("Feedback temporaneo da applicare a questa sessione:\n" + temporaryFeedbackNotes.trim());
-      }
-
-      return pieces.join("\n\n");
-    }
-
-    async function buildGeminiContents(historySnapshot) {
-      const contents = [];
-
-      for (const msg of historySnapshot) {
-        if (!msg || !msg.role) continue;
-
-        const parts = [];
-        const text = String(msg.text || "").trim();
-
-        if (text) parts.push({ text });
-
-        const files = Array.isArray(msg.files) ? msg.files : [];
-
-        for (const file of files) {
-          if (!file) continue;
-
-          if (file.type && file.type.startsWith("image/")) {
-            const base64 = await fileToBase64(file);
-            parts.push({
-              inlineData: {
-                mimeType: file.type || "image/png",
-                data: base64
-              }
-            });
-          } else if (isTextLikeFile(file)) {
-            const content = await fileToText(file);
-            parts.push({
-              text:
-                `\n\n[File: ${file.name}]\n` +
-                "```text\n" +
-                content.slice(0, 30000) +
-                "\n```" +
-                (content.length > 30000 ? "\n[File troncato a 30000 caratteri]" : "")
-            });
-          } else {
-            parts.push({
-              text: `\n\n[File allegato: ${file.name}, type: ${file.type || "unknown"}]`
-            });
-          }
+        function escapeHtml(s) {
+            return String(s)
+                .replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll('"', "&quot;")
+                .replaceAll("'", "&#039;");
         }
 
-        contents.push({
-          role: msg.role === "assistant" ? "model" : "user",
-          parts: parts.length ? parts : [{ text: " " }]
-        });
-      }
-
-      return contents;
-    }
-
-    async function callGoogleGemini(historySnapshot, modelId, allowFallback = true) {
-      const apiKey = val("googleKey", "").trim();
-
-      if (!apiKey) {
-        throw new Error("Manca Google AI Studio API Key.");
-      }
-
-      const temperature = Number(val("temperature", "0.7") || 0.7);
-      const maxTokens = Number(val("maxTokens", "2048") || 2048);
-
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(modelId)}:generateContent`;
-      const contents = await buildGeminiContents(historySnapshot);
-
-      const body = {
-        contents,
-        generationConfig: {
-          temperature,
-          maxOutputTokens: maxTokens
-        }
-      };
-
-      const systemPrompt = buildEffectiveSystemPrompt();
-      if (systemPrompt) {
-        body.systemInstruction = {
-          parts: [{ text: systemPrompt }]
-        };
-      }
-
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-goog-api-key": apiKey
-        },
-        body: JSON.stringify(body)
-      });
-
-      const data = await response.json().catch(() => null);
-
-      if (!response.ok) {
-        const message = data?.error?.message || `Google API error ${response.status}: ${response.statusText}`;
-
-        if (allowFallback && modelId !== defaults.think) {
-          showToast("Fallback su gemma-4-26b-a4b-it");
-          return callGoogleGemini(historySnapshot, defaults.think, false);
+        function formatBytes(b) {
+            if (!b) return "0 B";
+            const u = ["B", "KB", "MB", "GB"];
+            const i = Math.min(Math.floor(Math.log(b) / Math.log(1024)), u.length - 1);
+            return `${(b / Math.pow(1024, i)).toFixed(1)} ${u[i]}`;
         }
 
-        throw new Error(message);
-      }
+        function randomId() {
+            return Math.random().toString(36).slice(2, 9);
+        }
 
-      return extractGeminiText(data);
-    }
+        // ──────────────────────────────────────────────
+        //  INIT
+        // ──────────────────────────────────────────────
+        window.addEventListener("DOMContentLoaded", () => {
+            renderModelList();
+            restoreSettings();
+            bindEvents();
 
-    function extractGeminiText(data) {
-      const parts = data?.candidates?.[0]?.content?.parts || [];
+            if (!selectedModel) {
+                setSelectedModel(resolveModelById(defaults.instant), false);
+            } else {
+                syncUI();
+            }
 
-      const text = parts
-        .map(part => part.text || "")
-        .filter(Boolean)
-        .join("\n");
-
-      if (text) return text;
-
-      if (data?.promptFeedback?.blockReason) {
-        return "Risposta bloccata. Motivo: " + data.promptFeedback.blockReason;
-      }
-
-      return JSON.stringify(data, null, 2);
-    }
-
-    function prepareUserVisibleMessage(text, files) {
-      let visibleMessage = text || "";
-
-      if (files.length > 0) {
-        visibleMessage += "\n\nAllegati: " + files.map(file => file.name).join(", ");
-      }
-
-      return visibleMessage || "Allegato";
-    }
-
-    async function handleSend() {
-      if (isLoading) return;
-
-      const input = el("userInput");
-      const text = input.value.trim();
-
-      if (!text && selectedFiles.length === 0) return;
-
-      const filesForRequest = [...selectedFiles];
-      const visibleMessage = prepareUserVisibleMessage(text, filesForRequest);
-
-      appendMessage("user", visibleMessage);
-
-      chatHistory.push({
-        role: "user",
-        text,
-        files: filesForRequest
-      });
-
-      input.value = "";
-      input.style.height = "auto";
-      clearFiles();
-
-      const aiBubble = appendMessage("ai", "✦", { loading: true });
-      latestAssistantBubble = aiBubble;
-
-      const requestSnapshot = chatHistory.map(msg => ({
-        role: msg.role,
-        text: msg.text,
-        files: msg.files ? [...msg.files] : []
-      }));
-
-      aiBubble.__meta = {
-        requestSnapshot,
-        assistantHistoryIndex: chatHistory.length
-      };
-
-      setLoading(true, "Calling API...");
-
-      try {
-        const answer = await callGoogleGemini(requestSnapshot, selectedModel.id);
-
-        updateMessage(aiBubble, answer || "[Risposta vuota]");
-
-        chatHistory.push({
-          role: "assistant",
-          text: answer || ""
+            updateFeedbackPreview();
+            updateSendButton();
         });
 
-        aiBubble.__meta.assistantHistoryIndex = chatHistory.length - 1;
-      } catch (error) {
-        console.error(error);
-        updateMessage(aiBubble, "Errore API:\n\n" + formatApiError(error), true);
-      } finally {
-        setLoading(false);
-      }
-    }
+        function bindEvents() {
+            const inp = $("userInput");
 
-    function setLoading(value, label = "Calling API...") {
-      isLoading = value;
+            inp.addEventListener("input", () => {
+                inp.style.height = "auto";
+                inp.style.height = Math.min(inp.scrollHeight, 180) + "px";
+                updateSendButton();
+            });
 
-      const btn = el("sendBtn");
-      const status = el("connectionStatus");
+            inp.addEventListener("keydown", e => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSend();
+                }
+            });
 
-      btn.disabled = value;
+            window.addEventListener("resize", () => {
+                if (window.innerWidth > 1024) closeDrawers();
+            });
 
-      if (value) {
-        status.innerText = label;
-        status.className = "text-xs px-2 py-1 rounded-full bg-blue-950/40 text-blue-300 border border-blue-500/20";
-      } else {
-        status.innerText = "Idle";
-        status.className = "text-xs px-2 py-1 rounded-full bg-zinc-800 text-zinc-400 border border-white/5";
-      }
-    }
+            // Auto-save on input changes
+            [
+                "googleKey", "temperature", "maxTokens", "systemPrompt",
+                "responseStyle", "styleCustomPrompt",
+                "instantCustomModelId", "thinkCustomModelId", "previewCustomModelId"
+            ].forEach(id => {
+                const n = $(id);
+                if (!n) return;
+                n.addEventListener("input", persistSettings);
+                n.addEventListener("change", persistSettings);
+            });
+        }
 
-    function formatApiError(error) {
-      if (!error) return "Errore sconosciuto.";
-      if (typeof error === "string") return error;
-      return error.message || JSON.stringify(error, null, 2);
-    }
+        // ──────────────────────────────────────────────
+        //  MODEL RENDERING
+        // ──────────────────────────────────────────────
+        function renderModelList() {
+            const container = $("modelList");
+            container.innerHTML = "";
 
-    async function regenerateFromBubble(button) {
-      const bubble = button.closest(".assistant-bubble");
-      if (!bubble || !bubble.__meta) {
-        showToast("Nessun dato per rigenerare");
-        return;
-      }
+            let lastGroup = "";
 
-      const targetModel = selectedModel || resolveModelById(defaults.instant);
-      setLoading(true, "Rigenerando...");
+            models.forEach(m => {
+                if (m.group && m.group !== lastGroup) {
+                    lastGroup = m.group;
+                    const h = document.createElement("div");
+                    h.className = "text-[9px] text-zinc-600 uppercase tracking-[0.1em] mt-3 mb-1.5 px-2 font-semibold";
+                    h.textContent = lastGroup;
+                    container.appendChild(h);
+                }
 
-      try {
-        const answer = await callGoogleGemini(bubble.__meta.requestSnapshot, targetModel.id);
+                const div = document.createElement("div");
+                div.className = "model-list-item flex items-center justify-between gap-2 p-2.5 rounded-xl cursor-pointer transition text-xs hover:bg-zinc-800/60";
+                div.dataset.modelId = m.id;
+                div.dataset.provider = m.provider;
 
-        updateMessage(bubble, answer || "[Risposta vuota]");
-        chatHistory[bubble.__meta.assistantHistoryIndex] = {
-          role: "assistant",
-          text: answer || ""
-        };
+                div.innerHTML = `
+                    <div class="flex flex-col min-w-0">
+                        <span class="truncate text-zinc-200 font-medium">${escapeHtml(m.name)}</span>
+                        <span class="text-[9px] text-zinc-600 truncate">${escapeHtml(m.provider)} · ${escapeHtml(m.id)}</span>
+                    </div>
+                    <span class="text-[8px] px-1.5 py-0.5 rounded-full shrink-0 font-semibold ${statusClass(m.status)}">
+                        ${escapeHtml(String(m.status).toUpperCase())}
+                    </span>
+                `;
 
-        showToast("Rigenerato");
-      } catch (error) {
-        console.error(error);
-        updateMessage(bubble, "Errore API:\n\n" + formatApiError(error), true);
-      } finally {
-        setLoading(false);
-      }
-    }
+                div.onclick = () => setSelectedModel(m);
+                container.appendChild(div);
+            });
+        }
 
-    function newChat() {
-      if (!confirm("Vuoi cancellare la chat attuale?")) return;
+        function statusClass(status) {
+            const map = {
+                online:  "bg-emerald-500/10 text-emerald-400",
+                preview: "bg-cyan-500/10 text-cyan-400",
+                beta:    "bg-purple-500/10 text-purple-400",
+                instant: "bg-yellow-500/10 text-yellow-400",
+                think:   "bg-purple-500/10 text-purple-300",
+                check:   "bg-zinc-700/50 text-zinc-500",
+                custom:  "bg-white/5 text-zinc-400"
+            };
+            return map[status] || map.check;
+        }
 
-      chatHistory = [];
-      selectedFiles = [];
-      temporaryFeedbackNotes = "";
-      latestAssistantBubble = null;
+        function resolveModelById(id, fallbackName) {
+            const found = models.find(m => m.id === id);
+            return found || { id, name: fallbackName || id, provider: "google", status: "custom", group: "Custom" };
+        }
 
-      el("chatWindow").innerHTML = `
-        <div id="welcomeScreen" class="h-full flex flex-col items-center justify-center text-center space-y-4">
-          <h2 class="welcome-title text-3xl font-semibold">A cosa stai lavorando?</h2>
-          <p class="text-zinc-500 max-w-md">Nuova sessione avviata.</p>
+        function getQuickModelId(type) {
+            const fieldMap = { instant: "instantCustomModelId", think: "thinkCustomModelId", preview: "previewCustomModelId" };
+            const customId = v(fieldMap[type], "").trim();
+            return customId || defaults[type] || defaults.instant;
+        }
 
-          <div class="flex flex-wrap items-center justify-center gap-2 max-w-xl">
-            <button onclick="selectQuickModel('instant')" class="text-xs px-4 py-2 rounded-full bg-yellow-500/10 text-yellow-300 border border-yellow-500/20 hover:bg-yellow-500/20">
-              <i class="fa-solid fa-bolt mr-1"></i> Rapido ✦
-            </button>
+        function setSelectedModel(model, persist = true) {
+            selectedModel = {
+                id:       model.id,
+                name:     model.name || model.id,
+                provider: model.provider || "google",
+                status:   model.status || "custom",
+                group:    model.group || "Custom"
+            };
 
-            <button onclick="selectQuickModel('think')" class="text-xs px-4 py-2 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 hover:bg-purple-500/20">
-              <i class="fa-solid fa-brain mr-1"></i> Heavy ✦
-            </button>
+            syncUI();
+            if (persist) persistSettings();
+            closeDrawers();
+        }
 
-            <button onclick="selectQuickModel('preview')" class="text-xs px-4 py-2 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 hover:bg-cyan-500/20">
-              <i class="fa-solid fa-flask mr-1"></i> Preview ✦
-            </button>
-          </div>
-        </div>
-      `;
+        function syncUI() {
+            $("currentModelDisplay").innerText    = selectedModel.name || selectedModel.id;
+            $("currentProviderDisplay").innerText = selectedModel.provider || "google";
 
-      renderFilePreview();
-      updateFeedbackPreview();
-      closeDrawers();
-      showToast("Nuova chat avviata");
-    }
+            $$(".model-list-item").forEach(el => el.classList.remove("bg-zinc-800/80", "border-white/10"));
 
-    function escapeHtml(value) {
-      return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
+            const active = Array.from($$(".model-list-item")).find(
+                el => el.dataset.modelId === selectedModel.id && el.dataset.provider === selectedModel.provider
+            );
+            if (active) active.classList.add("bg-zinc-800/80", "border-white/10");
+        }
 
-    function renderText(text) {
-      let safe = escapeHtml(String(text || ""));
+        function selectQuickModel(type) {
+            const modelId = getQuickModelId(type);
+            const labels = { instant: "Rapido", think: "Heavy", preview: "Preview" };
+            setSelectedModel(resolveModelById(modelId, labels[type] + " custom"));
+            toast(`${labels[type]} selezionato ✦`);
+        }
 
-      safe = safe.replace(/```([\s\S]*?)```/g, function(_, code) {
-        return `<pre><code>${code.trim()}</code></pre>`;
-      });
+        function useCustomModel() {
+            const id = v("customModelId", "").trim();
+            if (!id) { alert("Inserisci un model ID."); return; }
 
-      safe = safe.replace(/`([^`]+)`/g, "<code>$1</code>");
-      safe = safe.replace(/\n/g, "<br>");
+            setSelectedModel({ id, name: id, provider: "google", status: "custom", group: "Custom" });
+            toast("Modello custom attivato");
+        }
 
-      return safe;
-    }
-  </script>
+        // ──────────────────────────────────────────────
+        //  DRAWERS
+        // ──────────────────────────────────────────────
+        function openLeftDrawer() {
+            $("leftSidebar").classList.add("open");
+            $("rightSidebar").classList.remove("open");
+            $("mobileOverlay").classList.add("!block");
+        }
+        function openRightDrawer() {
+            $("rightSidebar").classList.add("open");
+            $("leftSidebar").classList.remove("open");
+            $("mobileOverlay").classList.add("!block");
+        }
+        function closeDrawers() {
+            $("leftSidebar").classList.remove("open");
+            $("rightSidebar").classList.remove("open");
+            $("mobileOverlay").classList.remove("!block");
+        }
+
+        // ──────────────────────────────────────────────
+        //  SETTINGS
+        // ──────────────────────────────────────────────
+        function openSettings() {
+            $("settingsModal").classList.replace("hidden", "flex");
+            updateFeedbackPreview();
+            closeDrawers();
+        }
+        function closeSettings() {
+            $("settingsModal").classList.replace("flex", "hidden");
+            persistSettings();
+            updateFeedbackPreview();
+        }
+
+        function persistSettings() {
+            const saveLocal = $("saveLocal");
+            if (!saveLocal || !saveLocal.checked) {
+                localStorage.removeItem("aiChatSettings");
+                return;
+            }
+
+            localStorage.setItem("aiChatSettings", JSON.stringify({
+                googleKey:           v("googleKey"),
+                temperature:         v("temperature", "0.7"),
+                maxTokens:           v("maxTokens", "2048"),
+                systemPrompt:        v("systemPrompt"),
+                responseStyle:       v("responseStyle", "short"),
+                styleCustomPrompt:   v("styleCustomPrompt"),
+                instantCustomModelId:v("instantCustomModelId"),
+                thinkCustomModelId:  v("thinkCustomModelId"),
+                previewCustomModelId:v("previewCustomModelId"),
+                selectedModel
+            }));
+        }
+
+        function restoreSettings() {
+            const raw = localStorage.getItem("aiChatSettings");
+            if (!raw) { $("responseStyle").value = "short"; return; }
+
+            try {
+                const d = JSON.parse(raw);
+                $("saveLocal").checked = true;
+                $("googleKey").value           = d.googleKey           || "";
+                $("temperature").value         = d.temperature         || "0.7";
+                $("maxTokens").value           = d.maxTokens           || "2048";
+                $("systemPrompt").value        = d.systemPrompt        || "";
+                $("responseStyle").value       = d.responseStyle       || "short";
+                $("styleCustomPrompt").value   = d.styleCustomPrompt   || "";
+                $("instantCustomModelId").value= d.instantCustomModelId|| "";
+                $("thinkCustomModelId").value  = d.thinkCustomModelId  || "";
+                $("previewCustomModelId").value= d.previewCustomModelId|| "";
+
+                if (d.selectedModel?.id) selectedModel = d.selectedModel;
+            } catch (e) {
+                console.warn("Errore restore:", e);
+            }
+        }
+
+        // ──────────────────────────────────────────────
+        //  TOAST
+        // ──────────────────────────────────────────────
+        function toast(msg) {
+            const layer = $("toastLayer");
+            const el = document.createElement("div");
+            el.className = "pointer-events-none max-w-xs rounded-2xl border border-white/8 bg-zinc-900/95 px-4 py-2.5 text-xs text-zinc-200 shadow-2xl opacity-0 translate-y-3 transition-all duration-300";
+            el.textContent = msg;
+            layer.appendChild(el);
+
+            requestAnimationFrame(() => {
+                el.classList.remove("opacity-0", "translate-y-3");
+                el.classList.add("opacity-100", "translate-y-0");
+            });
+
+            setTimeout(() => {
+                el.classList.add("opacity-0", "translate-y-3");
+                setTimeout(() => el.remove(), 300);
+            }, 2500);
+        }
+
+        // ──────────────────────────────────────────────
+        //  FILE HANDLING
+        // ──────────────────────────────────────────────
+        function handleFileSelect(e) {
+            const files = Array.from(e.target.files || []);
+            selectedFiles = [...selectedFiles, ...files];
+            renderFilePreview();
+            updateSendButton();
+            e.target.value = "";
+        }
+
+        function renderFilePreview() {
+            const preview = $("filePreview");
+            preview.innerHTML = "";
+
+            selectedFiles.forEach((f, i) => {
+                const isImg = f.type?.startsWith("image/");
+                const item = document.createElement("div");
+                item.className = "bg-zinc-800/80 text-[10px] px-2.5 py-1.5 rounded-xl border border-white/5 flex items-center gap-2 max-w-full";
+
+                item.innerHTML = `
+                    <span class="truncate max-w-[200px] text-zinc-300">
+                        ${isImg ? "🖼️" : "📎"} ${escapeHtml(f.name)}
+                        <span class="text-zinc-600 ml-1">(${formatBytes(f.size)})</span>
+                    </span>
+                    <button class="cursor-pointer text-zinc-500 hover:text-red-400 shrink-0 transition" data-idx="${i}">
+                        <i class="fa-solid fa-xmark text-[9px]"></i>
+                    </button>
+                `;
+
+                item.querySelector("button").onclick = () => {
+                    selectedFiles.splice(i, 1);
+                    renderFilePreview();
+                    updateSendButton();
+                };
+
+                preview.appendChild(item);
+            });
+        }
+
+        function clearFiles() {
+            selectedFiles = [];
+            renderFilePreview();
+            updateSendButton();
+        }
+
+        function updateSendButton() {
+            const btn = $("sendBtn");
+            const hasText = v("userInput", "").trim().length > 0;
+            const hasFiles = selectedFiles.length > 0;
+            btn.disabled = !hasText && !hasFiles || isLoading;
+        }
+
+        // ──────────────────────────────────────────────
+        //  FILE → BASE64 / TEXT
+        // ──────────────────────────────────────────────
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload  = () => resolve(String(reader.result).split(",")[1]);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function fileToText(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload  = () => resolve(String(reader.result));
+                reader.onerror = reject;
+                reader.readAsText(file);
+            });
+        }
+
+        function isTextLikeFile(file) {
+            const t = file.type || "";
+            const n = file.name.toLowerCase();
+            return (
+                t.startsWith("text/") || t === "application/json" || t === "application/xml" ||
+                t === "application/javascript" ||
+                /\.(txt|md|csv|json|xml|ya?ml|jsx?|tsx?|html|css|py|java|c|cpp|cs|php|go|rs|sql)$/.test(n)
+            );
+        }
+
+        // ──────────────────────────────────────────────
+        //  MESSAGES RENDERING
+        // ──────────────────────────────────────────────
+        function appendMessage(role, text, opts = {}) {
+            const chatWindow = $("chatWindow");
+            const welcome = $("welcomeScreen");
+            if (welcome) welcome.remove();
+
+            const wrapper = document.createElement("div");
+            wrapper.className = `flex ${role === "user" ? "justify-end" : "justify-start"} message-animate`;
+
+            const bubble = document.createElement("div");
+            bubble.classList.add("chat-bubble");
+
+            if (role === "user") {
+                bubble.className += " max-w-[80%] p-4 rounded-2xl bubble-user text-zinc-100";
+            } else {
+                bubble.className += " max-w-[80%] p-4 rounded-2xl bubble-ai text-zinc-200";
+            }
+
+            const label = role === "user" ? "Tu" : "AI";
+
+            bubble.innerHTML = `
+                <div class="text-[10px] text-zinc-500 mb-1.5 font-medium">${label}</div>
+                <div class="message-content text-sm leading-relaxed">${renderText(text)}</div>
+                ${role === "ai" ? `
+                    <div class="assistant-actions mt-3"></div>
+                    <div class="feedback-panel hidden mt-3 p-3 rounded-xl border border-white/6 bg-zinc-950/70"></div>
+                ` : ""}
+            `;
+
+            if (role === "ai") bubble.classList.add("assistant-bubble");
+            if (opts.loading) {
+                bubble.dataset.loading = "true";
+                bubble.querySelector(".message-content").innerHTML = `
+                    <div class="flex items-center gap-1.5 text-zinc-500">
+                        <span class="typing-dot h-1.5 w-1.5 rounded-full bg-zinc-500 inline-block"></span>
+                        <span class="typing-dot h-1.5 w-1.5 rounded-full bg-zinc-500 inline-block"></span>
+                        <span class="typing-dot h-1.5 w-1.5 rounded-full bg-zinc-500 inline-block"></span>
+                    </div>
+                `;
+            }
+
+            wrapper.appendChild(bubble);
+            chatWindow.appendChild(wrapper);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+
+            return bubble;
+        }
+
+        function updateMessage(bubble, text, isError = false) {
+            delete bubble.dataset.loading;
+            const content = bubble.querySelector(".message-content");
+            if (content) content.innerHTML = renderText(text);
+
+            if (isError) {
+                bubble.classList.add("border", "border-red-500/20", "bg-red-500/5");
+                const host = bubble.querySelector(".assistant-actions");
+                if (host) host.innerHTML = "";
+                const panel = bubble.querySelector(".feedback-panel");
+                if (panel) panel.remove();
+            } else if (bubble.classList.contains("assistant-bubble")) {
+                renderAssistantControls(bubble);
+            }
+
+            $("chatWindow").scrollTop = $("chatWindow").scrollHeight;
+        }
+
+        function renderText(text) {
+            let safe = escapeHtml(String(text || ""));
+            safe = safe.replace(/```([\s\S]*?)```/g, (_, code) => `<pre><code>${code.trim()}</code></pre>`);
+            safe = safe.replace(/`([^`]+)`/g, "<code>$1</code>");
+            safe = safe.replace(/\n/g, "<br>");
+            return safe;
+        }
+
+        function renderAssistantControls(bubble) {
+            const host = bubble.querySelector(".assistant-actions");
+            if (!host) return;
+
+            host.innerHTML = `
+                <div class="flex flex-wrap gap-2">
+                    <button class="text-[11px] px-3 py-1.5 rounded-full bg-zinc-800/80 text-zinc-300 border border-white/8 hover:bg-zinc-700 transition flex items-center gap-1.5"
+                            onclick="regenerateFromBubble(this)">
+                        <i class="fa-solid fa-rotate-right text-[10px]"></i> Rigenera
+                    </button>
+                    <button class="text-[11px] px-3 py-1.5 rounded-full bg-emerald-500/8 text-emerald-300 border border-emerald-500/15 hover:bg-emerald-500/15 transition flex items-center gap-1.5"
+                            onclick="openFeedback(this, 'like')">
+                        <i class="fa-regular fa-thumbs-up text-[10px]"></i> Like
+                    </button>
+                    <button class="text-[11px] px-3 py-1.5 rounded-full bg-rose-500/8 text-rose-300 border border-rose-500/15 hover:bg-rose-500/15 transition flex items-center gap-1.5"
+                            onclick="openFeedback(this, 'dislike')">
+                        <i class="fa-regular fa-thumbs-down text-[10px]"></i> Dislike
+                    </button>
+                </div>
+            `;
+        }
+
+        function openFeedback(btn, mode) {
+            const bubble = btn.closest(".assistant-bubble");
+            if (!bubble) return;
+            const panel = bubble.querySelector(".feedback-panel");
+            if (!panel) return;
+
+            bubble.dataset.feedbackMode = mode;
+            panel.classList.remove("hidden");
+
+            const isLike = mode === "like";
+
+            panel.innerHTML = `
+                <div class="text-[11px] text-zinc-400 mb-2 font-medium">${isLike ? "Cosa ti è piaciuto?" : "Cosa migliorare?"}</div>
+                <textarea class="feedback-input w-full bg-zinc-800/80 border border-white/8 rounded-xl p-2.5 text-xs text-zinc-200 outline-none resize-none focus:border-white/15 transition"
+                          rows="2"
+                          placeholder="${isLike ? "Es: spiegazione chiara, tono giusto..." : "Es: più breve, più tecnico..."}"></textarea>
+                <div class="flex gap-2 mt-2">
+                    <button class="text-xs px-3 py-1.5 rounded-lg bg-white text-black font-semibold hover:bg-zinc-200 transition"
+                            onclick="submitFeedback(this)">Invia</button>
+                    <button class="text-xs px-3 py-1.5 rounded-lg bg-zinc-800 text-zinc-400 border border-white/8 hover:bg-zinc-700 transition"
+                            onclick="hideFeedback(this)">Annulla</button>
+                </div>
+            `;
+
+            panel.querySelector(".feedback-input").focus();
+        }
+
+        function hideFeedback(btn) {
+            const bubble = btn.closest(".assistant-bubble");
+            if (!bubble) return;
+            const panel = bubble.querySelector(".feedback-panel");
+            if (panel) panel.classList.add("hidden");
+        }
+
+        function submitFeedback(btn) {
+            const bubble = btn.closest(".assistant-bubble");
+            if (!bubble) return;
+
+            const input = bubble.querySelector(".feedback-input");
+            const panel = bubble.querySelector(".feedback-panel");
+            const mode  = bubble.dataset.feedbackMode || "dislike";
+            const text  = (input?.value || "").trim();
+
+            if (!text) { toast("Scrivi un feedback breve ✍️"); return; }
+
+            const entry = `${mode === "like" ? "PIACIUTO" : "DA MIGLIORARE"}: ${text}`;
+            temporaryFeedback = temporaryFeedback ? `${temporaryFeedback}\n- ${entry}` : `- ${entry}`;
+
+            updateFeedbackPreview();
+            if (panel) panel.classList.add("hidden");
+            if (input) input.value = "";
+
+            toast("Feedback salvato ✦");
+        }
+
+        function clearTemporaryFeedback() {
+            temporaryFeedback = "";
+            updateFeedbackPreview();
+            toast("Feedback pulito");
+        }
+
+        function updateFeedbackPreview() {
+            const preview = $("feedbackPreview");
+            if (!preview) return;
+            preview.textContent = temporaryFeedback.trim() || "Nessun feedback.";
+        }
+
+        // ──────────────────────────────────────────────
+        //  SYSTEM PROMPT BUILDER
+        // ──────────────────────────────────────────────
+        function getStyleInstruction() {
+            const style  = v("responseStyle", "short");
+            const custom = v("styleCustomPrompt", "").trim();
+
+            const map = {
+                short:        "Rispondi in modo breve, diretto e pulito. Niente divagazioni.",
+                long:         "Rispondi in modo completo e strutturato. Usa esempi se utile.",
+                genz:         "Rispondi con tono Gen Z leggero, chiaro e friendly. Un po' di slang ok.",
+                professional: "Rispondi in modo professionale, preciso e tecnico quando serve.",
+            };
+
+            if (style === "custom" && custom) return custom;
+            return map[style] || "";
+        }
+
+        function buildSystemPrompt() {
+            const pieces = [];
+            const base = v("systemPrompt", "").trim();
+            if (base) pieces.push(base);
+
+            const style = getStyleInstruction();
+            if (style) pieces.push(style);
+
+            if (temporaryFeedback.trim()) {
+                pieces.push("Feedback temporaneo da applicare:\n" + temporaryFeedback.trim());
+            }
+
+            return pieces.join("\n\n");
+        }
+
+        // ──────────────────────────────────────────────
+        //  GEMINI API
+        // ──────────────────────────────────────────────
+        async function buildGeminiContents(snapshot) {
+            const contents = [];
+
+            for (const msg of snapshot) {
+                if (!msg?.role) continue;
+                const parts = [];
+                const text  = String(msg.text || "").trim();
+
+                if (text) parts.push({ text });
+
+                for (const file of (msg.files || [])) {
+                    if (!file) continue;
+
+                    if (file.type?.startsWith("image/")) {
+                        const b64 = await fileToBase64(file);
+                        parts.push({ inlineData: { mimeType: file.type || "image/png", data: b64 } });
+                    } else if (isTextLikeFile(file)) {
+                        const content = await fileToText(file);
+                        parts.push({
+                            text: `\n\n[File: ${file.name}]\n\`\`\`\n${content.slice(0, 30000)}\n\`\`\`${content.length > 30000 ? "\n[troncato]" : ""}`
+                        });
+                    } else {
+                        parts.push({ text: `\n\n[Allegato: ${file.name}, tipo: ${file.type || "sconosciuto"}]` });
+                    }
+                }
+
+                contents.push({
+                    role:  msg.role === "assistant" ? "model" : "user",
+                    parts: parts.length ? parts : [{ text: " " }]
+                });
+            }
+
+            return contents;
+        }
+
+        async function callGemini(snapshot, modelId, allowFallback = true) {
+            const apiKey = v("googleKey", "").trim();
+            if (!apiKey) throw new Error("Manca Google AI Studio API Key.");
+
+            const temperature = Number(v("temperature", "0.7") || 0.7);
+            const maxTokens   = Number(v("maxTokens", "2048") || 2048);
+            const url          = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(modelId)}:generateContent`;
+
+            const body = {
+                contents: await buildGeminiContents(snapshot),
+                generationConfig: { temperature, maxOutputTokens: maxTokens }
+            };
+
+            const sysPrompt = buildSystemPrompt();
+            if (sysPrompt) body.systemInstruction = { parts: [{ text: sysPrompt }] };
+
+            const res = await fetch(url, {
+                method:  "POST",
+                headers: { "Content-Type": "application/json", "x-goog-api-key": apiKey },
+                body:    JSON.stringify(body)
+            });
+
+            const data = await res.json().catch(() => null);
+
+            if (!res.ok) {
+                const msg = data?.error?.message || `Errore ${res.status}`;
+                if (allowFallback && modelId !== defaults.think) {
+                    toast("Fallback su modello Heavy...");
+                    return callGemini(snapshot, defaults.think, false);
+                }
+                throw new Error(msg);
+            }
+
+            const parts = data?.candidates?.[0]?.content?.parts || [];
+            const text  = parts.map(p => p.text || "").filter(Boolean).join("\n");
+
+            if (text) return text;
+            if (data?.promptFeedback?.blockReason) return "⚠️ Bloccato: " + data.promptFeedback.blockReason;
+            return JSON.stringify(data, null, 2);
+        }
+
+        // ──────────────────────────────────────────────
+        //  SEND / REGENERATE
+        // ──────────────────────────────────────────────
+        async function handleSend() {
+            if (isLoading) return;
+
+            const text  = v("userInput", "").trim();
+            if (!text && selectedFiles.length === 0) return;
+
+            const filesForRequest = [...selectedFiles];
+            const visible = text || (filesForRequest.length ? "Allegati: " + filesForRequest.map(f => f.name).join(", ") : "");
+
+            appendMessage("user", visible);
+            chatHistory.push({ role: "user", text, files: filesForRequest });
+
+            $("userInput").value = "";
+            $("userInput").style.height = "auto";
+            clearFiles();
+
+            const aiBubble = appendMessage("ai", "", { loading: true });
+
+            const snapshot = chatHistory.map(m => ({ role: m.role, text: m.text, files: m.files ? [...m.files] : [] }));
+            aiBubble.__meta = { snapshot, idx: chatHistory.length };
+
+            setLoading(true);
+
+            try {
+                const answer = await callGemini(snapshot, selectedModel.id);
+                updateMessage(aiBubble, answer || "[vuoto]");
+                chatHistory.push({ role: "assistant", text: answer || "" });
+                aiBubble.__meta.idx = chatHistory.length - 1;
+            } catch (e) {
+                console.error(e);
+                updateMessage(aiBubble, "❌ Errore API:\n\n" + (e.message || "Sconosciuto"), true);
+            } finally {
+                setLoading(false);
+                updateSendButton();
+            }
+        }
+
+        async function regenerateFromBubble(btn) {
+            const bubble = btn.closest(".assistant-bubble");
+            if (!bubble?.__meta) { toast("Nessun dato"); return; }
+
+            setLoading(true);
+
+            try {
+                const answer = await callGemini(bubble.__meta.snapshot, selectedModel.id);
+                updateMessage(bubble, answer || "[vuoto]");
+                chatHistory[bubble.__meta.idx] = { role: "assistant", text: answer || "" };
+                toast("Rigenerato ✓");
+            } catch (e) {
+                console.error(e);
+                updateMessage(bubble, "❌ Errore:\n\n" + (e.message || "Sconosciuto"), true);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        function setLoading(v) {
+            isLoading = v;
+            const status = $("connectionStatus");
+
+            if (v) {
+                status.innerHTML = `<span class="h-1.5 w-1.5 rounded-full bg-blue-400 animate-pulse"></span> Calling...`;
+                status.className = "flex items-center gap-1.5 text-[10px] px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/20";
+            } else {
+                status.innerHTML = `<span class="h-1.5 w-1.5 rounded-full bg-zinc-500"></span> Idle`;
+                status.className = "flex items-center gap-1.5 text-[10px] px-2.5 py-1 rounded-full bg-zinc-800/70 text-zinc-400 border border-white/5";
+            }
+
+            updateSendButton();
+        }
+
+        // ──────────────────────────────────────────────
+        //  NEW CHAT
+        // ──────────────────────────────────────────────
+        function newChat() {
+            if (!confirm("Vuoi cancellare la chat attuale?")) return;
+
+            chatHistory       = [];
+            selectedFiles     = [];
+            temporaryFeedback = "";
+
+            $("chatWindow").innerHTML = `
+                <div id="welcomeScreen" class="h-full flex flex-col items-center justify-center text-center px-6">
+                    <div class="h-16 w-16 rounded-2xl bg-indigo-500/10 border border-indigo-500/15 flex items-center justify-center mb-6 shadow-lg shadow-indigo-500/5">
+                        <i class="fa-solid fa-wand-magic-sparkles text-2xl text-indigo-400"></i>
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-zinc-100 tracking-tight mb-3">Ciao, come posso aiutarti?</h2>
+                    <p class="text-zinc-500 max-w-md mb-8 text-sm">Nuova sessione avviata.</p>
+
+                    <div class="flex flex-wrap items-center justify-center gap-2.5 max-w-xl">
+                        <button onclick="selectQuickModel('instant')" class="model-pill text-xs px-5 py-2.5 rounded-full bg-yellow-500/8 text-yellow-300 border border-yellow-500/15">
+                            <i class="fa-solid fa-bolt mr-1"></i> Rapido
+                        </button>
+                        <button onclick="selectQuickModel('think')" class="model-pill text-xs px-5 py-2.5 rounded-full bg-purple-500/8 text-purple-300 border border-purple-500/15">
+                            <i class="fa-solid fa-brain mr-1"></i> Heavy
+                        </button>
+                        <button onclick="selectQuickModel('preview')" class="model-pill text-xs px-5 py-2.5 rounded-full bg-cyan-500/8 text-cyan-300 border border-cyan-500/15">
+                            <i class="fa-solid fa-flask mr-1"></i> Preview
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            renderFilePreview();
+            updateFeedbackPreview();
+            updateSendButton();
+            closeDrawers();
+            toast("Nuova chat ✓");
+        }
+    </script>
 </body>
 </html>
