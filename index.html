@@ -3,20 +3,27 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
-    <title>AI Chat - Gemini</title>
+    <title>AI Chat - Intel Arc Style</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css"/>
 
     <style>
+        /* === INTEL ARC THEME VARIABLES === */
         :root {
-            --bg: #09090b;
-            --panel: #0f0f0f;
-            --border: rgba(255, 255, 255, 0.06);
-            --text: #f4f4f5;
-            --muted: #71717a;
-            --accent: #6366f1;
-            --radius: 18px;
+            --bg-deep: #020617;       /* Slate 950 base */
+            --bg-panel: #0f172a;      /* Slate 900 */
+            --bg-input: #1e293b;      /* Slate 800 */
+            
+            --arc-blue: #00c7fd;      /* Intel Arc Cyan/Blue */
+            --arc-glow: rgba(0, 199, 253, 0.3);
+            --arc-dim: rgba(0, 199, 253, 0.1);
+            
+            --border-color: rgba(56, 189, 248, 0.15); /* Light blue border */
+            --text-main: #f8fafc;     /* Slate 50 */
+            --text-muted: #94a3b8;    /* Slate 400 */
+            
+            --radius: 16px;
         }
 
         * {
@@ -32,56 +39,65 @@
         }
 
         body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Inter', 'SF Pro Display', system-ui, -apple-system, sans-serif;
+            background: radial-gradient(circle at top right, #1e3a8a 0%, var(--bg-deep) 40%);
+            color: var(--text-main);
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* === SCROLLBAR === */
+        /* === SCROLLBAR (Blue Tinted) === */
         ::-webkit-scrollbar {
-            width: 4px;
-            height: 4px;
+            width: 5px;
+            height: 5px;
         }
         ::-webkit-scrollbar-track {
             background: transparent;
         }
         ::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(56, 189, 248, 0.2);
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.14);
+            background: var(--arc-blue);
         }
 
         /* === SIDEBAR === */
         .sidebar {
-            background: #050505;
-            border-right: 1px solid var(--border);
+            background: rgba(15, 23, 42, 0.6); /* Slate 900 with opacity */
+            backdrop-filter: blur(12px);
+            border-right: 1px solid var(--border-color);
         }
 
         /* === RIGHT PANEL === */
         .right-panel {
-            background: rgba(14, 14, 16, 0.85);
-            backdrop-filter: blur(20px) saturate(120%);
-            -webkit-backdrop-filter: blur(20px) saturate(120%);
-            border-left: 1px solid var(--border);
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(24px) saturate(140%);
+            -webkit-backdrop-filter: blur(24px) saturate(140%);
+            border-left: 1px solid var(--border-color);
         }
 
-        /* === INPUT BOX === */
+        /* === INPUT BOX (Tech Style) === */
         .input-box {
-            background: rgba(24, 24, 27, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        .input-box:focus-within {
+            border-color: var(--arc-blue);
+            box-shadow: 0 0 15px var(--arc-dim);
         }
 
         /* === MODEL PILLS === */
         .model-pill {
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid transparent;
         }
         .model-pill:hover {
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            background: rgba(0, 199, 253, 0.15);
+            border-color: var(--arc-blue);
+            box-shadow: 0 0 10px var(--arc-dim);
         }
         .model-pill:active {
             transform: scale(0.96);
@@ -89,186 +105,140 @@
 
         /* === SEND BUTTON === */
         #sendBtn {
+            background: linear-gradient(135deg, var(--arc-blue), #3b82f6);
+            color: white;
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 10px var(--arc-dim);
         }
         #sendBtn:hover:not(:disabled) {
             transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 20px var(--arc-glow);
+            filter: brightness(1.1);
         }
         #sendBtn:active:not(:disabled) {
             transform: scale(0.92);
         }
+        #sendBtn:disabled {
+            background: #334155;
+            color: #64748b;
+            box-shadow: none;
+        }
 
         /* === MESSAGE BUBBLES === */
         .bubble-user {
-            background: linear-gradient(135deg, #27272a 0%, #1f1f22 100%);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%); /* Blue gradient */
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
         .bubble-ai {
             background: transparent;
+            border-left: 2px solid var(--arc-blue); /* Tech accent line */
+            padding-left: 1rem;
         }
 
         /* === CODE BLOCKS === */
         .message-content pre {
-            background: #0a0a0b;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 14px;
+            background: #020617;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 8px;
             padding: 16px;
             overflow-x: auto;
             margin: 14px 0;
-            font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
-            font-size: 0.82em;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.85em;
             line-height: 1.6;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
         }
         .message-content code {
-            background: rgba(255, 255, 255, 0.06);
-            padding: 2px 7px;
-            border-radius: 6px;
-            font-size: 0.85em;
-            font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
+            background: rgba(56, 189, 248, 0.1);
+            color: #7dd3fc;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            font-family: 'JetBrains Mono', monospace;
         }
         .message-content pre code {
             background: transparent;
             padding: 0;
-            border-radius: 0;
-            font-size: inherit;
+            color: inherit;
         }
 
         /* === RESPONSIVE === */
-        .mobile-only {
-            display: none;
-        }
-        .desktop-only {
-            display: inline-flex;
-        }
+        .mobile-only { display: none; }
+        .desktop-only { display: inline-flex; }
 
         @media (max-width: 1024px) {
-            body {
-                overflow: hidden;
-            }
-            .mobile-only {
-                display: inline-flex;
-            }
-            .desktop-only {
-                display: none !important;
-            }
+            body { overflow: hidden; }
+            .mobile-only { display: inline-flex; }
+            .desktop-only { display: none !important; }
 
             #leftSidebar {
-                position: fixed;
-                left: 0;
-                top: 0;
-                bottom: 0;
-                width: min(82vw, 320px);
-                z-index: 60;
+                position: fixed; left: 0; top: 0; bottom: 0;
+                width: min(82vw, 320px); z-index: 60;
                 transform: translateX(-105%);
-                transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                background: #0f172a; /* Solid fallback for mobile */
             }
-            #leftSidebar.open {
-                transform: translateX(0);
-            }
+            #leftSidebar.open { transform: translateX(0); }
 
             #rightSidebar {
-                position: fixed;
-                right: 0;
-                top: 0;
-                bottom: 0;
-                width: min(92vw, 390px);
-                z-index: 60;
+                position: fixed; right: 0; top: 0; bottom: 0;
+                width: min(92vw, 390px); z-index: 60;
                 transform: translateX(105%);
-                transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                background: #0f172a;
             }
-            #rightSidebar.open {
-                transform: translateX(0);
-            }
+            #rightSidebar.open { transform: translateX(0); }
 
-            #mainArea {
-                width: 100%;
-            }
-            #chatWindow {
-                padding-left: 1rem;
-                padding-right: 1rem;
-            }
-            .chat-bubble {
-                max-width: 94% !important;
-            }
-            .input-wrap {
-                padding: 0.75rem;
-            }
+            #mainArea { width: 100%; }
+            #chatWindow { padding-left: 1rem; padding-right: 1rem; }
+            .chat-bubble { max-width: 94% !important; }
+            .input-wrap { padding: 0.75rem; }
         }
 
         @media (max-width: 640px) {
-            .header-model-title {
-                max-width: 45vw;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-            }
-            .input-box {
-                border-radius: 22px;
-            }
-            #chatWindow {
-                padding: 1rem 0.5rem;
-            }
+            .header-model-title { max-width: 45vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+            .input-box { border-radius: 22px; }
+            #chatWindow { padding: 1rem 0.5rem; }
         }
 
         /* === ANIMATIONS === */
         @keyframes fadeSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(16px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .message-animate {
-            animation: fadeSlideIn 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        .message-animate { animation: fadeSlideIn 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
 
         @keyframes pulse-dot {
-            0%, 100% {
-                opacity: 0.3;
-            }
-            50% {
-                opacity: 1;
-            }
+            0%, 100% { opacity: 0.3; box-shadow: 0 0 0 transparent; }
+            50% { opacity: 1; box-shadow: 0 0 8px var(--arc-blue); }
         }
         .typing-dot {
             animation: pulse-dot 1.2s infinite;
+            background-color: var(--arc-blue);
         }
-        .typing-dot:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-        .typing-dot:nth-child(3) {
-            animation-delay: 0.4s;
-        }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
 
         /* === MODAL === */
-        .modal-overlay {
-            animation: fadeIn 0.2s ease;
-        }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
+        .modal-overlay { animation: fadeIn 0.2s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
         .modal-content {
             animation: scaleIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #0f172a;
+            border: 1px solid var(--arc-blue);
+            box-shadow: 0 0 40px rgba(0, 199, 253, 0.15);
         }
         @keyframes scaleIn {
-            from {
-                opacity: 0;
-                transform: scale(0.94) translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
+            from { opacity: 0; transform: scale(0.94) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
+        
+        /* Utility for Arc Text */
+        .text-arc { color: var(--arc-blue); }
+        .border-arc { border-color: var(--arc-blue); }
+        .bg-arc-dim { background-color: var(--arc-dim); }
     </style>
 </head>
 
@@ -277,7 +247,7 @@
     <!-- ========== MOBILE OVERLAY ========== -->
     <div id="mobileOverlay"
          onclick="closeDrawers()"
-         class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 hidden">
+         class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden">
     </div>
 
     <!-- ========== LEFT SIDEBAR ========== -->
@@ -285,68 +255,68 @@
            class="sidebar w-64 flex flex-col p-4 custom-scrollbar overflow-y-auto shrink-0">
 
         <!-- Mobile close -->
-        <div class="flex items-center justify-between mb-5 lg:hidden">
-            <span class="text-[10px] uppercase tracking-[0.15em] text-zinc-600 font-semibold">Menu</span>
+        <div class="flex items-center justify-between mb-6 lg:hidden">
+            <span class="text-[10px] uppercase tracking-[0.2em] text-blue-300 font-bold">Menu</span>
             <button onclick="closeDrawers()"
-                    class="h-9 w-9 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-white/5 flex items-center justify-center transition">
-                <i class="fa-solid fa-xmark text-zinc-400 text-sm"></i>
+                    class="h-8 w-8 rounded-lg bg-slate-800 hover:bg-slate-700 border border-blue-500/20 flex items-center justify-center transition text-blue-200">
+                <i class="fa-solid fa-xmark text-sm"></i>
             </button>
         </div>
 
         <!-- New Chat -->
         <button onclick="newChat()"
-                class="flex items-center gap-3 p-3 rounded-2xl bg-zinc-900/50 hover:bg-zinc-900 border border-white/5 transition mb-5 w-full text-left group">
-            <div class="h-8 w-8 rounded-xl bg-white/5 flex items-center justify-center group-hover:bg-white/10 transition">
-                <i class="fa-solid fa-plus text-zinc-300 text-sm"></i>
+                class="flex items-center gap-3 p-3 rounded-xl bg-gradient-to-r from-blue-600/20 to-transparent hover:bg-blue-600/30 border border-blue-500/20 transition mb-6 w-full text-left group shadow-lg shadow-blue-900/20">
+            <div class="h-8 w-8 rounded-lg bg-blue-500/20 flex items-center justify-center group-hover:bg-blue-500/40 transition border border-blue-400/30">
+                <i class="fa-solid fa-plus text-blue-300 text-sm"></i>
             </div>
-            <span class="text-sm font-medium text-zinc-200">Nuova chat</span>
+            <span class="text-sm font-medium text-blue-50">Nuova chat</span>
         </button>
 
         <!-- Quick models -->
-        <div class="space-y-1">
+        <div class="space-y-2">
             <div onclick="selectQuickModel('instant')"
-                 class="flex items-center gap-3 p-3 rounded-xl hover:bg-zinc-900/70 cursor-pointer transition group">
-                <div class="h-7 w-7 rounded-lg bg-yellow-500/10 flex items-center justify-center group-hover:bg-yellow-500/20 transition">
+                 class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800/50 cursor-pointer transition group border border-transparent hover:border-yellow-500/30">
+                <div class="h-7 w-7 rounded-lg bg-yellow-500/10 flex items-center justify-center group-hover:bg-yellow-500/20 transition border border-yellow-500/20">
                     <i class="fa-solid fa-bolt text-yellow-400 text-xs"></i>
                 </div>
-                <span class="text-sm text-zinc-300">Rapido</span>
-                <span class="ml-auto text-[9px] text-zinc-600 bg-zinc-800/50 px-2 py-0.5 rounded-full">⚡</span>
+                <span class="text-sm text-slate-300 group-hover:text-white">Rapido</span>
+                <span class="ml-auto text-[9px] text-yellow-500/70 bg-yellow-900/20 px-2 py-0.5 rounded-full border border-yellow-500/20">⚡</span>
             </div>
 
             <div onclick="selectQuickModel('think')"
-                 class="flex items-center gap-3 p-3 rounded-xl hover:bg-zinc-900/70 cursor-pointer transition group">
-                <div class="h-7 w-7 rounded-lg bg-purple-500/10 flex items-center justify-center group-hover:bg-purple-500/20 transition">
+                 class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800/50 cursor-pointer transition group border border-transparent hover:border-purple-500/30">
+                <div class="h-7 w-7 rounded-lg bg-purple-500/10 flex items-center justify-center group-hover:bg-purple-500/20 transition border border-purple-500/20">
                     <i class="fa-solid fa-brain text-purple-400 text-xs"></i>
                 </div>
-                <span class="text-sm text-zinc-300">Heavy</span>
-                <span class="ml-auto text-[9px] text-zinc-600 bg-zinc-800/50 px-2 py-0.5 rounded-full">🧠</span>
+                <span class="text-sm text-slate-300 group-hover:text-white">Heavy</span>
+                <span class="ml-auto text-[9px] text-purple-500/70 bg-purple-900/20 px-2 py-0.5 rounded-full border border-purple-500/20">🧠</span>
             </div>
 
             <div onclick="selectQuickModel('preview')"
-                 class="flex items-center gap-3 p-3 rounded-xl hover:bg-zinc-900/70 cursor-pointer transition group">
-                <div class="h-7 w-7 rounded-lg bg-cyan-500/10 flex items-center justify-center group-hover:bg-cyan-500/20 transition">
+                 class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800/50 cursor-pointer transition group border border-transparent hover:border-cyan-500/30">
+                <div class="h-7 w-7 rounded-lg bg-cyan-500/10 flex items-center justify-center group-hover:bg-cyan-500/20 transition border border-cyan-500/20">
                     <i class="fa-solid fa-flask text-cyan-400 text-xs"></i>
                 </div>
-                <span class="text-sm text-zinc-300">Preview</span>
-                <span class="ml-auto text-[9px] text-zinc-600 bg-zinc-800/50 px-2 py-0.5 rounded-full">🧪</span>
+                <span class="text-sm text-slate-300 group-hover:text-white">Preview</span>
+                <span class="ml-auto text-[9px] text-cyan-500/70 bg-cyan-900/20 px-2 py-0.5 rounded-full border border-cyan-500/20">🧪</span>
             </div>
         </div>
 
         <!-- Divider -->
-        <div class="my-6 border-t border-white/5"></div>
+        <div class="my-6 border-t border-blue-500/10"></div>
 
         <!-- Settings -->
         <div onclick="openSettings()"
-             class="flex items-center gap-3 p-3 rounded-xl hover:bg-zinc-900/70 cursor-pointer transition group">
-            <div class="h-7 w-7 rounded-lg bg-zinc-800/80 flex items-center justify-center group-hover:bg-zinc-700 transition">
-                <i class="fa-solid fa-gear text-zinc-400 text-xs"></i>
+             class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800/50 cursor-pointer transition group border border-transparent hover:border-blue-500/30">
+            <div class="h-7 w-7 rounded-lg bg-slate-700/50 flex items-center justify-center group-hover:bg-blue-600/20 transition border border-slate-600 group-hover:border-blue-500/30">
+                <i class="fa-solid fa-gear text-slate-400 group-hover:text-blue-300 text-xs"></i>
             </div>
-            <span class="text-sm text-zinc-300">Impostazioni</span>
+            <span class="text-sm text-slate-300 group-hover:text-white">Impostazioni</span>
         </div>
 
         <!-- Footer -->
         <div class="mt-auto pt-6">
-            <div class="text-[10px] text-zinc-600 leading-relaxed bg-zinc-900/30 rounded-xl p-3 border border-white/5">
+            <div class="text-[10px] text-blue-300/60 leading-relaxed bg-slate-900/50 rounded-xl p-3 border border-blue-500/10 shadow-inner">
                 ⚠️ Test locale. In produzione usa sempre un backend per proteggere le API key.
             </div>
         </div>
@@ -356,25 +326,25 @@
     <main id="mainArea" class="flex-1 flex flex-col relative min-w-0">
 
         <!-- Header -->
-        <header class="flex items-center justify-between px-4 py-3 border-b border-white/5 bg-zinc-950/60 backdrop-blur-md shrink-0">
+        <header class="flex items-center justify-between px-4 py-3 border-b border-blue-500/10 bg-slate-950/40 backdrop-blur-md shrink-0">
             <div class="flex items-center gap-3 min-w-0">
                 <!-- Mobile hamburger -->
                 <button onclick="openLeftDrawer()"
-                        class="mobile-only h-9 w-9 rounded-xl bg-zinc-800/80 border border-white/5 flex items-center justify-center hover:bg-zinc-700 transition">
-                    <i class="fa-solid fa-bars text-zinc-300 text-sm"></i>
+                        class="mobile-only h-9 w-9 rounded-lg bg-slate-800 border border-blue-500/20 flex items-center justify-center hover:bg-slate-700 transition text-blue-200">
+                    <i class="fa-solid fa-bars text-sm"></i>
                 </button>
 
                 <!-- Logo / Model info -->
                 <div class="flex items-center gap-2.5 min-w-0">
-                    <div class="h-7 w-7 rounded-lg bg-indigo-500/15 flex items-center justify-center shrink-0">
-                        <i class="fa-solid fa-robot text-indigo-400 text-xs"></i>
+                    <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center shrink-0 shadow-lg shadow-blue-500/20 border border-white/10">
+                        <i class="fa-solid fa-microchip text-white text-sm"></i>
                     </div>
                     <div class="flex flex-col min-w-0">
                         <span id="currentModelDisplay"
-                              class="header-model-title text-sm font-semibold text-zinc-100">
+                              class="header-model-title text-sm font-bold text-white tracking-wide">
                             Seleziona modello
                         </span>
-                        <span id="currentProviderDisplay" class="text-[10px] text-zinc-500">-</span>
+                        <span id="currentProviderDisplay" class="text-[10px] text-blue-400 font-mono uppercase">-</span>
                     </div>
                 </div>
             </div>
@@ -383,29 +353,29 @@
             <div class="flex items-center gap-2">
                 <!-- Status dot -->
                 <div id="connectionStatus"
-                     class="flex items-center gap-1.5 text-[10px] px-2.5 py-1 rounded-full bg-zinc-800/70 text-zinc-400 border border-white/5">
-                    <span class="h-1.5 w-1.5 rounded-full bg-zinc-500"></span>
+                     class="flex items-center gap-1.5 text-[10px] px-2.5 py-1 rounded-full bg-slate-800/50 text-blue-300 border border-blue-500/20 font-mono">
+                    <span class="h-1.5 w-1.5 rounded-full bg-slate-500"></span>
                     Idle
                 </div>
 
                 <!-- Desktop quick model pills -->
                 <button onclick="selectQuickModel('instant')"
-                        class="desktop-only model-pill text-[11px] px-3 py-1.5 rounded-full bg-yellow-500/8 text-yellow-300/90 border border-yellow-500/15">
+                        class="desktop-only model-pill text-[11px] px-3 py-1.5 rounded-full bg-yellow-500/5 text-yellow-300 border border-yellow-500/20 hover:bg-yellow-500/10">
                     <i class="fa-solid fa-bolt mr-1 text-[10px]"></i>Rapido
                 </button>
                 <button onclick="selectQuickModel('think')"
-                        class="desktop-only model-pill text-[11px] px-3 py-1.5 rounded-full bg-purple-500/8 text-purple-300/90 border border-purple-500/15">
+                        class="desktop-only model-pill text-[11px] px-3 py-1.5 rounded-full bg-purple-500/5 text-purple-300 border border-purple-500/20 hover:bg-purple-500/10">
                     <i class="fa-solid fa-brain mr-1 text-[10px]"></i>Heavy
                 </button>
                 <button onclick="selectQuickModel('preview')"
-                        class="desktop-only model-pill text-[11px] px-3 py-1.5 rounded-full bg-cyan-500/8 text-cyan-300/90 border border-cyan-500/15">
+                        class="desktop-only model-pill text-[11px] px-3 py-1.5 rounded-full bg-cyan-500/5 text-cyan-300 border border-cyan-500/20 hover:bg-cyan-500/10">
                     <i class="fa-solid fa-flask mr-1 text-[10px]"></i>Preview
                 </button>
 
                 <!-- Mobile settings -->
                 <button onclick="openRightDrawer()"
-                        class="mobile-only h-9 w-9 rounded-xl bg-zinc-800/80 border border-white/5 flex items-center justify-center hover:bg-zinc-700 transition">
-                    <i class="fa-solid fa-sliders text-zinc-300 text-sm"></i>
+                        class="mobile-only h-9 w-9 rounded-lg bg-slate-800 border border-blue-500/20 flex items-center justify-center hover:bg-slate-700 transition text-blue-200">
+                    <i class="fa-solid fa-sliders text-sm"></i>
                 </button>
             </div>
         </header>
@@ -419,71 +389,72 @@
                  class="h-full flex flex-col items-center justify-center text-center px-6">
 
                 <!-- Logo -->
-                <div class="h-16 w-16 rounded-2xl bg-indigo-500/10 border border-indigo-500/15 flex items-center justify-center mb-6 shadow-lg shadow-indigo-500/5">
-                    <i class="fa-solid fa-wand-magic-sparkles text-2xl text-indigo-400"></i>
+                <div class="h-20 w-20 rounded-2xl bg-gradient-to-tr from-blue-600/20 to-cyan-400/20 border border-blue-500/30 flex items-center justify-center mb-8 shadow-[0_0_30px_rgba(59,130,246,0.15)] relative overflow-hidden group">
+                    <div class="absolute inset-0 bg-blue-500/10 opacity-0 group-hover:opacity-100 transition duration-500"></div>
+                    <i class="fa-solid fa-robot text-3xl text-blue-400 group-hover:text-cyan-300 transition duration-300"></i>
                 </div>
 
-                <h2 class="text-3xl sm:text-4xl font-bold text-zinc-100 tracking-tight mb-3">
+                <h2 class="text-4xl sm:text-5xl font-bold text-white tracking-tight mb-4 drop-shadow-lg">
                     Ciao, come posso aiutarti?
                 </h2>
-                <p class="text-zinc-500 max-w-md mb-8 text-sm leading-relaxed">
+                <p class="text-blue-200/70 max-w-md mb-10 text-sm leading-relaxed font-light">
                     Inserisci una API key, scegli un modello e inizia a chattare.
                 </p>
 
                 <!-- Quick start pills -->
-                <div class="flex flex-wrap items-center justify-center gap-2.5 max-w-xl">
+                <div class="flex flex-wrap items-center justify-center gap-3 max-w-xl">
                     <button onclick="selectQuickModel('instant')"
-                            class="model-pill text-xs px-5 py-2.5 rounded-full bg-yellow-500/8 text-yellow-300 border border-yellow-500/15 flex items-center gap-2">
+                            class="model-pill text-xs px-6 py-3 rounded-full bg-slate-800/50 text-yellow-300 border border-yellow-500/20 hover:border-yellow-400 flex items-center gap-2 backdrop-blur-sm">
                         <i class="fa-solid fa-bolt"></i> Rapido
                     </button>
                     <button onclick="selectQuickModel('think')"
-                            class="model-pill text-xs px-5 py-2.5 rounded-full bg-purple-500/8 text-purple-300 border border-purple-500/15 flex items-center gap-2">
+                            class="model-pill text-xs px-6 py-3 rounded-full bg-slate-800/50 text-purple-300 border border-purple-500/20 hover:border-purple-400 flex items-center gap-2 backdrop-blur-sm">
                         <i class="fa-solid fa-brain"></i> Heavy
                     </button>
                     <button onclick="selectQuickModel('preview')"
-                            class="model-pill text-xs px-5 py-2.5 rounded-full bg-cyan-500/8 text-cyan-300 border border-cyan-500/15 flex items-center gap-2">
+                            class="model-pill text-xs px-6 py-3 rounded-full bg-slate-800/50 text-cyan-300 border border-cyan-500/20 hover:border-cyan-400 flex items-center gap-2 backdrop-blur-sm">
                         <i class="fa-solid fa-flask"></i> Preview
                     </button>
                     <button onclick="openRightDrawer()"
-                            class="model-pill text-xs px-5 py-2.5 rounded-full bg-zinc-800/60 text-zinc-300 border border-white/5 flex items-center gap-2">
+                            class="model-pill text-xs px-6 py-3 rounded-full bg-blue-600/20 text-blue-200 border border-blue-500/30 hover:bg-blue-600/30 flex items-center gap-2 backdrop-blur-sm">
                         <i class="fa-solid fa-key"></i> API Key
                     </button>
                 </div>
 
                 <!-- Warning -->
-                <div class="mt-10 text-[11px] text-zinc-600 max-w-lg leading-relaxed bg-zinc-900/40 rounded-2xl p-4 border border-white/5">
-                    <b class="text-zinc-400">Attenzione:</b> questo esempio chiama direttamente le API dal browser. Per un progetto reale, crea un backend che custodisce le chiavi.
+                <div class="mt-12 text-[11px] text-blue-300/50 max-w-lg leading-relaxed bg-slate-900/40 rounded-2xl p-4 border border-blue-500/10">
+                    <b class="text-blue-400">Attenzione:</b> questo esempio chiama direttamente le API dal browser. Per un progetto reale, crea un backend che custodisce le chiavi.
                 </div>
             </div>
         </div>
 
         <!-- Input area -->
         <div class="input-wrap px-4 pb-4 pt-2 shrink-0 safe-bottom">
-            <div class="max-w-3xl mx-auto input-box rounded-[22px] p-2.5 flex flex-col">
+            <div class="max-w-3xl mx-auto input-box rounded-[24px] p-2 flex flex-col">
 
                 <!-- File preview -->
                 <div id="filePreview"
-                     class="flex flex-wrap gap-2 mb-2 px-1.5"></div>
+                     class="flex flex-wrap gap-2 mb-2 px-2"></div>
 
                 <!-- Textarea -->
                 <textarea id="userInput"
                           rows="1"
                           placeholder="Scrivi un messaggio..."
-                          class="bg-transparent border-none focus:ring-0 focus:outline-none text-zinc-100 w-full resize-none p-2 max-h-48 custom-scrollbar placeholder:text-zinc-500 text-sm"></textarea>
+                          class="bg-transparent border-none focus:ring-0 focus:outline-none text-white w-full resize-none p-3 max-h-48 custom-scrollbar placeholder:text-blue-300/30 text-sm"></textarea>
 
                 <!-- Bottom row -->
-                <div class="flex items-center justify-between mt-1 px-1.5 gap-2">
+                <div class="flex items-center justify-between mt-1 px-2 gap-2">
                     <!-- Left tools -->
-                    <div class="flex items-center gap-1.5 text-zinc-500">
+                    <div class="flex items-center gap-2 text-blue-300/60">
                         <!-- File attach -->
-                        <label class="cursor-pointer hover:text-zinc-300 h-8 w-8 rounded-xl bg-zinc-800/60 border border-white/5 flex items-center justify-center transition hover:bg-zinc-700/60"
+                        <label class="cursor-pointer hover:text-blue-300 h-8 w-8 rounded-lg bg-slate-800/50 border border-blue-500/10 flex items-center justify-center transition hover:bg-slate-700/50 hover:border-blue-500/30"
                                title="Allega file">
                             <i class="fa-solid fa-paperclip text-xs"></i>
                             <input type="file" id="fileInput" hidden multiple onchange="handleFileSelect(event)"/>
                         </label>
 
                         <!-- Photo attach -->
-                        <label class="cursor-pointer hover:text-zinc-300 h-8 w-8 rounded-xl bg-zinc-800/60 border border-white/5 flex items-center justify-center transition hover:bg-zinc-700/60"
+                        <label class="cursor-pointer hover:text-blue-300 h-8 w-8 rounded-lg bg-slate-800/50 border border-blue-500/10 flex items-center justify-center transition hover:bg-slate-700/50 hover:border-blue-500/30"
                                title="Allega foto">
                             <i class="fa-regular fa-image text-xs"></i>
                             <input type="file" id="photoInput" hidden multiple accept="image/*" onchange="handleFileSelect(event)"/>
@@ -491,17 +462,17 @@
 
                         <!-- Quick model selectors (compact) -->
                         <button onclick="selectQuickModel('instant')"
-                                class="hidden sm:inline-flex h-8 px-2.5 rounded-xl bg-yellow-500/8 text-yellow-400/80 border border-yellow-500/15 text-[10px] items-center gap-1 hover:bg-yellow-500/15 transition"
+                                class="hidden sm:inline-flex h-8 px-2.5 rounded-lg bg-yellow-500/5 text-yellow-400/80 border border-yellow-500/15 text-[10px] items-center gap-1 hover:bg-yellow-500/15 transition"
                                 title="Rapido">
                             <i class="fa-solid fa-bolt text-[9px]"></i> Rapido
                         </button>
                         <button onclick="selectQuickModel('think')"
-                                class="hidden sm:inline-flex h-8 px-2.5 rounded-xl bg-purple-500/8 text-purple-400/80 border border-purple-500/15 text-[10px] items-center gap-1 hover:bg-purple-500/15 transition"
+                                class="hidden sm:inline-flex h-8 px-2.5 rounded-lg bg-purple-500/5 text-purple-400/80 border border-purple-500/15 text-[10px] items-center gap-1 hover:bg-purple-500/15 transition"
                                 title="Heavy">
                             <i class="fa-solid fa-brain text-[9px]"></i> Heavy
                         </button>
                         <button onclick="selectQuickModel('preview')"
-                                class="hidden sm:inline-flex h-8 px-2.5 rounded-xl bg-cyan-500/8 text-cyan-400/80 border border-cyan-500/15 text-[10px] items-center gap-1 hover:bg-cyan-500/15 transition"
+                                class="hidden sm:inline-flex h-8 px-2.5 rounded-lg bg-cyan-500/5 text-cyan-400/80 border border-cyan-500/15 text-[10px] items-center gap-1 hover:bg-cyan-500/15 transition"
                                 title="Preview">
                             <i class="fa-solid fa-flask text-[9px]"></i> Preview
                         </button>
@@ -510,14 +481,14 @@
                     <!-- Right: clear + send -->
                     <div class="flex items-center gap-2">
                         <button onclick="clearFiles()"
-                                class="text-[10px] text-zinc-600 hover:text-zinc-300 transition"
+                                class="text-[10px] text-blue-400/50 hover:text-white transition px-2"
                                 title="Rimuovi allegati">
                             <i class="fa-solid fa-xmark"></i>
                         </button>
 
                         <button id="sendBtn"
                                 onclick="handleSend()"
-                                class="bg-white text-black h-9 w-9 rounded-full flex items-center justify-center hover:bg-zinc-200 disabled:opacity-30 disabled:cursor-not-allowed shrink-0 transition"
+                                class="h-9 w-9 rounded-full flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed shrink-0 transition"
                                 disabled>
                             <i class="fa-solid fa-arrow-up text-sm"></i>
                         </button>
@@ -529,112 +500,112 @@
 
     <!-- ========== RIGHT SIDEBAR (Settings) ========== -->
     <aside id="rightSidebar"
-           class="right-panel w-80 flex flex-col border-l border-white/10 p-5 custom-scrollbar overflow-y-auto shrink-0">
+           class="right-panel w-80 flex flex-col border-l border-blue-500/10 p-5 custom-scrollbar overflow-y-auto shrink-0">
 
         <!-- Header -->
-        <div class="flex items-center justify-between mb-5">
+        <div class="flex items-center justify-between mb-6">
             <div class="flex items-center gap-2">
-                <div class="h-6 w-6 rounded-lg bg-indigo-500/15 flex items-center justify-center">
-                    <i class="fa-solid fa-sliders text-indigo-400 text-[10px]"></i>
+                <div class="h-6 w-6 rounded-lg bg-blue-500/15 flex items-center justify-center border border-blue-500/20">
+                    <i class="fa-solid fa-sliders text-blue-400 text-[10px]"></i>
                 </div>
-                <h3 class="text-[11px] font-bold text-zinc-400 uppercase tracking-[0.12em]">Configurazione</h3>
+                <h3 class="text-[11px] font-bold text-blue-300 uppercase tracking-[0.15em]">Configurazione</h3>
             </div>
             <button onclick="closeDrawers()"
-                    class="lg:hidden h-8 w-8 rounded-xl bg-zinc-800 hover:bg-zinc-700 flex items-center justify-center transition">
-                <i class="fa-solid fa-xmark text-zinc-400 text-sm"></i>
+                    class="lg:hidden h-8 w-8 rounded-lg bg-slate-800 hover:bg-slate-700 flex items-center justify-center transition text-blue-200">
+                <i class="fa-solid fa-xmark text-sm"></i>
             </button>
         </div>
 
         <!-- API Key -->
-        <div class="space-y-1.5 mb-4">
-            <label class="text-[10px] text-zinc-500 font-medium">Google AI Studio API Key</label>
-            <div class="relative">
+        <div class="space-y-1.5 mb-5">
+            <label class="text-[10px] text-blue-300/70 font-medium uppercase tracking-wider">Google AI Studio API Key</label>
+            <div class="relative group">
                 <input type="password" id="googleKey"
                        placeholder="AIza..."
-                       class="w-full bg-zinc-900/70 border border-white/8 rounded-xl p-2.5 pr-8 text-xs text-zinc-200 outline-none focus:border-indigo-500/50 transition placeholder:text-zinc-600"/>
-                <i class="fa-solid fa-key absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-600 text-[10px]"></i>
+                       class="w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 pr-8 text-xs text-blue-100 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400/50 transition placeholder:text-slate-600"/>
+                <i class="fa-solid fa-key absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-600 group-focus-within:text-blue-400 text-[10px] transition"></i>
             </div>
         </div>
 
         <!-- Temp + Tokens -->
-        <div class="grid grid-cols-2 gap-3 mb-4">
+        <div class="grid grid-cols-2 gap-3 mb-5">
             <div class="space-y-1.5">
-                <label class="text-[10px] text-zinc-500 font-medium">Temperature</label>
+                <label class="text-[10px] text-blue-300/70 font-medium uppercase tracking-wider">Temperature</label>
                 <input type="number" id="temperature"
                        min="0" max="2" step="0.1" value="0.7"
-                       class="w-full bg-zinc-900/70 border border-white/8 rounded-xl p-2.5 text-xs text-zinc-200 outline-none focus:border-purple-500/50 transition"/>
+                       class="w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 text-xs text-blue-100 outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400/50 transition"/>
             </div>
             <div class="space-y-1.5">
-                <label class="text-[10px] text-zinc-500 font-medium">Max tokens</label>
+                <label class="text-[10px] text-blue-300/70 font-medium uppercase tracking-wider">Max tokens</label>
                 <input type="number" id="maxTokens"
                        min="64" max="32768" step="64" value="2048"
-                       class="w-full bg-zinc-900/70 border border-white/8 rounded-xl p-2.5 text-xs text-zinc-200 outline-none focus:border-purple-500/50 transition"/>
+                       class="w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 text-xs text-blue-100 outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400/50 transition"/>
             </div>
         </div>
 
         <!-- Save checkbox -->
-        <label class="flex items-center gap-2.5 text-xs text-zinc-400 select-none mb-5 cursor-pointer group">
-            <input id="saveLocal" type="checkbox" class="accent-white w-3.5 h-3.5 rounded" onchange="persistSettings()"/>
-            <span class="group-hover:text-zinc-300 transition">Salva impostazioni localmente</span>
+        <label class="flex items-center gap-2.5 text-xs text-blue-200 select-none mb-6 cursor-pointer group">
+            <input id="saveLocal" type="checkbox" class="accent-blue-500 w-3.5 h-3.5 rounded bg-slate-800 border-slate-600" onchange="persistSettings()"/>
+            <span class="group-hover:text-white transition">Salva impostazioni localmente</span>
         </label>
 
         <!-- Divider -->
-        <div class="border-t border-white/5 my-3"></div>
+        <div class="border-t border-blue-500/10 my-3"></div>
 
         <!-- Quick model IDs -->
-        <h4 class="text-[10px] font-semibold text-zinc-500 uppercase tracking-[0.1em] mb-3">Modelli Rapidi</h4>
-        <div class="space-y-3 mb-4">
+        <h4 class="text-[10px] font-semibold text-blue-300/70 uppercase tracking-[0.15em] mb-3">Modelli Rapidi</h4>
+        <div class="space-y-3 mb-5">
             <div class="space-y-1.5">
-                <label class="text-[10px] text-zinc-500 flex items-center gap-1.5">
-                    <span class="h-1.5 w-1.5 rounded-full bg-yellow-500"></span> Rapido
+                <label class="text-[10px] text-blue-300/70 flex items-center gap-1.5">
+                    <span class="h-1.5 w-1.5 rounded-full bg-yellow-500 shadow-[0_0_5px_rgba(234,179,8,0.5)]"></span> Rapido
                 </label>
                 <input id="instantCustomModelId"
                        placeholder="gemini-2.5-flash"
-                       class="w-full bg-zinc-900/70 border border-white/8 rounded-xl p-2.5 text-xs text-zinc-200 outline-none focus:border-yellow-500/50 transition placeholder:text-zinc-600"/>
+                       class="w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 text-xs text-blue-100 outline-none focus:border-yellow-500/50 transition placeholder:text-slate-600"/>
             </div>
             <div class="space-y-1.5">
-                <label class="text-[10px] text-zinc-500 flex items-center gap-1.5">
-                    <span class="h-1.5 w-1.5 rounded-full bg-purple-500"></span> Heavy
+                <label class="text-[10px] text-blue-300/70 flex items-center gap-1.5">
+                    <span class="h-1.5 w-1.5 rounded-full bg-purple-500 shadow-[0_0_5px_rgba(168,85,247,0.5)]"></span> Heavy
                 </label>
                 <input id="thinkCustomModelId"
                        placeholder="gemma-4-26b-a4b-it"
-                       class="w-full bg-zinc-900/70 border border-white/8 rounded-xl p-2.5 text-xs text-zinc-200 outline-none focus:border-purple-500/50 transition placeholder:text-zinc-600"/>
+                       class="w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 text-xs text-blue-100 outline-none focus:border-purple-500/50 transition placeholder:text-slate-600"/>
             </div>
             <div class="space-y-1.5">
-                <label class="text-[10px] text-zinc-500 flex items-center gap-1.5">
-                    <span class="h-1.5 w-1.5 rounded-full bg-cyan-500"></span> Preview
+                <label class="text-[10px] text-blue-300/70 flex items-center gap-1.5">
+                    <span class="h-1.5 w-1.5 rounded-full bg-cyan-500 shadow-[0_0_5px_rgba(6,182,212,0.5)]"></span> Preview
                 </label>
                 <input id="previewCustomModelId"
                        placeholder="gemini-3-flash-preview"
-                       class="w-full bg-zinc-900/70 border border-white/8 rounded-xl p-2.5 text-xs text-zinc-200 outline-none focus:border-cyan-500/50 transition placeholder:text-zinc-600"/>
+                       class="w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 text-xs text-blue-100 outline-none focus:border-cyan-500/50 transition placeholder:text-slate-600"/>
             </div>
         </div>
 
         <!-- Divider -->
-        <div class="border-t border-white/5 my-3"></div>
+        <div class="border-t border-blue-500/10 my-3"></div>
 
         <!-- Custom model -->
-        <h4 class="text-[10px] font-semibold text-zinc-500 uppercase tracking-[0.1em] mb-3">Modello Custom</h4>
-        <div class="space-y-2.5 mb-4">
+        <h4 class="text-[10px] font-semibold text-blue-300/70 uppercase tracking-[0.15em] mb-3">Modello Custom</h4>
+        <div class="space-y-2.5 mb-5">
             <input id="customModelId"
                    placeholder="es: gemini-2.5-pro"
-                   class="w-full bg-zinc-900/70 border border-white/8 rounded-xl p-2.5 text-xs text-zinc-200 outline-none focus:border-white/20 transition placeholder:text-zinc-600"/>
+                   class="w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 text-xs text-blue-100 outline-none focus:border-white/20 transition placeholder:text-slate-600"/>
             <button onclick="useCustomModel()"
-                    class="w-full bg-zinc-100 text-black font-semibold py-2.5 rounded-xl text-xs hover:bg-white transition active:scale-[0.98]">
+                    class="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2.5 rounded-lg text-xs transition active:scale-[0.98] shadow-lg shadow-blue-900/50 border border-blue-400/20">
                 <i class="fa-solid fa-check mr-1"></i> Usa modello custom
             </button>
         </div>
 
         <!-- Divider -->
-        <div class="border-t border-white/5 my-3"></div>
+        <div class="border-t border-blue-500/10 my-3"></div>
 
         <!-- Preset models -->
-        <h4 class="text-[10px] font-semibold text-zinc-500 uppercase tracking-[0.1em] mb-3">Modelli Preimpostati</h4>
+        <h4 class="text-[10px] font-semibold text-blue-300/70 uppercase tracking-[0.15em] mb-3">Modelli Preimpostati</h4>
         <div class="space-y-0.5" id="modelList"></div>
 
         <!-- Bottom tip -->
         <div class="mt-auto pt-5">
-            <div class="text-[10px] text-zinc-600 leading-relaxed">
+            <div class="text-[10px] text-blue-300/40 leading-relaxed">
                 Se un modello dà errore, verifica che l'ID sia disponibile per la tua API key nella dashboard Google AI Studio.
             </div>
         </div>
@@ -643,32 +614,32 @@
     <!-- ========== SETTINGS MODAL ========== -->
     <div id="settingsModal"
          class="hidden fixed inset-0 z-[80] items-center justify-center p-4 modal-overlay">
-        <div class="absolute inset-0 bg-black/85 backdrop-blur-sm" onclick="closeSettings()"></div>
-        <div class="relative bg-zinc-900 border border-white/8 w-full max-w-[580px] rounded-2xl p-6 shadow-2xl custom-scrollbar overflow-y-auto max-h-[85vh] modal-content">
+        <div class="absolute inset-0 bg-black/90 backdrop-blur-sm" onclick="closeSettings()"></div>
+        <div class="relative bg-slate-900 border border-blue-500/30 w-full max-w-[580px] rounded-2xl p-6 shadow-2xl custom-scrollbar overflow-y-auto max-h-[85vh] modal-content">
 
-            <div class="flex items-center justify-between mb-5">
-                <h2 class="text-lg font-bold text-zinc-100 flex items-center gap-2">
-                    <i class="fa-solid fa-gear text-indigo-400"></i> Impostazioni AI
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-gear text-blue-400"></i> Impostazioni AI
                 </h2>
                 <button onclick="closeSettings()"
-                        class="h-8 w-8 rounded-xl bg-zinc-800 hover:bg-zinc-700 flex items-center justify-center transition">
-                    <i class="fa-solid fa-xmark text-zinc-400 text-sm"></i>
+                        class="h-8 w-8 rounded-lg bg-slate-800 hover:bg-slate-700 flex items-center justify-center transition text-blue-200 border border-blue-500/20">
+                    <i class="fa-solid fa-xmark text-sm"></i>
                 </button>
             </div>
 
             <!-- System prompt -->
-            <div class="space-y-1.5 mb-4">
-                <label class="text-[10px] text-zinc-500 font-medium">System Prompt</label>
+            <div class="space-y-1.5 mb-5">
+                <label class="text-[10px] text-blue-300/70 font-medium uppercase tracking-wider">System Prompt</label>
                 <textarea id="systemPrompt" rows="4"
                           placeholder="Es: Rispondi come un ingegnere software preciso e chiaro."
-                          class="w-full bg-zinc-800/70 border border-white/8 rounded-xl p-3 text-sm text-zinc-200 outline-none focus:border-indigo-500/50 transition resize-none placeholder:text-zinc-600"></textarea>
+                          class="w-full bg-slate-950/50 border border-blue-500/20 rounded-lg p-3 text-sm text-blue-100 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400/30 transition resize-none placeholder:text-slate-600"></textarea>
             </div>
 
             <!-- Response style -->
-            <div class="space-y-1.5 mb-4">
-                <label class="text-[10px] text-zinc-500 font-medium">Stile Risposta</label>
+            <div class="space-y-1.5 mb-5">
+                <label class="text-[10px] text-blue-300/70 font-medium uppercase tracking-wider">Stile Risposta</label>
                 <select id="responseStyle"
-                        class="w-full bg-zinc-800/70 border border-white/8 rounded-xl p-3 text-sm text-zinc-200 outline-none focus:border-indigo-500/50 transition">
+                        class="w-full bg-slate-950/50 border border-blue-500/20 rounded-lg p-3 text-sm text-blue-100 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400/30 transition appearance-none">
                     <option value="short">Breve e diretto</option>
                     <option value="long">Lungo e dettagliato</option>
                     <option value="genz">Gen Z / Casual</option>
@@ -678,31 +649,31 @@
             </div>
 
             <!-- Custom style prompt -->
-            <div class="space-y-1.5 mb-4">
-                <label class="text-[10px] text-zinc-500 font-medium">Prompt Stile Custom</label>
+            <div class="space-y-1.5 mb-5">
+                <label class="text-[10px] text-blue-300/70 font-medium uppercase tracking-wider">Prompt Stile Custom</label>
                 <textarea id="styleCustomPrompt" rows="3"
                           placeholder="Descrivi il tono e comportamento desiderato..."
-                          class="w-full bg-zinc-800/70 border border-white/8 rounded-xl p-3 text-sm text-zinc-200 outline-none focus:border-indigo-500/50 transition resize-none placeholder:text-zinc-600"></textarea>
+                          class="w-full bg-slate-950/50 border border-blue-500/20 rounded-lg p-3 text-sm text-blue-100 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400/30 transition resize-none placeholder:text-slate-600"></textarea>
             </div>
 
             <!-- Feedback preview -->
-            <div class="rounded-xl border border-white/8 bg-zinc-950/60 p-4 mb-5">
+            <div class="rounded-lg border border-blue-500/20 bg-slate-950/80 p-4 mb-6">
                 <div class="flex items-center justify-between gap-3 mb-2">
-                    <span class="text-[10px] uppercase tracking-[0.1em] text-zinc-500 font-semibold">Feedback Temporaneo</span>
+                    <span class="text-[10px] uppercase tracking-[0.15em] text-blue-400 font-semibold">Feedback Temporaneo</span>
                     <button onclick="clearTemporaryFeedback()"
-                            class="text-[10px] px-2.5 py-1 rounded-lg bg-zinc-800 border border-white/8 text-zinc-400 hover:bg-zinc-700 hover:text-zinc-200 transition">
+                            class="text-[10px] px-2.5 py-1 rounded bg-slate-800 border border-blue-500/20 text-blue-300 hover:bg-slate-700 hover:text-white transition">
                         Pulisci
                     </button>
                 </div>
                 <div id="feedbackPreview"
-                     class="text-xs text-zinc-500 leading-relaxed whitespace-pre-wrap min-h-[40px]">
+                     class="text-xs text-blue-200/60 leading-relaxed whitespace-pre-wrap min-h-[40px] font-mono">
                     Nessun feedback.
                 </div>
             </div>
 
             <!-- Save button -->
             <button onclick="closeSettings()"
-                    class="w-full bg-white text-black font-semibold py-3 rounded-xl text-sm hover:bg-zinc-200 transition active:scale-[0.98]">
+                    class="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 rounded-lg text-sm transition active:scale-[0.98] shadow-lg shadow-blue-900/50 border border-blue-400/20">
                 <i class="fa-solid fa-check mr-1"></i> Salva impostazioni
             </button>
         </div>
@@ -837,20 +808,20 @@
                 if (m.group && m.group !== lastGroup) {
                     lastGroup = m.group;
                     const h = document.createElement("div");
-                    h.className = "text-[9px] text-zinc-600 uppercase tracking-[0.1em] mt-3 mb-1.5 px-2 font-semibold";
+                    h.className = "text-[9px] text-blue-400/60 uppercase tracking-[0.15em] mt-3 mb-1.5 px-2 font-bold";
                     h.textContent = lastGroup;
                     container.appendChild(h);
                 }
 
                 const div = document.createElement("div");
-                div.className = "model-list-item flex items-center justify-between gap-2 p-2.5 rounded-xl cursor-pointer transition text-xs hover:bg-zinc-800/60";
+                div.className = "model-list-item flex items-center justify-between gap-2 p-2.5 rounded-lg cursor-pointer transition text-xs hover:bg-slate-800/60 border border-transparent hover:border-blue-500/20";
                 div.dataset.modelId = m.id;
                 div.dataset.provider = m.provider;
 
                 div.innerHTML = `
                     <div class="flex flex-col min-w-0">
-                        <span class="truncate text-zinc-200 font-medium">${escapeHtml(m.name)}</span>
-                        <span class="text-[9px] text-zinc-600 truncate">${escapeHtml(m.provider)} · ${escapeHtml(m.id)}</span>
+                        <span class="truncate text-blue-100 font-medium">${escapeHtml(m.name)}</span>
+                        <span class="text-[9px] text-blue-400/50 truncate font-mono">${escapeHtml(m.provider)} · ${escapeHtml(m.id)}</span>
                     </div>
                     <span class="text-[8px] px-1.5 py-0.5 rounded-full shrink-0 font-semibold ${statusClass(m.status)}">
                         ${escapeHtml(String(m.status).toUpperCase())}
@@ -864,13 +835,13 @@
 
         function statusClass(status) {
             const map = {
-                online:  "bg-emerald-500/10 text-emerald-400",
-                preview: "bg-cyan-500/10 text-cyan-400",
-                beta:    "bg-purple-500/10 text-purple-400",
-                instant: "bg-yellow-500/10 text-yellow-400",
-                think:   "bg-purple-500/10 text-purple-300",
-                check:   "bg-zinc-700/50 text-zinc-500",
-                custom:  "bg-white/5 text-zinc-400"
+                online:  "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20",
+                preview: "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20",
+                beta:    "bg-purple-500/10 text-purple-400 border border-purple-500/20",
+                instant: "bg-yellow-500/10 text-yellow-400 border border-yellow-500/20",
+                think:   "bg-purple-500/10 text-purple-300 border border-purple-500/20",
+                check:   "bg-slate-700/50 text-slate-500 border border-slate-600/30",
+                custom:  "bg-blue-500/10 text-blue-400 border border-blue-500/20"
             };
             return map[status] || map.check;
         }
@@ -904,12 +875,12 @@
             $("currentModelDisplay").innerText    = selectedModel.name || selectedModel.id;
             $("currentProviderDisplay").innerText = selectedModel.provider || "google";
 
-            $$(".model-list-item").forEach(el => el.classList.remove("bg-zinc-800/80", "border-white/10"));
+            $$(".model-list-item").forEach(el => el.classList.remove("bg-slate-800/80", "border-blue-500/30"));
 
             const active = Array.from($$(".model-list-item")).find(
                 el => el.dataset.modelId === selectedModel.id && el.dataset.provider === selectedModel.provider
             );
-            if (active) active.classList.add("bg-zinc-800/80", "border-white/10");
+            if (active) active.classList.add("bg-slate-800/80", "border-blue-500/30");
         }
 
         function selectQuickModel(type) {
@@ -1010,7 +981,7 @@
         function toast(msg) {
             const layer = $("toastLayer");
             const el = document.createElement("div");
-            el.className = "pointer-events-none max-w-xs rounded-2xl border border-white/8 bg-zinc-900/95 px-4 py-2.5 text-xs text-zinc-200 shadow-2xl opacity-0 translate-y-3 transition-all duration-300";
+            el.className = "pointer-events-none max-w-xs rounded-xl border border-blue-500/20 bg-slate-900/95 px-4 py-2.5 text-xs text-blue-100 shadow-2xl opacity-0 translate-y-3 transition-all duration-300 backdrop-blur-md";
             el.textContent = msg;
             layer.appendChild(el);
 
@@ -1043,14 +1014,14 @@
             selectedFiles.forEach((f, i) => {
                 const isImg = f.type?.startsWith("image/");
                 const item = document.createElement("div");
-                item.className = "bg-zinc-800/80 text-[10px] px-2.5 py-1.5 rounded-xl border border-white/5 flex items-center gap-2 max-w-full";
+                item.className = "bg-slate-800/80 text-[10px] px-2.5 py-1.5 rounded-lg border border-blue-500/20 flex items-center gap-2 max-w-full text-blue-200";
 
                 item.innerHTML = `
-                    <span class="truncate max-w-[200px] text-zinc-300">
+                    <span class="truncate max-w-[200px]">
                         ${isImg ? "🖼️" : "📎"} ${escapeHtml(f.name)}
-                        <span class="text-zinc-600 ml-1">(${formatBytes(f.size)})</span>
+                        <span class="text-blue-400/60 ml-1">(${formatBytes(f.size)})</span>
                     </span>
-                    <button class="cursor-pointer text-zinc-500 hover:text-red-400 shrink-0 transition" data-idx="${i}">
+                    <button class="cursor-pointer text-blue-400/60 hover:text-red-400 shrink-0 transition" data-idx="${i}">
                         <i class="fa-solid fa-xmark text-[9px]"></i>
                     </button>
                 `;
@@ -1124,19 +1095,19 @@
             bubble.classList.add("chat-bubble");
 
             if (role === "user") {
-                bubble.className += " max-w-[80%] p-4 rounded-2xl bubble-user text-zinc-100";
+                bubble.className += " max-w-[80%] p-4 rounded-2xl bubble-user text-white";
             } else {
-                bubble.className += " max-w-[80%] p-4 rounded-2xl bubble-ai text-zinc-200";
+                bubble.className += " max-w-[80%] p-4 rounded-2xl bubble-ai text-blue-100";
             }
 
             const label = role === "user" ? "Tu" : "AI";
 
             bubble.innerHTML = `
-                <div class="text-[10px] text-zinc-500 mb-1.5 font-medium">${label}</div>
+                <div class="text-[10px] text-blue-300/60 mb-1.5 font-mono uppercase tracking-wider">${label}</div>
                 <div class="message-content text-sm leading-relaxed">${renderText(text)}</div>
                 ${role === "ai" ? `
                     <div class="assistant-actions mt-3"></div>
-                    <div class="feedback-panel hidden mt-3 p-3 rounded-xl border border-white/6 bg-zinc-950/70"></div>
+                    <div class="feedback-panel hidden mt-3 p-3 rounded-xl border border-blue-500/10 bg-slate-900/50"></div>
                 ` : ""}
             `;
 
@@ -1144,10 +1115,10 @@
             if (opts.loading) {
                 bubble.dataset.loading = "true";
                 bubble.querySelector(".message-content").innerHTML = `
-                    <div class="flex items-center gap-1.5 text-zinc-500">
-                        <span class="typing-dot h-1.5 w-1.5 rounded-full bg-zinc-500 inline-block"></span>
-                        <span class="typing-dot h-1.5 w-1.5 rounded-full bg-zinc-500 inline-block"></span>
-                        <span class="typing-dot h-1.5 w-1.5 rounded-full bg-zinc-500 inline-block"></span>
+                    <div class="flex items-center gap-1.5 text-blue-400">
+                        <span class="typing-dot h-1.5 w-1.5 rounded-full inline-block"></span>
+                        <span class="typing-dot h-1.5 w-1.5 rounded-full inline-block"></span>
+                        <span class="typing-dot h-1.5 w-1.5 rounded-full inline-block"></span>
                     </div>
                 `;
             }
@@ -1191,15 +1162,15 @@
 
             host.innerHTML = `
                 <div class="flex flex-wrap gap-2">
-                    <button class="text-[11px] px-3 py-1.5 rounded-full bg-zinc-800/80 text-zinc-300 border border-white/8 hover:bg-zinc-700 transition flex items-center gap-1.5"
+                    <button class="text-[11px] px-3 py-1.5 rounded-full bg-slate-800/50 text-blue-300 border border-blue-500/20 hover:bg-slate-700 transition flex items-center gap-1.5"
                             onclick="regenerateFromBubble(this)">
                         <i class="fa-solid fa-rotate-right text-[10px]"></i> Rigenera
                     </button>
-                    <button class="text-[11px] px-3 py-1.5 rounded-full bg-emerald-500/8 text-emerald-300 border border-emerald-500/15 hover:bg-emerald-500/15 transition flex items-center gap-1.5"
+                    <button class="text-[11px] px-3 py-1.5 rounded-full bg-emerald-500/5 text-emerald-300 border border-emerald-500/20 hover:bg-emerald-500/10 transition flex items-center gap-1.5"
                             onclick="openFeedback(this, 'like')">
                         <i class="fa-regular fa-thumbs-up text-[10px]"></i> Like
                     </button>
-                    <button class="text-[11px] px-3 py-1.5 rounded-full bg-rose-500/8 text-rose-300 border border-rose-500/15 hover:bg-rose-500/15 transition flex items-center gap-1.5"
+                    <button class="text-[11px] px-3 py-1.5 rounded-full bg-rose-500/5 text-rose-300 border border-rose-500/20 hover:bg-rose-500/10 transition flex items-center gap-1.5"
                             onclick="openFeedback(this, 'dislike')">
                         <i class="fa-regular fa-thumbs-down text-[10px]"></i> Dislike
                     </button>
@@ -1219,14 +1190,14 @@
             const isLike = mode === "like";
 
             panel.innerHTML = `
-                <div class="text-[11px] text-zinc-400 mb-2 font-medium">${isLike ? "Cosa ti è piaciuto?" : "Cosa migliorare?"}</div>
-                <textarea class="feedback-input w-full bg-zinc-800/80 border border-white/8 rounded-xl p-2.5 text-xs text-zinc-200 outline-none resize-none focus:border-white/15 transition"
+                <div class="text-[11px] text-blue-300 mb-2 font-medium">${isLike ? "Cosa ti è piaciuto?" : "Cosa migliorare?"}</div>
+                <textarea class="feedback-input w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 text-xs text-blue-100 outline-none resize-none focus:border-blue-400 transition"
                           rows="2"
                           placeholder="${isLike ? "Es: spiegazione chiara, tono giusto..." : "Es: più breve, più tecnico..."}"></textarea>
                 <div class="flex gap-2 mt-2">
-                    <button class="text-xs px-3 py-1.5 rounded-lg bg-white text-black font-semibold hover:bg-zinc-200 transition"
+                    <button class="text-xs px-3 py-1.5 rounded bg-blue-600 text-white font-semibold hover:bg-blue-500 transition"
                             onclick="submitFeedback(this)">Invia</button>
-                    <button class="text-xs px-3 py-1.5 rounded-lg bg-zinc-800 text-zinc-400 border border-white/8 hover:bg-zinc-700 transition"
+                    <button class="text-xs px-3 py-1.5 rounded bg-slate-800 text-blue-300 border border-blue-500/20 hover:bg-slate-700 transition"
                             onclick="hideFeedback(this)">Annulla</button>
                 </div>
             `;
@@ -1450,11 +1421,11 @@
             const status = $("connectionStatus");
 
             if (v) {
-                status.innerHTML = `<span class="h-1.5 w-1.5 rounded-full bg-blue-400 animate-pulse"></span> Calling...`;
-                status.className = "flex items-center gap-1.5 text-[10px] px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/20";
+                status.innerHTML = `<span class="h-1.5 w-1.5 rounded-full bg-blue-400 animate-pulse shadow-[0_0_8px_rgba(96,165,250,0.8)]"></span> Calling...`;
+                status.className = "flex items-center gap-1.5 text-[10px] px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/20 font-mono";
             } else {
-                status.innerHTML = `<span class="h-1.5 w-1.5 rounded-full bg-zinc-500"></span> Idle`;
-                status.className = "flex items-center gap-1.5 text-[10px] px-2.5 py-1 rounded-full bg-zinc-800/70 text-zinc-400 border border-white/5";
+                status.innerHTML = `<span class="h-1.5 w-1.5 rounded-full bg-slate-500"></span> Idle`;
+                status.className = "flex items-center gap-1.5 text-[10px] px-2.5 py-1 rounded-full bg-slate-800/70 text-blue-300 border border-blue-500/20 font-mono";
             }
 
             updateSendButton();
@@ -1472,20 +1443,21 @@
 
             $("chatWindow").innerHTML = `
                 <div id="welcomeScreen" class="h-full flex flex-col items-center justify-center text-center px-6">
-                    <div class="h-16 w-16 rounded-2xl bg-indigo-500/10 border border-indigo-500/15 flex items-center justify-center mb-6 shadow-lg shadow-indigo-500/5">
-                        <i class="fa-solid fa-wand-magic-sparkles text-2xl text-indigo-400"></i>
+                    <div class="h-20 w-20 rounded-2xl bg-gradient-to-tr from-blue-600/20 to-cyan-400/20 border border-blue-500/30 flex items-center justify-center mb-8 shadow-[0_0_30px_rgba(59,130,246,0.15)] relative overflow-hidden group">
+                        <div class="absolute inset-0 bg-blue-500/10 opacity-0 group-hover:opacity-100 transition duration-500"></div>
+                        <i class="fa-solid fa-robot text-3xl text-blue-400 group-hover:text-cyan-300 transition duration-300"></i>
                     </div>
-                    <h2 class="text-3xl sm:text-4xl font-bold text-zinc-100 tracking-tight mb-3">Ciao, come posso aiutarti?</h2>
-                    <p class="text-zinc-500 max-w-md mb-8 text-sm">Nuova sessione avviata.</p>
+                    <h2 class="text-4xl sm:text-5xl font-bold text-white tracking-tight mb-4 drop-shadow-lg">Ciao, come posso aiutarti?</h2>
+                    <p class="text-blue-200/70 max-w-md mb-10 text-sm leading-relaxed font-light">Nuova sessione avviata.</p>
 
-                    <div class="flex flex-wrap items-center justify-center gap-2.5 max-w-xl">
-                        <button onclick="selectQuickModel('instant')" class="model-pill text-xs px-5 py-2.5 rounded-full bg-yellow-500/8 text-yellow-300 border border-yellow-500/15">
+                    <div class="flex flex-wrap items-center justify-center gap-3 max-w-xl">
+                        <button onclick="selectQuickModel('instant')" class="model-pill text-xs px-6 py-3 rounded-full bg-slate-800/50 text-yellow-300 border border-yellow-500/20 hover:border-yellow-400 flex items-center gap-2 backdrop-blur-sm">
                             <i class="fa-solid fa-bolt mr-1"></i> Rapido
                         </button>
-                        <button onclick="selectQuickModel('think')" class="model-pill text-xs px-5 py-2.5 rounded-full bg-purple-500/8 text-purple-300 border border-purple-500/15">
+                        <button onclick="selectQuickModel('think')" class="model-pill text-xs px-6 py-3 rounded-full bg-slate-800/50 text-purple-300 border border-purple-500/20 hover:border-purple-400 flex items-center gap-2 backdrop-blur-sm">
                             <i class="fa-solid fa-brain mr-1"></i> Heavy
                         </button>
-                        <button onclick="selectQuickModel('preview')" class="model-pill text-xs px-5 py-2.5 rounded-full bg-cyan-500/8 text-cyan-300 border border-cyan-500/15">
+                        <button onclick="selectQuickModel('preview')" class="model-pill text-xs px-6 py-3 rounded-full bg-slate-800/50 text-cyan-300 border border-cyan-500/20 hover:border-cyan-400 flex items-center gap-2 backdrop-blur-sm">
                             <i class="fa-solid fa-flask mr-1"></i> Preview
                         </button>
                     </div>
