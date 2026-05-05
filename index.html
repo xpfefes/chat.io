@@ -11,135 +11,168 @@
     <style>
         /* === INTEL ARC THEME VARIABLES === */
         :root {
-            --bg-deep: #020617;       /* Slate 950 base */
-            --bg-panel: #0f172a;      /* Slate 900 */
-            --bg-input: #1e293b;      /* Slate 800 */
+            --bg-deep: #020617;
+            --bg-panel: #0f172a;
+            --bg-input: #1e293b;
             
-            --arc-blue: #00c7fd;      /* Intel Arc Cyan/Blue */
+            --arc-blue: #00c7fd;
             --arc-glow: rgba(0, 199, 253, 0.3);
             --arc-dim: rgba(0, 199, 253, 0.1);
             
-            --border-color: rgba(56, 189, 248, 0.15); /* Light blue border */
-            --text-main: #f8fafc;     /* Slate 50 */
-            --text-muted: #94a3b8;    /* Slate 400 */
+            /* 🌟 Fluorescent Neon Additions */
+            --neon-cyan: #00f5ff;
+            --neon-purple: #b72aff;
+            --neon-pink: #ff00aa;
+            --neon-green: #00ff9d;
+            --neon-glow-cyan: 0 0 8px #00f5ff, 0 0 16px #00f5ff, 0 0 32px rgba(0, 245, 255, 0.4);
+            --neon-glow-purple: 0 0 8px #b72aff, 0 0 16px #b72aff, 0 0 32px rgba(183, 42, 255, 0.4);
+            
+            --border-color: rgba(56, 189, 248, 0.15);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
             
             --radius: 16px;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html, body {
-            height: 100%;
-            width: 100%;
-            overflow: hidden;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; width: 100%; overflow: hidden; }
 
         body {
-            background: radial-gradient(circle at top right, #1e3a8a 0%, var(--bg-deep) 40%);
+            background: var(--bg-deep);
             color: var(--text-main);
             font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
             -webkit-font-smoothing: antialiased;
+            position: relative;
         }
 
-        /* === SCROLLBAR (Blue Tinted) === */
-        ::-webkit-scrollbar {
-            width: 5px;
-            height: 5px;
+        /* 🌌 Animated Background Mesh */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(0, 245, 255, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(183, 42, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(255, 0, 170, 0.08) 0%, transparent 60%);
+            z-index: -2;
+            animation: meshPulse 18s ease-in-out infinite alternate;
+            pointer-events: none;
         }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: rgba(56, 189, 248, 0.2);
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--arc-blue);
+        @keyframes meshPulse {
+            0%, 100% { transform: scale(1) translate(0, 0); opacity: 1; }
+            50% { transform: scale(1.05) translate(-12px, 12px); opacity: 0.9; }
         }
 
-        /* === SIDEBAR === */
+        /* ✨ Floating Particles */
+        .particles { position: fixed; inset: 0; pointer-events: none; z-index: -1; overflow: hidden; }
+        .particle {
+            position: absolute;
+            width: 3px; height: 3px;
+            background: var(--neon-cyan);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan);
+            animation: floatUp linear infinite;
+            opacity: 0.5;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-100px) scale(1); opacity: 0; }
+        }
+
+        /* === SCROLLBAR === */
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.2); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--arc-blue); }
+
+        /* === SIDEBAR & PANELS (Neon Glass) === */
         .sidebar {
-            background: rgba(15, 23, 42, 0.6); /* Slate 900 with opacity */
-            backdrop-filter: blur(12px);
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(14px) saturate(150%);
             border-right: 1px solid var(--border-color);
+            box-shadow: 4px 0 20px rgba(0, 245, 255, 0.05);
         }
-
-        /* === RIGHT PANEL === */
         .right-panel {
             background: rgba(15, 23, 42, 0.85);
             backdrop-filter: blur(24px) saturate(140%);
-            -webkit-backdrop-filter: blur(24px) saturate(140%);
             border-left: 1px solid var(--border-color);
+            box-shadow: -4px 0 20px rgba(183, 42, 255, 0.05);
         }
 
-        /* === INPUT BOX (Tech Style) === */
+        /* === INPUT BOX (Fluorescent Focus) === */
         .input-box {
-            background: rgba(30, 41, 59, 0.7);
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            background: rgba(30, 41, 59, 0.75);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
             transition: all 0.3s ease;
         }
         .input-box:focus-within {
-            border-color: var(--arc-blue);
-            box-shadow: 0 0 15px var(--arc-dim);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
-        /* === MODEL PILLS === */
+        /* === MODEL PILLS & BUTTONS === */
         .model-pill {
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1px solid transparent;
+            position: relative;
+            overflow: hidden;
         }
+        .model-pill::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        .model-pill:hover::after { transform: translateX(100%); }
         .model-pill:hover {
-            transform: translateY(-1px);
-            background: rgba(0, 199, 253, 0.15);
-            border-color: var(--arc-blue);
-            box-shadow: 0 0 10px var(--arc-dim);
+            transform: translateY(-2px);
+            background: rgba(0, 245, 255, 0.12);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 12px rgba(0, 245, 255, 0.3);
         }
-        .model-pill:active {
-            transform: scale(0.96);
-        }
+        .model-pill:active { transform: scale(0.96); }
 
-        /* === SEND BUTTON === */
         #sendBtn {
             background: linear-gradient(135deg, var(--arc-blue), #3b82f6);
             color: white;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 0 10px var(--arc-dim);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 12px var(--arc-dim);
+            animation: btnPulse 3s ease-in-out infinite;
+        }
+        @keyframes btnPulse {
+            0%, 100% { box-shadow: 0 0 12px var(--arc-dim); }
+            50% { box-shadow: 0 0 24px var(--arc-glow), 0 0 40px rgba(0, 245, 255, 0.2); }
         }
         #sendBtn:hover:not(:disabled) {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px var(--arc-glow);
-            filter: brightness(1.1);
+            transform: scale(1.08);
+            box-shadow: 0 0 25px var(--arc-glow), 0 0 45px rgba(0, 245, 255, 0.3);
+            filter: brightness(1.15);
         }
-        #sendBtn:active:not(:disabled) {
-            transform: scale(0.92);
-        }
-        #sendBtn:disabled {
-            background: #334155;
-            color: #64748b;
-            box-shadow: none;
-        }
+        #sendBtn:active:not(:disabled) { transform: scale(0.94); }
+        #sendBtn:disabled { background: #334155; color: #64748b; box-shadow: none; animation: none; }
 
         /* === MESSAGE BUBBLES === */
         .bubble-user {
-            background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%); /* Blue gradient */
-            border: 1px solid rgba(96, 165, 250, 0.3);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+            border: 1px solid rgba(96, 165, 250, 0.35);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 10px rgba(59, 130, 246, 0.15);
         }
         .bubble-ai {
             background: transparent;
-            border-left: 2px solid var(--arc-blue); /* Tech accent line */
+            border-left: 3px solid var(--neon-cyan);
             padding-left: 1rem;
+            box-shadow: -4px 0 15px rgba(0, 245, 255, 0.08);
         }
 
         /* === CODE BLOCKS === */
         .message-content pre {
             background: #020617;
-            border: 1px solid rgba(56, 189, 248, 0.2);
+            border: 1px solid rgba(56, 189, 248, 0.25);
             border-radius: 8px;
             padding: 16px;
             overflow-x: auto;
@@ -147,21 +180,17 @@
             font-family: 'JetBrains Mono', 'Fira Code', monospace;
             font-size: 0.85em;
             line-height: 1.6;
-            box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.6), 0 0 10px rgba(0, 245, 255, 0.1);
         }
         .message-content code {
-            background: rgba(56, 189, 248, 0.1);
+            background: rgba(56, 189, 248, 0.12);
             color: #7dd3fc;
             padding: 2px 6px;
             border-radius: 4px;
             font-size: 0.9em;
             font-family: 'JetBrains Mono', monospace;
         }
-        .message-content pre code {
-            background: transparent;
-            padding: 0;
-            color: inherit;
-        }
+        .message-content pre code { background: transparent; padding: 0; color: inherit; }
 
         /* === RESPONSIVE === */
         .mobile-only { display: none; }
@@ -171,16 +200,14 @@
             body { overflow: hidden; }
             .mobile-only { display: inline-flex; }
             .desktop-only { display: none !important; }
-
             #leftSidebar {
                 position: fixed; left: 0; top: 0; bottom: 0;
                 width: min(82vw, 320px); z-index: 60;
                 transform: translateX(-105%);
                 transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                background: #0f172a; /* Solid fallback for mobile */
+                background: #0f172a;
             }
             #leftSidebar.open { transform: translateX(0); }
-
             #rightSidebar {
                 position: fixed; right: 0; top: 0; bottom: 0;
                 width: min(92vw, 390px); z-index: 60;
@@ -189,7 +216,6 @@
                 background: #0f172a;
             }
             #rightSidebar.open { transform: translateX(0); }
-
             #mainArea { width: 100%; }
             #chatWindow { padding-left: 1rem; padding-right: 1rem; }
             .chat-bubble { max-width: 94% !important; }
@@ -204,21 +230,37 @@
 
         /* === ANIMATIONS === */
         @keyframes fadeSlideIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
         .message-animate { animation: fadeSlideIn 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
 
         @keyframes pulse-dot {
             0%, 100% { opacity: 0.3; box-shadow: 0 0 0 transparent; }
-            50% { opacity: 1; box-shadow: 0 0 8px var(--arc-blue); }
+            50% { opacity: 1; box-shadow: 0 0 10px var(--neon-cyan); }
         }
         .typing-dot {
             animation: pulse-dot 1.2s infinite;
-            background-color: var(--arc-blue);
+            background-color: var(--neon-cyan);
         }
         .typing-dot:nth-child(2) { animation-delay: 0.2s; }
         .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        /* 🌟 Welcome Screen Typing Cursor */
+        .typing-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.1em;
+            background: var(--neon-cyan);
+            margin-left: 4px;
+            vertical-align: text-bottom;
+            animation: cursorBlink 0.8s step-end infinite;
+            box-shadow: 0 0 8px var(--neon-cyan);
+        }
+        @keyframes cursorBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
 
         /* === MODAL === */
         .modal-overlay { animation: fadeIn 0.2s ease; }
@@ -227,22 +269,35 @@
         .modal-content {
             animation: scaleIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             background: #0f172a;
-            border: 1px solid var(--arc-blue);
-            box-shadow: 0 0 40px rgba(0, 199, 253, 0.15);
+            border: 1px solid var(--neon-cyan);
+            box-shadow: 0 0 40px rgba(0, 245, 255, 0.15), 0 0 80px rgba(183, 42, 255, 0.1);
         }
         @keyframes scaleIn {
             from { opacity: 0; transform: scale(0.94) translateY(10px); }
             to { opacity: 1; transform: scale(1) translateY(0); }
         }
         
-        /* Utility for Arc Text */
         .text-arc { color: var(--arc-blue); }
         .border-arc { border-color: var(--arc-blue); }
         .bg-arc-dim { background-color: var(--arc-dim); }
+
+        /* ♿ Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            .particles { display: none; }
+            .typing-cursor { animation: none; opacity: 1; }
+        }
     </style>
 </head>
 
 <body class="h-screen flex overflow-hidden">
+
+    <!-- 🌌 Animated Particles Container -->
+    <div class="particles" aria-hidden="true" id="particles"></div>
 
     <!-- ========== MOBILE OVERLAY ========== -->
     <div id="mobileOverlay"
@@ -254,7 +309,6 @@
     <aside id="leftSidebar"
            class="sidebar w-64 flex flex-col p-4 custom-scrollbar overflow-y-auto shrink-0">
 
-        <!-- Mobile close -->
         <div class="flex items-center justify-between mb-6 lg:hidden">
             <span class="text-[10px] uppercase tracking-[0.2em] text-blue-300 font-bold">Menu</span>
             <button onclick="closeDrawers()"
@@ -263,7 +317,6 @@
             </button>
         </div>
 
-        <!-- New Chat -->
         <button onclick="newChat()"
                 class="flex items-center gap-3 p-3 rounded-xl bg-gradient-to-r from-blue-600/20 to-transparent hover:bg-blue-600/30 border border-blue-500/20 transition mb-6 w-full text-left group shadow-lg shadow-blue-900/20">
             <div class="h-8 w-8 rounded-lg bg-blue-500/20 flex items-center justify-center group-hover:bg-blue-500/40 transition border border-blue-400/30">
@@ -272,7 +325,6 @@
             <span class="text-sm font-medium text-blue-50">Nuova chat</span>
         </button>
 
-        <!-- Quick models -->
         <div class="space-y-2">
             <div onclick="selectQuickModel('instant')"
                  class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800/50 cursor-pointer transition group border border-transparent hover:border-yellow-500/30">
@@ -302,10 +354,8 @@
             </div>
         </div>
 
-        <!-- Divider -->
         <div class="my-6 border-t border-blue-500/10"></div>
 
-        <!-- Settings -->
         <div onclick="openSettings()"
              class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800/50 cursor-pointer transition group border border-transparent hover:border-blue-500/30">
             <div class="h-7 w-7 rounded-lg bg-slate-700/50 flex items-center justify-center group-hover:bg-blue-600/20 transition border border-slate-600 group-hover:border-blue-500/30">
@@ -314,7 +364,6 @@
             <span class="text-sm text-slate-300 group-hover:text-white">Impostazioni</span>
         </div>
 
-        <!-- Footer -->
         <div class="mt-auto pt-6">
             <div class="text-[10px] text-blue-300/60 leading-relaxed bg-slate-900/50 rounded-xl p-3 border border-blue-500/10 shadow-inner">
                 ⚠️ Test locale. In produzione usa sempre un backend per proteggere le API key.
@@ -325,16 +374,13 @@
     <!-- ========== MAIN AREA ========== -->
     <main id="mainArea" class="flex-1 flex flex-col relative min-w-0">
 
-        <!-- Header -->
         <header class="flex items-center justify-between px-4 py-3 border-b border-blue-500/10 bg-slate-950/40 backdrop-blur-md shrink-0">
             <div class="flex items-center gap-3 min-w-0">
-                <!-- Mobile hamburger -->
                 <button onclick="openLeftDrawer()"
                         class="mobile-only h-9 w-9 rounded-lg bg-slate-800 border border-blue-500/20 flex items-center justify-center hover:bg-slate-700 transition text-blue-200">
                     <i class="fa-solid fa-bars text-sm"></i>
                 </button>
 
-                <!-- Logo / Model info -->
                 <div class="flex items-center gap-2.5 min-w-0">
                     <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center shrink-0 shadow-lg shadow-blue-500/20 border border-white/10">
                         <i class="fa-solid fa-microchip text-white text-sm"></i>
@@ -349,16 +395,13 @@
                 </div>
             </div>
 
-            <!-- Right header actions -->
             <div class="flex items-center gap-2">
-                <!-- Status dot -->
                 <div id="connectionStatus"
                      class="flex items-center gap-1.5 text-[10px] px-2.5 py-1 rounded-full bg-slate-800/50 text-blue-300 border border-blue-500/20 font-mono">
                     <span class="h-1.5 w-1.5 rounded-full bg-slate-500"></span>
                     Idle
                 </div>
 
-                <!-- Desktop quick model pills -->
                 <button onclick="selectQuickModel('instant')"
                         class="desktop-only model-pill text-[11px] px-3 py-1.5 rounded-full bg-yellow-500/5 text-yellow-300 border border-yellow-500/20 hover:bg-yellow-500/10">
                     <i class="fa-solid fa-bolt mr-1 text-[10px]"></i>Rapido
@@ -372,7 +415,6 @@
                     <i class="fa-solid fa-flask mr-1 text-[10px]"></i>Preview
                 </button>
 
-                <!-- Mobile settings -->
                 <button onclick="openRightDrawer()"
                         class="mobile-only h-9 w-9 rounded-lg bg-slate-800 border border-blue-500/20 flex items-center justify-center hover:bg-slate-700 transition text-blue-200">
                     <i class="fa-solid fa-sliders text-sm"></i>
@@ -380,28 +422,24 @@
             </div>
         </header>
 
-        <!-- Chat window -->
         <div id="chatWindow"
              class="flex-1 overflow-y-auto custom-scrollbar scroll-smooth">
 
-            <!-- Welcome screen -->
             <div id="welcomeScreen"
                  class="h-full flex flex-col items-center justify-center text-center px-6">
 
-                <!-- Logo -->
                 <div class="h-20 w-20 rounded-2xl bg-gradient-to-tr from-blue-600/20 to-cyan-400/20 border border-blue-500/30 flex items-center justify-center mb-8 shadow-[0_0_30px_rgba(59,130,246,0.15)] relative overflow-hidden group">
                     <div class="absolute inset-0 bg-blue-500/10 opacity-0 group-hover:opacity-100 transition duration-500"></div>
                     <i class="fa-solid fa-robot text-3xl text-blue-400 group-hover:text-cyan-300 transition duration-300"></i>
                 </div>
 
-                <h2 class="text-4xl sm:text-5xl font-bold text-white tracking-tight mb-4 drop-shadow-lg">
+                <h2 id="welcomeTitle" class="text-4xl sm:text-5xl font-bold text-white tracking-tight mb-4 drop-shadow-lg">
                     Ciao, come posso aiutarti?
                 </h2>
                 <p class="text-blue-200/70 max-w-md mb-10 text-sm leading-relaxed font-light">
                     Inserisci una API key, scegli un modello e inizia a chattare.
                 </p>
 
-                <!-- Quick start pills -->
                 <div class="flex flex-wrap items-center justify-center gap-3 max-w-xl">
                     <button onclick="selectQuickModel('instant')"
                             class="model-pill text-xs px-6 py-3 rounded-full bg-slate-800/50 text-yellow-300 border border-yellow-500/20 hover:border-yellow-400 flex items-center gap-2 backdrop-blur-sm">
@@ -421,46 +459,37 @@
                     </button>
                 </div>
 
-                <!-- Warning -->
                 <div class="mt-12 text-[11px] text-blue-300/50 max-w-lg leading-relaxed bg-slate-900/40 rounded-2xl p-4 border border-blue-500/10">
                     <b class="text-blue-400">Attenzione:</b> questo esempio chiama direttamente le API dal browser. Per un progetto reale, crea un backend che custodisce le chiavi.
                 </div>
             </div>
         </div>
 
-        <!-- Input area -->
         <div class="input-wrap px-4 pb-4 pt-2 shrink-0 safe-bottom">
             <div class="max-w-3xl mx-auto input-box rounded-[24px] p-2 flex flex-col">
 
-                <!-- File preview -->
                 <div id="filePreview"
                      class="flex flex-wrap gap-2 mb-2 px-2"></div>
 
-                <!-- Textarea -->
                 <textarea id="userInput"
                           rows="1"
                           placeholder="Scrivi un messaggio..."
                           class="bg-transparent border-none focus:ring-0 focus:outline-none text-white w-full resize-none p-3 max-h-48 custom-scrollbar placeholder:text-blue-300/30 text-sm"></textarea>
 
-                <!-- Bottom row -->
                 <div class="flex items-center justify-between mt-1 px-2 gap-2">
-                    <!-- Left tools -->
                     <div class="flex items-center gap-2 text-blue-300/60">
-                        <!-- File attach -->
                         <label class="cursor-pointer hover:text-blue-300 h-8 w-8 rounded-lg bg-slate-800/50 border border-blue-500/10 flex items-center justify-center transition hover:bg-slate-700/50 hover:border-blue-500/30"
                                title="Allega file">
                             <i class="fa-solid fa-paperclip text-xs"></i>
                             <input type="file" id="fileInput" hidden multiple onchange="handleFileSelect(event)"/>
                         </label>
 
-                        <!-- Photo attach -->
                         <label class="cursor-pointer hover:text-blue-300 h-8 w-8 rounded-lg bg-slate-800/50 border border-blue-500/10 flex items-center justify-center transition hover:bg-slate-700/50 hover:border-blue-500/30"
                                title="Allega foto">
                             <i class="fa-regular fa-image text-xs"></i>
                             <input type="file" id="photoInput" hidden multiple accept="image/*" onchange="handleFileSelect(event)"/>
                         </label>
 
-                        <!-- Quick model selectors (compact) -->
                         <button onclick="selectQuickModel('instant')"
                                 class="hidden sm:inline-flex h-8 px-2.5 rounded-lg bg-yellow-500/5 text-yellow-400/80 border border-yellow-500/15 text-[10px] items-center gap-1 hover:bg-yellow-500/15 transition"
                                 title="Rapido">
@@ -478,7 +507,6 @@
                         </button>
                     </div>
 
-                    <!-- Right: clear + send -->
                     <div class="flex items-center gap-2">
                         <button onclick="clearFiles()"
                                 class="text-[10px] text-blue-400/50 hover:text-white transition px-2"
@@ -498,11 +526,10 @@
         </div>
     </main>
 
-    <!-- ========== RIGHT SIDEBAR (Settings) ========== -->
+    <!-- ========== RIGHT SIDEBAR ========== -->
     <aside id="rightSidebar"
            class="right-panel w-80 flex flex-col border-l border-blue-500/10 p-5 custom-scrollbar overflow-y-auto shrink-0">
 
-        <!-- Header -->
         <div class="flex items-center justify-between mb-6">
             <div class="flex items-center gap-2">
                 <div class="h-6 w-6 rounded-lg bg-blue-500/15 flex items-center justify-center border border-blue-500/20">
@@ -516,7 +543,6 @@
             </button>
         </div>
 
-        <!-- API Key -->
         <div class="space-y-1.5 mb-5">
             <label class="text-[10px] text-blue-300/70 font-medium uppercase tracking-wider">Google AI Studio API Key</label>
             <div class="relative group">
@@ -527,7 +553,6 @@
             </div>
         </div>
 
-        <!-- Temp + Tokens -->
         <div class="grid grid-cols-2 gap-3 mb-5">
             <div class="space-y-1.5">
                 <label class="text-[10px] text-blue-300/70 font-medium uppercase tracking-wider">Temperature</label>
@@ -543,16 +568,13 @@
             </div>
         </div>
 
-        <!-- Save checkbox -->
         <label class="flex items-center gap-2.5 text-xs text-blue-200 select-none mb-6 cursor-pointer group">
             <input id="saveLocal" type="checkbox" class="accent-blue-500 w-3.5 h-3.5 rounded bg-slate-800 border-slate-600" onchange="persistSettings()"/>
             <span class="group-hover:text-white transition">Salva impostazioni localmente</span>
         </label>
 
-        <!-- Divider -->
         <div class="border-t border-blue-500/10 my-3"></div>
 
-        <!-- Quick model IDs -->
         <h4 class="text-[10px] font-semibold text-blue-300/70 uppercase tracking-[0.15em] mb-3">Modelli Rapidi</h4>
         <div class="space-y-3 mb-5">
             <div class="space-y-1.5">
@@ -581,10 +603,8 @@
             </div>
         </div>
 
-        <!-- Divider -->
         <div class="border-t border-blue-500/10 my-3"></div>
 
-        <!-- Custom model -->
         <h4 class="text-[10px] font-semibold text-blue-300/70 uppercase tracking-[0.15em] mb-3">Modello Custom</h4>
         <div class="space-y-2.5 mb-5">
             <input id="customModelId"
@@ -596,14 +616,11 @@
             </button>
         </div>
 
-        <!-- Divider -->
         <div class="border-t border-blue-500/10 my-3"></div>
 
-        <!-- Preset models -->
         <h4 class="text-[10px] font-semibold text-blue-300/70 uppercase tracking-[0.15em] mb-3">Modelli Preimpostati</h4>
         <div class="space-y-0.5" id="modelList"></div>
 
-        <!-- Bottom tip -->
         <div class="mt-auto pt-5">
             <div class="text-[10px] text-blue-300/40 leading-relaxed">
                 Se un modello dà errore, verifica che l'ID sia disponibile per la tua API key nella dashboard Google AI Studio.
@@ -627,7 +644,6 @@
                 </button>
             </div>
 
-            <!-- System prompt -->
             <div class="space-y-1.5 mb-5">
                 <label class="text-[10px] text-blue-300/70 font-medium uppercase tracking-wider">System Prompt</label>
                 <textarea id="systemPrompt" rows="4"
@@ -635,7 +651,6 @@
                           class="w-full bg-slate-950/50 border border-blue-500/20 rounded-lg p-3 text-sm text-blue-100 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400/30 transition resize-none placeholder:text-slate-600"></textarea>
             </div>
 
-            <!-- Response style -->
             <div class="space-y-1.5 mb-5">
                 <label class="text-[10px] text-blue-300/70 font-medium uppercase tracking-wider">Stile Risposta</label>
                 <select id="responseStyle"
@@ -648,7 +663,6 @@
                 </select>
             </div>
 
-            <!-- Custom style prompt -->
             <div class="space-y-1.5 mb-5">
                 <label class="text-[10px] text-blue-300/70 font-medium uppercase tracking-wider">Prompt Stile Custom</label>
                 <textarea id="styleCustomPrompt" rows="3"
@@ -656,7 +670,6 @@
                           class="w-full bg-slate-950/50 border border-blue-500/20 rounded-lg p-3 text-sm text-blue-100 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400/30 transition resize-none placeholder:text-slate-600"></textarea>
             </div>
 
-            <!-- Feedback preview -->
             <div class="rounded-lg border border-blue-500/20 bg-slate-950/80 p-4 mb-6">
                 <div class="flex items-center justify-between gap-3 mb-2">
                     <span class="text-[10px] uppercase tracking-[0.15em] text-blue-400 font-semibold">Feedback Temporaneo</span>
@@ -671,7 +684,6 @@
                 </div>
             </div>
 
-            <!-- Save button -->
             <button onclick="closeSettings()"
                     class="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 rounded-lg text-sm transition active:scale-[0.98] shadow-lg shadow-blue-900/50 border border-blue-400/20">
                 <i class="fa-solid fa-check mr-1"></i> Salva impostazioni
@@ -679,7 +691,6 @@
         </div>
     </div>
 
-    <!-- ========== TOAST ========== -->
     <div id="toastLayer"
          class="fixed bottom-6 right-6 z-[120] space-y-2 pointer-events-none flex flex-col items-end"></div>
 
@@ -751,6 +762,8 @@
             renderModelList();
             restoreSettings();
             bindEvents();
+            initParticles();
+            initWelcomeAnimator();
 
             if (!selectedModel) {
                 setSelectedModel(resolveModelById(defaults.instant), false);
@@ -782,7 +795,6 @@
                 if (window.innerWidth > 1024) closeDrawers();
             });
 
-            // Auto-save on input changes
             [
                 "googleKey", "temperature", "maxTokens", "systemPrompt",
                 "responseStyle", "styleCustomPrompt",
@@ -1447,7 +1459,7 @@
                         <div class="absolute inset-0 bg-blue-500/10 opacity-0 group-hover:opacity-100 transition duration-500"></div>
                         <i class="fa-solid fa-robot text-3xl text-blue-400 group-hover:text-cyan-300 transition duration-300"></i>
                     </div>
-                    <h2 class="text-4xl sm:text-5xl font-bold text-white tracking-tight mb-4 drop-shadow-lg">Ciao, come posso aiutarti?</h2>
+                    <h2 id="welcomeTitle" class="text-4xl sm:text-5xl font-bold text-white tracking-tight mb-4 drop-shadow-lg">Ciao, come posso aiutarti?</h2>
                     <p class="text-blue-200/70 max-w-md mb-10 text-sm leading-relaxed font-light">Nuova sessione avviata.</p>
 
                     <div class="flex flex-wrap items-center justify-center gap-3 max-w-xl">
@@ -1469,6 +1481,129 @@
             updateSendButton();
             closeDrawers();
             toast("Nuova chat ✓");
+            
+            // Restart animator on new chat
+            initWelcomeAnimator();
+        }
+
+        // ──────────────────────────────────────────────
+        //  🌟 FLUORESCENT UI ENHANCEMENTS (ISOLATED)
+        // ──────────────────────────────────────────────
+        
+        /**
+         * Lightweight particle generator
+         * Respects prefers-reduced-motion
+         */
+        function initParticles() {
+            const container = document.getElementById('particles');
+            const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (prefersReduced || !container) return;
+
+            const count = 20;
+            const colors = ['var(--neon-cyan)', 'var(--neon-purple)', 'var(--neon-pink)'];
+
+            for (let i = 0; i < count; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = `${Math.random() * 100}%`;
+                p.style.animationDelay = `${Math.random() * 15}s`;
+                p.style.animationDuration = `${15 + Math.random() * 20}s`;
+                const size = 2 + Math.random() * 3;
+                p.style.width = `${size}px`;
+                p.style.height = `${size}px`;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                p.style.background = color;
+                p.style.boxShadow = `0 0 10px ${color}, 0 0 20px ${color}`;
+                container.appendChild(p);
+            }
+        }
+
+        /**
+         * Welcome screen dynamic text animator
+         * Cycles through phrases with typing/deleting effect
+         * Uses textContent for safety, cleans up on unmount
+         */
+        function initWelcomeAnimator() {
+            const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const titleEl = document.getElementById('welcomeTitle');
+            if (!titleEl) return;
+
+            const phrases = [
+                "Ciao, come posso aiutarti?",
+                "Come va?",
+                "A cosa stai pensando?",
+                "Benvenuto, let's brainstorm!"
+            ];
+
+            let phraseIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            let isPaused = false;
+            let timeoutId = null;
+            let isActive = true;
+
+            // Add cursor
+            const cursor = document.createElement('span');
+            cursor.className = 'typing-cursor';
+            titleEl.appendChild(cursor);
+
+            const typeSpeed = prefersReduced ? 0 : 60;
+            const deleteSpeed = prefersReduced ? 0 : 30;
+            const pauseDuration = prefersReduced ? 500 : 1800;
+
+            function tick() {
+                if (!isActive || !document.getElementById('welcomeScreen')) {
+                    clearTimeout(timeoutId);
+                    return;
+                }
+
+                const currentPhrase = phrases[phraseIndex];
+                
+                if (isPaused) {
+                    isPaused = false;
+                    isDeleting = true;
+                    timeoutId = setTimeout(tick, prefersReduced ? 0 : 400);
+                    return;
+                }
+
+                if (!isDeleting) {
+                    titleEl.textContent = currentPhrase.substring(0, charIndex + 1);
+                    titleEl.appendChild(cursor);
+                    charIndex++;
+
+                    if (charIndex === currentPhrase.length) {
+                        isPaused = true;
+                        timeoutId = setTimeout(tick, pauseDuration);
+                    } else {
+                        timeoutId = setTimeout(tick, typeSpeed + Math.random() * 40);
+                    }
+                } else {
+                    titleEl.textContent = currentPhrase.substring(0, charIndex - 1);
+                    titleEl.appendChild(cursor);
+                    charIndex--;
+
+                    if (charIndex === 0) {
+                        isDeleting = false;
+                        phraseIndex = (phraseIndex + 1) % phrases.length;
+                        timeoutId = setTimeout(tick, prefersReduced ? 0 : 300);
+                    } else {
+                        timeoutId = setTimeout(tick, deleteSpeed);
+                    }
+                }
+            }
+
+            // Start loop
+            timeoutId = setTimeout(tick, prefersReduced ? 0 : 600);
+
+            // Cleanup observer
+            const observer = new MutationObserver(() => {
+                if (!document.getElementById('welcomeScreen')) {
+                    isActive = false;
+                    clearTimeout(timeoutId);
+                    observer.disconnect();
+                }
+            });
+            observer.observe(document.getElementById('chatWindow'), { childList: true });
         }
     </script>
 </body>
