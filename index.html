@@ -3,33 +3,30 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
-    <title>AI Chat - Intel Arc Style</title>
+    <title>AI Chat - NASA Mission Control Style</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css"/>
 
     <style>
-        /* === INTEL ARC THEME VARIABLES === */
+        /* === NASA THEME VARIABLES === */
         :root {
-            --bg-deep: #020617;
-            --bg-panel: #0f172a;
-            --bg-input: #1e293b;
+            --bg-deep: #03060d;
+            --bg-panel: #080c16;
+            --bg-input: #0f1524;
             
-            --arc-blue: #00c7fd;
-            --arc-glow: rgba(0, 199, 253, 0.3);
-            --arc-dim: rgba(0, 199, 253, 0.1);
+            --nasa-blue: #0B3D91;
+            --nasa-red: #FC3D21;
+            --nasa-white: #FFFFFF;
             
-            /* 🌟 Fluorescent Neon Additions */
-            --neon-cyan: #00f5ff;
-            --neon-purple: #b72aff;
-            --neon-pink: #ff00aa;
-            --neon-green: #00ff9d;
-            --neon-glow-cyan: 0 0 8px #00f5ff, 0 0 16px #00f5ff, 0 0 32px rgba(0, 245, 255, 0.4);
-            --neon-glow-purple: 0 0 8px #b72aff, 0 0 16px #b72aff, 0 0 32px rgba(183, 42, 255, 0.4);
+            --neon-cyan: #00E5FF;
+            --neon-red: #FF3B30;
+            --neon-glow-cyan: 0 0 8px #00E5FF, 0 0 16px rgba(0, 229, 255, 0.4);
+            --neon-glow-red: 0 0 8px #FF3B30, 0 0 16px rgba(255, 59, 48, 0.3);
             
-            --border-color: rgba(56, 189, 248, 0.15);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
+            --border-color: rgba(11, 61, 145, 0.35);
+            --text-main: #E2E8F0;
+            --text-muted: #8B9BB4;
             
             --radius: 16px;
         }
@@ -45,72 +42,72 @@
             position: relative;
         }
 
-        /* 🌌 Animated Background Mesh */
+        /* 🌌 Deep Space Background */
         body::before {
             content: "";
             position: fixed;
             inset: 0;
             background: 
-                radial-gradient(ellipse at 20% 20%, rgba(0, 245, 255, 0.12) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(183, 42, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(255, 0, 170, 0.08) 0%, transparent 60%);
+                radial-gradient(ellipse at 15% 30%, rgba(11, 61, 145, 0.25) 0%, transparent 55%),
+                radial-gradient(ellipse at 85% 70%, rgba(252, 61, 33, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0, 229, 255, 0.06) 0%, transparent 65%);
             z-index: -2;
-            animation: meshPulse 18s ease-in-out infinite alternate;
+            animation: nebulaPulse 24s ease-in-out infinite alternate;
             pointer-events: none;
         }
-        @keyframes meshPulse {
+        @keyframes nebulaPulse {
             0%, 100% { transform: scale(1) translate(0, 0); opacity: 1; }
-            50% { transform: scale(1.05) translate(-12px, 12px); opacity: 0.9; }
+            50% { transform: scale(1.08) translate(-8px, 10px); opacity: 0.92; }
         }
 
-        /* ✨ Floating Particles */
+        /* ✨ Floating Particles (Starfield) */
         .particles { position: fixed; inset: 0; pointer-events: none; z-index: -1; overflow: hidden; }
         .particle {
             position: absolute;
-            width: 3px; height: 3px;
+            width: 2px; height: 2px;
             background: var(--neon-cyan);
             border-radius: 50%;
-            box-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan);
+            box-shadow: 0 0 6px var(--neon-cyan);
             animation: floatUp linear infinite;
-            opacity: 0.5;
+            opacity: 0.6;
         }
         @keyframes floatUp {
             0% { transform: translateY(100vh) scale(0); opacity: 0; }
-            10% { opacity: 0.5; }
-            90% { opacity: 0.5; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
             100% { transform: translateY(-100px) scale(1); opacity: 0; }
         }
 
         /* === SCROLLBAR === */
         ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.2); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--arc-blue); }
+        ::-webkit-scrollbar-thumb { background: rgba(11, 61, 145, 0.4); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--nasa-blue); }
 
-        /* === SIDEBAR & PANELS (Neon Glass) === */
+        /* === SIDEBAR & PANELS (Glass HUD) === */
         .sidebar {
-            background: rgba(15, 23, 42, 0.65);
-            backdrop-filter: blur(14px) saturate(150%);
+            background: rgba(8, 12, 22, 0.75);
+            backdrop-filter: blur(16px) saturate(140%);
             border-right: 1px solid var(--border-color);
-            box-shadow: 4px 0 20px rgba(0, 245, 255, 0.05);
+            box-shadow: 4px 0 24px rgba(0, 229, 255, 0.04);
         }
         .right-panel {
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(24px) saturate(140%);
+            background: rgba(8, 12, 22, 0.85);
+            backdrop-filter: blur(22px) saturate(130%);
             border-left: 1px solid var(--border-color);
-            box-shadow: -4px 0 20px rgba(183, 42, 255, 0.05);
+            box-shadow: -4px 0 24px rgba(252, 61, 33, 0.04);
         }
 
-        /* === INPUT BOX (Fluorescent Focus) === */
+        /* === INPUT BOX === */
         .input-box {
-            background: rgba(30, 41, 59, 0.75);
-            border: 1px solid rgba(56, 189, 248, 0.25);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            background: rgba(15, 21, 36, 0.8);
+            border: 1px solid rgba(11, 61, 145, 0.4);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.04);
             transition: all 0.3s ease;
         }
         .input-box:focus-within {
             border-color: var(--neon-cyan);
-            box-shadow: 0 0 20px rgba(0, 245, 255, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 18px rgba(0, 229, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.08);
         }
 
         /* === MODEL PILLS & BUTTONS === */
@@ -124,55 +121,55 @@
             content: "";
             position: absolute;
             inset: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
             transform: translateX(-100%);
             transition: transform 0.6s ease;
         }
         .model-pill:hover::after { transform: translateX(100%); }
         .model-pill:hover {
             transform: translateY(-2px);
-            background: rgba(0, 245, 255, 0.12);
+            background: rgba(0, 229, 255, 0.1);
             border-color: var(--neon-cyan);
-            box-shadow: 0 0 12px rgba(0, 245, 255, 0.3);
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.25);
         }
         .model-pill:active { transform: scale(0.96); }
 
         #sendBtn {
-            background: linear-gradient(135deg, var(--arc-blue), #3b82f6);
+            background: linear-gradient(135deg, var(--nasa-blue), #1E40AF);
             color: white;
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 0 12px var(--arc-dim);
+            box-shadow: 0 0 12px rgba(11, 61, 145, 0.4);
             animation: btnPulse 3s ease-in-out infinite;
         }
         @keyframes btnPulse {
-            0%, 100% { box-shadow: 0 0 12px var(--arc-dim); }
-            50% { box-shadow: 0 0 24px var(--arc-glow), 0 0 40px rgba(0, 245, 255, 0.2); }
+            0%, 100% { box-shadow: 0 0 12px rgba(11, 61, 145, 0.3); }
+            50% { box-shadow: 0 0 22px rgba(0, 229, 255, 0.4), 0 0 35px rgba(11, 61, 145, 0.2); }
         }
         #sendBtn:hover:not(:disabled) {
             transform: scale(1.08);
-            box-shadow: 0 0 25px var(--arc-glow), 0 0 45px rgba(0, 245, 255, 0.3);
+            box-shadow: 0 0 25px rgba(0, 229, 255, 0.5);
             filter: brightness(1.15);
         }
         #sendBtn:active:not(:disabled) { transform: scale(0.94); }
-        #sendBtn:disabled { background: #334155; color: #64748b; box-shadow: none; animation: none; }
+        #sendBtn:disabled { background: #1F2937; color: #6B7280; box-shadow: none; animation: none; }
 
         /* === MESSAGE BUBBLES === */
         .bubble-user {
-            background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
-            border: 1px solid rgba(96, 165, 250, 0.35);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 10px rgba(59, 130, 246, 0.15);
+            background: linear-gradient(135deg, #1E3A8A 0%, #0F172A 100%);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), 0 0 8px rgba(11, 61, 145, 0.2);
         }
         .bubble-ai {
             background: transparent;
             border-left: 3px solid var(--neon-cyan);
             padding-left: 1rem;
-            box-shadow: -4px 0 15px rgba(0, 245, 255, 0.08);
+            box-shadow: -4px 0 12px rgba(0, 229, 255, 0.06);
         }
 
         /* === CODE BLOCKS === */
         .message-content pre {
-            background: #020617;
-            border: 1px solid rgba(56, 189, 248, 0.25);
+            background: #02040A;
+            border: 1px solid rgba(11, 61, 145, 0.4);
             border-radius: 8px;
             padding: 16px;
             overflow-x: auto;
@@ -180,11 +177,11 @@
             font-family: 'JetBrains Mono', 'Fira Code', monospace;
             font-size: 0.85em;
             line-height: 1.6;
-            box-shadow: inset 0 2px 8px rgba(0,0,0,0.6), 0 0 10px rgba(0, 245, 255, 0.1);
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.7), 0 0 8px rgba(0, 229, 255, 0.08);
         }
         .message-content code {
-            background: rgba(56, 189, 248, 0.12);
-            color: #7dd3fc;
+            background: rgba(0, 229, 255, 0.1);
+            color: #7DD3FC;
             padding: 2px 6px;
             border-radius: 4px;
             font-size: 0.9em;
@@ -205,7 +202,7 @@
                 width: min(82vw, 320px); z-index: 60;
                 transform: translateX(-105%);
                 transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                background: #0f172a;
+                background: #080c16;
             }
             #leftSidebar.open { transform: translateX(0); }
             #rightSidebar {
@@ -213,7 +210,7 @@
                 width: min(92vw, 390px); z-index: 60;
                 transform: translateX(105%);
                 transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                background: #0f172a;
+                background: #080c16;
             }
             #rightSidebar.open { transform: translateX(0); }
             #mainArea { width: 100%; }
@@ -237,7 +234,7 @@
 
         @keyframes pulse-dot {
             0%, 100% { opacity: 0.3; box-shadow: 0 0 0 transparent; }
-            50% { opacity: 1; box-shadow: 0 0 10px var(--neon-cyan); }
+            50% { opacity: 1; box-shadow: 0 0 8px var(--neon-cyan); }
         }
         .typing-dot {
             animation: pulse-dot 1.2s infinite;
@@ -246,7 +243,6 @@
         .typing-dot:nth-child(2) { animation-delay: 0.2s; }
         .typing-dot:nth-child(3) { animation-delay: 0.4s; }
 
-        /* 🌟 Welcome Screen Typing Cursor */
         .typing-cursor {
             display: inline-block;
             width: 3px;
@@ -255,7 +251,7 @@
             margin-left: 4px;
             vertical-align: text-bottom;
             animation: cursorBlink 0.8s step-end infinite;
-            box-shadow: 0 0 8px var(--neon-cyan);
+            box-shadow: 0 0 6px var(--neon-cyan);
         }
         @keyframes cursorBlink {
             0%, 100% { opacity: 1; }
@@ -268,18 +264,37 @@
         
         .modal-content {
             animation: scaleIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            background: #0f172a;
+            background: #080c16;
             border: 1px solid var(--neon-cyan);
-            box-shadow: 0 0 40px rgba(0, 245, 255, 0.15), 0 0 80px rgba(183, 42, 255, 0.1);
+            box-shadow: 0 0 35px rgba(0, 229, 255, 0.12), 0 0 70px rgba(11, 61, 145, 0.15);
         }
         @keyframes scaleIn {
             from { opacity: 0; transform: scale(0.94) translateY(10px); }
             to { opacity: 1; transform: scale(1) translateY(0); }
         }
         
-        .text-arc { color: var(--arc-blue); }
-        .border-arc { border-color: var(--arc-blue); }
-        .bg-arc-dim { background-color: var(--arc-dim); }
+        .text-arc { color: var(--neon-cyan); }
+        .border-arc { border-color: var(--neon-cyan); }
+        .bg-arc-dim { background-color: rgba(0, 229, 255, 0.1); }
+
+        /* 🚀 NASA Welcome Fluorescent Accents */
+        .nasa-hud-bracket {
+            position: absolute;
+            width: 24px; height: 24px;
+            border-color: var(--neon-cyan);
+            border-style: solid;
+            border-width: 0;
+            opacity: 0.6;
+            animation: hudPulse 3s ease-in-out infinite alternate;
+        }
+        .hud-tl { top: -8px; left: -8px; border-top-width: 2px; border-left-width: 2px; }
+        .hud-tr { top: -8px; right: -8px; border-top-width: 2px; border-right-width: 2px; }
+        .hud-bl { bottom: -8px; left: -8px; border-bottom-width: 2px; border-left-width: 2px; }
+        .hud-br { bottom: -8px; right: -8px; border-bottom-width: 2px; border-right-width: 2px; }
+        @keyframes hudPulse {
+            0% { opacity: 0.4; box-shadow: 0 0 4px var(--neon-cyan); }
+            100% { opacity: 0.9; box-shadow: 0 0 12px var(--neon-cyan); }
+        }
 
         /* ♿ Accessibility */
         @media (prefers-reduced-motion: reduce) {
@@ -296,29 +311,19 @@
 
 <body class="h-screen flex overflow-hidden">
 
-    <!-- 🌌 Animated Particles Container -->
     <div class="particles" aria-hidden="true" id="particles"></div>
 
-    <!-- ========== MOBILE OVERLAY ========== -->
-    <div id="mobileOverlay"
-         onclick="closeDrawers()"
-         class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden">
-    </div>
+    <div id="mobileOverlay" onclick="closeDrawers()" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden"></div>
 
-    <!-- ========== LEFT SIDEBAR ========== -->
-    <aside id="leftSidebar"
-           class="sidebar w-64 flex flex-col p-4 custom-scrollbar overflow-y-auto shrink-0">
-
+    <aside id="leftSidebar" class="sidebar w-64 flex flex-col p-4 custom-scrollbar overflow-y-auto shrink-0">
         <div class="flex items-center justify-between mb-6 lg:hidden">
             <span class="text-[10px] uppercase tracking-[0.2em] text-blue-300 font-bold">Menu</span>
-            <button onclick="closeDrawers()"
-                    class="h-8 w-8 rounded-lg bg-slate-800 hover:bg-slate-700 border border-blue-500/20 flex items-center justify-center transition text-blue-200">
+            <button onclick="closeDrawers()" class="h-8 w-8 rounded-lg bg-slate-800 hover:bg-slate-700 border border-blue-500/20 flex items-center justify-center transition text-blue-200">
                 <i class="fa-solid fa-xmark text-sm"></i>
             </button>
         </div>
 
-        <button onclick="newChat()"
-                class="flex items-center gap-3 p-3 rounded-xl bg-gradient-to-r from-blue-600/20 to-transparent hover:bg-blue-600/30 border border-blue-500/20 transition mb-6 w-full text-left group shadow-lg shadow-blue-900/20">
+        <button onclick="newChat()" class="flex items-center gap-3 p-3 rounded-xl bg-gradient-to-r from-blue-600/20 to-transparent hover:bg-blue-600/30 border border-blue-500/20 transition mb-6 w-full text-left group shadow-lg shadow-blue-900/20">
             <div class="h-8 w-8 rounded-lg bg-blue-500/20 flex items-center justify-center group-hover:bg-blue-500/40 transition border border-blue-400/30">
                 <i class="fa-solid fa-plus text-blue-300 text-sm"></i>
             </div>
@@ -326,26 +331,21 @@
         </button>
 
         <div class="space-y-2">
-            <div onclick="selectQuickModel('instant')"
-                 class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800/50 cursor-pointer transition group border border-transparent hover:border-yellow-500/30">
+            <div onclick="selectQuickModel('instant')" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800/50 cursor-pointer transition group border border-transparent hover:border-yellow-500/30">
                 <div class="h-7 w-7 rounded-lg bg-yellow-500/10 flex items-center justify-center group-hover:bg-yellow-500/20 transition border border-yellow-500/20">
                     <i class="fa-solid fa-bolt text-yellow-400 text-xs"></i>
                 </div>
                 <span class="text-sm text-slate-300 group-hover:text-white">Rapido</span>
                 <span class="ml-auto text-[9px] text-yellow-500/70 bg-yellow-900/20 px-2 py-0.5 rounded-full border border-yellow-500/20">⚡</span>
             </div>
-
-            <div onclick="selectQuickModel('think')"
-                 class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800/50 cursor-pointer transition group border border-transparent hover:border-purple-500/30">
+            <div onclick="selectQuickModel('think')" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800/50 cursor-pointer transition group border border-transparent hover:border-purple-500/30">
                 <div class="h-7 w-7 rounded-lg bg-purple-500/10 flex items-center justify-center group-hover:bg-purple-500/20 transition border border-purple-500/20">
                     <i class="fa-solid fa-brain text-purple-400 text-xs"></i>
                 </div>
                 <span class="text-sm text-slate-300 group-hover:text-white">Heavy</span>
                 <span class="ml-auto text-[9px] text-purple-500/70 bg-purple-900/20 px-2 py-0.5 rounded-full border border-purple-500/20">🧠</span>
             </div>
-
-            <div onclick="selectQuickModel('preview')"
-                 class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800/50 cursor-pointer transition group border border-transparent hover:border-cyan-500/30">
+            <div onclick="selectQuickModel('preview')" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800/50 cursor-pointer transition group border border-transparent hover:border-cyan-500/30">
                 <div class="h-7 w-7 rounded-lg bg-cyan-500/10 flex items-center justify-center group-hover:bg-cyan-500/20 transition border border-cyan-500/20">
                     <i class="fa-solid fa-flask text-cyan-400 text-xs"></i>
                 </div>
@@ -356,8 +356,7 @@
 
         <div class="my-6 border-t border-blue-500/10"></div>
 
-        <div onclick="openSettings()"
-             class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800/50 cursor-pointer transition group border border-transparent hover:border-blue-500/30">
+        <div onclick="openSettings()" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800/50 cursor-pointer transition group border border-transparent hover:border-blue-500/30">
             <div class="h-7 w-7 rounded-lg bg-slate-700/50 flex items-center justify-center group-hover:bg-blue-600/20 transition border border-slate-600 group-hover:border-blue-500/30">
                 <i class="fa-solid fa-gear text-slate-400 group-hover:text-blue-300 text-xs"></i>
             </div>
@@ -371,90 +370,79 @@
         </div>
     </aside>
 
-    <!-- ========== MAIN AREA ========== -->
     <main id="mainArea" class="flex-1 flex flex-col relative min-w-0">
-
         <header class="flex items-center justify-between px-4 py-3 border-b border-blue-500/10 bg-slate-950/40 backdrop-blur-md shrink-0">
             <div class="flex items-center gap-3 min-w-0">
-                <button onclick="openLeftDrawer()"
-                        class="mobile-only h-9 w-9 rounded-lg bg-slate-800 border border-blue-500/20 flex items-center justify-center hover:bg-slate-700 transition text-blue-200">
+                <button onclick="openLeftDrawer()" class="mobile-only h-9 w-9 rounded-lg bg-slate-800 border border-blue-500/20 flex items-center justify-center hover:bg-slate-700 transition text-blue-200">
                     <i class="fa-solid fa-bars text-sm"></i>
                 </button>
-
                 <div class="flex items-center gap-2.5 min-w-0">
-                    <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center shrink-0 shadow-lg shadow-blue-500/20 border border-white/10">
-                        <i class="fa-solid fa-microchip text-white text-sm"></i>
+                    <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-700 to-cyan-600 flex items-center justify-center shrink-0 shadow-lg shadow-blue-500/20 border border-white/10">
+                        <i class="fa-solid fa-satellite-dish text-white text-sm"></i>
                     </div>
                     <div class="flex flex-col min-w-0">
-                        <span id="currentModelDisplay"
-                              class="header-model-title text-sm font-bold text-white tracking-wide">
-                            Seleziona modello
-                        </span>
+                        <span id="currentModelDisplay" class="header-model-title text-sm font-bold text-white tracking-wide">Seleziona modello</span>
                         <span id="currentProviderDisplay" class="text-[10px] text-blue-400 font-mono uppercase">-</span>
                     </div>
                 </div>
             </div>
 
             <div class="flex items-center gap-2">
-                <div id="connectionStatus"
-                     class="flex items-center gap-1.5 text-[10px] px-2.5 py-1 rounded-full bg-slate-800/50 text-blue-300 border border-blue-500/20 font-mono">
-                    <span class="h-1.5 w-1.5 rounded-full bg-slate-500"></span>
-                    Idle
+                <div id="connectionStatus" class="flex items-center gap-1.5 text-[10px] px-2.5 py-1 rounded-full bg-slate-800/50 text-blue-300 border border-blue-500/20 font-mono">
+                    <span class="h-1.5 w-1.5 rounded-full bg-slate-500"></span> Idle
                 </div>
-
-                <button onclick="selectQuickModel('instant')"
-                        class="desktop-only model-pill text-[11px] px-3 py-1.5 rounded-full bg-yellow-500/5 text-yellow-300 border border-yellow-500/20 hover:bg-yellow-500/10">
+                <button onclick="selectQuickModel('instant')" class="desktop-only model-pill text-[11px] px-3 py-1.5 rounded-full bg-yellow-500/5 text-yellow-300 border border-yellow-500/20 hover:bg-yellow-500/10">
                     <i class="fa-solid fa-bolt mr-1 text-[10px]"></i>Rapido
                 </button>
-                <button onclick="selectQuickModel('think')"
-                        class="desktop-only model-pill text-[11px] px-3 py-1.5 rounded-full bg-purple-500/5 text-purple-300 border border-purple-500/20 hover:bg-purple-500/10">
+                <button onclick="selectQuickModel('think')" class="desktop-only model-pill text-[11px] px-3 py-1.5 rounded-full bg-purple-500/5 text-purple-300 border border-purple-500/20 hover:bg-purple-500/10">
                     <i class="fa-solid fa-brain mr-1 text-[10px]"></i>Heavy
                 </button>
-                <button onclick="selectQuickModel('preview')"
-                        class="desktop-only model-pill text-[11px] px-3 py-1.5 rounded-full bg-cyan-500/5 text-cyan-300 border border-cyan-500/20 hover:bg-cyan-500/10">
+                <button onclick="selectQuickModel('preview')" class="desktop-only model-pill text-[11px] px-3 py-1.5 rounded-full bg-cyan-500/5 text-cyan-300 border border-cyan-500/20 hover:bg-cyan-500/10">
                     <i class="fa-solid fa-flask mr-1 text-[10px]"></i>Preview
                 </button>
-
-                <button onclick="openRightDrawer()"
-                        class="mobile-only h-9 w-9 rounded-lg bg-slate-800 border border-blue-500/20 flex items-center justify-center hover:bg-slate-700 transition text-blue-200">
+                <button onclick="openRightDrawer()" class="mobile-only h-9 w-9 rounded-lg bg-slate-800 border border-blue-500/20 flex items-center justify-center hover:bg-slate-700 transition text-blue-200">
                     <i class="fa-solid fa-sliders text-sm"></i>
                 </button>
             </div>
         </header>
 
-        <div id="chatWindow"
-             class="flex-1 overflow-y-auto custom-scrollbar scroll-smooth">
-
-            <div id="welcomeScreen"
-                 class="h-full flex flex-col items-center justify-center text-center px-6">
-
-                <div class="h-20 w-20 rounded-2xl bg-gradient-to-tr from-blue-600/20 to-cyan-400/20 border border-blue-500/30 flex items-center justify-center mb-8 shadow-[0_0_30px_rgba(59,130,246,0.15)] relative overflow-hidden group">
-                    <div class="absolute inset-0 bg-blue-500/10 opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                    <i class="fa-solid fa-robot text-3xl text-blue-400 group-hover:text-cyan-300 transition duration-300"></i>
+        <div id="chatWindow" class="flex-1 overflow-y-auto custom-scrollbar scroll-smooth">
+            <div id="welcomeScreen" class="h-full flex flex-col items-center justify-center text-center px-6">
+                <div class="relative mb-8">
+                    <div class="nasa-hud-bracket hud-tl"></div>
+                    <div class="nasa-hud-bracket hud-tr"></div>
+                    <div class="nasa-hud-bracket hud-bl"></div>
+                    <div class="nasa-hud-bracket hud-br"></div>
+                    <div class="h-24 w-24 rounded-2xl bg-gradient-to-tr from-blue-900/40 to-cyan-800/20 border border-blue-500/30 flex items-center justify-center shadow-[0_0_35px_rgba(0,229,255,0.15)] relative overflow-hidden group">
+                        <div class="absolute inset-0 bg-blue-500/10 opacity-0 group-hover:opacity-100 transition duration-500"></div>
+                        <!-- NASA Worm Logo SVG -->
+                        <svg viewBox="0 0 120 30" class="w-16 h-8 drop-shadow-[0_0_8px_rgba(0,229,255,0.6)] group-hover:drop-shadow-[0_0_12px_rgba(0,229,255,0.8)] transition duration-300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15.2 14.6c0-3.2 2.1-5.4 5.1-5.4 3.1 0 5.2 2.2 5.2 5.4 0 3.2-2.1 5.4-5.2 5.4-3 0-5.1-2.2-5.1-5.4zm3.8 0c0 1.5.8 2.5 1.3 2.5.6 0 1.3-1 1.3-2.5 0-1.5-.7-2.5-1.3-2.5-.5 0-1.3 1-1.3 2.5z" fill="#00E5FF"/>
+                            <path d="M32.5 9.5h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5z" fill="#00E5FF"/>
+                            <path d="M85.4 14.6c0-3.2 2.1-5.4 5.1-5.4 3.1 0 5.2 2.2 5.2 5.4 0 3.2-2.1 5.4-5.2 5.4-3 0-5.1-2.2-5.1-5.4zm3.8 0c0 1.5.8 2.5 1.3 2.5.6 0 1.3-1 1.3-2.5 0-1.5-.7-2.5-1.3-2.5-.5 0-1.3 1-1.3 2.5z" fill="#00E5FF"/>
+                            <path d="M102.5 9.5h2.8v11.2h-2.8V9.5z" fill="#00E5FF"/>
+                        </svg>
+                    </div>
                 </div>
 
                 <h2 id="welcomeTitle" class="text-4xl sm:text-5xl font-bold text-white tracking-tight mb-4 drop-shadow-lg">
                     Ciao, come posso aiutarti?
                 </h2>
                 <p class="text-blue-200/70 max-w-md mb-10 text-sm leading-relaxed font-light">
-                    Inserisci una API key, scegli un modello e inizia a chattare.
+                    Inserisci una API key, scegli un modello e inizia la missione.
                 </p>
 
                 <div class="flex flex-wrap items-center justify-center gap-3 max-w-xl">
-                    <button onclick="selectQuickModel('instant')"
-                            class="model-pill text-xs px-6 py-3 rounded-full bg-slate-800/50 text-yellow-300 border border-yellow-500/20 hover:border-yellow-400 flex items-center gap-2 backdrop-blur-sm">
+                    <button onclick="selectQuickModel('instant')" class="model-pill text-xs px-6 py-3 rounded-full bg-slate-800/50 text-yellow-300 border border-yellow-500/20 hover:border-yellow-400 flex items-center gap-2 backdrop-blur-sm">
                         <i class="fa-solid fa-bolt"></i> Rapido
                     </button>
-                    <button onclick="selectQuickModel('think')"
-                            class="model-pill text-xs px-6 py-3 rounded-full bg-slate-800/50 text-purple-300 border border-purple-500/20 hover:border-purple-400 flex items-center gap-2 backdrop-blur-sm">
+                    <button onclick="selectQuickModel('think')" class="model-pill text-xs px-6 py-3 rounded-full bg-slate-800/50 text-purple-300 border border-purple-500/20 hover:border-purple-400 flex items-center gap-2 backdrop-blur-sm">
                         <i class="fa-solid fa-brain"></i> Heavy
                     </button>
-                    <button onclick="selectQuickModel('preview')"
-                            class="model-pill text-xs px-6 py-3 rounded-full bg-slate-800/50 text-cyan-300 border border-cyan-500/20 hover:border-cyan-400 flex items-center gap-2 backdrop-blur-sm">
+                    <button onclick="selectQuickModel('preview')" class="model-pill text-xs px-6 py-3 rounded-full bg-slate-800/50 text-cyan-300 border border-cyan-500/20 hover:border-cyan-400 flex items-center gap-2 backdrop-blur-sm">
                         <i class="fa-solid fa-flask"></i> Preview
                     </button>
-                    <button onclick="openRightDrawer()"
-                            class="model-pill text-xs px-6 py-3 rounded-full bg-blue-600/20 text-blue-200 border border-blue-500/30 hover:bg-blue-600/30 flex items-center gap-2 backdrop-blur-sm">
+                    <button onclick="openRightDrawer()" class="model-pill text-xs px-6 py-3 rounded-full bg-blue-600/20 text-blue-200 border border-blue-500/30 hover:bg-blue-600/30 flex items-center gap-2 backdrop-blur-sm">
                         <i class="fa-solid fa-key"></i> API Key
                     </button>
                 </div>
@@ -467,57 +455,33 @@
 
         <div class="input-wrap px-4 pb-4 pt-2 shrink-0 safe-bottom">
             <div class="max-w-3xl mx-auto input-box rounded-[24px] p-2 flex flex-col">
-
-                <div id="filePreview"
-                     class="flex flex-wrap gap-2 mb-2 px-2"></div>
-
-                <textarea id="userInput"
-                          rows="1"
-                          placeholder="Scrivi un messaggio..."
-                          class="bg-transparent border-none focus:ring-0 focus:outline-none text-white w-full resize-none p-3 max-h-48 custom-scrollbar placeholder:text-blue-300/30 text-sm"></textarea>
-
+                <div id="filePreview" class="flex flex-wrap gap-2 mb-2 px-2"></div>
+                <textarea id="userInput" rows="1" placeholder="Scrivi un messaggio..." class="bg-transparent border-none focus:ring-0 focus:outline-none text-white w-full resize-none p-3 max-h-48 custom-scrollbar placeholder:text-blue-300/30 text-sm"></textarea>
                 <div class="flex items-center justify-between mt-1 px-2 gap-2">
                     <div class="flex items-center gap-2 text-blue-300/60">
-                        <label class="cursor-pointer hover:text-blue-300 h-8 w-8 rounded-lg bg-slate-800/50 border border-blue-500/10 flex items-center justify-center transition hover:bg-slate-700/50 hover:border-blue-500/30"
-                               title="Allega file">
+                        <label class="cursor-pointer hover:text-blue-300 h-8 w-8 rounded-lg bg-slate-800/50 border border-blue-500/10 flex items-center justify-center transition hover:bg-slate-700/50 hover:border-blue-500/30" title="Allega file">
                             <i class="fa-solid fa-paperclip text-xs"></i>
                             <input type="file" id="fileInput" hidden multiple onchange="handleFileSelect(event)"/>
                         </label>
-
-                        <label class="cursor-pointer hover:text-blue-300 h-8 w-8 rounded-lg bg-slate-800/50 border border-blue-500/10 flex items-center justify-center transition hover:bg-slate-700/50 hover:border-blue-500/30"
-                               title="Allega foto">
+                        <label class="cursor-pointer hover:text-blue-300 h-8 w-8 rounded-lg bg-slate-800/50 border border-blue-500/10 flex items-center justify-center transition hover:bg-slate-700/50 hover:border-blue-500/30" title="Allega foto">
                             <i class="fa-regular fa-image text-xs"></i>
                             <input type="file" id="photoInput" hidden multiple accept="image/*" onchange="handleFileSelect(event)"/>
                         </label>
-
-                        <button onclick="selectQuickModel('instant')"
-                                class="hidden sm:inline-flex h-8 px-2.5 rounded-lg bg-yellow-500/5 text-yellow-400/80 border border-yellow-500/15 text-[10px] items-center gap-1 hover:bg-yellow-500/15 transition"
-                                title="Rapido">
+                        <button onclick="selectQuickModel('instant')" class="hidden sm:inline-flex h-8 px-2.5 rounded-lg bg-yellow-500/5 text-yellow-400/80 border border-yellow-500/15 text-[10px] items-center gap-1 hover:bg-yellow-500/15 transition" title="Rapido">
                             <i class="fa-solid fa-bolt text-[9px]"></i> Rapido
                         </button>
-                        <button onclick="selectQuickModel('think')"
-                                class="hidden sm:inline-flex h-8 px-2.5 rounded-lg bg-purple-500/5 text-purple-400/80 border border-purple-500/15 text-[10px] items-center gap-1 hover:bg-purple-500/15 transition"
-                                title="Heavy">
+                        <button onclick="selectQuickModel('think')" class="hidden sm:inline-flex h-8 px-2.5 rounded-lg bg-purple-500/5 text-purple-400/80 border border-purple-500/15 text-[10px] items-center gap-1 hover:bg-purple-500/15 transition" title="Heavy">
                             <i class="fa-solid fa-brain text-[9px]"></i> Heavy
                         </button>
-                        <button onclick="selectQuickModel('preview')"
-                                class="hidden sm:inline-flex h-8 px-2.5 rounded-lg bg-cyan-500/5 text-cyan-400/80 border border-cyan-500/15 text-[10px] items-center gap-1 hover:bg-cyan-500/15 transition"
-                                title="Preview">
+                        <button onclick="selectQuickModel('preview')" class="hidden sm:inline-flex h-8 px-2.5 rounded-lg bg-cyan-500/5 text-cyan-400/80 border border-cyan-500/15 text-[10px] items-center gap-1 hover:bg-cyan-500/15 transition" title="Preview">
                             <i class="fa-solid fa-flask text-[9px]"></i> Preview
                         </button>
                     </div>
-
                     <div class="flex items-center gap-2">
-                        <button onclick="clearFiles()"
-                                class="text-[10px] text-blue-400/50 hover:text-white transition px-2"
-                                title="Rimuovi allegati">
+                        <button onclick="clearFiles()" class="text-[10px] text-blue-400/50 hover:text-white transition px-2" title="Rimuovi allegati">
                             <i class="fa-solid fa-xmark"></i>
                         </button>
-
-                        <button id="sendBtn"
-                                onclick="handleSend()"
-                                class="h-9 w-9 rounded-full flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed shrink-0 transition"
-                                disabled>
+                        <button id="sendBtn" onclick="handleSend()" class="h-9 w-9 rounded-full flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed shrink-0 transition" disabled>
                             <i class="fa-solid fa-arrow-up text-sm"></i>
                         </button>
                     </div>
@@ -526,10 +490,7 @@
         </div>
     </main>
 
-    <!-- ========== RIGHT SIDEBAR ========== -->
-    <aside id="rightSidebar"
-           class="right-panel w-80 flex flex-col border-l border-blue-500/10 p-5 custom-scrollbar overflow-y-auto shrink-0">
-
+    <aside id="rightSidebar" class="right-panel w-80 flex flex-col border-l border-blue-500/10 p-5 custom-scrollbar overflow-y-auto shrink-0">
         <div class="flex items-center justify-between mb-6">
             <div class="flex items-center gap-2">
                 <div class="h-6 w-6 rounded-lg bg-blue-500/15 flex items-center justify-center border border-blue-500/20">
@@ -537,8 +498,7 @@
                 </div>
                 <h3 class="text-[11px] font-bold text-blue-300 uppercase tracking-[0.15em]">Configurazione</h3>
             </div>
-            <button onclick="closeDrawers()"
-                    class="lg:hidden h-8 w-8 rounded-lg bg-slate-800 hover:bg-slate-700 flex items-center justify-center transition text-blue-200">
+            <button onclick="closeDrawers()" class="lg:hidden h-8 w-8 rounded-lg bg-slate-800 hover:bg-slate-700 flex items-center justify-center transition text-blue-200">
                 <i class="fa-solid fa-xmark text-sm"></i>
             </button>
         </div>
@@ -546,9 +506,7 @@
         <div class="space-y-1.5 mb-5">
             <label class="text-[10px] text-blue-300/70 font-medium uppercase tracking-wider">Google AI Studio API Key</label>
             <div class="relative group">
-                <input type="password" id="googleKey"
-                       placeholder="AIza..."
-                       class="w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 pr-8 text-xs text-blue-100 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400/50 transition placeholder:text-slate-600"/>
+                <input type="password" id="googleKey" placeholder="AIza..." class="w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 pr-8 text-xs text-blue-100 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400/50 transition placeholder:text-slate-600"/>
                 <i class="fa-solid fa-key absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-600 group-focus-within:text-blue-400 text-[10px] transition"></i>
             </div>
         </div>
@@ -556,15 +514,11 @@
         <div class="grid grid-cols-2 gap-3 mb-5">
             <div class="space-y-1.5">
                 <label class="text-[10px] text-blue-300/70 font-medium uppercase tracking-wider">Temperature</label>
-                <input type="number" id="temperature"
-                       min="0" max="2" step="0.1" value="0.7"
-                       class="w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 text-xs text-blue-100 outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400/50 transition"/>
+                <input type="number" id="temperature" min="0" max="2" step="0.1" value="0.7" class="w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 text-xs text-blue-100 outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400/50 transition"/>
             </div>
             <div class="space-y-1.5">
                 <label class="text-[10px] text-blue-300/70 font-medium uppercase tracking-wider">Max tokens</label>
-                <input type="number" id="maxTokens"
-                       min="64" max="32768" step="64" value="2048"
-                       class="w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 text-xs text-blue-100 outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400/50 transition"/>
+                <input type="number" id="maxTokens" min="64" max="32768" step="64" value="2048" class="w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 text-xs text-blue-100 outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400/50 transition"/>
             </div>
         </div>
 
@@ -578,28 +532,16 @@
         <h4 class="text-[10px] font-semibold text-blue-300/70 uppercase tracking-[0.15em] mb-3">Modelli Rapidi</h4>
         <div class="space-y-3 mb-5">
             <div class="space-y-1.5">
-                <label class="text-[10px] text-blue-300/70 flex items-center gap-1.5">
-                    <span class="h-1.5 w-1.5 rounded-full bg-yellow-500 shadow-[0_0_5px_rgba(234,179,8,0.5)]"></span> Rapido
-                </label>
-                <input id="instantCustomModelId"
-                       placeholder="gemini-2.5-flash"
-                       class="w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 text-xs text-blue-100 outline-none focus:border-yellow-500/50 transition placeholder:text-slate-600"/>
+                <label class="text-[10px] text-blue-300/70 flex items-center gap-1.5"><span class="h-1.5 w-1.5 rounded-full bg-yellow-500 shadow-[0_0_5px_rgba(234,179,8,0.5)]"></span> Rapido</label>
+                <input id="instantCustomModelId" placeholder="gemini-2.5-flash" class="w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 text-xs text-blue-100 outline-none focus:border-yellow-500/50 transition placeholder:text-slate-600"/>
             </div>
             <div class="space-y-1.5">
-                <label class="text-[10px] text-blue-300/70 flex items-center gap-1.5">
-                    <span class="h-1.5 w-1.5 rounded-full bg-purple-500 shadow-[0_0_5px_rgba(168,85,247,0.5)]"></span> Heavy
-                </label>
-                <input id="thinkCustomModelId"
-                       placeholder="gemma-4-26b-a4b-it"
-                       class="w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 text-xs text-blue-100 outline-none focus:border-purple-500/50 transition placeholder:text-slate-600"/>
+                <label class="text-[10px] text-blue-300/70 flex items-center gap-1.5"><span class="h-1.5 w-1.5 rounded-full bg-purple-500 shadow-[0_0_5px_rgba(168,85,247,0.5)]"></span> Heavy</label>
+                <input id="thinkCustomModelId" placeholder="gemma-4-26b-a4b-it" class="w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 text-xs text-blue-100 outline-none focus:border-purple-500/50 transition placeholder:text-slate-600"/>
             </div>
             <div class="space-y-1.5">
-                <label class="text-[10px] text-blue-300/70 flex items-center gap-1.5">
-                    <span class="h-1.5 w-1.5 rounded-full bg-cyan-500 shadow-[0_0_5px_rgba(6,182,212,0.5)]"></span> Preview
-                </label>
-                <input id="previewCustomModelId"
-                       placeholder="gemini-3-flash-preview"
-                       class="w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 text-xs text-blue-100 outline-none focus:border-cyan-500/50 transition placeholder:text-slate-600"/>
+                <label class="text-[10px] text-blue-300/70 flex items-center gap-1.5"><span class="h-1.5 w-1.5 rounded-full bg-cyan-500 shadow-[0_0_5px_rgba(6,182,212,0.5)]"></span> Preview</label>
+                <input id="previewCustomModelId" placeholder="gemini-3-flash-preview" class="w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 text-xs text-blue-100 outline-none focus:border-cyan-500/50 transition placeholder:text-slate-600"/>
             </div>
         </div>
 
@@ -607,11 +549,8 @@
 
         <h4 class="text-[10px] font-semibold text-blue-300/70 uppercase tracking-[0.15em] mb-3">Modello Custom</h4>
         <div class="space-y-2.5 mb-5">
-            <input id="customModelId"
-                   placeholder="es: gemini-2.5-pro"
-                   class="w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 text-xs text-blue-100 outline-none focus:border-white/20 transition placeholder:text-slate-600"/>
-            <button onclick="useCustomModel()"
-                    class="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2.5 rounded-lg text-xs transition active:scale-[0.98] shadow-lg shadow-blue-900/50 border border-blue-400/20">
+            <input id="customModelId" placeholder="es: gemini-2.5-pro" class="w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 text-xs text-blue-100 outline-none focus:border-white/20 transition placeholder:text-slate-600"/>
+            <button onclick="useCustomModel()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2.5 rounded-lg text-xs transition active:scale-[0.98] shadow-lg shadow-blue-900/50 border border-blue-400/20">
                 <i class="fa-solid fa-check mr-1"></i> Usa modello custom
             </button>
         </div>
@@ -628,33 +567,26 @@
         </div>
     </aside>
 
-    <!-- ========== SETTINGS MODAL ========== -->
-    <div id="settingsModal"
-         class="hidden fixed inset-0 z-[80] items-center justify-center p-4 modal-overlay">
+    <div id="settingsModal" class="hidden fixed inset-0 z-[80] items-center justify-center p-4 modal-overlay">
         <div class="absolute inset-0 bg-black/90 backdrop-blur-sm" onclick="closeSettings()"></div>
         <div class="relative bg-slate-900 border border-blue-500/30 w-full max-w-[580px] rounded-2xl p-6 shadow-2xl custom-scrollbar overflow-y-auto max-h-[85vh] modal-content">
-
             <div class="flex items-center justify-between mb-6">
                 <h2 class="text-lg font-bold text-white flex items-center gap-2">
                     <i class="fa-solid fa-gear text-blue-400"></i> Impostazioni AI
                 </h2>
-                <button onclick="closeSettings()"
-                        class="h-8 w-8 rounded-lg bg-slate-800 hover:bg-slate-700 flex items-center justify-center transition text-blue-200 border border-blue-500/20">
+                <button onclick="closeSettings()" class="h-8 w-8 rounded-lg bg-slate-800 hover:bg-slate-700 flex items-center justify-center transition text-blue-200 border border-blue-500/20">
                     <i class="fa-solid fa-xmark text-sm"></i>
                 </button>
             </div>
 
             <div class="space-y-1.5 mb-5">
                 <label class="text-[10px] text-blue-300/70 font-medium uppercase tracking-wider">System Prompt</label>
-                <textarea id="systemPrompt" rows="4"
-                          placeholder="Es: Rispondi come un ingegnere software preciso e chiaro."
-                          class="w-full bg-slate-950/50 border border-blue-500/20 rounded-lg p-3 text-sm text-blue-100 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400/30 transition resize-none placeholder:text-slate-600"></textarea>
+                <textarea id="systemPrompt" rows="4" placeholder="Es: Rispondi come un ingegnere software preciso e chiaro." class="w-full bg-slate-950/50 border border-blue-500/20 rounded-lg p-3 text-sm text-blue-100 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400/30 transition resize-none placeholder:text-slate-600"></textarea>
             </div>
 
             <div class="space-y-1.5 mb-5">
                 <label class="text-[10px] text-blue-300/70 font-medium uppercase tracking-wider">Stile Risposta</label>
-                <select id="responseStyle"
-                        class="w-full bg-slate-950/50 border border-blue-500/20 rounded-lg p-3 text-sm text-blue-100 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400/30 transition appearance-none">
+                <select id="responseStyle" class="w-full bg-slate-950/50 border border-blue-500/20 rounded-lg p-3 text-sm text-blue-100 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400/30 transition appearance-none">
                     <option value="short">Breve e diretto</option>
                     <option value="long">Lungo e dettagliato</option>
                     <option value="genz">Gen Z / Casual</option>
@@ -665,37 +597,61 @@
 
             <div class="space-y-1.5 mb-5">
                 <label class="text-[10px] text-blue-300/70 font-medium uppercase tracking-wider">Prompt Stile Custom</label>
-                <textarea id="styleCustomPrompt" rows="3"
-                          placeholder="Descrivi il tono e comportamento desiderato..."
-                          class="w-full bg-slate-950/50 border border-blue-500/20 rounded-lg p-3 text-sm text-blue-100 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400/30 transition resize-none placeholder:text-slate-600"></textarea>
+                <textarea id="styleCustomPrompt" rows="3" placeholder="Descrivi il tono e comportamento desiderato..." class="w-full bg-slate-950/50 border border-blue-500/20 rounded-lg p-3 text-sm text-blue-100 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400/30 transition resize-none placeholder:text-slate-600"></textarea>
+            </div>
+
+            <!-- 🚀 AGENT MODE SECTION -->
+            <div class="rounded-lg border border-blue-500/20 bg-slate-950/80 p-4 mb-6">
+                <div class="flex items-center justify-between gap-3 mb-3">
+                    <span class="text-[10px] uppercase tracking-[0.15em] text-blue-400 font-semibold flex items-center gap-2">
+                        <i class="fa-solid fa-robot text-cyan-400"></i> Modalità Agente
+                    </span>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="agentModeToggle" class="sr-only peer" onchange="toggleAgentMode()">
+                        <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+                    </label>
+                </div>
+                <div id="agentModeConfig" class="hidden space-y-3">
+                    <div class="text-[10px] text-yellow-400 bg-yellow-900/20 border border-yellow-500/30 px-3 py-2 rounded-md flex items-start gap-2">
+                        <i class="fa-solid fa-triangle-exclamation mt-0.5"></i>
+                        <span>Attenzione: La modalità agente esegue 3 chiamate API sequenziali. Il costo può essere fino a <b>3 volte superiore</b> a una richiesta normale.</span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2">
+                        <div class="space-y-1">
+                            <label class="text-[9px] text-cyan-300/80 uppercase">1. Elaboratore</label>
+                            <select id="agentModel1" class="w-full bg-slate-900 border border-blue-500/20 rounded p-2 text-xs text-blue-100 outline-none focus:border-cyan-400"></select>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[9px] text-purple-300/80 uppercase">2. Architetto</label>
+                            <select id="agentModel2" class="w-full bg-slate-900 border border-blue-500/20 rounded p-2 text-xs text-blue-100 outline-none focus:border-purple-400"></select>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[9px] text-emerald-300/80 uppercase">3. Esecutore</label>
+                            <select id="agentModel3" class="w-full bg-slate-900 border border-blue-500/20 rounded p-2 text-xs text-blue-100 outline-none focus:border-emerald-400"></select>
+                        </div>
+                    </div>
+                    <div class="text-[9px] text-blue-300/60 leading-relaxed">
+                        Flusso: Richiesta Utente → Agente 1 (Dettaglia Prompt) → Agente 2 (Pianifica Struttura) → Agente 3 (Genera Risposta Finale)
+                    </div>
+                </div>
             </div>
 
             <div class="rounded-lg border border-blue-500/20 bg-slate-950/80 p-4 mb-6">
                 <div class="flex items-center justify-between gap-3 mb-2">
                     <span class="text-[10px] uppercase tracking-[0.15em] text-blue-400 font-semibold">Feedback Temporaneo</span>
-                    <button onclick="clearTemporaryFeedback()"
-                            class="text-[10px] px-2.5 py-1 rounded bg-slate-800 border border-blue-500/20 text-blue-300 hover:bg-slate-700 hover:text-white transition">
-                        Pulisci
-                    </button>
+                    <button onclick="clearTemporaryFeedback()" class="text-[10px] px-2.5 py-1 rounded bg-slate-800 border border-blue-500/20 text-blue-300 hover:bg-slate-700 hover:text-white transition">Pulisci</button>
                 </div>
-                <div id="feedbackPreview"
-                     class="text-xs text-blue-200/60 leading-relaxed whitespace-pre-wrap min-h-[40px] font-mono">
-                    Nessun feedback.
-                </div>
+                <div id="feedbackPreview" class="text-xs text-blue-200/60 leading-relaxed whitespace-pre-wrap min-h-[40px] font-mono">Nessun feedback.</div>
             </div>
 
-            <button onclick="closeSettings()"
-                    class="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 rounded-lg text-sm transition active:scale-[0.98] shadow-lg shadow-blue-900/50 border border-blue-400/20">
+            <button onclick="closeSettings()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 rounded-lg text-sm transition active:scale-[0.98] shadow-lg shadow-blue-900/50 border border-blue-400/20">
                 <i class="fa-solid fa-check mr-1"></i> Salva impostazioni
             </button>
         </div>
     </div>
 
-    <div id="toastLayer"
-         class="fixed bottom-6 right-6 z-[120] space-y-2 pointer-events-none flex flex-col items-end"></div>
+    <div id="toastLayer" class="fixed bottom-6 right-6 z-[120] space-y-2 pointer-events-none flex flex-col items-end"></div>
 
-
-    <!-- ========== SCRIPTS ========== -->
     <script>
         // ──────────────────────────────────────────────
         //  DATA
@@ -727,6 +683,8 @@
         let chatHistory        = [];
         let isLoading          = false;
         let temporaryFeedback  = "";
+        let agentModeEnabled   = false;
+        let agentModels        = { model1: "", model2: "", model3: "" };
 
         // ──────────────────────────────────────────────
         //  HELPERS
@@ -736,12 +694,7 @@
         const $$ = (sel, ctx = document) => ctx.querySelectorAll(sel);
 
         function escapeHtml(s) {
-            return String(s)
-                .replaceAll("&", "&amp;")
-                .replaceAll("<", "&lt;")
-                .replaceAll(">", "&gt;")
-                .replaceAll('"', "&quot;")
-                .replaceAll("'", "&#039;");
+            return String(s).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;");
         }
 
         function formatBytes(b) {
@@ -751,15 +704,12 @@
             return `${(b / Math.pow(1024, i)).toFixed(1)} ${u[i]}`;
         }
 
-        function randomId() {
-            return Math.random().toString(36).slice(2, 9);
-        }
-
         // ──────────────────────────────────────────────
         //  INIT
         // ──────────────────────────────────────────────
         window.addEventListener("DOMContentLoaded", () => {
             renderModelList();
+            populateAgentSelects();
             restoreSettings();
             bindEvents();
             initParticles();
@@ -777,28 +727,20 @@
 
         function bindEvents() {
             const inp = $("userInput");
-
             inp.addEventListener("input", () => {
                 inp.style.height = "auto";
                 inp.style.height = Math.min(inp.scrollHeight, 180) + "px";
                 updateSendButton();
             });
-
             inp.addEventListener("keydown", e => {
-                if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault();
-                    handleSend();
-                }
+                if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSend(); }
             });
-
-            window.addEventListener("resize", () => {
-                if (window.innerWidth > 1024) closeDrawers();
-            });
-
+            window.addEventListener("resize", () => { if (window.innerWidth > 1024) closeDrawers(); });
             [
                 "googleKey", "temperature", "maxTokens", "systemPrompt",
                 "responseStyle", "styleCustomPrompt",
-                "instantCustomModelId", "thinkCustomModelId", "previewCustomModelId"
+                "instantCustomModelId", "thinkCustomModelId", "previewCustomModelId",
+                "agentModel1", "agentModel2", "agentModel3"
             ].forEach(id => {
                 const n = $(id);
                 if (!n) return;
@@ -808,14 +750,12 @@
         }
 
         // ──────────────────────────────────────────────
-        //  MODEL RENDERING
+        //  MODEL RENDERING & AGENT SELECTS
         // ──────────────────────────────────────────────
         function renderModelList() {
             const container = $("modelList");
             container.innerHTML = "";
-
             let lastGroup = "";
-
             models.forEach(m => {
                 if (m.group && m.group !== lastGroup) {
                     lastGroup = m.group;
@@ -824,24 +764,33 @@
                     h.textContent = lastGroup;
                     container.appendChild(h);
                 }
-
                 const div = document.createElement("div");
                 div.className = "model-list-item flex items-center justify-between gap-2 p-2.5 rounded-lg cursor-pointer transition text-xs hover:bg-slate-800/60 border border-transparent hover:border-blue-500/20";
                 div.dataset.modelId = m.id;
                 div.dataset.provider = m.provider;
-
                 div.innerHTML = `
                     <div class="flex flex-col min-w-0">
                         <span class="truncate text-blue-100 font-medium">${escapeHtml(m.name)}</span>
                         <span class="text-[9px] text-blue-400/50 truncate font-mono">${escapeHtml(m.provider)} · ${escapeHtml(m.id)}</span>
                     </div>
-                    <span class="text-[8px] px-1.5 py-0.5 rounded-full shrink-0 font-semibold ${statusClass(m.status)}">
-                        ${escapeHtml(String(m.status).toUpperCase())}
-                    </span>
+                    <span class="text-[8px] px-1.5 py-0.5 rounded-full shrink-0 font-semibold ${statusClass(m.status)}">${escapeHtml(String(m.status).toUpperCase())}</span>
                 `;
-
                 div.onclick = () => setSelectedModel(m);
                 container.appendChild(div);
+            });
+        }
+
+        function populateAgentSelects() {
+            ["agentModel1", "agentModel2", "agentModel3"].forEach(id => {
+                const sel = $(id);
+                if (!sel) return;
+                sel.innerHTML = '<option value="">Seleziona...</option>';
+                models.forEach(m => {
+                    const opt = document.createElement("option");
+                    opt.value = m.id;
+                    opt.textContent = m.name;
+                    sel.appendChild(opt);
+                });
             });
         }
 
@@ -870,28 +819,17 @@
         }
 
         function setSelectedModel(model, persist = true) {
-            selectedModel = {
-                id:       model.id,
-                name:     model.name || model.id,
-                provider: model.provider || "google",
-                status:   model.status || "custom",
-                group:    model.group || "Custom"
-            };
-
+            selectedModel = { id: model.id, name: model.name || model.id, provider: model.provider || "google", status: model.status || "custom", group: model.group || "Custom" };
             syncUI();
             if (persist) persistSettings();
             closeDrawers();
         }
 
         function syncUI() {
-            $("currentModelDisplay").innerText    = selectedModel.name || selectedModel.id;
+            $("currentModelDisplay").innerText = selectedModel.name || selectedModel.id;
             $("currentProviderDisplay").innerText = selectedModel.provider || "google";
-
             $$(".model-list-item").forEach(el => el.classList.remove("bg-slate-800/80", "border-blue-500/30"));
-
-            const active = Array.from($$(".model-list-item")).find(
-                el => el.dataset.modelId === selectedModel.id && el.dataset.provider === selectedModel.provider
-            );
+            const active = Array.from($$(".model-list-item")).find(el => el.dataset.modelId === selectedModel.id && el.dataset.provider === selectedModel.provider);
             if (active) active.classList.add("bg-slate-800/80", "border-blue-500/30");
         }
 
@@ -905,61 +843,36 @@
         function useCustomModel() {
             const id = v("customModelId", "").trim();
             if (!id) { alert("Inserisci un model ID."); return; }
-
             setSelectedModel({ id, name: id, provider: "google", status: "custom", group: "Custom" });
             toast("Modello custom attivato");
         }
 
         // ──────────────────────────────────────────────
-        //  DRAWERS
+        //  DRAWERS & SETTINGS
         // ──────────────────────────────────────────────
-        function openLeftDrawer() {
-            $("leftSidebar").classList.add("open");
-            $("rightSidebar").classList.remove("open");
-            $("mobileOverlay").classList.add("!block");
-        }
-        function openRightDrawer() {
-            $("rightSidebar").classList.add("open");
-            $("leftSidebar").classList.remove("open");
-            $("mobileOverlay").classList.add("!block");
-        }
-        function closeDrawers() {
-            $("leftSidebar").classList.remove("open");
-            $("rightSidebar").classList.remove("open");
-            $("mobileOverlay").classList.remove("!block");
-        }
+        function openLeftDrawer() { $("leftSidebar").classList.add("open"); $("rightSidebar").classList.remove("open"); $("mobileOverlay").classList.add("!block"); }
+        function openRightDrawer() { $("rightSidebar").classList.add("open"); $("leftSidebar").classList.remove("open"); $("mobileOverlay").classList.add("!block"); }
+        function closeDrawers() { $("leftSidebar").classList.remove("open"); $("rightSidebar").classList.remove("open"); $("mobileOverlay").classList.remove("!block"); }
 
-        // ──────────────────────────────────────────────
-        //  SETTINGS
-        // ──────────────────────────────────────────────
-        function openSettings() {
-            $("settingsModal").classList.replace("hidden", "flex");
-            updateFeedbackPreview();
-            closeDrawers();
-        }
-        function closeSettings() {
-            $("settingsModal").classList.replace("flex", "hidden");
+        function openSettings() { $("settingsModal").classList.replace("hidden", "flex"); updateFeedbackPreview(); closeDrawers(); }
+        function closeSettings() { $("settingsModal").classList.replace("flex", "hidden"); persistSettings(); updateFeedbackPreview(); }
+
+        function toggleAgentMode() {
+            agentModeEnabled = $("agentModeToggle").checked;
+            $("agentModeConfig").classList.toggle("hidden", !agentModeEnabled);
             persistSettings();
-            updateFeedbackPreview();
+            toast(agentModeEnabled ? "🤖 Modalità Agente ATTIVA" : "🔙 Modalità Standard");
         }
 
         function persistSettings() {
             const saveLocal = $("saveLocal");
-            if (!saveLocal || !saveLocal.checked) {
-                localStorage.removeItem("aiChatSettings");
-                return;
-            }
-
+            if (!saveLocal || !saveLocal.checked) { localStorage.removeItem("aiChatSettings"); return; }
             localStorage.setItem("aiChatSettings", JSON.stringify({
-                googleKey:           v("googleKey"),
-                temperature:         v("temperature", "0.7"),
-                maxTokens:           v("maxTokens", "2048"),
-                systemPrompt:        v("systemPrompt"),
-                responseStyle:       v("responseStyle", "short"),
-                styleCustomPrompt:   v("styleCustomPrompt"),
-                instantCustomModelId:v("instantCustomModelId"),
-                thinkCustomModelId:  v("thinkCustomModelId"),
-                previewCustomModelId:v("previewCustomModelId"),
+                googleKey: v("googleKey"), temperature: v("temperature", "0.7"), maxTokens: v("maxTokens", "2048"),
+                systemPrompt: v("systemPrompt"), responseStyle: v("responseStyle", "short"), styleCustomPrompt: v("styleCustomPrompt"),
+                instantCustomModelId: v("instantCustomModelId"), thinkCustomModelId: v("thinkCustomModelId"), previewCustomModelId: v("previewCustomModelId"),
+                agentModeEnabled: $("agentModeToggle")?.checked || false,
+                agentModel1: v("agentModel1"), agentModel2: v("agentModel2"), agentModel3: v("agentModel3"),
                 selectedModel
             }));
         }
@@ -967,406 +880,173 @@
         function restoreSettings() {
             const raw = localStorage.getItem("aiChatSettings");
             if (!raw) { $("responseStyle").value = "short"; return; }
-
             try {
                 const d = JSON.parse(raw);
                 $("saveLocal").checked = true;
-                $("googleKey").value           = d.googleKey           || "";
-                $("temperature").value         = d.temperature         || "0.7";
-                $("maxTokens").value           = d.maxTokens           || "2048";
-                $("systemPrompt").value        = d.systemPrompt        || "";
-                $("responseStyle").value       = d.responseStyle       || "short";
-                $("styleCustomPrompt").value   = d.styleCustomPrompt   || "";
-                $("instantCustomModelId").value= d.instantCustomModelId|| "";
-                $("thinkCustomModelId").value  = d.thinkCustomModelId  || "";
-                $("previewCustomModelId").value= d.previewCustomModelId|| "";
-
+                $("googleKey").value = d.googleKey || ""; $("temperature").value = d.temperature || "0.7"; $("maxTokens").value = d.maxTokens || "2048";
+                $("systemPrompt").value = d.systemPrompt || ""; $("responseStyle").value = d.responseStyle || "short"; $("styleCustomPrompt").value = d.styleCustomPrompt || "";
+                $("instantCustomModelId").value = d.instantCustomModelId || ""; $("thinkCustomModelId").value = d.thinkCustomModelId || ""; $("previewCustomModelId").value = d.previewCustomModelId || "";
+                if (d.agentModeEnabled) { $("agentModeToggle").checked = true; agentModeEnabled = true; $("agentModeConfig").classList.remove("hidden"); }
+                $("agentModel1").value = d.agentModel1 || ""; $("agentModel2").value = d.agentModel2 || ""; $("agentModel3").value = d.agentModel3 || "";
                 if (d.selectedModel?.id) selectedModel = d.selectedModel;
-            } catch (e) {
-                console.warn("Errore restore:", e);
-            }
+            } catch (e) { console.warn("Errore restore:", e); }
         }
 
         // ──────────────────────────────────────────────
-        //  TOAST
+        //  TOAST & FILES
         // ──────────────────────────────────────────────
         function toast(msg) {
-            const layer = $("toastLayer");
-            const el = document.createElement("div");
+            const layer = $("toastLayer"); const el = document.createElement("div");
             el.className = "pointer-events-none max-w-xs rounded-xl border border-blue-500/20 bg-slate-900/95 px-4 py-2.5 text-xs text-blue-100 shadow-2xl opacity-0 translate-y-3 transition-all duration-300 backdrop-blur-md";
-            el.textContent = msg;
-            layer.appendChild(el);
-
-            requestAnimationFrame(() => {
-                el.classList.remove("opacity-0", "translate-y-3");
-                el.classList.add("opacity-100", "translate-y-0");
-            });
-
-            setTimeout(() => {
-                el.classList.add("opacity-0", "translate-y-3");
-                setTimeout(() => el.remove(), 300);
-            }, 2500);
+            el.textContent = msg; layer.appendChild(el);
+            requestAnimationFrame(() => { el.classList.remove("opacity-0", "translate-y-3"); el.classList.add("opacity-100", "translate-y-0"); });
+            setTimeout(() => { el.classList.add("opacity-0", "translate-y-3"); setTimeout(() => el.remove(), 300); }, 2500);
         }
 
-        // ──────────────────────────────────────────────
-        //  FILE HANDLING
-        // ──────────────────────────────────────────────
-        function handleFileSelect(e) {
-            const files = Array.from(e.target.files || []);
-            selectedFiles = [...selectedFiles, ...files];
-            renderFilePreview();
-            updateSendButton();
-            e.target.value = "";
-        }
-
+        function handleFileSelect(e) { selectedFiles = [...selectedFiles, ...Array.from(e.target.files || [])]; renderFilePreview(); updateSendButton(); e.target.value = ""; }
         function renderFilePreview() {
-            const preview = $("filePreview");
-            preview.innerHTML = "";
-
+            const preview = $("filePreview"); preview.innerHTML = "";
             selectedFiles.forEach((f, i) => {
                 const isImg = f.type?.startsWith("image/");
                 const item = document.createElement("div");
                 item.className = "bg-slate-800/80 text-[10px] px-2.5 py-1.5 rounded-lg border border-blue-500/20 flex items-center gap-2 max-w-full text-blue-200";
-
-                item.innerHTML = `
-                    <span class="truncate max-w-[200px]">
-                        ${isImg ? "🖼️" : "📎"} ${escapeHtml(f.name)}
-                        <span class="text-blue-400/60 ml-1">(${formatBytes(f.size)})</span>
-                    </span>
-                    <button class="cursor-pointer text-blue-400/60 hover:text-red-400 shrink-0 transition" data-idx="${i}">
-                        <i class="fa-solid fa-xmark text-[9px]"></i>
-                    </button>
-                `;
-
-                item.querySelector("button").onclick = () => {
-                    selectedFiles.splice(i, 1);
-                    renderFilePreview();
-                    updateSendButton();
-                };
-
+                item.innerHTML = `<span class="truncate max-w-[200px]">${isImg ? "🖼️" : "📎"} ${escapeHtml(f.name)} <span class="text-blue-400/60 ml-1">(${formatBytes(f.size)})</span></span><button class="cursor-pointer text-blue-400/60 hover:text-red-400 shrink-0 transition" data-idx="${i}"><i class="fa-solid fa-xmark text-[9px]"></i></button>`;
+                item.querySelector("button").onclick = () => { selectedFiles.splice(i, 1); renderFilePreview(); updateSendButton(); };
                 preview.appendChild(item);
             });
         }
+        function clearFiles() { selectedFiles = []; renderFilePreview(); updateSendButton(); }
+        function updateSendButton() { const btn = $("sendBtn"); const hasText = v("userInput", "").trim().length > 0; const hasFiles = selectedFiles.length > 0; btn.disabled = !hasText && !hasFiles || isLoading; }
 
-        function clearFiles() {
-            selectedFiles = [];
-            renderFilePreview();
-            updateSendButton();
-        }
-
-        function updateSendButton() {
-            const btn = $("sendBtn");
-            const hasText = v("userInput", "").trim().length > 0;
-            const hasFiles = selectedFiles.length > 0;
-            btn.disabled = !hasText && !hasFiles || isLoading;
-        }
+        function fileToBase64(file) { return new Promise((resolve, reject) => { const r = new FileReader(); r.onload = () => resolve(String(r.result).split(",")[1]); r.onerror = reject; r.readAsDataURL(file); }); }
+        function fileToText(file) { return new Promise((resolve, reject) => { const r = new FileReader(); r.onload = () => resolve(String(r.result)); r.onerror = reject; r.readAsText(file); }); }
+        function isTextLikeFile(file) { const t = file.type || ""; const n = file.name.toLowerCase(); return t.startsWith("text/") || t === "application/json" || t === "application/xml" || t === "application/javascript" || /\.(txt|md|csv|json|xml|ya?ml|jsx?|tsx?|html|css|py|java|c|cpp|cs|php|go|rs|sql)$/.test(n); }
 
         // ──────────────────────────────────────────────
-        //  FILE → BASE64 / TEXT
-        // ──────────────────────────────────────────────
-        function fileToBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload  = () => resolve(String(reader.result).split(",")[1]);
-                reader.onerror = reject;
-                reader.readAsDataURL(file);
-            });
-        }
-
-        function fileToText(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload  = () => resolve(String(reader.result));
-                reader.onerror = reject;
-                reader.readAsText(file);
-            });
-        }
-
-        function isTextLikeFile(file) {
-            const t = file.type || "";
-            const n = file.name.toLowerCase();
-            return (
-                t.startsWith("text/") || t === "application/json" || t === "application/xml" ||
-                t === "application/javascript" ||
-                /\.(txt|md|csv|json|xml|ya?ml|jsx?|tsx?|html|css|py|java|c|cpp|cs|php|go|rs|sql)$/.test(n)
-            );
-        }
-
-        // ──────────────────────────────────────────────
-        //  MESSAGES RENDERING
+        //  MESSAGES & UI
         // ──────────────────────────────────────────────
         function appendMessage(role, text, opts = {}) {
-            const chatWindow = $("chatWindow");
-            const welcome = $("welcomeScreen");
-            if (welcome) welcome.remove();
-
-            const wrapper = document.createElement("div");
-            wrapper.className = `flex ${role === "user" ? "justify-end" : "justify-start"} message-animate`;
-
-            const bubble = document.createElement("div");
-            bubble.classList.add("chat-bubble");
-
-            if (role === "user") {
-                bubble.className += " max-w-[80%] p-4 rounded-2xl bubble-user text-white";
-            } else {
-                bubble.className += " max-w-[80%] p-4 rounded-2xl bubble-ai text-blue-100";
-            }
-
+            const chatWindow = $("chatWindow"); const welcome = $("welcomeScreen"); if (welcome) welcome.remove();
+            const wrapper = document.createElement("div"); wrapper.className = `flex ${role === "user" ? "justify-end" : "justify-start"} message-animate`;
+            const bubble = document.createElement("div"); bubble.classList.add("chat-bubble");
+            if (role === "user") bubble.className += " max-w-[80%] p-4 rounded-2xl bubble-user text-white";
+            else bubble.className += " max-w-[80%] p-4 rounded-2xl bubble-ai text-blue-100";
             const label = role === "user" ? "Tu" : "AI";
-
-            bubble.innerHTML = `
-                <div class="text-[10px] text-blue-300/60 mb-1.5 font-mono uppercase tracking-wider">${label}</div>
-                <div class="message-content text-sm leading-relaxed">${renderText(text)}</div>
-                ${role === "ai" ? `
-                    <div class="assistant-actions mt-3"></div>
-                    <div class="feedback-panel hidden mt-3 p-3 rounded-xl border border-blue-500/10 bg-slate-900/50"></div>
-                ` : ""}
-            `;
-
+            bubble.innerHTML = `<div class="text-[10px] text-blue-300/60 mb-1.5 font-mono uppercase tracking-wider">${label}</div><div class="message-content text-sm leading-relaxed">${renderText(text)}</div>${role === "ai" ? `<div class="assistant-actions mt-3"></div><div class="feedback-panel hidden mt-3 p-3 rounded-xl border border-blue-500/10 bg-slate-900/50"></div>` : ""}`;
             if (role === "ai") bubble.classList.add("assistant-bubble");
             if (opts.loading) {
                 bubble.dataset.loading = "true";
-                bubble.querySelector(".message-content").innerHTML = `
-                    <div class="flex items-center gap-1.5 text-blue-400">
-                        <span class="typing-dot h-1.5 w-1.5 rounded-full inline-block"></span>
-                        <span class="typing-dot h-1.5 w-1.5 rounded-full inline-block"></span>
-                        <span class="typing-dot h-1.5 w-1.5 rounded-full inline-block"></span>
-                    </div>
-                `;
+                bubble.querySelector(".message-content").innerHTML = `<div class="flex items-center gap-1.5 text-blue-400"><span class="typing-dot h-1.5 w-1.5 rounded-full inline-block"></span><span class="typing-dot h-1.5 w-1.5 rounded-full inline-block"></span><span class="typing-dot h-1.5 w-1.5 rounded-full inline-block"></span></div>`;
             }
-
-            wrapper.appendChild(bubble);
-            chatWindow.appendChild(wrapper);
-            chatWindow.scrollTop = chatWindow.scrollHeight;
-
+            wrapper.appendChild(bubble); chatWindow.appendChild(wrapper); chatWindow.scrollTop = chatWindow.scrollHeight;
             return bubble;
         }
 
         function updateMessage(bubble, text, isError = false) {
-            delete bubble.dataset.loading;
-            const content = bubble.querySelector(".message-content");
-            if (content) content.innerHTML = renderText(text);
-
-            if (isError) {
-                bubble.classList.add("border", "border-red-500/20", "bg-red-500/5");
-                const host = bubble.querySelector(".assistant-actions");
-                if (host) host.innerHTML = "";
-                const panel = bubble.querySelector(".feedback-panel");
-                if (panel) panel.remove();
-            } else if (bubble.classList.contains("assistant-bubble")) {
-                renderAssistantControls(bubble);
-            }
-
+            delete bubble.dataset.loading; const content = bubble.querySelector(".message-content"); if (content) content.innerHTML = renderText(text);
+            if (isError) { bubble.classList.add("border", "border-red-500/20", "bg-red-500/5"); const host = bubble.querySelector(".assistant-actions"); if (host) host.innerHTML = ""; const panel = bubble.querySelector(".feedback-panel"); if (panel) panel.remove(); }
+            else if (bubble.classList.contains("assistant-bubble")) renderAssistantControls(bubble);
             $("chatWindow").scrollTop = $("chatWindow").scrollHeight;
         }
 
-        function renderText(text) {
-            let safe = escapeHtml(String(text || ""));
-            safe = safe.replace(/```([\s\S]*?)```/g, (_, code) => `<pre><code>${code.trim()}</code></pre>`);
-            safe = safe.replace(/`([^`]+)`/g, "<code>$1</code>");
-            safe = safe.replace(/\n/g, "<br>");
-            return safe;
-        }
+        function renderText(text) { let safe = escapeHtml(String(text || "")); safe = safe.replace(/```([\s\S]*?)```/g, (_, code) => `<pre><code>${code.trim()}</code></pre>`); safe = safe.replace(/`([^`]+)`/g, "<code>$1</code>"); safe = safe.replace(/\n/g, "<br>"); return safe; }
 
         function renderAssistantControls(bubble) {
-            const host = bubble.querySelector(".assistant-actions");
-            if (!host) return;
-
-            host.innerHTML = `
-                <div class="flex flex-wrap gap-2">
-                    <button class="text-[11px] px-3 py-1.5 rounded-full bg-slate-800/50 text-blue-300 border border-blue-500/20 hover:bg-slate-700 transition flex items-center gap-1.5"
-                            onclick="regenerateFromBubble(this)">
-                        <i class="fa-solid fa-rotate-right text-[10px]"></i> Rigenera
-                    </button>
-                    <button class="text-[11px] px-3 py-1.5 rounded-full bg-emerald-500/5 text-emerald-300 border border-emerald-500/20 hover:bg-emerald-500/10 transition flex items-center gap-1.5"
-                            onclick="openFeedback(this, 'like')">
-                        <i class="fa-regular fa-thumbs-up text-[10px]"></i> Like
-                    </button>
-                    <button class="text-[11px] px-3 py-1.5 rounded-full bg-rose-500/5 text-rose-300 border border-rose-500/20 hover:bg-rose-500/10 transition flex items-center gap-1.5"
-                            onclick="openFeedback(this, 'dislike')">
-                        <i class="fa-regular fa-thumbs-down text-[10px]"></i> Dislike
-                    </button>
-                </div>
-            `;
+            const host = bubble.querySelector(".assistant-actions"); if (!host) return;
+            host.innerHTML = `<div class="flex flex-wrap gap-2"><button class="text-[11px] px-3 py-1.5 rounded-full bg-slate-800/50 text-blue-300 border border-blue-500/20 hover:bg-slate-700 transition flex items-center gap-1.5" onclick="regenerateFromBubble(this)"><i class="fa-solid fa-rotate-right text-[10px]"></i> Rigenera</button><button class="text-[11px] px-3 py-1.5 rounded-full bg-emerald-500/5 text-emerald-300 border border-emerald-500/20 hover:bg-emerald-500/10 transition flex items-center gap-1.5" onclick="openFeedback(this, 'like')"><i class="fa-regular fa-thumbs-up text-[10px]"></i> Like</button><button class="text-[11px] px-3 py-1.5 rounded-full bg-rose-500/5 text-rose-300 border border-rose-500/20 hover:bg-rose-500/10 transition flex items-center gap-1.5" onclick="openFeedback(this, 'dislike')"><i class="fa-regular fa-thumbs-down text-[10px]"></i> Dislike</button></div>`;
         }
 
         function openFeedback(btn, mode) {
-            const bubble = btn.closest(".assistant-bubble");
-            if (!bubble) return;
-            const panel = bubble.querySelector(".feedback-panel");
-            if (!panel) return;
-
-            bubble.dataset.feedbackMode = mode;
-            panel.classList.remove("hidden");
-
-            const isLike = mode === "like";
-
-            panel.innerHTML = `
-                <div class="text-[11px] text-blue-300 mb-2 font-medium">${isLike ? "Cosa ti è piaciuto?" : "Cosa migliorare?"}</div>
-                <textarea class="feedback-input w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 text-xs text-blue-100 outline-none resize-none focus:border-blue-400 transition"
-                          rows="2"
-                          placeholder="${isLike ? "Es: spiegazione chiara, tono giusto..." : "Es: più breve, più tecnico..."}"></textarea>
-                <div class="flex gap-2 mt-2">
-                    <button class="text-xs px-3 py-1.5 rounded bg-blue-600 text-white font-semibold hover:bg-blue-500 transition"
-                            onclick="submitFeedback(this)">Invia</button>
-                    <button class="text-xs px-3 py-1.5 rounded bg-slate-800 text-blue-300 border border-blue-500/20 hover:bg-slate-700 transition"
-                            onclick="hideFeedback(this)">Annulla</button>
-                </div>
-            `;
-
+            const bubble = btn.closest(".assistant-bubble"); if (!bubble) return; const panel = bubble.querySelector(".feedback-panel"); if (!panel) return;
+            bubble.dataset.feedbackMode = mode; panel.classList.remove("hidden"); const isLike = mode === "like";
+            panel.innerHTML = `<div class="text-[11px] text-blue-300 mb-2 font-medium">${isLike ? "Cosa ti è piaciuto?" : "Cosa migliorare?"}</div><textarea class="feedback-input w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 text-xs text-blue-100 outline-none resize-none focus:border-blue-400 transition" rows="2" placeholder="${isLike ? "Es: spiegazione chiara..." : "Es: più breve, più tecnico..."}"></textarea><div class="flex gap-2 mt-2"><button class="text-xs px-3 py-1.5 rounded bg-blue-600 text-white font-semibold hover:bg-blue-500 transition" onclick="submitFeedback(this)">Invia</button><button class="text-xs px-3 py-1.5 rounded bg-slate-800 text-blue-300 border border-blue-500/20 hover:bg-slate-700 transition" onclick="hideFeedback(this)">Annulla</button></div>`;
             panel.querySelector(".feedback-input").focus();
         }
-
-        function hideFeedback(btn) {
-            const bubble = btn.closest(".assistant-bubble");
-            if (!bubble) return;
-            const panel = bubble.querySelector(".feedback-panel");
-            if (panel) panel.classList.add("hidden");
-        }
-
+        function hideFeedback(btn) { const panel = btn.closest(".assistant-bubble")?.querySelector(".feedback-panel"); if (panel) panel.classList.add("hidden"); }
         function submitFeedback(btn) {
-            const bubble = btn.closest(".assistant-bubble");
-            if (!bubble) return;
-
-            const input = bubble.querySelector(".feedback-input");
-            const panel = bubble.querySelector(".feedback-panel");
-            const mode  = bubble.dataset.feedbackMode || "dislike";
-            const text  = (input?.value || "").trim();
-
+            const bubble = btn.closest(".assistant-bubble"); if (!bubble) return;
+            const input = bubble.querySelector(".feedback-input"); const panel = bubble.querySelector(".feedback-panel"); const mode = bubble.dataset.feedbackMode || "dislike"; const text = (input?.value || "").trim();
             if (!text) { toast("Scrivi un feedback breve ✍️"); return; }
-
             const entry = `${mode === "like" ? "PIACIUTO" : "DA MIGLIORARE"}: ${text}`;
             temporaryFeedback = temporaryFeedback ? `${temporaryFeedback}\n- ${entry}` : `- ${entry}`;
-
-            updateFeedbackPreview();
-            if (panel) panel.classList.add("hidden");
-            if (input) input.value = "";
-
-            toast("Feedback salvato ✦");
+            updateFeedbackPreview(); if (panel) panel.classList.add("hidden"); if (input) input.value = ""; toast("Feedback salvato ✦");
         }
+        function clearTemporaryFeedback() { temporaryFeedback = ""; updateFeedbackPreview(); toast("Feedback pulito"); }
+        function updateFeedbackPreview() { const preview = $("feedbackPreview"); if (preview) preview.textContent = temporaryFeedback.trim() || "Nessun feedback."; }
 
-        function clearTemporaryFeedback() {
-            temporaryFeedback = "";
-            updateFeedbackPreview();
-            toast("Feedback pulito");
-        }
-
-        function updateFeedbackPreview() {
-            const preview = $("feedbackPreview");
-            if (!preview) return;
-            preview.textContent = temporaryFeedback.trim() || "Nessun feedback.";
-        }
-
-        // ──────────────────────────────────────────────
-        //  SYSTEM PROMPT BUILDER
-        // ──────────────────────────────────────────────
         function getStyleInstruction() {
-            const style  = v("responseStyle", "short");
-            const custom = v("styleCustomPrompt", "").trim();
-
-            const map = {
-                short:        "Rispondi in modo breve, diretto e pulito. Niente divagazioni.",
-                long:         "Rispondi in modo completo e strutturato. Usa esempi se utile.",
-                genz:         "Rispondi con tono Gen Z leggero, chiaro e friendly. Un po' di slang ok.",
-                professional: "Rispondi in modo professionale, preciso e tecnico quando serve.",
-            };
-
-            if (style === "custom" && custom) return custom;
-            return map[style] || "";
+            const style = v("responseStyle", "short"); const custom = v("styleCustomPrompt", "").trim();
+            const map = { short: "Rispondi in modo breve, diretto e pulito.", long: "Rispondi in modo completo e strutturato.", genz: "Rispondi con tono Gen Z leggero e friendly.", professional: "Rispondi in modo professionale e tecnico." };
+            if (style === "custom" && custom) return custom; return map[style] || "";
         }
-
         function buildSystemPrompt() {
-            const pieces = [];
-            const base = v("systemPrompt", "").trim();
-            if (base) pieces.push(base);
-
-            const style = getStyleInstruction();
-            if (style) pieces.push(style);
-
-            if (temporaryFeedback.trim()) {
-                pieces.push("Feedback temporaneo da applicare:\n" + temporaryFeedback.trim());
-            }
-
+            const pieces = []; const base = v("systemPrompt", "").trim(); if (base) pieces.push(base);
+            const style = getStyleInstruction(); if (style) pieces.push(style);
+            if (temporaryFeedback.trim()) pieces.push("Feedback temporaneo da applicare:\n" + temporaryFeedback.trim());
             return pieces.join("\n\n");
         }
 
         // ──────────────────────────────────────────────
-        //  GEMINI API
+        //  GEMINI API & AGENT CHAIN
         // ──────────────────────────────────────────────
         async function buildGeminiContents(snapshot) {
             const contents = [];
-
             for (const msg of snapshot) {
-                if (!msg?.role) continue;
-                const parts = [];
-                const text  = String(msg.text || "").trim();
-
+                if (!msg?.role) continue; const parts = []; const text = String(msg.text || "").trim();
                 if (text) parts.push({ text });
-
                 for (const file of (msg.files || [])) {
                     if (!file) continue;
-
-                    if (file.type?.startsWith("image/")) {
-                        const b64 = await fileToBase64(file);
-                        parts.push({ inlineData: { mimeType: file.type || "image/png", data: b64 } });
-                    } else if (isTextLikeFile(file)) {
-                        const content = await fileToText(file);
-                        parts.push({
-                            text: `\n\n[File: ${file.name}]\n\`\`\`\n${content.slice(0, 30000)}\n\`\`\`${content.length > 30000 ? "\n[troncato]" : ""}`
-                        });
-                    } else {
-                        parts.push({ text: `\n\n[Allegato: ${file.name}, tipo: ${file.type || "sconosciuto"}]` });
-                    }
+                    if (file.type?.startsWith("image/")) { const b64 = await fileToBase64(file); parts.push({ inlineData: { mimeType: file.type || "image/png", data: b64 } }); }
+                    else if (isTextLikeFile(file)) { const content = await fileToText(file); parts.push({ text: `\n\n[File: ${file.name}]\n\`\`\`\n${content.slice(0, 30000)}\n\`\`\`${content.length > 30000 ? "\n[troncato]" : ""}` }); }
+                    else { parts.push({ text: `\n\n[Allegato: ${file.name}, tipo: ${file.type || "sconosciuto"}]` }); }
                 }
-
-                contents.push({
-                    role:  msg.role === "assistant" ? "model" : "user",
-                    parts: parts.length ? parts : [{ text: " " }]
-                });
+                contents.push({ role: msg.role === "assistant" ? "model" : "user", parts: parts.length ? parts : [{ text: " " }] });
             }
-
             return contents;
         }
 
-        async function callGemini(snapshot, modelId, allowFallback = true) {
-            const apiKey = v("googleKey", "").trim();
-            if (!apiKey) throw new Error("Manca Google AI Studio API Key.");
-
-            const temperature = Number(v("temperature", "0.7") || 0.7);
-            const maxTokens   = Number(v("maxTokens", "2048") || 2048);
-            const url          = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(modelId)}:generateContent`;
-
-            const body = {
-                contents: await buildGeminiContents(snapshot),
-                generationConfig: { temperature, maxOutputTokens: maxTokens }
-            };
-
-            const sysPrompt = buildSystemPrompt();
+        async function callGemini(snapshot, modelId, allowFallback = true, systemOverride = null) {
+            const apiKey = v("googleKey", "").trim(); if (!apiKey) throw new Error("Manca Google AI Studio API Key.");
+            const temperature = Number(v("temperature", "0.7") || 0.7); const maxTokens = Number(v("maxTokens", "2048") || 2048);
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(modelId)}:generateContent`;
+            const body = { contents: await buildGeminiContents(snapshot), generationConfig: { temperature, maxOutputTokens: maxTokens } };
+            const sysPrompt = systemOverride || buildSystemPrompt();
             if (sysPrompt) body.systemInstruction = { parts: [{ text: sysPrompt }] };
-
-            const res = await fetch(url, {
-                method:  "POST",
-                headers: { "Content-Type": "application/json", "x-goog-api-key": apiKey },
-                body:    JSON.stringify(body)
-            });
-
+            const res = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json", "x-goog-api-key": apiKey }, body: JSON.stringify(body) });
             const data = await res.json().catch(() => null);
-
             if (!res.ok) {
                 const msg = data?.error?.message || `Errore ${res.status}`;
-                if (allowFallback && modelId !== defaults.think) {
-                    toast("Fallback su modello Heavy...");
-                    return callGemini(snapshot, defaults.think, false);
-                }
+                if (allowFallback && modelId !== defaults.think) { toast("Fallback su modello Heavy..."); return callGemini(snapshot, defaults.think, false, systemOverride); }
                 throw new Error(msg);
             }
+            const parts = data?.candidates?.[0]?.content?.parts || []; const text = parts.map(p => p.text || "").filter(Boolean).join("\n");
+            if (text) return text; if (data?.promptFeedback?.blockReason) return "⚠️ Bloccato: " + data.promptFeedback.blockReason; return JSON.stringify(data, null, 2);
+        }
 
-            const parts = data?.candidates?.[0]?.content?.parts || [];
-            const text  = parts.map(p => p.text || "").filter(Boolean).join("\n");
+        async function callAgentChain(snapshot, agentModelIds) {
+            const [m1, m2, m3] = agentModelIds;
+            if (!m1 || !m2 || !m3) throw new Error("Configura tutti e 3 i modelli per la Modalità Agente.");
+            
+            // Step 1: Elaboratore
+            updateStatus("🟡 Agente 1: Elaborazione prompt...");
+            const prompt1 = await callGemini(snapshot, m1, false, "Sei un Prompt Engineer esperto. Prendi la richiesta dell'utente e trasformala in un prompt altamente dettagliato, strutturato e ottimizzato per un'AI architetto. Restituisci SOLO il prompt raffinato, senza commenti.");
+            
+            // Step 2: Architetto
+            updateStatus("🟠 Agente 2: Pianificazione struttura...");
+            const snapshot2 = [{ role: "user", text: prompt1 }];
+            const plan2 = await callGemini(snapshot2, m2, false, "Sei un System Architect AI. Ricevi un prompt dettagliato. Crea un piano di esecuzione passo-passo, istruzioni tecniche precise e struttura logica per generare la risposta finale. Restituisci SOLO il piano tecnico.");
+            
+            // Step 3: Esecutore
+            updateStatus("🟢 Agente 3: Generazione risposta...");
+            const finalPrompt = `RICHIESTA ORIGINALE:\n${snapshot[snapshot.length-1].text}\n\nPIANO TECNICO DA SEGUIRE:\n${plan2}`;
+            const snapshot3 = [{ role: "user", text: finalPrompt }];
+            return await callGemini(snapshot3, m3, false, buildSystemPrompt() + "\n\nSei l'AI Esecutrice Principale. Segui IL PIANO TECNICO fornito alla lettera per generare la risposta finale all'utente. Sii preciso, completo e aderente alle istruzioni.");
+        }
 
-            if (text) return text;
-            if (data?.promptFeedback?.blockReason) return "⚠️ Bloccato: " + data.promptFeedback.blockReason;
-            return JSON.stringify(data, null, 2);
+        function updateStatus(msg) {
+            const status = $("connectionStatus");
+            status.innerHTML = `<span class="h-1.5 w-1.5 rounded-full bg-blue-400 animate-pulse shadow-[0_0_8px_rgba(96,165,250,0.8)]"></span> ${msg}`;
+            status.className = "flex items-center gap-1.5 text-[10px] px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/20 font-mono transition-all";
         }
 
         // ──────────────────────────────────────────────
@@ -1374,235 +1054,103 @@
         // ──────────────────────────────────────────────
         async function handleSend() {
             if (isLoading) return;
-
-            const text  = v("userInput", "").trim();
-            if (!text && selectedFiles.length === 0) return;
-
-            const filesForRequest = [...selectedFiles];
-            const visible = text || (filesForRequest.length ? "Allegati: " + filesForRequest.map(f => f.name).join(", ") : "");
-
-            appendMessage("user", visible);
-            chatHistory.push({ role: "user", text, files: filesForRequest });
-
-            $("userInput").value = "";
-            $("userInput").style.height = "auto";
-            clearFiles();
-
+            const text = v("userInput", "").trim(); if (!text && selectedFiles.length === 0) return;
+            const filesForRequest = [...selectedFiles]; const visible = text || (filesForRequest.length ? "Allegati: " + filesForRequest.map(f => f.name).join(", ") : "");
+            appendMessage("user", visible); chatHistory.push({ role: "user", text, files: filesForRequest });
+            $("userInput").value = ""; $("userInput").style.height = "auto"; clearFiles();
             const aiBubble = appendMessage("ai", "", { loading: true });
-
             const snapshot = chatHistory.map(m => ({ role: m.role, text: m.text, files: m.files ? [...m.files] : [] }));
             aiBubble.__meta = { snapshot, idx: chatHistory.length };
-
             setLoading(true);
 
             try {
-                const answer = await callGemini(snapshot, selectedModel.id);
+                let answer;
+                if (agentModeEnabled) {
+                    answer = await callAgentChain(snapshot, [v("agentModel1"), v("agentModel2"), v("agentModel3")]);
+                } else {
+                    answer = await callGemini(snapshot, selectedModel.id);
+                }
                 updateMessage(aiBubble, answer || "[vuoto]");
                 chatHistory.push({ role: "assistant", text: answer || "" });
                 aiBubble.__meta.idx = chatHistory.length - 1;
             } catch (e) {
-                console.error(e);
-                updateMessage(aiBubble, "❌ Errore API:\n\n" + (e.message || "Sconosciuto"), true);
+                console.error(e); updateMessage(aiBubble, "❌ Errore API:\n\n" + (e.message || "Sconosciuto"), true);
             } finally {
-                setLoading(false);
-                updateSendButton();
+                setLoading(false); updateSendButton();
             }
         }
 
         async function regenerateFromBubble(btn) {
-            const bubble = btn.closest(".assistant-bubble");
-            if (!bubble?.__meta) { toast("Nessun dato"); return; }
-
+            const bubble = btn.closest(".assistant-bubble"); if (!bubble?.__meta) { toast("Nessun dato"); return; }
             setLoading(true);
-
             try {
-                const answer = await callGemini(bubble.__meta.snapshot, selectedModel.id);
+                let answer;
+                if (agentModeEnabled) {
+                    answer = await callAgentChain(bubble.__meta.snapshot, [v("agentModel1"), v("agentModel2"), v("agentModel3")]);
+                } else {
+                    answer = await callGemini(bubble.__meta.snapshot, selectedModel.id);
+                }
                 updateMessage(bubble, answer || "[vuoto]");
                 chatHistory[bubble.__meta.idx] = { role: "assistant", text: answer || "" };
                 toast("Rigenerato ✓");
             } catch (e) {
-                console.error(e);
-                updateMessage(bubble, "❌ Errore:\n\n" + (e.message || "Sconosciuto"), true);
-            } finally {
-                setLoading(false);
-            }
+                console.error(e); updateMessage(bubble, "❌ Errore:\n\n" + (e.message || "Sconosciuto"), true);
+            } finally { setLoading(false); }
         }
 
         function setLoading(v) {
             isLoading = v;
-            const status = $("connectionStatus");
-
-            if (v) {
-                status.innerHTML = `<span class="h-1.5 w-1.5 rounded-full bg-blue-400 animate-pulse shadow-[0_0_8px_rgba(96,165,250,0.8)]"></span> Calling...`;
-                status.className = "flex items-center gap-1.5 text-[10px] px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/20 font-mono";
-            } else {
+            if (!v) {
+                const status = $("connectionStatus");
                 status.innerHTML = `<span class="h-1.5 w-1.5 rounded-full bg-slate-500"></span> Idle`;
                 status.className = "flex items-center gap-1.5 text-[10px] px-2.5 py-1 rounded-full bg-slate-800/70 text-blue-300 border border-blue-500/20 font-mono";
             }
-
             updateSendButton();
         }
 
-        // ──────────────────────────────────────────────
-        //  NEW CHAT
-        // ──────────────────────────────────────────────
         function newChat() {
             if (!confirm("Vuoi cancellare la chat attuale?")) return;
-
-            chatHistory       = [];
-            selectedFiles     = [];
-            temporaryFeedback = "";
-
-            $("chatWindow").innerHTML = `
-                <div id="welcomeScreen" class="h-full flex flex-col items-center justify-center text-center px-6">
-                    <div class="h-20 w-20 rounded-2xl bg-gradient-to-tr from-blue-600/20 to-cyan-400/20 border border-blue-500/30 flex items-center justify-center mb-8 shadow-[0_0_30px_rgba(59,130,246,0.15)] relative overflow-hidden group">
-                        <div class="absolute inset-0 bg-blue-500/10 opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                        <i class="fa-solid fa-robot text-3xl text-blue-400 group-hover:text-cyan-300 transition duration-300"></i>
-                    </div>
-                    <h2 id="welcomeTitle" class="text-4xl sm:text-5xl font-bold text-white tracking-tight mb-4 drop-shadow-lg">Ciao, come posso aiutarti?</h2>
-                    <p class="text-blue-200/70 max-w-md mb-10 text-sm leading-relaxed font-light">Nuova sessione avviata.</p>
-
-                    <div class="flex flex-wrap items-center justify-center gap-3 max-w-xl">
-                        <button onclick="selectQuickModel('instant')" class="model-pill text-xs px-6 py-3 rounded-full bg-slate-800/50 text-yellow-300 border border-yellow-500/20 hover:border-yellow-400 flex items-center gap-2 backdrop-blur-sm">
-                            <i class="fa-solid fa-bolt mr-1"></i> Rapido
-                        </button>
-                        <button onclick="selectQuickModel('think')" class="model-pill text-xs px-6 py-3 rounded-full bg-slate-800/50 text-purple-300 border border-purple-500/20 hover:border-purple-400 flex items-center gap-2 backdrop-blur-sm">
-                            <i class="fa-solid fa-brain mr-1"></i> Heavy
-                        </button>
-                        <button onclick="selectQuickModel('preview')" class="model-pill text-xs px-6 py-3 rounded-full bg-slate-800/50 text-cyan-300 border border-cyan-500/20 hover:border-cyan-400 flex items-center gap-2 backdrop-blur-sm">
-                            <i class="fa-solid fa-flask mr-1"></i> Preview
-                        </button>
-                    </div>
-                </div>
-            `;
-
-            renderFilePreview();
-            updateFeedbackPreview();
-            updateSendButton();
-            closeDrawers();
-            toast("Nuova chat ✓");
-            
-            // Restart animator on new chat
-            initWelcomeAnimator();
+            chatHistory = []; selectedFiles = []; temporaryFeedback = "";
+            $("chatWindow").innerHTML = `<div id="welcomeScreen" class="h-full flex flex-col items-center justify-center text-center px-6"><div class="relative mb-8"><div class="nasa-hud-bracket hud-tl"></div><div class="nasa-hud-bracket hud-tr"></div><div class="nasa-hud-bracket hud-bl"></div><div class="nasa-hud-bracket hud-br"></div><div class="h-24 w-24 rounded-2xl bg-gradient-to-tr from-blue-900/40 to-cyan-800/20 border border-blue-500/30 flex items-center justify-center shadow-[0_0_35px_rgba(0,229,255,0.15)] relative overflow-hidden group"><div class="absolute inset-0 bg-blue-500/10 opacity-0 group-hover:opacity-100 transition duration-500"></div><svg viewBox="0 0 120 30" class="w-16 h-8 drop-shadow-[0_0_8px_rgba(0,229,255,0.6)] group-hover:drop-shadow-[0_0_12px_rgba(0,229,255,0.8)] transition duration-300" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15.2 14.6c0-3.2 2.1-5.4 5.1-5.4 3.1 0 5.2 2.2 5.2 5.4 0 3.2-2.1 5.4-5.2 5.4-3 0-5.1-2.2-5.1-5.4zm3.8 0c0 1.5.8 2.5 1.3 2.5.6 0 1.3-1 1.3-2.5 0-1.5-.7-2.5-1.3-2.5-.5 0-1.3 1-1.3 2.5z" fill="#00E5FF"/><path d="M32.5 9.5h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5z" fill="#00E5FF"/><path d="M85.4 14.6c0-3.2 2.1-5.4 5.1-5.4 3.1 0 5.2 2.2 5.2 5.4 0 3.2-2.1 5.4-5.2 5.4-3 0-5.1-2.2-5.1-5.4zm3.8 0c0 1.5.8 2.5 1.3 2.5.6 0 1.3-1 1.3-2.5 0-1.5-.7-2.5-1.3-2.5-.5 0-1.3 1-1.3 2.5z" fill="#00E5FF"/><path d="M102.5 9.5h2.8v11.2h-2.8V9.5z" fill="#00E5FF"/></svg></div></div><h2 id="welcomeTitle" class="text-4xl sm:text-5xl font-bold text-white tracking-tight mb-4 drop-shadow-lg">Ciao, come posso aiutarti?</h2><p class="text-blue-200/70 max-w-md mb-10 text-sm leading-relaxed font-light">Nuova sessione avviata.</p><div class="flex flex-wrap items-center justify-center gap-3 max-w-xl"><button onclick="selectQuickModel('instant')" class="model-pill text-xs px-6 py-3 rounded-full bg-slate-800/50 text-yellow-300 border border-yellow-500/20 hover:border-yellow-400 flex items-center gap-2 backdrop-blur-sm"><i class="fa-solid fa-bolt mr-1"></i> Rapido</button><button onclick="selectQuickModel('think')" class="model-pill text-xs px-6 py-3 rounded-full bg-slate-800/50 text-purple-300 border border-purple-500/20 hover:border-purple-400 flex items-center gap-2 backdrop-blur-sm"><i class="fa-solid fa-brain mr-1"></i> Heavy</button><button onclick="selectQuickModel('preview')" class="model-pill text-xs px-6 py-3 rounded-full bg-slate-800/50 text-cyan-300 border border-cyan-500/20 hover:border-cyan-400 flex items-center gap-2 backdrop-blur-sm"><i class="fa-solid fa-flask mr-1"></i> Preview</button></div></div>`;
+            renderFilePreview(); updateFeedbackPreview(); updateSendButton(); closeDrawers(); toast("Nuova chat ✓"); initWelcomeAnimator();
         }
 
         // ──────────────────────────────────────────────
-        //  🌟 FLUORESCENT UI ENHANCEMENTS (ISOLATED)
+        //  🌟 FLUORESCENT UI ENHANCEMENTS
         // ──────────────────────────────────────────────
-        
-        /**
-         * Lightweight particle generator
-         * Respects prefers-reduced-motion
-         */
         function initParticles() {
-            const container = document.getElementById('particles');
-            const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const container = document.getElementById('particles'); const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             if (prefersReduced || !container) return;
-
-            const count = 20;
-            const colors = ['var(--neon-cyan)', 'var(--neon-purple)', 'var(--neon-pink)'];
-
+            const count = 24; const colors = ['var(--neon-cyan)', 'var(--neon-red)', '#FFFFFF'];
             for (let i = 0; i < count; i++) {
-                const p = document.createElement('div');
-                p.className = 'particle';
-                p.style.left = `${Math.random() * 100}%`;
-                p.style.animationDelay = `${Math.random() * 15}s`;
-                p.style.animationDuration = `${15 + Math.random() * 20}s`;
-                const size = 2 + Math.random() * 3;
-                p.style.width = `${size}px`;
-                p.style.height = `${size}px`;
-                const color = colors[Math.floor(Math.random() * colors.length)];
-                p.style.background = color;
-                p.style.boxShadow = `0 0 10px ${color}, 0 0 20px ${color}`;
+                const p = document.createElement('div'); p.className = 'particle';
+                p.style.left = `${Math.random() * 100}%`; p.style.animationDelay = `${Math.random() * 15}s`; p.style.animationDuration = `${15 + Math.random() * 20}s`;
+                const size = 1.5 + Math.random() * 2.5; p.style.width = `${size}px`; p.style.height = `${size}px`;
+                const color = colors[Math.floor(Math.random() * colors.length)]; p.style.background = color; p.style.boxShadow = `0 0 8px ${color}`;
                 container.appendChild(p);
             }
         }
 
-        /**
-         * Welcome screen dynamic text animator
-         * Cycles through phrases with typing/deleting effect
-         * Uses textContent for safety, cleans up on unmount
-         */
         function initWelcomeAnimator() {
-            const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            const titleEl = document.getElementById('welcomeTitle');
-            if (!titleEl) return;
-
-            const phrases = [
-                "Ciao, come posso aiutarti?",
-                "Come va?",
-                "A cosa stai pensando?",
-                "Benvenuto, let's brainstorm!"
-            ];
-
-            let phraseIndex = 0;
-            let charIndex = 0;
-            let isDeleting = false;
-            let isPaused = false;
-            let timeoutId = null;
-            let isActive = true;
-
-            // Add cursor
-            const cursor = document.createElement('span');
-            cursor.className = 'typing-cursor';
-            titleEl.appendChild(cursor);
-
-            const typeSpeed = prefersReduced ? 0 : 60;
-            const deleteSpeed = prefersReduced ? 0 : 30;
-            const pauseDuration = prefersReduced ? 500 : 1800;
-
+            const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches; const titleEl = document.getElementById('welcomeTitle'); if (!titleEl) return;
+            const phrases = ["Ciao, come posso aiutarti?", "Pronto al decollo?", "A cosa stai pensando?", "Benvenuto, let's brainstorm!"];
+            let phraseIndex = 0, charIndex = 0, isDeleting = false, isPaused = false, timeoutId = null, isActive = true;
+            const cursor = document.createElement('span'); cursor.className = 'typing-cursor'; titleEl.appendChild(cursor);
+            const typeSpeed = prefersReduced ? 0 : 60, deleteSpeed = prefersReduced ? 0 : 30, pauseDuration = prefersReduced ? 500 : 1800;
             function tick() {
-                if (!isActive || !document.getElementById('welcomeScreen')) {
-                    clearTimeout(timeoutId);
-                    return;
-                }
-
+                if (!isActive || !document.getElementById('welcomeScreen')) { clearTimeout(timeoutId); return; }
                 const currentPhrase = phrases[phraseIndex];
-                
-                if (isPaused) {
-                    isPaused = false;
-                    isDeleting = true;
-                    timeoutId = setTimeout(tick, prefersReduced ? 0 : 400);
-                    return;
-                }
-
+                if (isPaused) { isPaused = false; isDeleting = true; timeoutId = setTimeout(tick, prefersReduced ? 0 : 400); return; }
                 if (!isDeleting) {
-                    titleEl.textContent = currentPhrase.substring(0, charIndex + 1);
-                    titleEl.appendChild(cursor);
-                    charIndex++;
-
-                    if (charIndex === currentPhrase.length) {
-                        isPaused = true;
-                        timeoutId = setTimeout(tick, pauseDuration);
-                    } else {
-                        timeoutId = setTimeout(tick, typeSpeed + Math.random() * 40);
-                    }
+                    titleEl.textContent = currentPhrase.substring(0, charIndex + 1); titleEl.appendChild(cursor); charIndex++;
+                    if (charIndex === currentPhrase.length) { isPaused = true; timeoutId = setTimeout(tick, pauseDuration); } else { timeoutId = setTimeout(tick, typeSpeed + Math.random() * 40); }
                 } else {
-                    titleEl.textContent = currentPhrase.substring(0, charIndex - 1);
-                    titleEl.appendChild(cursor);
-                    charIndex--;
-
-                    if (charIndex === 0) {
-                        isDeleting = false;
-                        phraseIndex = (phraseIndex + 1) % phrases.length;
-                        timeoutId = setTimeout(tick, prefersReduced ? 0 : 300);
-                    } else {
-                        timeoutId = setTimeout(tick, deleteSpeed);
-                    }
+                    titleEl.textContent = currentPhrase.substring(0, charIndex - 1); titleEl.appendChild(cursor); charIndex--;
+                    if (charIndex === 0) { isDeleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; timeoutId = setTimeout(tick, prefersReduced ? 0 : 300); } else { timeoutId = setTimeout(tick, deleteSpeed); }
                 }
             }
-
-            // Start loop
             timeoutId = setTimeout(tick, prefersReduced ? 0 : 600);
-
-            // Cleanup observer
-            const observer = new MutationObserver(() => {
-                if (!document.getElementById('welcomeScreen')) {
-                    isActive = false;
-                    clearTimeout(timeoutId);
-                    observer.disconnect();
-                }
-            });
+            const observer = new MutationObserver(() => { if (!document.getElementById('welcomeScreen')) { isActive = false; clearTimeout(timeoutId); observer.disconnect(); } });
             observer.observe(document.getElementById('chatWindow'), { childList: true });
         }
     </script>
