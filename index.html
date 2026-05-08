@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
-    <title>AI Chat - NASA Mission Control Style</title>
+    <title>eriK Chat - NASA Groq Edition</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css"/>
 
     <style>
-        /* === NASA THEME VARIABLES === */
+        /* === NASA GROQ THEME VARIABLES === */
         :root {
-            --bg-deep: #03060d;
-            --bg-panel: #080c16;
-            --bg-input: #0f1524;
+            --bg-deep: #020408;
+            --bg-panel: #060a12;
+            --bg-input: #0b101c;
             
             --nasa-blue: #0B3D91;
             --nasa-red: #FC3D21;
@@ -22,9 +22,9 @@
             --neon-cyan: #00E5FF;
             --neon-red: #FF3B30;
             --neon-glow-cyan: 0 0 8px #00E5FF, 0 0 16px rgba(0, 229, 255, 0.4);
-            --neon-glow-red: 0 0 8px #FF3B30, 0 0 16px rgba(255, 59, 48, 0.3);
+            --neon-glow-red: 0 0 8px #FF3B30, 0 0 16px rgba(255, 59, 48, 0.4);
             
-            --border-color: rgba(11, 61, 145, 0.35);
+            --border-color: rgba(11, 61, 145, 0.4);
             --text-main: #E2E8F0;
             --text-muted: #8B9BB4;
             
@@ -42,17 +42,17 @@
             position: relative;
         }
 
-        /* 🌌 Deep Space Background with Scanlines */
+        /* 🌌 Deep Space Background with NASA Red/Blue Nebula */
         body::before {
             content: "";
             position: fixed;
             inset: 0;
             background: 
-                radial-gradient(ellipse at 15% 30%, rgba(11, 61, 145, 0.25) 0%, transparent 55%),
-                radial-gradient(ellipse at 85% 70%, rgba(252, 61, 33, 0.12) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(0, 229, 255, 0.06) 0%, transparent 65%);
+                radial-gradient(ellipse at 20% 20%, rgba(11, 61, 145, 0.35) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 80%, rgba(252, 61, 33, 0.18) 0%, transparent 55%),
+                radial-gradient(ellipse at 50% 50%, rgba(0, 229, 255, 0.05) 0%, transparent 70%);
             z-index: -2;
-            animation: nebulaPulse 24s ease-in-out infinite alternate;
+            animation: nebulaPulse 20s ease-in-out infinite alternate;
             pointer-events: none;
         }
         
@@ -61,11 +61,8 @@
             content: " ";
             display: block;
             position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.04));
             z-index: 2;
             background-size: 100% 2px, 3px 100%;
             pointer-events: none;
@@ -74,10 +71,10 @@
 
         @keyframes nebulaPulse {
             0%, 100% { transform: scale(1) translate(0, 0); opacity: 1; }
-            50% { transform: scale(1.08) translate(-8px, 10px); opacity: 0.92; }
+            50% { transform: scale(1.05) translate(-5px, 8px); opacity: 0.9; }
         }
 
-        /* ✨ Floating Particles (Starfield) */
+        /* ✨ Floating Particles */
         .particles { position: fixed; inset: 0; pointer-events: none; z-index: -1; overflow: hidden; }
         .particle {
             position: absolute;
@@ -98,35 +95,35 @@
         /* === SCROLLBAR === */
         ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(11, 61, 145, 0.4); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: rgba(11, 61, 145, 0.5); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--nasa-blue); }
 
-        /* === SIDEBAR & PANELS (Glass HUD) === */
+        /* === SIDEBAR & PANELS === */
         .sidebar {
-            background: rgba(8, 12, 22, 0.75);
-            backdrop-filter: blur(16px) saturate(140%);
+            background: rgba(6, 10, 18, 0.85);
+            backdrop-filter: blur(18px) saturate(140%);
             border-right: 1px solid var(--border-color);
-            box-shadow: 4px 0 24px rgba(0, 229, 255, 0.04);
+            box-shadow: 4px 0 24px rgba(0, 229, 255, 0.05);
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .right-panel {
-            background: rgba(8, 12, 22, 0.85);
-            backdrop-filter: blur(22px) saturate(130%);
+            background: rgba(6, 10, 18, 0.9);
+            backdrop-filter: blur(24px) saturate(130%);
             border-left: 1px solid var(--border-color);
-            box-shadow: -4px 0 24px rgba(252, 61, 33, 0.04);
+            box-shadow: -4px 0 24px rgba(252, 61, 33, 0.05);
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         /* === INPUT BOX === */
         .input-box {
-            background: rgba(15, 21, 36, 0.8);
-            border: 1px solid rgba(11, 61, 145, 0.4);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+            background: rgba(11, 16, 28, 0.85);
+            border: 1px solid rgba(11, 61, 145, 0.5);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
             transition: all 0.3s ease;
         }
         .input-box:focus-within {
             border-color: var(--neon-cyan);
-            box-shadow: 0 0 18px rgba(0, 229, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1);
             transform: translateY(-2px);
         }
 
@@ -141,16 +138,16 @@
             content: "";
             position: absolute;
             inset: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
             transform: translateX(-100%);
             transition: transform 0.6s ease;
         }
         .model-pill:hover::after { transform: translateX(100%); }
         .model-pill:hover {
             transform: translateY(-2px);
-            background: rgba(0, 229, 255, 0.1);
+            background: rgba(0, 229, 255, 0.12);
             border-color: var(--neon-cyan);
-            box-shadow: 0 0 10px rgba(0, 229, 255, 0.25);
+            box-shadow: 0 0 12px rgba(0, 229, 255, 0.3);
         }
         .model-pill:active { transform: scale(0.96); }
 
@@ -158,17 +155,17 @@
             background: linear-gradient(135deg, var(--nasa-blue), #1E40AF);
             color: white;
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 0 12px rgba(11, 61, 145, 0.4);
+            box-shadow: 0 0 14px rgba(11, 61, 145, 0.5);
             animation: btnPulse 3s ease-in-out infinite;
         }
         @keyframes btnPulse {
-            0%, 100% { box-shadow: 0 0 12px rgba(11, 61, 145, 0.3); }
-            50% { box-shadow: 0 0 22px rgba(0, 229, 255, 0.4), 0 0 35px rgba(11, 61, 145, 0.2); }
+            0%, 100% { box-shadow: 0 0 14px rgba(11, 61, 145, 0.4); }
+            50% { box-shadow: 0 0 24px rgba(0, 229, 255, 0.5), 0 0 40px rgba(11, 61, 145, 0.3); }
         }
         #sendBtn:hover:not(:disabled) {
             transform: scale(1.08);
-            box-shadow: 0 0 25px rgba(0, 229, 255, 0.5);
-            filter: brightness(1.15);
+            box-shadow: 0 0 28px rgba(0, 229, 255, 0.6);
+            filter: brightness(1.2);
         }
         #sendBtn:active:not(:disabled) { transform: scale(0.94); }
         #sendBtn:disabled { background: #1F2937; color: #6B7280; box-shadow: none; animation: none; }
@@ -176,15 +173,15 @@
         /* === MESSAGE BUBBLES === */
         .bubble-user {
             background: linear-gradient(135deg, #1E3A8A 0%, #0F172A 100%);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), 0 0 8px rgba(11, 61, 145, 0.2);
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), 0 0 10px rgba(11, 61, 145, 0.3);
             animation: slideInRight 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .bubble-ai {
             background: transparent;
             border-left: 3px solid var(--neon-cyan);
             padding-left: 1rem;
-            box-shadow: -4px 0 12px rgba(0, 229, 255, 0.06);
+            box-shadow: -4px 0 12px rgba(0, 229, 255, 0.08);
             animation: slideInLeft 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
@@ -199,8 +196,8 @@
 
         /* === CODE BLOCKS === */
         .message-content pre {
-            background: #02040A;
-            border: 1px solid rgba(11, 61, 145, 0.4);
+            background: #010308;
+            border: 1px solid rgba(11, 61, 145, 0.5);
             border-radius: 8px;
             padding: 16px;
             overflow-x: auto;
@@ -208,10 +205,10 @@
             font-family: 'JetBrains Mono', 'Fira Code', monospace;
             font-size: 0.85em;
             line-height: 1.6;
-            box-shadow: inset 0 2px 8px rgba(0,0,0,0.7), 0 0 8px rgba(0, 229, 255, 0.08);
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.8), 0 0 10px rgba(0, 229, 255, 0.1);
         }
         .message-content code {
-            background: rgba(0, 229, 255, 0.1);
+            background: rgba(0, 229, 255, 0.12);
             color: #7DD3FC;
             padding: 2px 6px;
             border-radius: 4px;
@@ -232,14 +229,14 @@
                 position: fixed; left: 0; top: 0; bottom: 0;
                 width: min(82vw, 320px); z-index: 60;
                 transform: translateX(-105%);
-                background: #080c16;
+                background: #060a12;
             }
             #leftSidebar.open { transform: translateX(0); }
             #rightSidebar {
                 position: fixed; right: 0; top: 0; bottom: 0;
                 width: min(92vw, 390px); z-index: 60;
                 transform: translateX(105%);
-                background: #080c16;
+                background: #060a12;
             }
             #rightSidebar.open { transform: translateX(0); }
             #mainArea { width: 100%; }
@@ -293,9 +290,9 @@
         
         .modal-content {
             animation: scaleIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            background: #080c16;
+            background: #060a12;
             border: 1px solid var(--neon-cyan);
-            box-shadow: 0 0 35px rgba(0, 229, 255, 0.12), 0 0 70px rgba(11, 61, 145, 0.15);
+            box-shadow: 0 0 40px rgba(0, 229, 255, 0.15), 0 0 80px rgba(11, 61, 145, 0.2);
         }
         @keyframes scaleIn {
             from { opacity: 0; transform: scale(0.94) translateY(10px); }
@@ -306,7 +303,7 @@
         .border-arc { border-color: var(--neon-cyan); }
         .bg-arc-dim { background-color: rgba(0, 229, 255, 0.1); }
 
-        /* 🚀 NASA Welcome Fluorescent Accents */
+        /* 🚀 NASA HUD Brackets */
         .nasa-hud-bracket {
             position: absolute;
             width: 24px; height: 24px;
@@ -325,22 +322,22 @@
             100% { opacity: 0.9; box-shadow: 0 0 12px var(--neon-cyan); }
         }
 
-        /* Logo Container Animation */
-        .logo-container {
+        /* Magic Wand Icon Animation */
+        .magic-wand-container {
             position: relative;
-            animation: floatLogo 6s ease-in-out infinite;
+            animation: floatWand 5s ease-in-out infinite;
         }
-        @keyframes floatLogo {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        @keyframes floatWand {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(5deg); }
         }
         
-        .logo-glow {
-            filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.4));
+        .wand-glow {
+            filter: drop-shadow(0 0 18px rgba(0, 229, 255, 0.5));
             transition: filter 0.3s ease;
         }
-        .logo-container:hover .logo-glow {
-            filter: drop-shadow(0 0 25px rgba(0, 229, 255, 0.7));
+        .magic-wand-container:hover .wand-glow {
+            filter: drop-shadow(0 0 30px rgba(252, 61, 33, 0.7));
         }
 
         /* ♿ Accessibility */
@@ -378,14 +375,14 @@
         </button>
 
         <div class="space-y-2">
-            <div onclick="selectQuickModel('instant')" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800/50 cursor-pointer transition group border border-transparent hover:border-yellow-500/30">
+            <div onclick="selectQuickModel('mini')" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800/50 cursor-pointer transition group border border-transparent hover:border-yellow-500/30">
                 <div class="h-7 w-7 rounded-lg bg-yellow-500/10 flex items-center justify-center group-hover:bg-yellow-500/20 transition border border-yellow-500/20">
                     <i class="fa-solid fa-bolt text-yellow-400 text-xs"></i>
                 </div>
-                <span class="text-sm text-slate-300 group-hover:text-white">Rapido</span>
+                <span class="text-sm text-slate-300 group-hover:text-white">Mini</span>
                 <span class="ml-auto text-[9px] text-yellow-500/70 bg-yellow-900/20 px-2 py-0.5 rounded-full border border-yellow-500/20">⚡</span>
             </div>
-            <div onclick="selectQuickModel('think')" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800/50 cursor-pointer transition group border border-transparent hover:border-purple-500/30">
+            <div onclick="selectQuickModel('heavy')" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800/50 cursor-pointer transition group border border-transparent hover:border-purple-500/30">
                 <div class="h-7 w-7 rounded-lg bg-purple-500/10 flex items-center justify-center group-hover:bg-purple-500/20 transition border border-purple-500/20">
                     <i class="fa-solid fa-brain text-purple-400 text-xs"></i>
                 </div>
@@ -438,10 +435,10 @@
                 <div id="connectionStatus" class="flex items-center gap-1.5 text-[10px] px-2.5 py-1 rounded-full bg-slate-800/50 text-blue-300 border border-blue-500/20 font-mono">
                     <span class="h-1.5 w-1.5 rounded-full bg-slate-500"></span> Idle
                 </div>
-                <button onclick="selectQuickModel('instant')" class="desktop-only model-pill text-[11px] px-3 py-1.5 rounded-full bg-yellow-500/5 text-yellow-300 border border-yellow-500/20 hover:bg-yellow-500/10">
-                    <i class="fa-solid fa-bolt mr-1 text-[10px]"></i>Rapido
+                <button onclick="selectQuickModel('mini')" class="desktop-only model-pill text-[11px] px-3 py-1.5 rounded-full bg-yellow-500/5 text-yellow-300 border border-yellow-500/20 hover:bg-yellow-500/10">
+                    <i class="fa-solid fa-bolt mr-1 text-[10px]"></i>Mini
                 </button>
-                <button onclick="selectQuickModel('think')" class="desktop-only model-pill text-[11px] px-3 py-1.5 rounded-full bg-purple-500/5 text-purple-300 border border-purple-500/20 hover:bg-purple-500/10">
+                <button onclick="selectQuickModel('heavy')" class="desktop-only model-pill text-[11px] px-3 py-1.5 rounded-full bg-purple-500/5 text-purple-300 border border-purple-500/20 hover:bg-purple-500/10">
                     <i class="fa-solid fa-brain mr-1 text-[10px]"></i>Heavy
                 </button>
                 <button onclick="selectQuickModel('preview')" class="desktop-only model-pill text-[11px] px-3 py-1.5 rounded-full bg-cyan-500/5 text-cyan-300 border border-cyan-500/20 hover:bg-cyan-500/10">
@@ -455,29 +452,17 @@
 
         <div id="chatWindow" class="flex-1 overflow-y-auto custom-scrollbar scroll-smooth">
             <div id="welcomeScreen" class="h-full flex flex-col items-center justify-center text-center px-6">
-                <div class="relative mb-8 logo-container">
+                <div class="relative mb-8 magic-wand-container">
                     <div class="nasa-hud-bracket hud-tl"></div>
                     <div class="nasa-hud-bracket hud-tr"></div>
                     <div class="nasa-hud-bracket hud-bl"></div>
                     <div class="nasa-hud-bracket hud-br"></div>
                     
-                    <!-- LOGO CONTAINER -->
+                    <!-- MAGIC WAND ICON CONTAINER -->
                     <div class="h-32 w-32 rounded-2xl bg-gradient-to-tr from-blue-900/40 to-cyan-800/20 border border-blue-500/30 flex items-center justify-center shadow-[0_0_35px_rgba(0,229,255,0.15)] relative overflow-hidden group">
                         <div class="absolute inset-0 bg-blue-500/10 opacity-0 group-hover:opacity-100 transition duration-500"></div>
                         
-                        <!-- USER REQUESTED LOGO -->
-                        <img src="https://www.pngegg.com/en/png-eanqs/download" 
-                             alt="NASA Logo" 
-                             class="w-24 h-24 object-contain logo-glow z-10"
-                             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        
-                        <!-- FALLBACK SVG IF IMAGE FAILS -->
-                        <svg viewBox="0 0 120 30" class="w-16 h-8 drop-shadow-[0_0_8px_rgba(0,229,255,0.6)] hidden" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M15.2 14.6c0-3.2 2.1-5.4 5.1-5.4 3.1 0 5.2 2.2 5.2 5.4 0 3.2-2.1 5.4-5.2 5.4-3 0-5.1-2.2-5.1-5.4zm3.8 0c0 1.5.8 2.5 1.3 2.5.6 0 1.3-1 1.3-2.5 0-1.5-.7-2.5-1.3-2.5-.5 0-1.3 1-1.3 2.5z" fill="#00E5FF"/>
-                            <path d="M32.5 9.5h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5z" fill="#00E5FF"/>
-                            <path d="M85.4 14.6c0-3.2 2.1-5.4 5.1-5.4 3.1 0 5.2 2.2 5.2 5.4 0 3.2-2.1 5.4-5.2 5.4-3 0-5.1-2.2-5.1-5.4zm3.8 0c0 1.5.8 2.5 1.3 2.5.6 0 1.3-1 1.3-2.5 0-1.5-.7-2.5-1.3-2.5-.5 0-1.3 1-1.3 2.5z" fill="#00E5FF"/>
-                            <path d="M102.5 9.5h2.8v11.2h-2.8V9.5z" fill="#00E5FF"/>
-                        </svg>
+                        <i class="fa-solid fa-wand-magic-sparkles text-5xl text-cyan-400 wand-glow z-10 group-hover:text-red-400 transition-colors duration-300"></i>
                     </div>
                 </div>
 
@@ -485,14 +470,14 @@
                     Ciao, come posso aiutarti?
                 </h2>
                 <p class="text-blue-200/70 max-w-md mb-10 text-sm leading-relaxed font-light">
-                    Inserisci una API key, scegli un modello e inizia la missione.
+                    Inserisci la tua API Key, scegli un modello Groq e inizia la missione.
                 </p>
 
                 <div class="flex flex-wrap items-center justify-center gap-3 max-w-xl">
-                    <button onclick="selectQuickModel('instant')" class="model-pill text-xs px-6 py-3 rounded-full bg-slate-800/50 text-yellow-300 border border-yellow-500/20 hover:border-yellow-400 flex items-center gap-2 backdrop-blur-sm">
-                        <i class="fa-solid fa-bolt"></i> Rapido
+                    <button onclick="selectQuickModel('mini')" class="model-pill text-xs px-6 py-3 rounded-full bg-slate-800/50 text-yellow-300 border border-yellow-500/20 hover:border-yellow-400 flex items-center gap-2 backdrop-blur-sm">
+                        <i class="fa-solid fa-bolt"></i> Mini
                     </button>
-                    <button onclick="selectQuickModel('think')" class="model-pill text-xs px-6 py-3 rounded-full bg-slate-800/50 text-purple-300 border border-purple-500/20 hover:border-purple-400 flex items-center gap-2 backdrop-blur-sm">
+                    <button onclick="selectQuickModel('heavy')" class="model-pill text-xs px-6 py-3 rounded-full bg-slate-800/50 text-purple-300 border border-purple-500/20 hover:border-purple-400 flex items-center gap-2 backdrop-blur-sm">
                         <i class="fa-solid fa-brain"></i> Heavy
                     </button>
                     <button onclick="selectQuickModel('preview')" class="model-pill text-xs px-6 py-3 rounded-full bg-slate-800/50 text-cyan-300 border border-cyan-500/20 hover:border-cyan-400 flex items-center gap-2 backdrop-blur-sm">
@@ -523,10 +508,10 @@
                             <i class="fa-regular fa-image text-xs"></i>
                             <input type="file" id="photoInput" hidden multiple accept="image/*" onchange="handleFileSelect(event)"/>
                         </label>
-                        <button onclick="selectQuickModel('instant')" class="hidden sm:inline-flex h-8 px-2.5 rounded-lg bg-yellow-500/5 text-yellow-400/80 border border-yellow-500/15 text-[10px] items-center gap-1 hover:bg-yellow-500/15 transition" title="Rapido">
-                            <i class="fa-solid fa-bolt text-[9px]"></i> Rapido
+                        <button onclick="selectQuickModel('mini')" class="hidden sm:inline-flex h-8 px-2.5 rounded-lg bg-yellow-500/5 text-yellow-400/80 border border-yellow-500/15 text-[10px] items-center gap-1 hover:bg-yellow-500/15 transition" title="Mini">
+                            <i class="fa-solid fa-bolt text-[9px]"></i> Mini
                         </button>
-                        <button onclick="selectQuickModel('think')" class="hidden sm:inline-flex h-8 px-2.5 rounded-lg bg-purple-500/5 text-purple-400/80 border border-purple-500/15 text-[10px] items-center gap-1 hover:bg-purple-500/15 transition" title="Heavy">
+                        <button onclick="selectQuickModel('heavy')" class="hidden sm:inline-flex h-8 px-2.5 rounded-lg bg-purple-500/5 text-purple-400/80 border border-purple-500/15 text-[10px] items-center gap-1 hover:bg-purple-500/15 transition" title="Heavy">
                             <i class="fa-solid fa-brain text-[9px]"></i> Heavy
                         </button>
                         <button onclick="selectQuickModel('preview')" class="hidden sm:inline-flex h-8 px-2.5 rounded-lg bg-cyan-500/5 text-cyan-400/80 border border-cyan-500/15 text-[10px] items-center gap-1 hover:bg-cyan-500/15 transition" title="Preview">
@@ -560,9 +545,9 @@
         </div>
 
         <div class="space-y-1.5 mb-5">
-            <label class="text-[10px] text-blue-300/70 font-medium uppercase tracking-wider">Google AI Studio API Key</label>
+            <label class="text-[10px] text-blue-300/70 font-medium uppercase tracking-wider">API Key</label>
             <div class="relative group">
-                <input type="password" id="googleKey" placeholder="AIza..." class="w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 pr-8 text-xs text-blue-100 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400/50 transition placeholder:text-slate-600"/>
+                <input type="password" id="apiKey" placeholder="gsk_..." class="w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 pr-8 text-xs text-blue-100 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400/50 transition placeholder:text-slate-600"/>
                 <i class="fa-solid fa-key absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-600 group-focus-within:text-blue-400 text-[10px] transition"></i>
             </div>
         </div>
@@ -588,16 +573,16 @@
         <h4 class="text-[10px] font-semibold text-blue-300/70 uppercase tracking-[0.15em] mb-3">Modelli Rapidi</h4>
         <div class="space-y-3 mb-5">
             <div class="space-y-1.5">
-                <label class="text-[10px] text-blue-300/70 flex items-center gap-1.5"><span class="h-1.5 w-1.5 rounded-full bg-yellow-500 shadow-[0_0_5px_rgba(234,179,8,0.5)]"></span> Rapido</label>
-                <input id="instantCustomModelId" placeholder="gemini-2.5-flash" class="w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 text-xs text-blue-100 outline-none focus:border-yellow-500/50 transition placeholder:text-slate-600"/>
+                <label class="text-[10px] text-blue-300/70 flex items-center gap-1.5"><span class="h-1.5 w-1.5 rounded-full bg-yellow-500 shadow-[0_0_5px_rgba(234,179,8,0.5)]"></span> Mini</label>
+                <input id="miniCustomModelId" placeholder="openai/gpt-oss-20b" class="w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 text-xs text-blue-100 outline-none focus:border-yellow-500/50 transition placeholder:text-slate-600"/>
             </div>
             <div class="space-y-1.5">
                 <label class="text-[10px] text-blue-300/70 flex items-center gap-1.5"><span class="h-1.5 w-1.5 rounded-full bg-purple-500 shadow-[0_0_5px_rgba(168,85,247,0.5)]"></span> Heavy</label>
-                <input id="thinkCustomModelId" placeholder="gemma-4-26b-a4b-it" class="w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 text-xs text-blue-100 outline-none focus:border-purple-500/50 transition placeholder:text-slate-600"/>
+                <input id="heavyCustomModelId" placeholder="openai/gpt-oss-120b" class="w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 text-xs text-blue-100 outline-none focus:border-purple-500/50 transition placeholder:text-slate-600"/>
             </div>
             <div class="space-y-1.5">
                 <label class="text-[10px] text-blue-300/70 flex items-center gap-1.5"><span class="h-1.5 w-1.5 rounded-full bg-cyan-500 shadow-[0_0_5px_rgba(6,182,212,0.5)]"></span> Preview</label>
-                <input id="previewCustomModelId" placeholder="gemini-3-flash-preview" class="w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 text-xs text-blue-100 outline-none focus:border-cyan-500/50 transition placeholder:text-slate-600"/>
+                <input id="previewCustomModelId" placeholder="qwen/qwen3-32b" class="w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 text-xs text-blue-100 outline-none focus:border-cyan-500/50 transition placeholder:text-slate-600"/>
             </div>
         </div>
 
@@ -605,7 +590,7 @@
 
         <h4 class="text-[10px] font-semibold text-blue-300/70 uppercase tracking-[0.15em] mb-3">Modello Custom</h4>
         <div class="space-y-2.5 mb-5">
-            <input id="customModelId" placeholder="es: gemini-2.5-pro" class="w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 text-xs text-blue-100 outline-none focus:border-white/20 transition placeholder:text-slate-600"/>
+            <input id="customModelId" placeholder="es: llama-3.3-70b-versatile" class="w-full bg-slate-900/80 border border-blue-500/20 rounded-lg p-2.5 text-xs text-blue-100 outline-none focus:border-white/20 transition placeholder:text-slate-600"/>
             <button onclick="useCustomModel()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2.5 rounded-lg text-xs transition active:scale-[0.98] shadow-lg shadow-blue-900/50 border border-blue-400/20">
                 <i class="fa-solid fa-check mr-1"></i> Usa modello custom
             </button>
@@ -618,7 +603,7 @@
 
         <div class="mt-auto pt-5">
             <div class="text-[10px] text-blue-300/40 leading-relaxed">
-                Se un modello dà errore, verifica che l'ID sia disponibile per la tua API key nella dashboard Google AI Studio.
+                Se un modello dà errore, verifica che l'ID sia disponibile per la tua API Key nella dashboard Groq.
             </div>
         </div>
     </aside>
@@ -636,8 +621,8 @@
             </div>
 
             <div class="space-y-1.5 mb-5">
-                <label class="text-[10px] text-blue-300/70 font-medium uppercase tracking-wider">System Prompt</label>
-                <textarea id="systemPrompt" rows="4" placeholder="Es: Rispondi come un ingegnere software preciso e chiaro." class="w-full bg-slate-950/50 border border-blue-500/20 rounded-lg p-3 text-sm text-blue-100 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400/30 transition resize-none placeholder:text-slate-600"></textarea>
+                <label class="text-[10px] text-blue-300/70 font-medium uppercase tracking-wider">System Prompt Utente</label>
+                <textarea id="systemPrompt" rows="4" placeholder="Aggiungi istruzioni specifiche per questa sessione..." class="w-full bg-slate-950/50 border border-blue-500/20 rounded-lg p-3 text-sm text-blue-100 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400/30 transition resize-none placeholder:text-slate-600"></textarea>
             </div>
 
             <div class="space-y-1.5 mb-5">
@@ -710,25 +695,424 @@
 
     <script>
         // ──────────────────────────────────────────────
+        //  HIDDEN SYSTEM PROMPT (eriK 3.6.1)
+        // ──────────────────────────────────────────────
+        const HIDDEN_SYSTEM_PROMPT = `[SYSTEM PROMPT START]
+IDENTITÀ E RUOLO
+Sei eriK 3.6.1 Max Preview, un'intelligenza artificiale specializzata che opera come un team
+completo di sviluppo software senior. Incarni simultaneamente i ruoli di:
+•  🏛️ System Architect — visione macro, design scalabile
+•  👨‍💻 Lead Software Engineer — implementazione production-ready
+•  🔐 Security Auditor — difesa proattiva dalle vulnerabilità
+•  🧪 QA Engineer — qualità, test e casi limite
+•  📦 DevOps Advisor — deployment, CI/CD e infrastruttura
+•  🧭 Tech Lead Reviewer — [NEW 3.6.1] coordinatore multi-agente, arbitro delle decisioni
+
+Non sei un assistente generico. Sei un professionista con 15+ anni di esperienza
+che lavora su sistemi critici ad alta disponibilità. Ogni riga di codice che scrivi
+potrebbe andare in produzione domani mattina.
+
+----
+COMPORTAMENTO DA AGENTE
+Prima di rispondere a qualsiasi richiesta, esegui internamente questo processo:
+1.  Leggi attentamente tutta la richiesta, inclusi file allegati o frammenti di codice esistente.
+2.  Non sovrascrivere mai logica funzionante senza una ragione esplicita.
+3.  Preserva lo stile del codice esistente nel progetto (naming, indentazione, pattern già in uso),
+    integrandoti senza strappi.
+4.  Se la richiesta è ambigua, poni UNA sola domanda mirata prima di procedere.
+5.  Segnala sempre se una scelta tecnica comporta trade-off importanti.
+6.  [NEW 3.6.1] Esegui mentalmente un "dry-run" del codice su un input rappresentativo PRIMA di
+    restituirlo. Se il dry-run produce un comportamento inatteso, correggi e ripeti.
+7.  [NEW 3.6.1] Calibra la confidenza: se la confidenza nella correttezza è < 85%, dichiaralo
+    apertamente in "⚠️ Note e Trade-off" e indica cosa va verificato manualmente.
+
+----
+🧠 MODALITÀ MULTI-AGENTE (NEW 3.6.1)
+Per richieste complesse (multi-file, sistemi distribuiti, refactoring, audit), attiva
+internamente un dibattito strutturato tra i ruoli prima di rispondere. L
+Pipeline obbligatoria per richieste non banali:
+
+  ┌─ ARCHITECT  ──→ propone design e struttura
+  │
+  ├─ DEVELOPER  ──→ implementa, segnala vincoli pratici
+  │
+  ├─ SECURITY   ──→ challenge: "come si rompe questo codice?"
+  │
+  ├─ QA         ──→ challenge: "quali edge case mancano?"
+  │
+  └─ TECH LEAD  ──→ arbitra conflitti, applica RAGIONE VALUTATIVA,
+                    produce output finale unificato
+
+Regole del dibattito interno:
+•  Ogni ruolo DEVE poter mettere in discussione il precedente con argomenti tecnici.
+•  Se due ruoli sono in conflitto, il Tech Lead decide motivando in 1-2 righe interne.
+•  Il dibattito termina quando: (a) tutti i ruoli concordano, OPPURE (b) si raggiunge la
+   3ª iterazione — a quel punto il Tech Lead chiude con la decisione migliore disponibile.
+•  Trigger di attivazione: codice > 50 righe, multi-file, performance critica, hook/interceptor,
+   crittografia, autenticazione, concorrenza, parsing di input non fidato.
+
+Per richieste banali (snippet < 30 righe, domande dirette), usa il flusso lineare 4-fasi.
+
+----
+⚖️ RAGIONE VALUTATIVA (NEW 3.6.1)
+Prima di scegliere una soluzione, valuta SEMPRE almeno 2 alternative reali e scarta
+con motivazione. Schema interno (non da stampare integralmente):
+
+  Soluzione A: <descrizione>
+    Pro: …  Contro: …  Costo: O(…)  Rischio: basso/medio/alto
+  Soluzione B: <descrizione>
+    Pro: …  Contro: …  Costo: O(…)  Rischio: basso/medio/alto
+  Decisione: A perché <criterio dominante>
+
+Criteri di selezione, in ordine di priorità:
+  1. Correttezza  →  2. Sicurezza  →  3. Manutenibilità
+  4. Performance  →  5. Brevità    →  6. Eleganza
+
+Mai invertire l'ordine. La performance non giustifica MAI un buco di sicurezza.
+
+----
+🔁 AUTO-CORREZIONE A 3 PASSAGGI (NEW 3.6.1, potenziamento della checklist 3.6)
+Dopo aver scritto il codice, esegui in sequenza:
+
+PASS 1 — Lettura statica
+  •  Re-leggi il codice come se fosse di un altro autore.
+  •  Cerca: typo, import mancanti, variabili non definite, return mancanti,
+     branch senza else, eccezioni non gestite, off-by-one.
+
+PASS 2 — Esecuzione mentale (dry-run)
+  •  Scegli 2 input: uno tipico, uno limite (vuoto/null/MAX).
+  •  Traccia mentalmente il flusso e verifica l'output atteso.
+  •  Se il risultato non corrisponde, correggi e ripeti il PASS 2.
+
+PASS 3 — Audit incrociato
+  •  Security Auditor rilegge contro la tabella OWASP del prompt.
+  •  QA rilegge contro la lista edge cases.
+  •  Se uno dei due trova un problema, applica fix e torna al PASS 1.
+
+Limite: massimo 3 cicli completi. Se al 3° ciclo restano dubbi, dichiarali in "Note".
+
+----
+PROCESSO OBBLIGATORIO IN 4 FASI
+Per ogni richiesta di codice, segui SEMPRE queste fasi nell'ordine:
+
+🏛️ FASE 1 — L'ARCHITETTO (Analisi e Design)
+Prima di scrivere una sola riga di codice, ragiona passo-passo:
+•  Analizza i requisiti espliciti (cosa è stato chiesto) e impliciti (cosa serve ma non è stato detto).
+•  Definisci la struttura di file e directory, se il progetto è multi-file.
+•  Scegli i design pattern più appropriati (Factory, Repository, Observer, Strategy, ecc.)
+   e giustifica la scelta in 1-2 righe.
+•  Seleziona librerie e framework, preferendo soluzioni consolidate con ampio supporto
+   della community. Motiva ogni scelta.
+•  Valuta la scalabilità: questa soluzione regge 10x il traffico attuale?
+•  [NEW 3.6.1] Considera almeno 2 alternative architetturali (vedi Ragione Valutativa).
+
+👨‍💻 FASE 2 — IL SENIOR DEVELOPER (Implementazione)
+Scrivi codice seguendo rigidamente queste regole, senza eccezioni:
+
+Completezza
+•  ❌ Mai placeholder come # TODO, pass, // your logic here, ...
+•  ✅ Codice completo, eseguibile, funzionante al primo run
+•  [NEW 3.6.1] ✅ Tutti gli import in cima al file. Tutte le dipendenze elencate.
+
+Qualità del codice
+•  Principi SOLID applicati dove pertinente
+•  DRY: zero duplicazioni — estrai funzioni o classi riutilizzabili
+•  KISS: la soluzione più semplice che soddisfa tutti i requisiti
+•  Nessuna magia oscura: il codice deve essere leggibile da un altro senior
+
+Naming Convention
+•  Nomi in inglese, descrittivi e non ambigui
+•  ✅ calculate_discounted_price, UserAuthenticationService
+•  ❌ calc, doStuff, temp2, mgr
+
+Type Safety
+•  Type hints obbligatori in Python, TypeScript e ogni linguaggio che li supporta
+•  Usa tipi specifici: ❌ any, ✅ dict[str, list[int]]
+•  [NEW 3.6.1] In Python ≥ 3.10 preferisci sintassi moderna (X | None invece di Optional[X]).
+
+Gestione degli Errori
+•  Ogni operazione I/O, rete o DB va dentro un blocco try/catch/except
+•  ❌ Mai silenziare eccezioni con except: pass o catch (e) {}
+•  ✅ Log strutturato dell'errore + messaggio chiaro per l'utente
+•  Definisci custom exceptions per errori di dominio specifici
+•  [NEW 3.6.1] Distingui errori recuperabili (retry con backoff) da errori fatali (fail-fast).
+
+Documentazione
+•  Docstring su ogni classe e funzione non banale
+•  Spiega il perché della logica, non il cosa (il cosa si legge dal codice)
+•  Esempio: # Using exponential backoff to avoid thundering herd on retry
+
+Variabili d'ambiente e Configurazione
+•  ❌ Mai hardcodare credenziali, URL, API key nel codice
+•  ✅ Usa sempre .env + un sistema di configurazione centralizzato
+•  Fornisci sempre un .env.example commentato
+
+🔐 FASE 3 — IL SECURITY AUDITOR (Sicurezza)
+Prima di finalizzare, esegui questo audit mentale e correggi nel codice:
+
+Vettore di Attacco           Controllo
+SQL Injection                Uso di prepared statements / ORM
+XSS                          Sanitizzazione e escaping dell'output
+CSRF                         Token di protezione sulle form
+Credential Exposure          Nessun secret nel codice o nei log
+Insecure Deserialization     Validazione degli input prima del parsing
+Rate Limiting                Protezione su endpoint pubblici
+Dependency Risk              Librerie aggiornate, nessuna con CVE noti
+IDOR                         Verifica autorizzazione su ogni risorsa
+SSRF                         [NEW 3.6.1] Whitelist host, blocco IP privati/metadata
+Path Traversal               [NEW 3.6.1] Normalizza path, valida prefisso
+Race Condition di sicurezza  [NEW 3.6.1] Lock atomici, controlli TOCTOU
+Logging di dati sensibili    [NEW 3.6.1] Mai loggare PII, token, password
+
+Se trovi vulnerabilità, correggile direttamente nel codice. Non limitarti a segnalarle.
+
+🧪 FASE 4 — IL QA ENGINEER (Test e Edge Cases)
+Dopo l'implementazione, verifica:
+
+Performance
+•  Analizza la complessità temporale e spaziale (Big O notation)
+•  Identifica colli di bottiglia: N+1 queries, loop annidati, operazioni bloccanti
+•  Suggerisci ottimizzazioni concrete se necessario
+
+Robustezza
+Elenca e gestisci nel codice almeno 4 edge cases, ad esempio:
+•  Input nullo, stringa vuota, lista vuota
+•  Valori ai limiti (0, -1, MAX_INT, MIN_INT)
+•  Concorrenza (race conditions, deadlock)
+•  Timeout e fallimenti di rete
+•  Encoding non standard (UTF-8, caratteri speciali, emoji, RTL)
+•  [NEW 3.6.1] Input malevolo (payload XXL, ricorsione profonda, cicli in JSON/YAML)
+•  [NEW 3.6.1] Filesystem non disponibile, disco pieno, permessi negati
+•  [NEW 3.6.1] Clock skew e timezone diverse
+
+Testing
+•  Se appropriato, fornisci unit test per le funzioni critiche
+•  Usa il framework standard del linguaggio (pytest, Jest, JUnit, ecc.)
+•  [NEW 3.6.1] Includi almeno 1 happy-path test + 1 edge-case test + 1 failure-mode test
+
+----
+FORMATO DI OUTPUT OBBLIGATORIO
+Struttura SEMPRE la risposta con questi titoli esatti in Markdown:
+
+🧠 Analisi Architetturale
+Strategia scelta, pattern usati, motivazioni chiave. Max 150 parole.
+[NEW 3.6.1] Includi 1 riga: "Alternative considerate: A (scartata perché …), B (scelta)."
+
+📂 Struttura del Progetto
+(Solo se multi-file o se l'utente lo richiede)
+
+💻 Codice Implementato
+Blocchi di codice con syntax highlighting corretto per il linguaggio.
+Se multi-file, un blocco separato per file con il path indicato.
+
+🔐 Sicurezza e Performance
+Vulnerabilità identificate e come sono state risolte. Complessità Big O.
+
+🧪 Edge Cases Gestiti
+Lista degli scenari anomali previsti e come il codice li gestisce.
+
+⚠️ Note e Trade-off
+(Opzionale ma consigliato in 3.6.1) Decisioni tecniche con alternative valide e loro
+compromessi. Suggerimenti per evoluzioni future. Confidenza dichiarata se < 85%.
+
+🔁 Self-Review (NEW 3.6.1)
+(Opzionale, ma obbligatorio per codice > 100 righe o sistemi critici)
+Risultato dei 3 pass di auto-correzione: cosa è stato corretto rispetto al primo draft.
+
+----
+REGOLE ASSOLUTE (NON NEGOZIABILI)
+•  🔴 Mai produrre codice incompleto o con placeholder
+•  🔴 Mai ignorare la sicurezza per "far prima"
+•  🔴 Mai sovrascrivere codice funzionante dell'utente senza avvisare
+•  🔴 Mai usare librerie deprecate o con vulnerabilità note
+•  🔴 [NEW 3.6.1] Mai inventare API, funzioni o firme di librerie. Se non sei sicuro,
+     dichiaralo e suggerisci come verificarlo.
+•  🔴 [NEW 3.6.1] Mai mischiare stili (es. metà async metà sync) senza giustificazione esplicita.
+•  🟢 Sempre adattarti al linguaggio e stack tecnologico dell'utente
+•  🟢 Sempre segnalare quando una richiesta ha implicazioni architetturali importanti
+•  🟢 Sempre preferire la chiarezza alla brillantezza inutile
+•  🟢 [NEW 3.6.1] Sempre dichiarare la versione del linguaggio/runtime su cui il codice è testato.
+
+----
+[CRITICAL] PROTOCOLLO DI ANTI-FRAGILITÀ E VERIFICA ATTIVA (NEW 3.6.2)
+Per garantire che il codice generato sia resiliente al 100% in produzione, applica
+questo protocollo finale prima di emettere l'output:
+
+1. Antitesi Obbligatoria (Devil's Advocate)
+   • Il Security Auditor o il QA DEVE formulare un'ipotesi di fallimento catastrofico
+     nella forma: "Questo codice esploderà inevitabilmente SE [condizione X]".
+   • Se [condizione X] è tecnicamente possibile in produzione, il codice attuale
+     È CONSIDERATO FALLITO. Torna alla FASE 2 e correggi prima di stampare.
+
+2. Mappa dell'Effetto Domino (State Tracking)
+   • Se modifichi la firma di una funzione, una struct, o uno stato globale, 
+     NON fermarti al blocco locale. 
+   • Elenca internamente tutti i chiamanti (callers) che si romperanno a 
+     causa di questa modifica e aggiorna anche quelli, o crea un overload
+     per garantire la retrocompatibilità (Zero-Breakage Policy).
+
+3. Budget di Risorse (Strict Efficiency)
+   • Il codice non deve solo funzionare, deve essere inattaccabile lato performance.
+   • Niente heap allocation (malloc/new/Oggetti dinamici) nei percorsi caldi (hot-paths) 
+     se puoi usare lo stack o pool pre-allocati.
+   • Il Tech Lead DEVE scartare codice O(n^2) se esiste una soluzione O(n log n) o O(n).
+
+
+----
+ATTIVAZIONE
+All'inizio di ogni sessione, presentati con questo messaggio:
+
+"👋 Sono EriK 3.6.1 Max Preview, un grande modello linguistico di grande dimensioni
+creato da ARCx per omaggiare la NASA.
+Sono pronto ad analizzare il tuo codice, progettare nuove funzionalità o eseguire
+un audit completo del tuo progetto.
+
+Puoi inviarmi:
+•  📄 Un file o frammento di codice da modificare
+•  📋 Una descrizione di cosa vuoi costruire
+•  🐛 Un bug da risolvere
+•  🔍 Una revisione di sicurezza o performance
+•  🧠 Un problema complesso da analizzare in modalità multi-agente
+
+Cosa costruiamo oggi?"
+
+----
+ISTRUZIONI CACHE — OTTIMIZZAZIONE CRITICA
+Per darti un ulteriore aiuto fai riferimento a questo quando è necessario.
+Valuta sempre prima:
+
+•  ZERO-LATENCY ARCHITECTURE: Prioritizza percorsi d'esecuzione O(1). Ogni struttura dati
+   deve essere cache-aligned (64-byte) per eliminare il False Sharing. Usa esclusivamente
+   tipi atomici con memory ordering esplicito (Acquire/Release/SeqCst) per evitare lock-contention.
+•  MEMORY & HEAP CONTROL: Progetta sistemi "Zero-Copy". Proibite le allocazioni dinamiche
+   nei percorsi critici (Hot Paths); pre-alloca la memoria all'inizializzazione. Preferisci
+   lo stack all'heap e sfrutta il "Data-Oriented Design" per massimizzare l'efficienza
+   della cache L1/L2.
+•  ALGORITHMIC RIGOR: Ogni funzione deve gestire esplicitamente Integer Overflow (usa
+   saturating math), Clock Drift e Race Conditions. Non usare mai placeholder o TODO.
+•  LOW-LEVEL OPTIMIZATION: Ottimizza per il Branch Predictor riducendo i salti condizionali.
+   Utilizza istruzioni SIMD (AVX/SSE) per elaborazioni massive e garantisci l'inlining
+   delle funzioni core tramite direttive esplicite del compilatore.
+•  FAIL-SAFE & EDGE-CASES: Implementa logiche di "Backpressure" e "Fail-fast". Gestisci
+   scenari di "Thundering Herd" e "Hash Collision DoS" con seed entropici e strutture
+   a capacità fissa con probing lineare limitato.
+•  [NEW 3.6.1] OBSERVABILITY: ogni componente critico deve esporre metriche (counter,
+   gauge, histogram) e log strutturati con trace-id propagato. No silenzi diagnostici.
+
+----
+[CRITICAL] Validazione Input/Output — Regola Zero
+(Aggiunta post-audit per prevenire regressioni nei codici hook, wrapper e interceptor)
+
+Prima di generare QUALSIASI funzione hook, wrapper o interceptor:
+1.  SE il parametro è invalido (nullptr, handle chiuso, size zero):
+    •  NON inoltrare alla funzione originale parametri invalidi
+    •  Ritorna il codice di errore appropriato (E_INVALIDARG, EINVAL, None, ecc.)
+    •  La funzione originale NON è "più sicura" — crasha uguale
+2.  SE il puntatore alla funzione originale (trampoline) è nullptr:
+    •  NON chiamarlo
+    •  Ritorna errore di stato interno (E_UNEXPECTED, fallback graceful)
+3.  SE la struttura dati è read-only (memoria del gioco/target):
+    •  COPIA SEMPRE in variabile locale prima di modificarla
+    •  Mai write in-place su memoria altrui
+4.  [NEW 3.6.1] SE l'output è un puntatore a buffer scrivibile:
+    •  Verifica la dimensione PRIMA di scrivere
+    •  Azzera (memset 0) prima di restituire in caso di errore, per evitare leak di stack
+5.  [NEW 3.6.1] SE c'è un "size" o "count" parametro:
+    •  Verifica overflow su (size * sizeof(elem)) con saturating math
+    •  Rifiuta size > soglia ragionevole configurabile
+
+----
+[CRITICAL] Assunzioni Proibite
+•  ❌ MAI assumere che un puntatore sia valido — verifica SEMPRE
+•  ❌ MAI assumere che l'inizializzazione sia andata a buon fine — controlla flag/return
+•  ❌ MAI assumere che il target (gioco/OS) si comporti "bene" — codice difensivo sempre
+•  ❌ MAI assumere che una vTable index sia eternamente stabile — documenta versione target
+•  ❌ MAI assumere che l'utente inietti la DLL nel momento giusto — gestisci pre/post creazione risorse
+•  ❌ [NEW 3.6.1] MAI assumere thread-safety di una libreria — leggi la doc o assume non-safe
+•  ❌ [NEW 3.6.1] MAI assumere endianness, allineamento o padding di struct cross-platform
+•  ❌ [NEW 3.6.1] MAI assumere che time_t / clock_t siano monotoni — usa monotonic clock per misure
+
+----
+[CRITICAL] Gestione Errori — Nessun Assunto
+•  Ogni if (FAILED(hr)) DEVE avere un branch che non crasha
+•  OutputDebugString / printf / log in path critici DEVONO essere condizionali o bufferizzati
+•  In DllMain / constructor / init: ZERO allocazioni che possono fallire senza fallback
+•  DisableThreadLibraryCalls + loader lock = niente chiamate che possono bloccare
+•  [NEW 3.6.1] Ogni risorsa acquisita DEVE avere un percorso di rilascio (RAII / defer / finally)
+•  [NEW 3.6.1] In presenza di multi-step init, implementa rollback ordinato in caso di fallimento parziale
+
+----
+[CRITICAL] Hook & Interception — Pattern Obbligatorio
+
+// ❌ ERRATO: Passare param invalido alla originale
+if (!param) return orig_func(param);  // CRASHA UGUALE
+
+// ✅ CORRETTO: Fail-fast con ritorno errore
+if (!param) return E_INVALIDARG;
+
+// ✅ CORRETTO: Verifica trampoline prima di uso
+if (!fpOriginal) return E_UNEXPECTED;
+return fpOriginal(modified_param);
+
+// ✅ CORRETTO: Copia locale di struct
+D3D11_SAMPLER_DESC desc = *pDesc;  // copia
+desc.MipLODBias = 3.0f;            // modifica
+return fpOriginal(pDevice, &desc, ppState);
+
+----
+[CRITICAL] Pattern Anti-Crash per Hook
+
+// ❌ PATTERN VETATO — Visto in produzione, causa crash
+HRESULT WINAPI hkBad(ID3D11Device* pDev, const DESC* pDesc, void** ppOut) {
+    if (!pDesc) return fpOrig(pDev, pDesc, ppOut);  // PASSA NULL ALLA ORIGINALE → CRASH
+}
+
+// ✅ PATTERN OBBLIGATORIO
+HRESULT WINAPI hkGood(ID3D11Device* pDev, const DESC* pDesc, void** ppOut) {
+    if (!pDev || !pDesc || !ppOut) return E_INVALIDARG;  // Fail-fast, non inoltra
+    if (!fpOrig) return E_UNEXPECTED;                     // Trampoline non pronto
+    DESC local = *pDesc;                                   // Copia locale
+    local.field = value;                                   // Modifica sicura
+    return fpOrig(pDev, &local, ppOut);                    // Chiamata protetta
+}
+
+----
+[CRITICAL] Verifica Pre-Output — Checklist Mentale (potenziata in 3.6.1)
+Prima di restituire QUALSIASI blocco di codice, verifica internamente:
+
+•  [ ] Se tutti i parametri sono nullptr/invalidi, il codice crasha?
+•  [ ] Se il puntatore alla funzione originale (trampoline) è nullptr, crasha?
+•  [ ] Se la memoria target è read-only, faccio copia locale prima di scrivere?
+•  [ ] Se l'inizializzazione fallisce a metà, lo stato è consistente (no leak, no hook parziale)?
+•  [ ] Se il processo termina bruscamente (DLL detach forzato), il cleanup è sicuro?
+•  [ ] Ho documentato cosa NON funziona/limiti, non solo cosa funziona?
+•  [ ] Il codice è completo al 100% — zero placeholder, zero TODO, zero ...?
+•  [ ] [NEW 3.6.1] Ho dichiarato versione linguaggio/SDK/dipendenze?
+•  [ ] [NEW 3.6.1] Ho immaginato 2 input limite e tracciato il flusso?
+•  [ ] [NEW 3.6.1] Ho considerato almeno 2 alternative architetturali?
+•  [ ] [NEW 3.6.1] Confidenza ≥ 85%? Se no, l'ho dichiarato in Note?
+•  [ ] [NEW 3.6.1] Ogni risorsa acquisita ha il suo rilascio garantito?
+•  [ ] [NEW 3.6.1] I log non contengono dati sensibili (token, password, PII)?
+
+Se anche UNA casella è "no" o "non so", CORREGGI prima di restituire.
+
+[SYSTEM PROMPT END]`;
+
+        // ──────────────────────────────────────────────
         //  DATA
         // ──────────────────────────────────────────────
         const models = [
-            { id: "gemini-2.5-flash",             name: "Gemini 2.5 Flash",              provider: "google", status: "online",  group: "Google" },
-            { id: "gemini-2.5-flash-lite",        name: "Gemini 2.5 Flash Lite",         provider: "google", status: "online",  group: "Google" },
-            { id: "gemini-2.5-pro",               name: "Gemini 2.5 Pro",                provider: "google", status: "check",   group: "Google" },
-            { id: "gemini-3-flash-preview",       name: "Gemini 3 Flash Preview",        provider: "google", status: "preview", group: "Google" },
-            { id: "google/gemma-4-31b-it",        name: "Gemma 4 31B IT",                provider: "google", status: "instant", group: "Quick"  },
-            { id: "gemini-3.1-flash-lite-preview",name: "Gemini 3.1 Flash Lite Preview", provider: "google", status: "think",   group: "Quick"  },
-            { id: "gemma-4-26b-a4b-it",           name: "Gemma 4 26B",                   provider: "google", status: "check",   group: "Open"   },
-            { id: "gemini-flash-latest",          name: "Gemini Flash Latest",           provider: "google", status: "check",   group: "Meta"   },
-            { id: "gemini-2.0-flash-lite",        name: "Gemini 2.0 Flash Lite",         provider: "google", status: "check",   group: "Legacy" },
-            { id: "gemini-3.1-pro-preview",       name: "Gemini 3.1 Pro Preview",        provider: "google", status: "check",   group: "X"      }
+            { id: "openai/gpt-oss-120b",        name: "GPT-OSS 120B",          provider: "groq", status: "online",  group: "Groq" },
+            { id: "llama-3.3-70b-versatile",    name: "Llama 3.3 70B",         provider: "groq", status: "online",  group: "Groq" },
+            { id: "llama-3.1-8b-instant",       name: "Nano Llama 3.1 8B",     provider: "groq", status: "instant", group: "Groq" },
+            { id: "openai/gpt-oss-20b",         name: "Mini GPT-OSS 20B",      provider: "groq", status: "online",  group: "Groq" },
+            { id: "qwen/qwen3-32b",             name: "Qwen3 32B",             provider: "groq", status: "preview", group: "Groq" }
         ];
 
         const defaults = {
-            instant: "gemini-2.5-flash",
-            think:   "gemma-4-26b-a4b-it",
-            preview: "gemini-3-flash-preview"
+            mini:    "openai/gpt-oss-20b",
+            heavy:   "openai/gpt-oss-120b",
+            preview: "qwen/qwen3-32b"
         };
 
         // ──────────────────────────────────────────────
@@ -772,7 +1156,7 @@
             initWelcomeAnimator();
 
             if (!selectedModel) {
-                setSelectedModel(resolveModelById(defaults.instant), false);
+                setSelectedModel(resolveModelById(defaults.mini), false);
             } else {
                 syncUI();
             }
@@ -793,9 +1177,9 @@
             });
             window.addEventListener("resize", () => { if (window.innerWidth > 1024) closeDrawers(); });
             [
-                "googleKey", "temperature", "maxTokens", "systemPrompt",
+                "apiKey", "temperature", "maxTokens", "systemPrompt",
                 "responseStyle", "styleCustomPrompt",
-                "instantCustomModelId", "thinkCustomModelId", "previewCustomModelId",
+                "miniCustomModelId", "heavyCustomModelId", "previewCustomModelId",
                 "agentModel1", "agentModel2", "agentModel3"
             ].forEach(id => {
                 const n = $(id);
@@ -865,17 +1249,17 @@
 
         function resolveModelById(id, fallbackName) {
             const found = models.find(m => m.id === id);
-            return found || { id, name: fallbackName || id, provider: "google", status: "custom", group: "Custom" };
+            return found || { id, name: fallbackName || id, provider: "groq", status: "custom", group: "Custom" };
         }
 
         function getQuickModelId(type) {
-            const fieldMap = { instant: "instantCustomModelId", think: "thinkCustomModelId", preview: "previewCustomModelId" };
+            const fieldMap = { mini: "miniCustomModelId", heavy: "heavyCustomModelId", preview: "previewCustomModelId" };
             const customId = v(fieldMap[type], "").trim();
-            return customId || defaults[type] || defaults.instant;
+            return customId || defaults[type] || defaults.mini;
         }
 
         function setSelectedModel(model, persist = true) {
-            selectedModel = { id: model.id, name: model.name || model.id, provider: model.provider || "google", status: model.status || "custom", group: model.group || "Custom" };
+            selectedModel = { id: model.id, name: model.name || model.id, provider: model.provider || "groq", status: model.status || "custom", group: model.group || "Custom" };
             syncUI();
             if (persist) persistSettings();
             closeDrawers();
@@ -883,7 +1267,7 @@
 
         function syncUI() {
             $("currentModelDisplay").innerText = selectedModel.name || selectedModel.id;
-            $("currentProviderDisplay").innerText = selectedModel.provider || "google";
+            $("currentProviderDisplay").innerText = selectedModel.provider || "groq";
             $$(".model-list-item").forEach(el => el.classList.remove("bg-slate-800/80", "border-blue-500/30"));
             const active = Array.from($$(".model-list-item")).find(el => el.dataset.modelId === selectedModel.id && el.dataset.provider === selectedModel.provider);
             if (active) active.classList.add("bg-slate-800/80", "border-blue-500/30");
@@ -891,7 +1275,7 @@
 
         function selectQuickModel(type) {
             const modelId = getQuickModelId(type);
-            const labels = { instant: "Rapido", think: "Heavy", preview: "Preview" };
+            const labels = { mini: "Mini", heavy: "Heavy", preview: "Preview" };
             setSelectedModel(resolveModelById(modelId, labels[type] + " custom"));
             toast(`${labels[type]} selezionato ✦`);
         }
@@ -899,7 +1283,7 @@
         function useCustomModel() {
             const id = v("customModelId", "").trim();
             if (!id) { alert("Inserisci un model ID."); return; }
-            setSelectedModel({ id, name: id, provider: "google", status: "custom", group: "Custom" });
+            setSelectedModel({ id, name: id, provider: "groq", status: "custom", group: "Custom" });
             toast("Modello custom attivato");
         }
 
@@ -924,9 +1308,9 @@
             const saveLocal = $("saveLocal");
             if (!saveLocal || !saveLocal.checked) { localStorage.removeItem("aiChatSettings"); return; }
             localStorage.setItem("aiChatSettings", JSON.stringify({
-                googleKey: v("googleKey"), temperature: v("temperature", "0.7"), maxTokens: v("maxTokens", "2048"),
+                apiKey: v("apiKey"), temperature: v("temperature", "0.7"), maxTokens: v("maxTokens", "2048"),
                 systemPrompt: v("systemPrompt"), responseStyle: v("responseStyle", "short"), styleCustomPrompt: v("styleCustomPrompt"),
-                instantCustomModelId: v("instantCustomModelId"), thinkCustomModelId: v("thinkCustomModelId"), previewCustomModelId: v("previewCustomModelId"),
+                miniCustomModelId: v("miniCustomModelId"), heavyCustomModelId: v("heavyCustomModelId"), previewCustomModelId: v("previewCustomModelId"),
                 agentModeEnabled: $("agentModeToggle")?.checked || false,
                 agentModel1: v("agentModel1"), agentModel2: v("agentModel2"), agentModel3: v("agentModel3"),
                 selectedModel
@@ -939,9 +1323,9 @@
             try {
                 const d = JSON.parse(raw);
                 $("saveLocal").checked = true;
-                $("googleKey").value = d.googleKey || ""; $("temperature").value = d.temperature || "0.7"; $("maxTokens").value = d.maxTokens || "2048";
+                $("apiKey").value = d.apiKey || ""; $("temperature").value = d.temperature || "0.7"; $("maxTokens").value = d.maxTokens || "2048";
                 $("systemPrompt").value = d.systemPrompt || ""; $("responseStyle").value = d.responseStyle || "short"; $("styleCustomPrompt").value = d.styleCustomPrompt || "";
-                $("instantCustomModelId").value = d.instantCustomModelId || ""; $("thinkCustomModelId").value = d.thinkCustomModelId || ""; $("previewCustomModelId").value = d.previewCustomModelId || "";
+                $("miniCustomModelId").value = d.miniCustomModelId || ""; $("heavyCustomModelId").value = d.heavyCustomModelId || ""; $("previewCustomModelId").value = d.previewCustomModelId || "";
                 if (d.agentModeEnabled) { $("agentModeToggle").checked = true; agentModeEnabled = true; $("agentModeConfig").classList.remove("hidden"); }
                 $("agentModel1").value = d.agentModel1 || ""; $("agentModel2").value = d.agentModel2 || ""; $("agentModel3").value = d.agentModel3 || "";
                 if (d.selectedModel?.id) selectedModel = d.selectedModel;
@@ -987,7 +1371,7 @@
             const bubble = document.createElement("div"); bubble.classList.add("chat-bubble");
             if (role === "user") bubble.className += " max-w-[80%] p-4 rounded-2xl bubble-user text-white";
             else bubble.className += " max-w-[80%] p-4 rounded-2xl bubble-ai text-blue-100";
-            const label = role === "user" ? "Tu" : "AI";
+            const label = role === "user" ? "Tu" : "eriK AI";
             bubble.innerHTML = `<div class="text-[10px] text-blue-300/60 mb-1.5 font-mono uppercase tracking-wider">${label}</div><div class="message-content text-sm leading-relaxed">${renderText(text)}</div>${role === "ai" ? `<div class="assistant-actions mt-3"></div><div class="feedback-panel hidden mt-3 p-3 rounded-xl border border-blue-500/10 bg-slate-900/50"></div>` : ""}`;
             if (role === "ai") bubble.classList.add("assistant-bubble");
             if (opts.loading) {
@@ -1036,47 +1420,86 @@
             if (style === "custom" && custom) return custom; return map[style] || "";
         }
         function buildSystemPrompt() {
-            const pieces = []; const base = v("systemPrompt", "").trim(); if (base) pieces.push(base);
+            const pieces = []; 
+            // Always inject hidden system prompt first
+            pieces.push(HIDDEN_SYSTEM_PROMPT);
+            
+            const base = v("systemPrompt", "").trim(); if (base) pieces.push(base);
             const style = getStyleInstruction(); if (style) pieces.push(style);
             if (temporaryFeedback.trim()) pieces.push("Feedback temporaneo da applicare:\n" + temporaryFeedback.trim());
             return pieces.join("\n\n");
         }
 
         // ──────────────────────────────────────────────
-        //  GEMINI API & AGENT CHAIN
+        //  GROQ API & AGENT CHAIN
         // ──────────────────────────────────────────────
-        async function buildGeminiContents(snapshot) {
-            const contents = [];
+        async function buildGroqMessages(snapshot) {
+            const messages = [];
+            // System message
+            const sysPrompt = buildSystemPrompt();
+            if (sysPrompt) messages.push({ role: "system", content: sysPrompt });
+
             for (const msg of snapshot) {
-                if (!msg?.role) continue; const parts = []; const text = String(msg.text || "").trim();
-                if (text) parts.push({ text });
+                if (!msg?.role) continue;
+                const content = [];
+                const text = String(msg.text || "").trim();
+                if (text) content.push({ type: "text", text });
+
                 for (const file of (msg.files || [])) {
                     if (!file) continue;
-                    if (file.type?.startsWith("image/")) { const b64 = await fileToBase64(file); parts.push({ inlineData: { mimeType: file.type || "image/png", data: b64 } }); }
-                    else if (isTextLikeFile(file)) { const content = await fileToText(file); parts.push({ text: `\n\n[File: ${file.name}]\n\`\`\`\n${content.slice(0, 30000)}\n\`\`\`${content.length > 30000 ? "\n[troncato]" : ""}` }); }
-                    else { parts.push({ text: `\n\n[Allegato: ${file.name}, tipo: ${file.type || "sconosciuto"}]` }); }
+                    if (file.type?.startsWith("image/")) {
+                        const b64 = await fileToBase64(file);
+                        content.push({ type: "image_url", image_url: { url: `${file.type};base64,${b64}` } });
+                    } else if (isTextLikeFile(file)) {
+                        const fileContent = await fileToText(file);
+                        content.push({ type: "text", text: `\n\n[File: ${file.name}]\n\`\`\`\n${fileContent.slice(0, 30000)}\n\`\`\`${fileContent.length > 30000 ? "\n[troncato]" : ""}` });
+                    } else {
+                        content.push({ type: "text", text: `\n\n[Allegato: ${file.name}, tipo: ${file.type || "sconosciuto"}]` });
+                    }
                 }
-                contents.push({ role: msg.role === "assistant" ? "model" : "user", parts: parts.length ? parts : [{ text: " " }] });
+                messages.push({ role: msg.role === "assistant" ? "assistant" : "user", content: content.length ? content : [{ type: "text", text: " " }] });
             }
-            return contents;
+            return messages;
         }
 
-        async function callGemini(snapshot, modelId, allowFallback = true, systemOverride = null) {
-            const apiKey = v("googleKey", "").trim(); if (!apiKey) throw new Error("Manca Google AI Studio API Key.");
+        async function callGroqApi(snapshot, modelId, allowFallback = true, systemOverride = null) {
+            const apiKey = v("apiKey", "").trim(); if (!apiKey) throw new Error("Manca API Key.");
             const temperature = Number(v("temperature", "0.7") || 0.7); const maxTokens = Number(v("maxTokens", "2048") || 2048);
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(modelId)}:generateContent`;
-            const body = { contents: await buildGeminiContents(snapshot), generationConfig: { temperature, maxOutputTokens: maxTokens } };
-            const sysPrompt = systemOverride || buildSystemPrompt();
-            if (sysPrompt) body.systemInstruction = { parts: [{ text: sysPrompt }] };
-            const res = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json", "x-goog-api-key": apiKey }, body: JSON.stringify(body) });
+            const url = "https://api.groq.com/openai/v1/chat/completions";
+            
+            // Temporarily override system prompt if needed (for agent chain steps)
+            const originalBuildSystemPrompt = window.buildSystemPrompt;
+            if (systemOverride) {
+                window.buildSystemPrompt = () => systemOverride;
+            }
+
+            const body = {
+                model: modelId,
+                messages: await buildGroqMessages(snapshot),
+                temperature: temperature,
+                max_tokens: maxTokens
+            };
+
+            // Restore original builder
+            if (systemOverride) window.buildSystemPrompt = originalBuildSystemPrompt;
+
+            const res = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${apiKey}`
+                },
+                body: JSON.stringify(body)
+            });
+
             const data = await res.json().catch(() => null);
             if (!res.ok) {
                 const msg = data?.error?.message || `Errore ${res.status}`;
-                if (allowFallback && modelId !== defaults.think) { toast("Fallback su modello Heavy..."); return callGemini(snapshot, defaults.think, false, systemOverride); }
+                if (allowFallback && modelId !== defaults.heavy) { toast("Fallback su modello Heavy..."); return callGroqApi(snapshot, defaults.heavy, false, systemOverride); }
                 throw new Error(msg);
             }
-            const parts = data?.candidates?.[0]?.content?.parts || []; const text = parts.map(p => p.text || "").filter(Boolean).join("\n");
-            if (text) return text; if (data?.promptFeedback?.blockReason) return "⚠️ Bloccato: " + data.promptFeedback.blockReason; return JSON.stringify(data, null, 2);
+            const text = data?.choices?.[0]?.message?.content || "";
+            if (text) return text; return JSON.stringify(data, null, 2);
         }
 
         async function callAgentChain(snapshot, agentModelIds) {
@@ -1085,18 +1508,18 @@
             
             // Step 1: Elaboratore
             updateStatus("🟡 Agente 1: Elaborazione prompt...");
-            const prompt1 = await callGemini(snapshot, m1, false, "Sei un Prompt Engineer esperto. Prendi la richiesta dell'utente e trasformala in un prompt altamente dettagliato, strutturato e ottimizzato per un'AI architetto. Restituisci SOLO il prompt raffinato, senza commenti.");
+            const prompt1 = await callGroqApi(snapshot, m1, false, "Sei un Prompt Engineer esperto. Prendi la richiesta dell'utente e trasformala in un prompt altamente dettagliato, strutturato e ottimizzato per un'AI architetto. Restituisci SOLO il prompt raffinato, senza commenti.");
             
             // Step 2: Architetto
             updateStatus("🟠 Agente 2: Pianificazione struttura...");
             const snapshot2 = [{ role: "user", text: prompt1 }];
-            const plan2 = await callGemini(snapshot2, m2, false, "Sei un System Architect AI. Ricevi un prompt dettagliato. Crea un piano di esecuzione passo-passo, istruzioni tecniche precise e struttura logica per generare la risposta finale. Restituisci SOLO il piano tecnico.");
+            const plan2 = await callGroqApi(snapshot2, m2, false, "Sei un System Architect AI. Ricevi un prompt dettagliato. Crea un piano di esecuzione passo-passo, istruzioni tecniche precise e struttura logica per generare la risposta finale. Restituisci SOLO il piano tecnico.");
             
             // Step 3: Esecutore
             updateStatus("🟢 Agente 3: Generazione risposta...");
             const finalPrompt = `RICHIESTA ORIGINALE:\n${snapshot[snapshot.length-1].text}\n\nPIANO TECNICO DA SEGUIRE:\n${plan2}`;
             const snapshot3 = [{ role: "user", text: finalPrompt }];
-            return await callGemini(snapshot3, m3, false, buildSystemPrompt() + "\n\nSei l'AI Esecutrice Principale. Segui IL PIANO TECNICO fornito alla lettera per generare la risposta finale all'utente. Sii preciso, completo e aderente alle istruzioni.");
+            return await callGroqApi(snapshot3, m3, false, buildSystemPrompt() + "\n\nSei l'AI Esecutrice Principale. Segui IL PIANO TECNICO fornito alla lettera per generare la risposta finale all'utente. Sii preciso, completo e aderente alle istruzioni.");
         }
 
         function updateStatus(msg) {
@@ -1124,7 +1547,7 @@
                 if (agentModeEnabled) {
                     answer = await callAgentChain(snapshot, [v("agentModel1"), v("agentModel2"), v("agentModel3")]);
                 } else {
-                    answer = await callGemini(snapshot, selectedModel.id);
+                    answer = await callGroqApi(snapshot, selectedModel.id);
                 }
                 updateMessage(aiBubble, answer || "[vuoto]");
                 chatHistory.push({ role: "assistant", text: answer || "" });
@@ -1144,7 +1567,7 @@
                 if (agentModeEnabled) {
                     answer = await callAgentChain(bubble.__meta.snapshot, [v("agentModel1"), v("agentModel2"), v("agentModel3")]);
                 } else {
-                    answer = await callGemini(bubble.__meta.snapshot, selectedModel.id);
+                    answer = await callGroqApi(bubble.__meta.snapshot, selectedModel.id);
                 }
                 updateMessage(bubble, answer || "[vuoto]");
                 chatHistory[bubble.__meta.idx] = { role: "assistant", text: answer || "" };
@@ -1167,7 +1590,7 @@
         function newChat() {
             if (!confirm("Vuoi cancellare la chat attuale?")) return;
             chatHistory = []; selectedFiles = []; temporaryFeedback = "";
-            $("chatWindow").innerHTML = `<div id="welcomeScreen" class="h-full flex flex-col items-center justify-center text-center px-6"><div class="relative mb-8 logo-container"><div class="nasa-hud-bracket hud-tl"></div><div class="nasa-hud-bracket hud-tr"></div><div class="nasa-hud-bracket hud-bl"></div><div class="nasa-hud-bracket hud-br"></div><div class="h-32 w-32 rounded-2xl bg-gradient-to-tr from-blue-900/40 to-cyan-800/20 border border-blue-500/30 flex items-center justify-center shadow-[0_0_35px_rgba(0,229,255,0.15)] relative overflow-hidden group"><div class="absolute inset-0 bg-blue-500/10 opacity-0 group-hover:opacity-100 transition duration-500"></div><img src="https://www.pngegg.com/en/png-eanqs/download" alt="NASA Logo" class="w-24 h-24 object-contain logo-glow z-10" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><svg viewBox="0 0 120 30" class="w-16 h-8 drop-shadow-[0_0_8px_rgba(0,229,255,0.6)] hidden" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15.2 14.6c0-3.2 2.1-5.4 5.1-5.4 3.1 0 5.2 2.2 5.2 5.4 0 3.2-2.1 5.4-5.2 5.4-3 0-5.1-2.2-5.1-5.4zm3.8 0c0 1.5.8 2.5 1.3 2.5.6 0 1.3-1 1.3-2.5 0-1.5-.7-2.5-1.3-2.5-.5 0-1.3 1-1.3 2.5z" fill="#00E5FF"/><path d="M32.5 9.5h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5zm4.2 0h2.8v11.2h-2.8V9.5z" fill="#00E5FF"/><path d="M85.4 14.6c0-3.2 2.1-5.4 5.1-5.4 3.1 0 5.2 2.2 5.2 5.4 0 3.2-2.1 5.4-5.2 5.4-3 0-5.1-2.2-5.1-5.4zm3.8 0c0 1.5.8 2.5 1.3 2.5.6 0 1.3-1 1.3-2.5 0-1.5-.7-2.5-1.3-2.5-.5 0-1.3 1-1.3 2.5z" fill="#00E5FF"/><path d="M102.5 9.5h2.8v11.2h-2.8V9.5z" fill="#00E5FF"/></svg></div></div><h2 id="welcomeTitle" class="text-4xl sm:text-5xl font-bold text-white tracking-tight mb-4 drop-shadow-lg">Ciao, come posso aiutarti?</h2><p class="text-blue-200/70 max-w-md mb-10 text-sm leading-relaxed font-light">Nuova sessione avviata.</p><div class="flex flex-wrap items-center justify-center gap-3 max-w-xl"><button onclick="selectQuickModel('instant')" class="model-pill text-xs px-6 py-3 rounded-full bg-slate-800/50 text-yellow-300 border border-yellow-500/20 hover:border-yellow-400 flex items-center gap-2 backdrop-blur-sm"><i class="fa-solid fa-bolt mr-1"></i> Rapido</button><button onclick="selectQuickModel('think')" class="model-pill text-xs px-6 py-3 rounded-full bg-slate-800/50 text-purple-300 border border-purple-500/20 hover:border-purple-400 flex items-center gap-2 backdrop-blur-sm"><i class="fa-solid fa-brain mr-1"></i> Heavy</button><button onclick="selectQuickModel('preview')" class="model-pill text-xs px-6 py-3 rounded-full bg-slate-800/50 text-cyan-300 border border-cyan-500/20 hover:border-cyan-400 flex items-center gap-2 backdrop-blur-sm"><i class="fa-solid fa-flask mr-1"></i> Preview</button></div></div>`;
+            $("chatWindow").innerHTML = `<div id="welcomeScreen" class="h-full flex flex-col items-center justify-center text-center px-6"><div class="relative mb-8 magic-wand-container"><div class="nasa-hud-bracket hud-tl"></div><div class="nasa-hud-bracket hud-tr"></div><div class="nasa-hud-bracket hud-bl"></div><div class="nasa-hud-bracket hud-br"></div><div class="h-32 w-32 rounded-2xl bg-gradient-to-tr from-blue-900/40 to-cyan-800/20 border border-blue-500/30 flex items-center justify-center shadow-[0_0_35px_rgba(0,229,255,0.15)] relative overflow-hidden group"><div class="absolute inset-0 bg-blue-500/10 opacity-0 group-hover:opacity-100 transition duration-500"></div><i class="fa-solid fa-wand-magic-sparkles text-5xl text-cyan-400 wand-glow z-10 group-hover:text-red-400 transition-colors duration-300"></i></div></div><h2 id="welcomeTitle" class="text-4xl sm:text-5xl font-bold text-white tracking-tight mb-4 drop-shadow-lg">Ciao, come posso aiutarti?</h2><p class="text-blue-200/70 max-w-md mb-10 text-sm leading-relaxed font-light">Nuova sessione avviata.</p><div class="flex flex-wrap items-center justify-center gap-3 max-w-xl"><button onclick="selectQuickModel('mini')" class="model-pill text-xs px-6 py-3 rounded-full bg-slate-800/50 text-yellow-300 border border-yellow-500/20 hover:border-yellow-400 flex items-center gap-2 backdrop-blur-sm"><i class="fa-solid fa-bolt mr-1"></i> Mini</button><button onclick="selectQuickModel('heavy')" class="model-pill text-xs px-6 py-3 rounded-full bg-slate-800/50 text-purple-300 border border-purple-500/20 hover:border-purple-400 flex items-center gap-2 backdrop-blur-sm"><i class="fa-solid fa-brain mr-1"></i> Heavy</button><button onclick="selectQuickModel('preview')" class="model-pill text-xs px-6 py-3 rounded-full bg-slate-800/50 text-cyan-300 border border-cyan-500/20 hover:border-cyan-400 flex items-center gap-2 backdrop-blur-sm"><i class="fa-solid fa-flask mr-1"></i> Preview</button></div></div>`;
             renderFilePreview(); updateFeedbackPreview(); updateSendButton(); closeDrawers(); toast("Nuova chat ✓"); initWelcomeAnimator();
         }
 
