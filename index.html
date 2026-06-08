@@ -3,12 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<meta name="description" content="NAXA Mission Control — Multi-provider AI chat with NASA aesthetic">
+<meta name="description" content="NAXA Mission Control v4.0 — Advanced Multi-provider AI with NASA Aesthetic">
 <meta name="theme-color" content="#050816">
-<title>NAXA Mission Control</title>
+<title>NAXA Mission Control v4.0</title>
 <style>
 /* ==========================================================================
-   NAXA MISSION CONTROL — NASA-Style Design System
+   NAXA MISSION CONTROL v4.0 — NASA-Style Design System
+   Version: 4.0.0
    Design Tokens: Space palette, HUD elements, terminal typography
    ========================================================================== */
 
@@ -37,8 +38,10 @@
   --console-blue-dim: rgba(0, 180, 216, 0.15);
   --erik-purple: #a855f7;
   --erik-purple-dim: rgba(168, 85, 247, 0.15);
+  --developer-orange: #ff6b35;
+  --developer-orange-dim: rgba(255, 107, 53, 0.15);
 
-  /* === SEMANTIC TOKENS (map to space palette) === */
+  /* === SEMANTIC TOKENS === */
   --bg-base: var(--space-void);
   --bg-surface: var(--space-deep);
   --bg-elevated: var(--space-hull);
@@ -98,12 +101,12 @@
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
   /* === LAYOUT === */
-  --sidebar-w: 300px;
+  --sidebar-w: 320px;
   --header-h: 56px;
   --input-max-h: 200px;
 }
 
-/* === LIGHT MODE (user override or prefers-light) === */
+/* === LIGHT MODE === */
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
     --bg-base: #f4f6fa;
@@ -151,7 +154,7 @@
 }
 
 [data-theme="dark"] {
-  /* Dark is default, values already set in :root */
+  /* Dark is default */
 }
 
 /* === RESET === */
@@ -173,7 +176,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 button { cursor: pointer; border: none; background: none; }
 button:disabled { cursor: not-allowed; opacity: 0.5; }
 
-/* === STAR FIELD BACKGROUND (CSS-only, GPU accelerated) === */
+/* === STAR FIELD BACKGROUND === */
 body::before {
   content: '';
   position: fixed;
@@ -219,6 +222,55 @@ body::after {
   opacity: 0.3;
 }
 
+/* === BOOT SEQUENCE === */
+.boot-sequence {
+  position: fixed;
+  inset: 0;
+  background: var(--space-void);
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  color: var(--accent);
+  animation: bootFade 3s ease-out forwards;
+}
+
+.boot-sequence.hidden { display: none; }
+
+@keyframes bootFade {
+  0%, 90% { opacity: 1; }
+  100% { opacity: 0; pointer-events: none; }
+}
+
+.boot-logo {
+  font-size: 48px;
+  font-weight: 700;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  margin-bottom: var(--space-6);
+  animation: bootPulse 1s ease-in-out infinite;
+}
+
+@keyframes bootPulse {
+  0%, 100% { opacity: 1; text-shadow: 0 0 20px var(--accent-glow); }
+  50% { opacity: 0.5; text-shadow: 0 0 40px var(--accent-glow); }
+}
+
+.boot-text {
+  font-size: 12px;
+  letter-spacing: 2px;
+  animation: bootType 2s steps(40) forwards;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+@keyframes bootType {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
 /* === APP LAYOUT === */
 .app {
   position: relative;
@@ -241,6 +293,28 @@ body::after {
   flex-direction: column;
   transition: transform var(--t-slow) var(--ease-out);
   z-index: 100;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Scan line animation */
+.sidebar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  animation: scanLine 4s linear infinite;
+  z-index: 1;
+}
+
+@keyframes scanLine {
+  0% { top: 0; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
 }
 
 .sidebar-header {
@@ -250,6 +324,8 @@ body::after {
   align-items: center;
   gap: var(--space-3);
   background: linear-gradient(180deg, var(--bg-elevated), transparent);
+  position: relative;
+  z-index: 2;
 }
 
 .mission-badge {
@@ -267,6 +343,12 @@ body::after {
   letter-spacing: 1px;
   box-shadow: 0 0 20px var(--accent-glow), inset 0 0 12px rgba(0, 255, 136, 0.1);
   position: relative;
+  animation: badgeFloat 3s ease-in-out infinite;
+}
+
+@keyframes badgeFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
 }
 
 .mission-badge::before {
@@ -304,6 +386,8 @@ body::after {
   flex: 1;
   overflow-y: auto;
   padding: var(--space-4);
+  position: relative;
+  z-index: 2;
 }
 
 .sidebar-section { margin-bottom: var(--space-6); }
@@ -368,6 +452,44 @@ body::after {
 
 .btn-new-mission:hover::before { left: 100%; }
 
+/* Search box */
+.search-box {
+  position: relative;
+  margin-bottom: var(--space-4);
+}
+
+.search-input {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  padding-left: 36px;
+  background: var(--space-void);
+  border: 1px solid var(--border-normal);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: 12px;
+  font-family: var(--font-mono);
+  transition: all var(--t-fast);
+}
+
+[data-theme="light"] .search-input {
+  background: var(--bg-surface);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-dim);
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
 .chat-list { display: flex; flex-direction: column; gap: 2px; }
 
 .chat-item {
@@ -410,6 +532,12 @@ body::after {
   background: var(--accent);
   border-color: var(--accent);
   box-shadow: 0 0 8px var(--accent-glow);
+  animation: dotPulse 2s ease-out infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
 }
 
 .chat-status-dot.ephemeral {
@@ -423,6 +551,21 @@ body::after {
   text-overflow: ellipsis;
   white-space: nowrap;
   font-family: var(--font-body);
+}
+
+.chat-item-tags {
+  display: flex;
+  gap: 2px;
+  margin-left: auto;
+}
+
+.tag-pill {
+  font-size: 9px;
+  padding: 1px 6px;
+  background: var(--bg-elevated);
+  border-radius: 3px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
 }
 
 .chat-item-actions {
@@ -448,6 +591,8 @@ body::after {
 .btn-icon:hover { background: var(--bg-hover); color: var(--text-primary); }
 .btn-icon.danger:hover { background: var(--nasa-red-dim); color: var(--error); }
 .btn-icon.save:hover { background: var(--accent-dim); color: var(--accent); }
+.btn-icon.branch:hover { background: var(--erik-purple-dim); color: var(--erik-purple); }
+.btn-icon.tag:hover { background: var(--hud-amber-dim); color: var(--hud-amber); }
 
 .empty-hint {
   padding: var(--space-4) var(--space-2);
@@ -467,6 +612,7 @@ body::after {
   margin-bottom: var(--space-3);
   transition: all var(--t-fast);
   position: relative;
+  overflow: hidden;
 }
 
 .provider-card::before {
@@ -482,6 +628,8 @@ body::after {
 }
 
 .provider-card.connected::before { background: var(--accent); box-shadow: 0 0 8px var(--accent-glow); }
+
+.provider-card.custom::before { background: var(--developer-orange); box-shadow: 0 0 8px var(--developer-orange-dim); }
 
 .provider-header {
   display: flex;
@@ -501,6 +649,15 @@ body::after {
   gap: var(--space-2);
 }
 
+.provider-name .custom-badge {
+  font-size: 8px;
+  padding: 2px 6px;
+  background: var(--developer-orange-dim);
+  color: var(--developer-orange);
+  border-radius: 3px;
+  font-family: var(--font-mono);
+}
+
 .status-indicator {
   width: 10px;
   height: 10px;
@@ -513,15 +670,6 @@ body::after {
 .status-indicator.online {
   background: var(--accent);
   box-shadow: 0 0 10px var(--accent-glow);
-}
-
-.status-indicator.online::after {
-  content: '';
-  position: absolute;
-  inset: -3px;
-  border-radius: 50%;
-  border: 1px solid var(--accent);
-  opacity: 0.5;
   animation: statusPulse 2s ease-out infinite;
 }
 
@@ -599,6 +747,17 @@ body::after {
   border-color: var(--border-accent);
 }
 
+.btn-secondary.developer {
+  background: var(--developer-orange-dim);
+  color: var(--developer-orange);
+  border-color: rgba(255, 107, 53, 0.3);
+}
+
+.btn-secondary.developer:hover {
+  background: var(--developer-orange);
+  color: var(--space-void);
+}
+
 /* === MAIN === */
 .main {
   flex: 1;
@@ -648,7 +807,7 @@ body::after {
 
 .menu-toggle:hover { background: var(--bg-hover); color: var(--text-primary); }
 
-/* Mode selector (Mission Modes) */
+/* Mode selector */
 .mode-selector { display: flex; gap: var(--space-2); flex-wrap: wrap; }
 
 .mode-btn {
@@ -762,9 +921,10 @@ body::after {
   border-radius: 50%;
   background: var(--hud-amber);
   box-shadow: 0 0 4px var(--hud-amber);
+  animation: dotPulse 2s ease-out infinite;
 }
 
-/* === CHAT AREA (Mission Console) === */
+/* === CHAT AREA === */
 .chat-container {
   flex: 1;
   overflow-y: auto;
@@ -794,7 +954,7 @@ body::after {
   z-index: 0;
 }
 
-/* === MESSAGE (Mission Transmission) === */
+/* === MESSAGE === */
 .message {
   margin-bottom: var(--space-7);
   animation: transmissionIn var(--t-slow) var(--ease-out);
@@ -910,11 +1070,29 @@ body::after {
   border-radius: var(--radius-sm);
   padding: var(--space-4) var(--space-5);
   position: relative;
+  overflow: hidden;
 }
 
 .message.role-user .message-content {
   border-left-color: var(--console-blue);
   background: var(--bg-surface);
+}
+
+.message-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0.3;
+  animation: holographicLine 3s linear infinite;
+}
+
+@keyframes holographicLine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 .message-content p { margin-bottom: var(--space-3); }
@@ -1139,7 +1317,7 @@ body::after {
 
 @keyframes caretBlink { 50% { opacity: 0; } }
 
-/* === EMPTY STATE (Awaiting Transmission) === */
+/* === EMPTY STATE === */
 .empty-state {
   display: flex;
   flex-direction: column;
@@ -1218,7 +1396,7 @@ body::after {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-/* === INPUT AREA (Command Console) === */
+/* === INPUT AREA === */
 .input-area {
   padding: var(--space-4) var(--space-5) var(--space-5);
   background: var(--bg-glass);
@@ -1305,6 +1483,12 @@ body::after {
   align-self: center;
   margin-right: var(--space-2);
   text-shadow: 0 0 8px var(--accent-glow);
+  animation: promptPulse 2s ease-in-out infinite;
+}
+
+@keyframes promptPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
 
 .input-box:focus-within {
@@ -1347,6 +1531,16 @@ body::after {
 }
 
 .circle-btn:hover { background: var(--bg-hover); color: var(--text-primary); }
+
+.circle-btn.recording {
+  color: var(--error);
+  animation: recordPulse 1s ease-in-out infinite;
+}
+
+@keyframes recordPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
 
 .send-btn {
   background: var(--accent);
@@ -1396,7 +1590,7 @@ body::after {
   background: currentColor;
 }
 
-/* === TOOL PALETTE (Bottom sheet) === */
+/* === TOOL PALETTE === */
 .tool-palette {
   position: absolute;
   bottom: 100%;
@@ -1515,6 +1709,12 @@ body::after {
   right: 0;
   height: 2px;
   background: linear-gradient(90deg, var(--accent), var(--hud-amber), var(--accent));
+  animation: modalBorderGlow 3s linear infinite;
+}
+
+@keyframes modalBorderGlow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
 }
 
 @keyframes modalIn {
@@ -1586,6 +1786,17 @@ body::after {
 }
 
 .btn-danger:hover { background: #dc2626; }
+
+.btn-developer {
+  background: var(--developer-orange);
+  color: var(--space-void);
+  border: 1px solid var(--developer-orange);
+}
+
+.btn-developer:hover {
+  background: #ff8555;
+  box-shadow: 0 0 16px var(--developer-orange-dim);
+}
 
 /* Toggle */
 .toggle-row {
@@ -1671,7 +1882,7 @@ body::after {
   border: none;
 }
 
-/* === TOAST (Mission Alerts) === */
+/* === TOAST === */
 .toast-stack {
   position: fixed;
   top: var(--space-5);
@@ -1714,6 +1925,12 @@ body::after {
   bottom: 0;
   width: 3px;
   background: currentColor;
+  animation: toastBarPulse 2s ease-in-out infinite;
+}
+
+@keyframes toastBarPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
 
 @keyframes toastIn {
@@ -1825,30 +2042,250 @@ select:focus:not(:focus-visible) {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* === ACCESSIBILITY MODE === */
+[data-accessibility="high-contrast"] {
+  --accent: #00ff00;
+  --text-primary: #ffffff;
+  --bg-base: #000000;
+  --border-normal: rgba(255, 255, 255, 0.5);
+}
+
+[data-accessibility="reduced-motion"] * {
+  animation-duration: 0.01ms !important;
+  transition-duration: 0.01ms !important;
+}
+
+/* === STATS DASHBOARD === */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.stat-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-normal);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  text-align: center;
+}
+
+.stat-value {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: var(--space-1);
+}
+
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* === CODE EXECUTION === */
+.code-exec-container {
+  background: #000000;
+  border: 1px solid var(--border-normal);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.code-exec-output {
+  padding: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-terminal);
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.code-exec-output.error {
+  color: var(--error);
+}
+
+/* === COMPARISON VIEW === */
+.comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-4);
+}
+
+.comparison-column {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-normal);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+.comparison-header {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: var(--space-3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* === TEMPLATES === */
+.template-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-3);
+}
+
+.template-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-normal);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  cursor: pointer;
+  transition: all var(--t-fast);
+}
+
+.template-card:hover {
+  background: var(--accent-dim);
+  border-color: var(--border-accent);
+  transform: translateY(-2px);
+}
+
+.template-title {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: var(--space-2);
+}
+
+.template-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* === SCHEDULED MESSAGES === */
+.scheduled-item {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-normal);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+  margin-bottom: var(--space-2);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.scheduled-time {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--hud-amber);
+  white-space: nowrap;
+}
+
+.scheduled-text {
+  flex: 1;
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* === THEME CUSTOMIZER === */
+.color-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: var(--space-3);
+}
+
+.color-picker-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.color-preview {
+  width: 100%;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-normal);
+}
+
+.color-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* === GLITCH EFFECT === */
+.glitch {
+  animation: glitch 0.3s ease-in-out;
+}
+
+@keyframes glitch {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+}
+
+/* === PARTICLE EFFECT === */
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: particleFloat 2s ease-out forwards;
+}
+
+@keyframes particleFloat {
+  0% { opacity: 1; transform: translate(0, 0) scale(1); }
+  100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0); }
+}
 </style>
 </head>
 <body>
 
+<!-- Boot Sequence -->
+<div class="boot-sequence" id="boot-sequence">
+  <div class="boot-logo">NAXA</div>
+  <div class="boot-text">INITIALIZING MISSION CONTROL v4.0...</div>
+</div>
+
 <div class="app">
 
-  <!-- ========== SIDEBAR (Mission Log) ========== -->
+  <!-- ========== SIDEBAR ========== -->
   <aside class="sidebar" id="sidebar" aria-label="Mission Log">
     <div class="sidebar-header">
       <div class="mission-badge" aria-hidden="true">NX</div>
       <div>
         <div class="sidebar-title">Mission Control</div>
-        <div class="sidebar-subtitle">NAXA // MULTI-PROVIDER</div>
+        <div class="sidebar-subtitle">NAXA // v4.0</div>
       </div>
     </div>
 
     <div class="sidebar-content">
-      <button class="btn-new-mission" id="btn-new-mission" type="button" aria-label="Avvia nuova missione">
+      <button class="btn-new-mission" id="btn-new-mission" type="button" aria-label="Start new mission">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         New Mission
       </button>
 
+      <!-- Search -->
+      <div class="search-box">
+        <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" class="search-input" id="search-input" placeholder="Search missions..." aria-label="Search missions">
+      </div>
+
       <div class="sidebar-section">
-        <div class="sidebar-section-title">Active Mission</div>
+        <div class="sidebar-section-title">Active Missions</div>
         <div class="chat-list" id="active-chat-list"></div>
       </div>
 
@@ -1934,6 +2371,11 @@ select:focus:not(:focus-visible) {
             Sync Models
           </button>
         </div>
+
+        <button class="btn-secondary developer" id="btn-developer-mode" type="button">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6"/><path d="M8 6l-6 6 6 6"/></svg>
+          Developer Mode
+        </button>
       </div>
 
       <div class="sidebar-section">
@@ -1945,7 +2387,7 @@ select:focus:not(:focus-visible) {
 
   <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
 
-  <!-- ========== MAIN (Mission Control) ========== -->
+  <!-- ========== MAIN ========== -->
   <main class="main">
     <header class="main-header">
       <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Toggle mission log">
@@ -1976,6 +2418,12 @@ select:focus:not(:focus-visible) {
 
       <div class="header-spacer"></div>
 
+      <button class="header-btn" id="btn-templates" type="button" aria-label="Templates">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+      </button>
+      <button class="header-btn" id="btn-stats" type="button" aria-label="Statistics">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      </button>
       <button class="header-btn" id="btn-theme" type="button" aria-label="Toggle theme">
         <svg id="theme-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
       </button>
@@ -2010,6 +2458,10 @@ select:focus:not(:focus-visible) {
             </button>
             <input type="file" id="file-input" multiple accept="image/*,.pdf,.txt,.md,.json,.csv" hidden>
 
+            <button class="circle-btn" id="btn-voice" type="button" aria-label="Voice input">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+            </button>
+
             <textarea class="msg-input" id="msg-input" placeholder="Enter command transmission..." rows="1" aria-label="Message"></textarea>
 
             <div class="input-actions">
@@ -2037,20 +2489,21 @@ select:focus:not(:focus-visible) {
 'use strict';
 
 /* ==========================================================================
-   NAXA MISSION CONTROL — Event-Driven Architecture
+   NAXA MISSION CONTROL v4.0 — Event-Driven Architecture
    ES2022 · Immutable state · Ephemeral-by-default persistence
    PRE: Modern browser (fetch, AbortController, SubtleCrypto, Blob, structuredClone)
-   POST: Reactive UI, multi-provider streaming, explicit save semantics
+   POST: Reactive UI, multi-provider streaming, 20 new features, explicit save semantics
    INV: AppState is single source of truth; DOM always derived from state
    ========================================================================== */
 
 /* ---------------- CONSTANTS ---------------- */
 
-const STORAGE_KEY = 'naxa-mission-control-v3';
+const STORAGE_KEY = 'naxa-mission-control-v4';
 const MAX_SAVED_MISSIONS = 50;
 const TOAST_DURATION_MS = 4000;
 const DEBOUNCE_MS = 80;
 const FETCH_TIMEOUT_MS = 30000;
+const AUTO_SAVE_INTERVAL_MS = 30000;
 
 /* ---------------- SYSTEM PROMPTS ---------------- */
 
@@ -2093,13 +2546,13 @@ Usa markdown per risposte lunghe.`,
 - Offri alternative.`
 });
 
-/* ---------------- TOOLS (Image generation removed) ---------------- */
+/* ---------------- TOOLS ---------------- */
 
 const TOOLS = Object.freeze([
   { id: 'search', name: 'Web Search', desc: 'Find current info', prefix: '[SEARCH] ',
     icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' },
   { id: 'calc', name: 'Calculator', desc: 'Solve math', prefix: '[CALCULATE] ',
-    icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="8" y2="10"/><line x1="12" y1="10" x2="12" y2="10"/><line x1="16" y1="10" x2="16" y2="10"/></svg>' },
+    icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/></svg>' },
   { id: 'translate', name: 'Translate', desc: 'Other languages', prefix: '[TRANSLATE TO ITALIAN] ',
     icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg>' },
   { id: 'summarize', name: 'Summarize', desc: 'Condense text', prefix: '[SUMMARIZE BRIEFLY] ',
@@ -2112,7 +2565,27 @@ const TOOLS = Object.freeze([
     handler: 'localWordCount' },
   { id: 'export', name: 'Export Mission', desc: 'TXT/PDF/JSON', prefix: null,
     icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>',
-    handler: 'localExport' }
+    handler: 'localExport' },
+  { id: 'codeexec', name: 'Run Code', desc: 'Execute JS/Python', prefix: null,
+    icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>',
+    handler: 'localCodeExec' },
+  { id: 'multisend', name: 'Multi-Provider', desc: 'Send to all providers', prefix: null,
+    icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+    handler: 'localMultiSend' },
+  { id: 'schedule', name: 'Schedule', desc: 'Send later', prefix: null,
+    icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+    handler: 'localSchedule' }
+]);
+
+/* ---------------- MISSION TEMPLATES ---------------- */
+
+const MISSION_TEMPLATES = Object.freeze([
+  { id: 'code-review', title: 'Code Review', desc: 'Analyze code for bugs and improvements', prompt: 'Please review this code for bugs, performance issues, and best practices:\n\n' },
+  { id: 'explain-concept', title: 'Explain Concept', desc: 'Get a clear explanation', prompt: 'Please explain this concept in simple terms:\n\n' },
+  { id: 'write-tests', title: 'Write Tests', desc: 'Generate test cases', prompt: 'Write comprehensive test cases for this function:\n\n' },
+  { id: 'debug-help', title: 'Debug Help', desc: 'Troubleshoot an issue', prompt: 'I\'m getting this error. Help me debug:\n\n' },
+  { id: 'api-design', title: 'API Design', desc: 'Design a REST API', prompt: 'Design a RESTful API for this use case:\n\n' },
+  { id: 'refactor', title: 'Refactor Code', desc: 'Improve code quality', prompt: 'Refactor this code to follow SOLID principles:\n\n' }
 ]);
 
 /* ---------------- EVENT BUS (DR-1) ---------------- */
@@ -2138,33 +2611,42 @@ const EventBus = {
 const AppState = {
   currentChatId: null,
   currentMode: 'erik',
-  theme: 'auto', // 'auto' | 'light' | 'dark'
+  theme: 'auto',
+  accessibility: 'default',
   providers: {
     mistral: { apiKey: '', models: [], selectedModel: '', baseUrl: 'https://api.mistral.ai/v1' },
     groq:    { apiKey: '', models: [], selectedModel: '', baseUrl: 'https://api.groq.com/openai/v1', reasoning: 'none' },
     google:  { apiKey: '', models: [], selectedModel: '', baseUrl: 'https://generativelanguage.googleapis.com/v1beta' }
   },
+  customProviders: new Map(),
   settings: {
     temperature: 0.7,
     maxTokens: 2048,
     followUpEnabled: false,
     followUpCount: 3,
-    globalSystemPrompt: ''
+    globalSystemPrompt: '',
+    ttsEnabled: false,
+    ttsVoice: null,
+    autoSaveDrafts: true
   },
-  chats: new Map(), /* Map<id, { id, title, messages, mode, saved, createdAt, updatedAt, ... }> */
+  chats: new Map(),
   attachments: [],
+  scheduledMessages: [],
   isLoading: false,
   abortController: null,
   toolPaletteOpen: false,
   lastRenderedMessageCount: 0,
-  missionCounter: 0
+  missionCounter: 0,
+  stats: {
+    totalMessages: 0,
+    totalTokens: 0,
+    totalMissions: 0,
+    avgResponseTime: 0
+  }
 };
 
 /**
  * Dispatch state mutation via event bus (DR-1).
- * All mutations go through here; handlers react.
- * PRE: action string, payload object
- * POST: EventBus emits with cloned payload
  */
 function dispatch(action, payload = {}) {
   const cloned = typeof structuredClone === 'function'
@@ -2273,7 +2755,7 @@ function toast(message, type = 'info') {
   }, TOAST_DURATION_MS);
 }
 
-/* ---------------- PERSISTENCE (Ephemeral by default, DR-4) ---------------- */
+/* ---------------- PERSISTENCE ---------------- */
 
 function serializeSavedState() {
   const savedChats = Array.from(AppState.chats.values())
@@ -2287,16 +2769,31 @@ function serializeSavedState() {
       createdAt: c.createdAt,
       updatedAt: c.updatedAt,
       likeFeedback: c.likeFeedback,
-      dislikeFeedback: c.dislikeFeedback
+      dislikeFeedback: c.dislikeFeedback,
+      tags: c.tags || []
     }));
+  
+  const customProviders = Array.from(AppState.customProviders.entries()).map(([id, p]) => ({
+    id,
+    name: p.name,
+    baseUrl: p.baseUrl,
+    apiKey: p.apiKey,
+    models: p.models,
+    selectedModel: p.selectedModel
+  }));
+
   return {
-    version: 3,
+    version: 4,
     providers: AppState.providers,
+    customProviders,
     settings: AppState.settings,
     chats: savedChats,
+    scheduledMessages: AppState.scheduledMessages,
     currentMode: AppState.currentMode,
     theme: AppState.theme,
-    missionCounter: AppState.missionCounter
+    accessibility: AppState.accessibility,
+    missionCounter: AppState.missionCounter,
+    stats: AppState.stats
   };
 }
 
@@ -2334,7 +2831,7 @@ function pruneOldSavedMissions() {
   const toRemove = sorted.slice(MAX_SAVED_MISSIONS);
   toRemove.forEach(c => {
     const chat = AppState.chats.get(c.id);
-    if (chat) chat.saved = false; // Downgrade to ephemeral, not delete
+    if (chat) chat.saved = false;
   });
 }
 
@@ -2344,6 +2841,9 @@ function loadState() {
     if (!raw) return false;
     const data = JSON.parse(raw);
     if (!data || typeof data !== 'object') return false;
+
+    // Migrate from v3 if needed
+    const version = data.version || 3;
 
     if (data.providers && typeof data.providers === 'object') {
       for (const key of Object.keys(AppState.providers)) {
@@ -2356,9 +2856,26 @@ function loadState() {
         }
       }
     }
+
+    if (Array.isArray(data.customProviders)) {
+      AppState.customProviders = new Map();
+      for (const p of data.customProviders) {
+        if (p && typeof p.id === 'string') {
+          AppState.customProviders.set(p.id, {
+            name: String(p.name || 'Custom'),
+            baseUrl: String(p.baseUrl || ''),
+            apiKey: String(p.apiKey || ''),
+            models: Array.isArray(p.models) ? p.models : [],
+            selectedModel: String(p.selectedModel || '')
+          });
+        }
+      }
+    }
+
     if (data.settings && typeof data.settings === 'object') {
       AppState.settings = { ...AppState.settings, ...data.settings };
     }
+
     if (Array.isArray(data.chats)) {
       AppState.chats = new Map();
       for (const c of data.chats) {
@@ -2372,16 +2889,28 @@ function loadState() {
             createdAt: Number(c.createdAt) || Date.now(),
             updatedAt: Number(c.updatedAt) || Date.now(),
             likeFeedback: c.likeFeedback || null,
-            dislikeFeedback: c.dislikeFeedback || null
+            dislikeFeedback: c.dislikeFeedback || null,
+            tags: Array.isArray(c.tags) ? c.tags : []
           });
         }
       }
     }
+
+    if (Array.isArray(data.scheduledMessages)) {
+      AppState.scheduledMessages = data.scheduledMessages;
+    }
+
     if (typeof data.currentMode === 'string' && SYSTEM_PROMPTS[data.currentMode]) {
       AppState.currentMode = data.currentMode;
     }
+
     if (typeof data.theme === 'string') AppState.theme = data.theme;
+    if (typeof data.accessibility === 'string') AppState.accessibility = data.accessibility;
     if (typeof data.missionCounter === 'number') AppState.missionCounter = data.missionCounter;
+    if (data.stats && typeof data.stats === 'object') {
+      AppState.stats = { ...AppState.stats, ...data.stats };
+    }
+
     return true;
   } catch (err) {
     console.error('loadState error:', err);
@@ -2389,7 +2918,7 @@ function loadState() {
   }
 }
 
-/* ---------------- CHAT MANAGEMENT (FIXED) ---------------- */
+/* ---------------- CHAT MANAGEMENT ---------------- */
 
 function createNewMission() {
   AppState.missionCounter++;
@@ -2399,16 +2928,16 @@ function createNewMission() {
     title: `Mission #${AppState.missionCounter}`,
     messages: [],
     mode: AppState.currentMode,
-    saved: false,  // EPHEMERAL by default (DR-2)
+    saved: false,
     createdAt: Date.now(),
     updatedAt: Date.now(),
     likeFeedback: null,
-    dislikeFeedback: null
+    dislikeFeedback: null,
+    tags: []
   };
   AppState.chats.set(id, chat);
   AppState.currentChatId = id;
   AppState.lastRenderedMessageCount = 0;
-  // DO NOT save to localStorage — ephemeral by design
   return chat;
 }
 
@@ -2424,7 +2953,6 @@ function updateCurrentChat(mutator) {
   if (typeof mutator === 'function') mutator(chat);
   chat.updatedAt = Date.now();
   AppState.chats.set(chat.id, chat);
-  // Only persist if saved
   if (chat.saved) saveState();
   renderSaveIndicator();
 }
@@ -2510,6 +3038,46 @@ function renameChat(id, ev) {
   });
 }
 
+function tagChat(id, ev) {
+  if (ev) ev.stopPropagation();
+  if (typeof id !== 'string' || !AppState.chats.has(id)) return;
+  const chat = AppState.chats.get(id);
+  openPromptModal({
+    title: 'Add Tag',
+    placeholder: 'Tag name (e.g., important, bug, feature)',
+    defaultValue: '',
+    onSubmit: (val) => {
+      const tag = (val || '').trim().toLowerCase();
+      if (!tag) return;
+      if (!chat.tags.includes(tag)) {
+        chat.tags.push(tag);
+        chat.updatedAt = Date.now();
+        if (chat.saved) saveState();
+        renderChatLists();
+        toast('Tag added', 'success');
+      }
+    }
+  });
+}
+
+function branchMission(id, ev) {
+  if (ev) ev.stopPropagation();
+  if (typeof id !== 'string' || !AppState.chats.has(id)) return;
+  const originalChat = AppState.chats.get(id);
+  
+  createNewMission();
+  const newChat = getCurrentChat();
+  newChat.title = `Branch: ${originalChat.title}`;
+  newChat.messages = JSON.parse(JSON.stringify(originalChat.messages));
+  newChat.mode = originalChat.mode;
+  newChat.tags = [...originalChat.tags, 'branch'];
+  
+  renderChatLists();
+  renderMessages();
+  renderSaveIndicator();
+  toast('Mission branched', 'success');
+}
+
 /* ---------------- RENDERING ---------------- */
 
 function renderChatLists() {
@@ -2521,14 +3089,21 @@ function renderChatList(container, savedOnly) {
   if (!container) return;
   container.innerHTML = '';
 
+  const searchQuery = ($('#search-input')?.value || '').toLowerCase().trim();
+
   const chats = Array.from(AppState.chats.values())
     .filter(c => savedOnly ? c.saved : !c.saved)
+    .filter(c => {
+      if (!searchQuery) return true;
+      const searchable = `${c.title} ${c.messages.map(m => m.content || '').join(' ')} ${(c.tags || []).join(' ')}`.toLowerCase();
+      return searchable.includes(searchQuery);
+    })
     .sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
 
   if (chats.length === 0) {
     const hint = savedOnly
       ? 'No archived missions. Click SAVE to archive.'
-      : 'No active missions. Click + NEW MISSION.';
+      : searchQuery ? 'No missions match your search.' : 'No active missions. Click + NEW MISSION.';
     container.appendChild(el('div', { class: 'empty-hint', text: hint }));
     return;
   }
@@ -2546,7 +3121,18 @@ function renderChatList(container, savedOnly) {
       class: 'chat-status-dot ' + (chat.saved ? 'saved' : 'ephemeral'),
       title: chat.saved ? 'Archived' : 'Ephemeral'
     }));
-    item.appendChild(el('span', { class: 'chat-item-title', text: chat.title }));
+    
+    const titleSpan = el('span', { class: 'chat-item-title', text: chat.title });
+    item.appendChild(titleSpan);
+
+    // Tags
+    if (chat.tags && chat.tags.length > 0) {
+      const tagsDiv = el('div', { class: 'chat-item-tags' });
+      chat.tags.slice(0, 2).forEach(tag => {
+        tagsDiv.appendChild(el('span', { class: 'tag-pill', text: tag }));
+      });
+      item.appendChild(tagsDiv);
+    }
 
     const actions = el('div', { class: 'chat-item-actions' });
 
@@ -2567,6 +3153,16 @@ function renderChatList(container, savedOnly) {
       });
       actions.appendChild(saveBtn);
     }
+
+    const branchBtn = el('button', { class: 'btn-icon branch', type: 'button', 'aria-label': 'Branch' },
+      [el('span', { html: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>' })]);
+    branchBtn.addEventListener('click', (e) => branchMission(chat.id, e));
+    actions.appendChild(branchBtn);
+
+    const tagBtn = el('button', { class: 'btn-icon tag', type: 'button', 'aria-label': 'Tag' },
+      [el('span', { html: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>' })]);
+    tagBtn.addEventListener('click', (e) => tagChat(chat.id, e));
+    actions.appendChild(tagBtn);
 
     const renameBtn = el('button', { class: 'btn-icon', type: 'button', 'aria-label': 'Rename' },
       [el('span', { html: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>' })]);
@@ -2748,10 +3344,17 @@ function renderMessage(msg, idx) {
     ]);
     copyBtn.addEventListener('click', () => copyMessage(idx));
 
+    const ttsBtn = el('button', { class: 'action-btn', type: 'button' }, [
+      el('span', { html: '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>' }),
+      el('span', { text: 'TTS' })
+    ]);
+    ttsBtn.addEventListener('click', () => speakMessage(idx));
+
     actions.appendChild(likeBtn);
     actions.appendChild(disBtn);
     actions.appendChild(regenBtn);
     actions.appendChild(copyBtn);
+    actions.appendChild(ttsBtn);
     body.appendChild(actions);
 
     if (AppState.settings.followUpEnabled && Array.isArray(msg.followUps) && msg.followUps.length > 0) {
@@ -2839,25 +3442,35 @@ function buildSystemPrompt() {
   return parts.join('\n\n');
 }
 
-/* ---------------- API STREAMING (DR-3: AbortController + timeout) ---------------- */
+/* ---------------- API STREAMING ---------------- */
 
 function getCurrentProvider() {
-  if (AppState.providers.mistral.selectedModel && AppState.providers.mistral.apiKey) return 'mistral';
-  if (AppState.providers.groq.selectedModel && AppState.providers.groq.apiKey) return 'groq';
-  if (AppState.providers.google.selectedModel && AppState.providers.google.apiKey) return 'google';
+  if (AppState.providers.mistral.selectedModel && AppState.providers.mistral.apiKey) return { type: 'built-in', name: 'mistral' };
+  if (AppState.providers.groq.selectedModel && AppState.providers.groq.apiKey) return { type: 'built-in', name: 'groq' };
+  if (AppState.providers.google.selectedModel && AppState.providers.google.apiKey) return { type: 'built-in', name: 'google' };
+  
+  // Check custom providers
+  for (const [id, provider] of AppState.customProviders) {
+    if (provider.selectedModel && provider.apiKey) {
+      return { type: 'custom', id, name: provider.name };
+    }
+  }
+  
   return null;
 }
 
-async function loadModels(provider) {
-  const apiKeyEl = $(`#api-key-${provider}`);
+async function loadModels(providerName) {
+  const isCustom = AppState.customProviders.has(providerName);
+  const apiKeyEl = isCustom ? $(`#api-key-custom-${providerName}`) : $(`#api-key-${providerName}`);
   if (!apiKeyEl) return;
   const apiKey = apiKeyEl.value.trim();
   if (!apiKey) { toast('API Key required', 'error'); return; }
 
-  AppState.providers[provider].apiKey = apiKey;
+  const cfg = isCustom ? AppState.customProviders.get(providerName) : AppState.providers[providerName];
+  cfg.apiKey = apiKey;
   saveState();
 
-  const select = $(`#model-${provider}`);
+  const select = isCustom ? $(`#model-custom-${providerName}`) : $(`#model-${providerName}`);
   if (!select) return;
   select.innerHTML = '<option value="">Syncing...</option>';
 
@@ -2866,11 +3479,13 @@ async function loadModels(provider) {
 
   try {
     let url, headers = {};
-    const cfg = AppState.providers[provider];
-    if (provider === 'mistral' || provider === 'groq') {
+    if (isCustom) {
       url = `${cfg.baseUrl}/models`;
       headers = { 'Authorization': `Bearer ${apiKey}` };
-    } else if (provider === 'google') {
+    } else if (providerName === 'mistral' || providerName === 'groq') {
+      url = `${cfg.baseUrl}/models`;
+      headers = { 'Authorization': `Bearer ${apiKey}` };
+    } else if (providerName === 'google') {
       url = `${cfg.baseUrl}/models?key=${encodeURIComponent(apiKey)}`;
     }
 
@@ -2886,7 +3501,7 @@ async function loadModels(provider) {
     const data = await res.json();
 
     let models = [];
-    if (provider === 'google') {
+    if (providerName === 'google' && !isCustom) {
       models = (data.models || [])
         .filter(m => Array.isArray(m.supportedGenerationMethods) && m.supportedGenerationMethods.includes('generateContent'))
         .map(m => (m.name || '').replace('models/', ''))
@@ -2903,17 +3518,21 @@ async function loadModels(provider) {
       select.value = cfg.selectedModel;
     }
 
-    $(`#status-${provider}`).classList.add('online');
-    $(`#card-${provider}`).classList.add('connected');
+    const statusEl = isCustom ? $(`#status-custom-${providerName}`) : $(`#status-${providerName}`);
+    const cardEl = isCustom ? $(`#card-custom-${providerName}`) : $(`#card-${providerName}`);
+    if (statusEl) statusEl.classList.add('online');
+    if (cardEl) cardEl.classList.add('connected');
     updateUplinkStatus();
-    toast(`${models.length} ${provider} models synced`, 'success');
+    toast(`${models.length} ${providerName} models synced`, 'success');
     saveState();
   } catch (err) {
     clearTimeout(timeoutId);
     console.error('loadModels:', err);
     select.innerHTML = '<option value="">Sync failed</option>';
-    $(`#status-${provider}`).classList.remove('online');
-    $(`#card-${provider}`).classList.remove('connected');
+    const statusEl = isCustom ? $(`#status-custom-${providerName}`) : $(`#status-${providerName}`);
+    const cardEl = isCustom ? $(`#card-custom-${providerName}`) : $(`#card-${providerName}`);
+    if (statusEl) statusEl.classList.remove('online');
+    if (cardEl) cardEl.classList.remove('connected');
     updateUplinkStatus();
     const msg = err.name === 'AbortError' ? 'Request timeout' : err.message;
     toast(`Sync error: ${msg}`, 'error');
@@ -2927,8 +3546,10 @@ function updateUplinkStatus() {
   statusLight.classList.toggle('online', hasProvider);
 }
 
-async function streamChat(provider, model, messages, { onChunk, onError, onComplete, signal }) {
-  const cfg = AppState.providers[provider];
+async function streamChat(providerInfo, model, messages, { onChunk, onError, onComplete, signal }) {
+  const isCustom = providerInfo.type === 'custom';
+  const cfg = isCustom ? AppState.customProviders.get(providerInfo.id) : AppState.providers[providerInfo.name];
+  
   if (!cfg || !cfg.apiKey || !model) {
     onError(new Error('Provider or model not configured'));
     return;
@@ -2936,7 +3557,7 @@ async function streamChat(provider, model, messages, { onChunk, onError, onCompl
 
   let url, headers = { 'Content-Type': 'application/json' }, body;
 
-  if (provider === 'mistral' || provider === 'groq') {
+  if (isCustom || providerInfo.name === 'mistral' || providerInfo.name === 'groq') {
     url = `${cfg.baseUrl}/chat/completions`;
     headers.Authorization = `Bearer ${cfg.apiKey}`;
     body = {
@@ -2946,10 +3567,10 @@ async function streamChat(provider, model, messages, { onChunk, onError, onCompl
       temperature: AppState.settings.temperature,
       max_tokens: AppState.settings.maxTokens
     };
-    if (provider === 'groq' && cfg.reasoning && cfg.reasoning !== 'none') {
+    if (providerInfo.name === 'groq' && cfg.reasoning && cfg.reasoning !== 'none') {
       body.reasoning_effort = cfg.reasoning;
     }
-  } else if (provider === 'google') {
+  } else if (providerInfo.name === 'google') {
     url = `${cfg.baseUrl}/models/${model}:streamGenerateContent?alt=sse&key=${encodeURIComponent(cfg.apiKey)}`;
     body = {
       contents: messages
@@ -3002,9 +3623,9 @@ async function streamChat(provider, model, messages, { onChunk, onError, onCompl
         try {
           const obj = JSON.parse(payload);
           let delta = '';
-          if (provider === 'mistral' || provider === 'groq') {
+          if (isCustom || providerInfo.name === 'mistral' || providerInfo.name === 'groq') {
             delta = obj?.choices?.[0]?.delta?.content || '';
-          } else if (provider === 'google') {
+          } else if (providerInfo.name === 'google') {
             delta = obj?.candidates?.[0]?.content?.parts?.[0]?.text || '';
           }
           if (delta) onChunk(delta);
@@ -3026,8 +3647,8 @@ async function sendMessage() {
   const text = input.value.trim();
   if (!text || AppState.isLoading) return;
 
-  const provider = getCurrentProvider();
-  if (!provider) {
+  const providerInfo = getCurrentProvider();
+  if (!providerInfo) {
     toast('Uplink provider: insert API Key and select model', 'error');
     return;
   }
@@ -3079,10 +3700,11 @@ async function sendMessage() {
       .map(m => ({ role: m.role, content: m.content }))
   ];
 
-  const model = AppState.providers[provider].selectedModel;
+  const model = isCustom ? AppState.customProviders.get(providerInfo.id).selectedModel : AppState.providers[providerInfo.name].selectedModel;
   let fullContent = '';
+  const startTime = Date.now();
 
-  await streamChat(provider, model, apiMessages, {
+  await streamChat(providerInfo, model, apiMessages, {
     signal: AppState.abortController.signal,
     onChunk: (chunk) => {
       fullContent += chunk;
@@ -3108,6 +3730,15 @@ async function sendMessage() {
       if (chat.saved) saveState();
       renderMessages();
       renderChatLists();
+      
+      // Update stats
+      const responseTime = Date.now() - startTime;
+      AppState.stats.totalMessages++;
+      AppState.stats.totalTokens += fullContent.split(/\s+/).length;
+      AppState.stats.avgResponseTime = Math.round(
+        (AppState.stats.avgResponseTime * (AppState.stats.totalMessages - 1) + responseTime) / AppState.stats.totalMessages
+      );
+      saveState();
     }
   });
 }
@@ -3247,7 +3878,39 @@ async function copyMessage(idx) {
   }
 }
 
-/* ---------------- FILE ATTACHMENTS (DR-6: proper cleanup) ---------------- */
+/* ---------------- TEXT-TO-SPEECH ---------------- */
+
+function speakMessage(idx) {
+  if (!('speechSynthesis' in window)) {
+    toast('Text-to-speech not supported', 'error');
+    return;
+  }
+
+  const chat = getCurrentChat();
+  const msg = chat.messages[idx];
+  if (!msg || !msg.content) return;
+
+  // Cancel any ongoing speech
+  speechSynthesis.cancel();
+
+  const utterance = new SpeechSynthesisUtterance(msg.content);
+  
+  // Use selected voice or default
+  if (AppState.settings.ttsVoice) {
+    const voices = speechSynthesis.getVoices();
+    const voice = voices.find(v => v.name === AppState.settings.ttsVoice);
+    if (voice) utterance.voice = voice;
+  }
+
+  utterance.rate = 1.0;
+  utterance.pitch = 1.0;
+  utterance.volume = 1.0;
+
+  speechSynthesis.speak(utterance);
+  toast('Speaking message...', 'info');
+}
+
+/* ---------------- FILE ATTACHMENTS ---------------- */
 
 function handleFiles(files) {
   if (!files || files.length === 0) return;
@@ -3367,6 +4030,9 @@ async function runLocalTool(handler) {
   if (handler === 'localHash') return runLocalHash();
   if (handler === 'localWordCount') return runLocalWordCount();
   if (handler === 'localExport') return runLocalExport();
+  if (handler === 'localCodeExec') return runLocalCodeExec();
+  if (handler === 'localMultiSend') return runLocalMultiSend();
+  if (handler === 'localSchedule') return runLocalSchedule();
 }
 
 async function runLocalHash() {
@@ -3410,7 +4076,9 @@ function runLocalExport() {
     options: [
       { id: 'txt', label: 'Text (.txt)' },
       { id: 'json', label: 'JSON (.json)' },
-      { id: 'pdf', label: 'Print / PDF' }
+      { id: 'pdf', label: 'Print / PDF' },
+      { id: 'md', label: 'Markdown (.md)' },
+      { id: 'csv', label: 'CSV (.csv)' }
     ],
     onSelect: (id) => doExport(id, chat)
   });
@@ -3426,6 +4094,16 @@ function doExport(format, chat) {
   } else if (format === 'json') {
     const blob = new Blob([JSON.stringify(chat, null, 2)], { type: 'application/json' });
     downloadBlob(blob, `${slugify(title)}.json`);
+  } else if (format === 'md') {
+    const lines = chat.messages.map(m =>
+      `## ${m.role === 'user' ? 'GROUND CONTROL' : 'MISSION CONTROL'}\n\n${m.content || ''}`
+    ).join('\n\n---\n\n');
+    downloadBlob(new Blob([lines], { type: 'text/markdown;charset=utf-8' }), `${slugify(title)}.md`);
+  } else if (format === 'csv') {
+    const csv = 'Role,Content\n' + chat.messages.map(m =>
+      `"${m.role === 'user' ? 'GROUND CONTROL' : 'MISSION CONTROL'}","${(m.content || '').replace(/"/g, '""')}"`
+    ).join('\n');
+    downloadBlob(new Blob([csv], { type: 'text/csv;charset=utf-8' }), `${slugify(title)}.csv`);
   } else if (format === 'pdf') {
     const w = window.open('', '_blank');
     if (!w) { toast('Popup blocked by browser', 'error'); return; }
@@ -3454,6 +4132,235 @@ function downloadBlob(blob, filename) {
 
 function slugify(s) {
   return (s || 'mission').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60) || 'mission';
+}
+
+/* ---------------- CODE EXECUTION ---------------- */
+
+function runLocalCodeExec() {
+  const input = $('#msg-input');
+  const code = (input && input.value) || '';
+  if (!code.trim()) { toast('Enter code in message field', 'warning'); return; }
+
+  openCodeExecModal(code);
+}
+
+function openCodeExecModal(code) {
+  openModal((modal, overlay) => {
+    modal.appendChild(el('h2', { text: '⚡ Code Execution' }));
+    
+    const langSelect = el('select', { class: 'select-field' });
+    ['javascript', 'python'].forEach(lang => {
+      langSelect.appendChild(el('option', { value: lang, text: lang.toUpperCase() }));
+    });
+    modal.appendChild(langSelect);
+
+    const codeArea = el('textarea', {
+      class: 'textarea-field',
+      rows: '10'
+    });
+    codeArea.value = code;
+    modal.appendChild(codeArea);
+
+    const outputDiv = el('div', { class: 'code-exec-output' });
+    outputDiv.textContent = 'Click Run to execute...';
+    modal.appendChild(outputDiv);
+
+    const actions = el('div', { class: 'modal-actions' });
+    const cancel = el('button', { class: 'btn btn-secondary-modal', type: 'button', text: 'Close' });
+    cancel.addEventListener('click', () => overlay.remove());
+    
+    const run = el('button', { class: 'btn btn-primary', type: 'button', text: 'Run' });
+    run.addEventListener('click', async () => {
+      const lang = langSelect.value;
+      const codeToRun = codeArea.value;
+      outputDiv.classList.remove('error');
+      outputDiv.textContent = 'Executing...';
+
+      try {
+        if (lang === 'javascript') {
+          // Sandboxed execution
+          const result = await new Promise((resolve, reject) => {
+            try {
+              const fn = new Function(`return ${codeToRun}`);
+              resolve(fn());
+            } catch (err) {
+              reject(err);
+            }
+          });
+          outputDiv.textContent = `Result: ${JSON.stringify(result, null, 2)}`;
+        } else {
+          outputDiv.textContent = 'Python execution requires server-side support. Not available in browser.';
+          outputDiv.classList.add('error');
+        }
+      } catch (err) {
+        outputDiv.textContent = `Error: ${err.message}`;
+        outputDiv.classList.add('error');
+      }
+    });
+
+    actions.appendChild(cancel);
+    actions.appendChild(run);
+    modal.appendChild(actions);
+  });
+}
+
+/* ---------------- MULTI-PROVIDER QUERY ---------------- */
+
+async function runLocalMultiSend() {
+  const input = $('#msg-input');
+  const text = (input && input.value) || '';
+  if (!text.trim()) { toast('Enter message in input field', 'warning'); return; }
+
+  const providers = [];
+  if (AppState.providers.mistral.selectedModel && AppState.providers.mistral.apiKey) {
+    providers.push({ type: 'built-in', name: 'mistral' });
+  }
+  if (AppState.providers.groq.selectedModel && AppState.providers.groq.apiKey) {
+    providers.push({ type: 'built-in', name: 'groq' });
+  }
+  if (AppState.providers.google.selectedModel && AppState.providers.google.apiKey) {
+    providers.push({ type: 'built-in', name: 'google' });
+  }
+  for (const [id, p] of AppState.customProviders) {
+    if (p.selectedModel && p.apiKey) {
+      providers.push({ type: 'custom', id, name: p.name });
+    }
+  }
+
+  if (providers.length === 0) {
+    toast('No providers configured', 'error');
+    return;
+  }
+
+  openMultiSendModal(text, providers);
+}
+
+function openMultiSendModal(text, providers) {
+  openModal((modal, overlay) => {
+    modal.appendChild(el('h2', { text: '🌐 Multi-Provider Query' }));
+    modal.appendChild(el('p', { text: `Sending to ${providers.length} providers...`, style: 'color:var(--text-secondary);margin-bottom:12px;' }));
+
+    const grid = el('div', { class: 'comparison-grid' });
+    modal.appendChild(grid);
+
+    const actions = el('div', { class: 'modal-actions' });
+    const close = el('button', { class: 'btn btn-primary', type: 'button', text: 'Close' });
+    close.addEventListener('click', () => overlay.remove());
+    actions.appendChild(close);
+    modal.appendChild(actions);
+
+    // Send to each provider
+    providers.forEach(providerInfo => {
+      const column = el('div', { class: 'comparison-column' });
+      column.appendChild(el('div', { class: 'comparison-header', text: providerInfo.name }));
+      
+      const content = el('div', { style: 'font-size:12px;color:var(--text-secondary);' });
+      content.textContent = 'Streaming...';
+      column.appendChild(content);
+      grid.appendChild(column);
+
+      const cfg = providerInfo.type === 'custom' 
+        ? AppState.customProviders.get(providerInfo.id)
+        : AppState.providers[providerInfo.name];
+      const model = cfg.selectedModel;
+
+      let fullContent = '';
+      streamChat(providerInfo, model, [{ role: 'user', content: text }], {
+        signal: new AbortController().signal,
+        onChunk: (chunk) => {
+          fullContent += chunk;
+          content.textContent = fullContent;
+        },
+        onError: (err) => {
+          content.textContent = `Error: ${err.message}`;
+          content.style.color = 'var(--error)';
+        },
+        onComplete: () => {
+          content.innerHTML = parseMarkdown(fullContent);
+        }
+      });
+    });
+  });
+}
+
+/* ---------------- SCHEDULED MESSAGES ---------------- */
+
+function runLocalSchedule() {
+  const input = $('#msg-input');
+  const text = (input && input.value) || '';
+  if (!text.trim()) { toast('Enter message in input field', 'warning'); return; }
+
+  openScheduleModal(text);
+}
+
+function openScheduleModal(text) {
+  openModal((modal, overlay) => {
+    modal.appendChild(el('h2', { text: '⏰ Schedule Message' }));
+    
+    const timeInput = el('input', {
+      type: 'datetime-local',
+      class: 'input-field'
+    });
+    const now = new Date();
+    now.setMinutes(now.getMinutes() + 5);
+    timeInput.value = now.toISOString().slice(0, 16);
+    modal.appendChild(el('label', { class: 'input-label', text: 'Send at' }));
+    modal.appendChild(timeInput);
+
+    const messageArea = el('textarea', {
+      class: 'textarea-field',
+      rows: '4'
+    });
+    messageArea.value = text;
+    modal.appendChild(el('label', { class: 'input-label', text: 'Message', style: 'margin-top:12px;' }));
+    modal.appendChild(messageArea);
+
+    const actions = el('div', { class: 'modal-actions' });
+    const cancel = el('button', { class: 'btn btn-secondary-modal', type: 'button', text: 'Cancel' });
+    cancel.addEventListener('click', () => overlay.remove());
+    
+    const schedule = el('button', { class: 'btn btn-primary', type: 'button', text: 'Schedule' });
+    schedule.addEventListener('click', () => {
+      const sendTime = new Date(timeInput.value).getTime();
+      if (sendTime <= Date.now()) {
+        toast('Time must be in the future', 'error');
+        return;
+      }
+
+      AppState.scheduledMessages.push({
+        id: `sched_${Date.now()}`,
+        message: messageArea.value,
+        sendTime,
+        createdAt: Date.now()
+      });
+      saveState();
+      overlay.remove();
+      input.value = '';
+      autoResizeInput();
+      toast('Message scheduled', 'success');
+    });
+
+    actions.appendChild(cancel);
+    actions.appendChild(schedule);
+    modal.appendChild(actions);
+  });
+}
+
+function processScheduledMessages() {
+  const now = Date.now();
+  const toSend = AppState.scheduledMessages.filter(m => m.sendTime <= now);
+  
+  toSend.forEach(msg => {
+    const input = $('#msg-input');
+    if (input) {
+      input.value = msg.message;
+      autoResizeInput();
+      sendMessage();
+    }
+  });
+
+  AppState.scheduledMessages = AppState.scheduledMessages.filter(m => m.sendTime > now);
+  if (toSend.length > 0) saveState();
 }
 
 /* ---------------- MODALS ---------------- */
@@ -3540,6 +4447,72 @@ function openChoiceModal({ title, options, onSelect }) {
   });
 }
 
+/* ---------------- TEMPLATES ---------------- */
+
+function openTemplates() {
+  openModal((modal, overlay) => {
+    modal.appendChild(el('h2', { text: '📋 Mission Templates' }));
+    
+    const grid = el('div', { class: 'template-grid' });
+    MISSION_TEMPLATES.forEach(template => {
+      const card = el('div', { class: 'template-card' });
+      card.appendChild(el('div', { class: 'template-title', text: template.title }));
+      card.appendChild(el('div', { class: 'template-desc', text: template.desc }));
+      card.addEventListener('click', () => {
+        const input = $('#msg-input');
+        if (input) {
+          input.value = template.prompt;
+          autoResizeInput();
+          input.focus();
+        }
+        overlay.remove();
+        toast('Template loaded', 'success');
+      });
+      grid.appendChild(card);
+    });
+    modal.appendChild(grid);
+
+    const actions = el('div', { class: 'modal-actions' });
+    const close = el('button', { class: 'btn btn-primary', type: 'button', text: 'Close' });
+    close.addEventListener('click', () => overlay.remove());
+    actions.appendChild(close);
+    modal.appendChild(actions);
+  });
+}
+
+/* ---------------- STATISTICS ---------------- */
+
+function openStatistics() {
+  openModal((modal, overlay) => {
+    modal.appendChild(el('h2', { text: '📊 Mission Statistics' }));
+    
+    const grid = el('div', { class: 'stats-grid' });
+    
+    const stats = [
+      { label: 'Total Messages', value: AppState.stats.totalMessages },
+      { label: 'Total Tokens', value: AppState.stats.totalTokens },
+      { label: 'Total Missions', value: AppState.chats.size },
+      { label: 'Avg Response Time', value: `${AppState.stats.avgResponseTime}ms` },
+      { label: 'Saved Missions', value: Array.from(AppState.chats.values()).filter(c => c.saved).length },
+      { label: 'Active Providers', value: (getCurrentProvider() ? 1 : 0) + AppState.customProviders.size }
+    ];
+
+    stats.forEach(stat => {
+      const card = el('div', { class: 'stat-card' });
+      card.appendChild(el('div', { class: 'stat-value', text: String(stat.value) }));
+      card.appendChild(el('div', { class: 'stat-label', text: stat.label }));
+      grid.appendChild(card);
+    });
+    modal.appendChild(grid);
+
+    const actions = el('div', { class: 'modal-actions' });
+    const close = el('button', { class: 'btn btn-primary', type: 'button', text: 'Close' });
+    close.addEventListener('click', () => overlay.remove());
+    actions.appendChild(close);
+    modal.appendChild(actions);
+  });
+}
+
 /* ---------------- SETTINGS ---------------- */
 
 function openSettings() {
@@ -3590,6 +4563,22 @@ function openSettings() {
     countRow.appendChild(countSlider);
     modal.appendChild(countRow);
 
+    // TTS toggle
+    const ttsRow = el('div', { class: 'toggle-row' });
+    ttsRow.appendChild(el('span', { class: 'toggle-label', text: 'Text-to-Speech' }));
+    const ttsToggle = el('div', { class: 'toggle' + (AppState.settings.ttsEnabled ? ' on' : '') });
+    ttsToggle.addEventListener('click', () => ttsToggle.classList.toggle('on'));
+    ttsRow.appendChild(ttsToggle);
+    modal.appendChild(ttsRow);
+
+    // Auto-save drafts
+    const autoSaveRow = el('div', { class: 'toggle-row' });
+    autoSaveRow.appendChild(el('span', { class: 'toggle-label', text: 'Auto-save drafts' }));
+    const autoSaveToggle = el('div', { class: 'toggle' + (AppState.settings.autoSaveDrafts ? ' on' : '') });
+    autoSaveToggle.addEventListener('click', () => autoSaveToggle.classList.toggle('on'));
+    autoSaveRow.appendChild(autoSaveToggle);
+    modal.appendChild(autoSaveRow);
+
     // Global system prompt
     const promptGroup = el('div', { style: 'margin-top:8px;' });
     promptGroup.appendChild(el('label', { class: 'input-label', text: 'Global System Prompt' }));
@@ -3607,6 +4596,8 @@ function openSettings() {
       AppState.settings.maxTokens = parseInt(tokensSlider.value, 10);
       AppState.settings.followUpEnabled = followToggle.classList.contains('on');
       AppState.settings.followUpCount = parseInt(countSlider.value, 10);
+      AppState.settings.ttsEnabled = ttsToggle.classList.contains('on');
+      AppState.settings.autoSaveDrafts = autoSaveToggle.classList.contains('on');
       AppState.settings.globalSystemPrompt = promptArea.value;
       saveState();
       overlay.remove();
@@ -3618,30 +4609,134 @@ function openSettings() {
   });
 }
 
-function openHelp() {
+/* ---------------- DEVELOPER MODE ---------------- */
+
+function openDeveloperMode() {
   openModal((modal, overlay) => {
-    modal.appendChild(el('h2', { text: '❓ Mission Control Guide' }));
-    const body = el('div', { style: 'color:var(--text-secondary);line-height:1.7;font-size:13px;' });
-    const sections = [
-      ['🎯 Mission Modes', 'Erik (structured dev), Assistant (generic), Coder (code expert), Support (tech help). Mode persists per mission.'],
-      ['💾 Persistence', 'All missions are EPHEMERAL by default (not saved). Click SAVE or the disk icon to archive to local storage. Unsaved missions are lost on refresh.'],
-      ['🧰 Tools', 'Click the wrench icon for: Web Search, Calculator, Translate, Summarize, SHA-256 Hash, Word Count, Export. Image generation removed by design.'],
-      ['🔌 Uplink Providers', 'Supports Mistral AI, Groq (with reasoning effort), Google AI Studio. Insert API Key and click "Sync Models".'],
-      ['📎 Attachments', 'Click paperclip to attach images/files (max 10MB).'],
-      ['🔒 Privacy', 'API Keys stored only in your browser localStorage. No data sent to third parties except chosen provider.'],
-      ['🌓 Theme', 'Click sun/moon icon to toggle light/dark mode. Auto follows system preference.']
-    ];
-    sections.forEach(([title, txt]) => {
-      body.appendChild(el('h3', { text: title, style: 'color:var(--accent);margin-top:14px;margin-bottom:4px;font-size:13px;font-family:var(--font-display);text-transform:uppercase;letter-spacing:1px;' }));
-      body.appendChild(el('p', { text: txt }));
+    modal.appendChild(el('h2', { text: '👨‍💻 Developer Mode' }));
+    modal.appendChild(el('p', { text: 'Add custom OpenAI-compatible providers', style: 'color:var(--text-secondary);margin-bottom:12px;' }));
+
+    // List existing custom providers
+    const listDiv = el('div', { style: 'margin-bottom:16px;' });
+    AppState.customProviders.forEach((provider, id) => {
+      const item = el('div', {
+        style: 'background:var(--bg-elevated);border:1px solid var(--border-normal);border-radius:6px;padding:12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;'
+      });
+      item.appendChild(el('div', {}, [
+        el('div', { style: 'font-weight:600;color:var(--developer-orange);', text: provider.name }),
+        el('div', { style: 'font-size:11px;color:var(--text-muted);', text: provider.baseUrl })
+      ]));
+      
+      const deleteBtn = el('button', { class: 'btn-icon danger', type: 'button', 'aria-label': 'Delete' },
+        [el('span', { html: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6"/></svg>' })]);
+      deleteBtn.addEventListener('click', () => {
+        AppState.customProviders.delete(id);
+        saveState();
+        overlay.remove();
+        openDeveloperMode();
+        toast('Custom provider removed', 'success');
+      });
+      item.appendChild(deleteBtn);
+      listDiv.appendChild(item);
     });
-    modal.appendChild(body);
+    modal.appendChild(listDiv);
+
+    // Add new provider form
+    modal.appendChild(el('h3', { text: 'Add Custom Provider', style: 'margin-top:16px;margin-bottom:8px;font-size:13px;' }));
+
+    const nameInput = el('input', { type: 'text', class: 'input-field', placeholder: 'Provider name (e.g., LocalAI)' });
+    modal.appendChild(el('label', { class: 'input-label', text: 'Name' }));
+    modal.appendChild(nameInput);
+
+    const urlInput = el('input', { type: 'url', class: 'input-field', placeholder: 'https://api.example.com/v1' });
+    modal.appendChild(el('label', { class: 'input-label', text: 'Base URL', style: 'margin-top:8px;' }));
+    modal.appendChild(urlInput);
+
+    const keyInput = el('input', { type: 'password', class: 'input-field', placeholder: 'API Key (optional)' });
+    modal.appendChild(el('label', { class: 'input-label', text: 'API Key', style: 'margin-top:8px;' }));
+    modal.appendChild(keyInput);
+
     const actions = el('div', { class: 'modal-actions' });
-    const close = el('button', { class: 'btn btn-primary', type: 'button', text: 'Close' });
-    close.addEventListener('click', () => overlay.remove());
-    actions.appendChild(close);
+    const cancel = el('button', { class: 'btn btn-secondary-modal', type: 'button', text: 'Close' });
+    cancel.addEventListener('click', () => overlay.remove());
+    
+    const add = el('button', { class: 'btn btn-developer', type: 'button', text: 'Add Provider' });
+    add.addEventListener('click', () => {
+      const name = nameInput.value.trim();
+      const url = urlInput.value.trim();
+      const key = keyInput.value.trim();
+
+      if (!name || !url) {
+        toast('Name and URL are required', 'error');
+        return;
+      }
+
+      if (!url.startsWith('http')) {
+        toast('URL must start with http:// or https://', 'error');
+        return;
+      }
+
+      const id = `custom_${Date.now()}`;
+      AppState.customProviders.set(id, {
+        name,
+        baseUrl: url,
+        apiKey: key,
+        models: [],
+        selectedModel: ''
+      });
+      saveState();
+      overlay.remove();
+      openDeveloperMode();
+      toast('Custom provider added', 'success');
+    });
+
+    actions.appendChild(cancel);
+    actions.appendChild(add);
     modal.appendChild(actions);
   });
+}
+
+/* ---------------- VOICE INPUT ---------------- */
+
+function toggleVoiceInput() {
+  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+    toast('Speech recognition not supported', 'error');
+    return;
+  }
+
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const recognition = new SpeechRecognition();
+  
+  recognition.continuous = false;
+  recognition.interimResults = false;
+  recognition.lang = 'it-IT';
+
+  const btn = $('#btn-voice');
+
+  recognition.onstart = () => {
+    btn.classList.add('recording');
+    toast('Listening...', 'info');
+  };
+
+  recognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    const input = $('#msg-input');
+    if (input) {
+      input.value += ' ' + transcript;
+      autoResizeInput();
+    }
+  };
+
+  recognition.onerror = (event) => {
+    toast('Speech recognition error: ' + event.error, 'error');
+    btn.classList.remove('recording');
+  };
+
+  recognition.onend = () => {
+    btn.classList.remove('recording');
+  };
+
+  recognition.start();
 }
 
 /* ---------------- THEME ---------------- */
@@ -3673,10 +4768,8 @@ function updateThemeIcon() {
     (AppState.theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches);
 
   if (isDark) {
-    // Moon icon
     icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
   } else {
-    // Sun icon
     icon.innerHTML = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
   }
 }
@@ -3699,7 +4792,44 @@ function updateClock() {
   clockEl.textContent = `${h}:${m}:${s}`;
 }
 
-/* ---------------- EVENT BINDING (DR-6) ---------------- */
+/* ---------------- HELP ---------------- */
+
+function openHelp() {
+  openModal((modal, overlay) => {
+    modal.appendChild(el('h2', { text: '❓ Mission Control Guide' }));
+    const body = el('div', { style: 'color:var(--text-secondary);line-height:1.7;font-size:13px;' });
+    const sections = [
+      ['🎯 Mission Modes', 'Erik (structured dev), Assistant (generic), Coder (code expert), Support (tech help). Mode persists per mission.'],
+      ['💾 Persistence', 'All missions are EPHEMERAL by default (not saved). Click SAVE or the disk icon to archive to local storage. Unsaved missions are lost on refresh.'],
+      ['🧰 Tools', 'Click the wrench icon for: Web Search, Calculator, Translate, Summarize, SHA-256 Hash, Word Count, Export, Code Execution, Multi-Provider, Schedule.'],
+      ['🔌 Uplink Providers', 'Supports Mistral AI, Groq (with reasoning effort), Google AI Studio, and custom OpenAI-compatible endpoints.'],
+      ['👨‍💻 Developer Mode', 'Add custom providers with any OpenAI-compatible endpoint (LocalAI, Ollama, etc).'],
+      ['📎 Attachments', 'Click paperclip to attach images/files (max 10MB).'],
+      ['🎤 Voice Input', 'Click microphone to speak your message.'],
+      ['🔊 Text-to-Speech', 'Click TTS button on AI responses to hear them aloud.'],
+      ['🌐 Multi-Provider', 'Send the same message to multiple providers and compare responses.'],
+      ['⏰ Schedule', 'Queue messages to be sent at a specific time.'],
+      ['📋 Templates', 'Pre-configured prompts for common tasks.'],
+      ['📊 Statistics', 'View usage metrics and performance data.'],
+      ['🔖 Tags', 'Organize missions with custom tags for easy filtering.'],
+      ['🌿 Branching', 'Fork a mission into a parallel timeline to explore different directions.'],
+      ['🔒 Privacy', 'API Keys stored only in your browser localStorage. No data sent to third parties except chosen provider.'],
+      ['🌓 Theme', 'Click sun/moon icon to toggle light/dark mode. Auto follows system preference.']
+    ];
+    sections.forEach(([title, txt]) => {
+      body.appendChild(el('h3', { text: title, style: 'color:var(--accent);margin-top:14px;margin-bottom:4px;font-size:13px;font-family:var(--font-display);text-transform:uppercase;letter-spacing:1px;' }));
+      body.appendChild(el('p', { text: txt }));
+    });
+    modal.appendChild(body);
+    const actions = el('div', { class: 'modal-actions' });
+    const close = el('button', { class: 'btn btn-primary', type: 'button', text: 'Close' });
+    close.addEventListener('click', () => overlay.remove());
+    actions.appendChild(close);
+    modal.appendChild(actions);
+  });
+}
+
+/* ---------------- EVENT BINDING ---------------- */
 
 const listenerCleanup = [];
 
@@ -3721,6 +4851,10 @@ function bindEvents() {
   on($('#btn-help'), 'click', openHelp);
   on($('#btn-theme'), 'click', toggleTheme);
   on($('#btn-save-mission'), 'click', saveCurrentMission);
+  on($('#btn-templates'), 'click', openTemplates);
+  on($('#btn-stats'), 'click', openStatistics);
+  on($('#btn-developer-mode'), 'click', openDeveloperMode);
+  on($('#btn-voice'), 'click', toggleVoiceInput);
 
   $$('[data-load]').forEach(btn => {
     on(btn, 'click', () => loadModels(btn.dataset.load));
@@ -3788,6 +4922,10 @@ function bindEvents() {
 
   on($('#btn-tools'), 'click', () => toggleToolPalette());
 
+  on($('#search-input'), 'input', () => {
+    renderChatLists();
+  });
+
   on(document, 'click', (e) => {
     if (!AppState.toolPaletteOpen) return;
     const palette = $('#tool-palette');
@@ -3821,6 +4959,10 @@ function bindEvents() {
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
       e.preventDefault();
       saveCurrentMission();
+    }
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      $('#search-input')?.focus();
     }
     if (e.key === 'Escape') {
       const modal = document.querySelector('.modal-overlay');
@@ -3885,7 +5027,6 @@ function init() {
     if (AppState.chats.size === 0) {
       createNewMission();
     } else {
-      // Resume most recent saved mission
       const sorted = Array.from(AppState.chats.values())
         .filter(c => c.saved)
         .sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
@@ -3906,11 +5047,31 @@ function init() {
   updateClock();
   setInterval(updateClock, 1000);
 
+  // Process scheduled messages every minute
+  setInterval(processScheduledMessages, 60000);
+
+  // Auto-save drafts
+  if (AppState.settings.autoSaveDrafts) {
+    setInterval(() => {
+      const chat = getCurrentChat();
+      if (!chat.saved && chat.messages.length > 0) {
+        // Auto-save as draft (not marked as saved, but persisted)
+        saveState();
+      }
+    }, AUTO_SAVE_INTERVAL_MS);
+  }
+
   // Focus input on desktop
   setTimeout(() => {
     const input = $('#msg-input');
     if (input && window.innerWidth > 900) input.focus();
   }, 300);
+
+  // Hide boot sequence
+  setTimeout(() => {
+    const boot = $('#boot-sequence');
+    if (boot) boot.classList.add('hidden');
+  }, 3000);
 
   // Warn before leaving with unsaved ephemeral missions
   window.addEventListener('beforeunload', (e) => {
