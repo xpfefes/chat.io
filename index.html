@@ -3,115 +3,121 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="NAXA Mission Control v5.0 — ChatGPT-style UI with multi-provider AI">
-<meta name="theme-color" content="#212121">
-<title>NAXA Mission Control v5.0</title>
+<meta name="description" content="NAXA Mission Control v6.0 — Intel Blue Theme">
+<meta name="theme-color" content="#0A1628">
+<title>NAXA Mission Control v6.0 — Intel Blue</title>
 <style>
 /* ==========================================================================
-   NAXA v5.0 — ChatGPT-Inspired Design System
+   NAXA v6.0 — Intel Blue Design System
+   Intel® Brand Colors: #0071C5, #003087, #00ADEF
    ========================================================================== */
 
 :root {
-  /* === CHATGPT PALETTE === */
-  --bg-primary: #212121;
-  --bg-secondary: #171717;
-  --bg-tertiary: #2f2f2f;
-  --bg-elevated: #343541;
-  --bg-hover: rgba(255, 255, 255, 0.08);
-  --bg-active: rgba(255, 255, 255, 0.12);
+  /* === INTEL BLUE PALETTE === */
+  --intel-primary: #0071C5;
+  --intel-dark: #003087;
+  --intel-light: #00ADEF;
+  --intel-glow: rgba(0, 173, 239, 0.3);
   
-  --surface-user: #2f2f2f;
+  /* === SURFACES === */
+  --bg-primary: #0A1628;
+  --bg-secondary: #0B1121;
+  --bg-tertiary: #111B2E;
+  --bg-elevated: #162238;
+  --bg-hover: rgba(0, 113, 197, 0.08);
+  --bg-active: rgba(0, 113, 197, 0.15);
+  --bg-selected: rgba(0, 113, 197, 0.22);
+  
+  --surface-user: #1A2742;
   --surface-assistant: transparent;
+  --surface-code: #0D1520;
   
-  --text-primary: #ececec;
-  --text-secondary: #b4b4b4;
-  --text-muted: #8e8ea0;
-  --text-disabled: #5d5d5d;
+  /* === TEXT === */
+  --text-primary: #E8F0FE;
+  --text-secondary: #8BA4C7;
+  --text-muted: #5A7499;
+  --text-disabled: #3D5275;
+  --text-accent: #4DB8E8;
   
-  --accent: #10a37f;
-  --accent-hover: #0d8a6a;
-  --accent-light: rgba(16, 163, 127, 0.15);
+  /* === ACCENT === */
+  --accent: #0071C5;
+  --accent-hover: #0088E0;
+  --accent-light: rgba(0, 113, 197, 0.15);
+  --accent-glow: 0 0 12px rgba(0, 173, 239, 0.4);
   
-  --border: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.14);
-  --border-focus: rgba(16, 163, 127, 0.5);
+  /* === BORDERS === */
+  --border: rgba(0, 113, 197, 0.12);
+  --border-strong: rgba(0, 113, 197, 0.22);
+  --border-focus: #0071C5;
+  --border-accent: rgba(0, 173, 239, 0.4);
   
-  --error: #ef4444;
-  --error-light: rgba(239, 68, 68, 0.15);
-  --warning: #f59e0b;
-  --warning-light: rgba(245, 158, 11, 0.15);
-  --info: #3b82f6;
-  --info-light: rgba(59, 130, 246, 0.15);
+  /* === STATUS === */
+  --error: #FF4D6A;
+  --error-light: rgba(255, 77, 106, 0.12);
+  --warning: #FFB020;
+  --warning-light: rgba(255, 176, 32, 0.12);
+  --success: #00D68F;
+  --success-light: rgba(0, 214, 143, 0.12);
+  --info: #4DB8E8;
+  --info-light: rgba(77, 184, 232, 0.12);
   
   /* === TYPOGRAPHY === */
-  --font-sans: 'Söhne', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', 'SF Mono', 'Monaco', 'Consolas', monospace;
-  --font-serif: 'Georgia', 'Cambria', serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
   
   /* === SPACING === */
-  --sp-1: 4px;
-  --sp-2: 8px;
-  --sp-3: 12px;
-  --sp-4: 16px;
-  --sp-5: 20px;
-  --sp-6: 24px;
-  --sp-7: 32px;
-  --sp-8: 40px;
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px;
+  --sp-5: 20px; --sp-6: 24px; --sp-7: 32px; --sp-8: 40px;
   
   /* === RADII === */
-  --r-sm: 6px;
-  --r-md: 10px;
-  --r-lg: 16px;
-  --r-xl: 24px;
-  --r-pill: 999px;
+  --r-xs: 4px; --r-sm: 6px; --r-md: 10px; --r-lg: 14px; --r-xl: 20px; --r-pill: 999px;
   
   /* === SHADOWS === */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25);
-  --shadow-lg: 0 8px 28px rgba(0, 0, 0, 0.35);
-  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.45);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 20px rgba(0, 113, 197, 0.3);
   
   /* === TIMING === */
-  --t-fast: 120ms;
-  --t-normal: 200ms;
-  --t-slow: 300ms;
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --t-fast: 100ms; --t-normal: 180ms; --t-slow: 280ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   
   /* === LAYOUT === */
-  --sidebar-w: 260px;
-  --sidebar-collapsed: 0px;
-  --max-w-message: 768px;
-  --header-h: 52px;
+  --sidebar-w: 280px;
+  --max-w-message: 800px;
+  --header-h: 56px;
 }
 
-/* === LIGHT MODE === */
+/* === LIGHT MODE (Intel Day) === */
 [data-theme="light"] {
-  --bg-primary: #ffffff;
-  --bg-secondary: #f9f9f9;
-  --bg-tertiary: #f4f4f4;
-  --bg-elevated: #ffffff;
-  --bg-hover: rgba(0, 0, 0, 0.05);
-  --bg-active: rgba(0, 0, 0, 0.08);
+  --bg-primary: #F0F6FF;
+  --bg-secondary: #E3EEFA;
+  --bg-tertiary: #D6E5F7;
+  --bg-elevated: #FFFFFF;
+  --bg-hover: rgba(0, 113, 197, 0.06);
+  --bg-active: rgba(0, 113, 197, 0.1);
+  --bg-selected: rgba(0, 113, 197, 0.15);
   
-  --surface-user: #f4f4f4;
-  --surface-assistant: transparent;
+  --surface-user: #E3EEFA;
+  --surface-code: #F8FBFF;
   
-  --text-primary: #0d0d0d;
-  --text-secondary: #5d5d5d;
-  --text-muted: #8e8ea0;
-  --text-disabled: #b4b4b4;
+  --text-primary: #0A1628;
+  --text-secondary: #2D4A6F;
+  --text-muted: #5A7499;
+  --text-disabled: #8BA4C7;
   
-  --border: rgba(0, 0, 0, 0.08);
-  --border-strong: rgba(0, 0, 0, 0.14);
+  --border: rgba(0, 113, 197, 0.12);
+  --border-strong: rgba(0, 113, 197, 0.2);
+  
+  --shadow-sm: 0 2px 4px rgba(0, 48, 135, 0.08);
+  --shadow-md: 0 4px 16px rgba(0, 48, 135, 0.1);
+  --shadow-lg: 0 8px 32px rgba(0, 48, 135, 0.12);
 }
 
 /* === RESET === */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
   height: 100%;
@@ -122,33 +128,15 @@ html, body {
   line-height: 1.6;
   font-size: 15px;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-button, input, select, textarea {
-  font: inherit;
-  color: inherit;
-}
-
-button {
-  cursor: pointer;
-  border: none;
-  background: none;
-}
-
-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-}
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; border: none; background: none; }
+button:disabled { cursor: not-allowed; opacity: 0.4; }
+a { color: var(--text-accent); text-decoration: none; }
 
 /* === APP LAYOUT === */
-.app {
-  display: flex;
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
-  position: relative;
-}
+.app { display: flex; height: 100vh; width: 100vw; overflow: hidden; position: relative; }
 
 /* === SIDEBAR === */
 .sidebar {
@@ -163,107 +151,133 @@ button:disabled {
   border-right: 1px solid var(--border);
 }
 
-.sidebar.collapsed {
-  width: var(--sidebar-collapsed);
-}
+.sidebar.collapsed { width: 0; }
 
 .sidebar-header {
-  padding: var(--sp-3) var(--sp-3) var(--sp-3) var(--sp-4);
+  padding: var(--sp-3) var(--sp-4);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--sp-2);
-  min-height: 52px;
+  gap: var(--sp-3);
+  min-height: 56px;
   border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
 }
 
 .sidebar-logo {
   display: flex;
   align-items: center;
-  gap: var(--sp-2);
-  font-weight: 600;
-  font-size: 14px;
+  gap: var(--sp-3);
+  font-weight: 700;
+  font-size: 15px;
   white-space: nowrap;
   color: var(--text-primary);
+  letter-spacing: -0.02em;
 }
 
 .sidebar-logo-icon {
-  width: 24px;
-  height: 24px;
-  border-radius: var(--r-sm);
-  background: linear-gradient(135deg, var(--accent), #0d8a6a);
+  width: 32px;
+  height: 32px;
+  border-radius: var(--r-md);
+  background: linear-gradient(135deg, var(--intel-primary), var(--intel-light));
   display: grid;
   place-items: center;
   color: white;
-  font-size: 11px;
-  font-weight: 700;
+  font-size: 13px;
+  font-weight: 800;
+  box-shadow: var(--accent-glow);
 }
 
 .sidebar-collapse-btn {
-  width: 28px;
-  height: 28px;
+  width: 28px; height: 28px;
   border-radius: var(--r-sm);
-  color: var(--text-secondary);
+  color: var(--text-muted);
   display: grid;
   place-items: center;
   transition: all var(--t-fast);
   flex-shrink: 0;
+  margin-left: auto;
 }
 
-.sidebar-collapse-btn:hover {
-  background: var(--bg-hover);
-  color: var(--text-primary);
+.sidebar-collapse-btn:hover { background: var(--bg-hover); color: var(--text-primary); }
+
+.sidebar-search {
+  padding: var(--sp-3);
+  border-bottom: 1px solid var(--border);
 }
+
+.search-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-input-wrap svg {
+  position: absolute;
+  left: var(--sp-3);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  padding: var(--sp-2) var(--sp-3) var(--sp-2) 36px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  color: var(--text-primary);
+  font-size: 13px;
+  transition: all var(--t-fast);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-light);
+}
+
+.search-input::placeholder { color: var(--text-muted); }
 
 .btn-new-chat {
   margin: var(--sp-3);
   padding: var(--sp-3) var(--sp-4);
-  background: var(--bg-tertiary);
-  color: var(--text-primary);
-  border: 1px solid var(--border);
+  background: linear-gradient(135deg, var(--intel-primary), var(--intel-dark));
+  color: white;
   border-radius: var(--r-md);
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 600;
   display: flex;
   align-items: center;
   gap: var(--sp-2);
   transition: all var(--t-fast);
   white-space: nowrap;
   overflow: hidden;
+  box-shadow: var(--shadow-sm), var(--accent-glow);
 }
 
 .btn-new-chat:hover {
-  background: var(--bg-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md), var(--accent-glow);
 }
 
-.btn-new-chat-icon {
-  flex-shrink: 0;
-}
+.btn-new-chat:active { transform: translateY(0); }
 
-.sidebar-content {
-  flex: 1;
-  overflow-y: auto;
-  padding: var(--sp-2);
-}
+.sidebar-content { flex: 1; overflow-y: auto; padding: var(--sp-2); }
 
-.sidebar-section {
-  margin-bottom: var(--sp-5);
-}
+.sidebar-section { margin-bottom: var(--sp-4); }
 
 .sidebar-section-title {
   padding: var(--sp-2) var(--sp-3);
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 10px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
   color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
 }
 
-.chat-list {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
+.chat-list { display: flex; flex-direction: column; gap: 1px; }
 
 .chat-item {
   padding: var(--sp-2) var(--sp-3);
@@ -275,84 +289,46 @@ button:disabled {
   transition: all var(--t-fast);
   cursor: pointer;
   position: relative;
-  font-size: 14px;
+  font-size: 13px;
   overflow: hidden;
+  border: 1px solid transparent;
 }
 
-.chat-item:hover {
-  background: var(--bg-hover);
-  color: var(--text-primary);
+.chat-item:hover { background: var(--bg-hover); color: var(--text-primary); border-color: var(--border); }
+.chat-item.active { background: var(--bg-selected); color: var(--text-primary); border-color: var(--border-accent); }
+.chat-item.pinned::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--intel-light);
+  border-radius: 0 2px 2px 0;
 }
 
-.chat-item.active {
-  background: var(--bg-active);
-  color: var(--text-primary);
-}
+.chat-item-icon { color: var(--text-muted); flex-shrink: 0; }
 
-.chat-item-title {
-  flex: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
+.chat-item-title { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-.chat-item-status {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  background: var(--text-disabled);
-}
-
-.chat-item-status.saved {
-  background: var(--accent);
-}
-
-.chat-item-actions {
-  display: flex;
-  gap: 2px;
-  opacity: 0;
-  transition: opacity var(--t-fast);
-}
-
-.chat-item:hover .chat-item-actions,
-.chat-item.active .chat-item-actions {
-  opacity: 1;
-}
+.chat-item-actions { display: flex; gap: 2px; opacity: 0; transition: opacity var(--t-fast); }
+.chat-item:hover .chat-item-actions { opacity: 1; }
 
 .btn-icon {
-  width: 24px;
-  height: 24px;
+  width: 22px; height: 22px;
   display: grid;
   place-items: center;
   color: var(--text-muted);
-  border-radius: var(--r-sm);
+  border-radius: var(--r-xs);
   transition: all var(--t-fast);
   flex-shrink: 0;
 }
 
-.btn-icon:hover {
-  background: var(--bg-hover);
-  color: var(--text-primary);
-}
+.btn-icon:hover { background: var(--bg-hover); color: var(--text-primary); }
+.btn-icon.danger:hover { background: var(--error-light); color: var(--error); }
+.btn-icon.active { color: var(--intel-light); }
 
-.btn-icon.danger:hover {
-  background: var(--error-light);
-  color: var(--error);
-}
+.empty-hint { padding: var(--sp-4) var(--sp-3); text-align: center; color: var(--text-muted); font-size: 12px; }
 
-.empty-hint {
-  padding: var(--sp-4) var(--sp-3);
-  text-align: center;
-  color: var(--text-muted);
-  font-size: 13px;
-}
-
-/* Sidebar footer with settings */
-.sidebar-footer {
-  padding: var(--sp-2) var(--sp-3);
-  border-top: 1px solid var(--border);
-}
+.sidebar-footer { padding: var(--sp-2) var(--sp-3); border-top: 1px solid var(--border); }
 
 .user-menu {
   padding: var(--sp-2) var(--sp-3);
@@ -364,40 +340,24 @@ button:disabled {
   transition: background var(--t-fast);
 }
 
-.user-menu:hover {
-  background: var(--bg-hover);
-}
+.user-menu:hover { background: var(--bg-hover); }
 
 .user-avatar {
-  width: 28px;
-  height: 28px;
+  width: 28px; height: 28px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #a855f7, #6366f1);
+  background: linear-gradient(135deg, var(--intel-primary), var(--intel-light));
   display: grid;
   place-items: center;
   color: white;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 11px;
+  font-weight: 700;
   flex-shrink: 0;
 }
 
-.user-name {
-  flex: 1;
-  font-size: 14px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
+.user-name { flex: 1; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 /* === MAIN === */
-.main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  position: relative;
-  background: var(--bg-primary);
-}
+.main { flex: 1; display: flex; flex-direction: column; min-width: 0; position: relative; background: var(--bg-primary); }
 
 .main-header {
   height: var(--header-h);
@@ -409,22 +369,19 @@ button:disabled {
   flex-shrink: 0;
   position: relative;
   z-index: 10;
+  background: var(--bg-secondary);
 }
 
 .menu-toggle {
   display: none;
-  width: 32px;
-  height: 32px;
+  width: 32px; height: 32px;
   color: var(--text-secondary);
   border-radius: var(--r-sm);
   transition: all var(--t-fast);
   place-items: center;
 }
 
-.menu-toggle:hover {
-  background: var(--bg-hover);
-  color: var(--text-primary);
-}
+.menu-toggle:hover { background: var(--bg-hover); color: var(--text-primary); }
 
 .model-selector {
   display: flex;
@@ -434,131 +391,80 @@ button:disabled {
   border-radius: var(--r-sm);
   cursor: pointer;
   transition: background var(--t-fast);
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--text-primary);
-}
-
-.model-selector:hover {
-  background: var(--bg-hover);
-}
-
-.model-selector-badge {
-  font-size: 10px;
-  padding: 2px 6px;
-  background: var(--accent-light);
-  color: var(--accent);
-  border-radius: var(--r-sm);
+  font-size: 13px;
   font-weight: 600;
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  background: var(--bg-tertiary);
+}
+
+.model-selector:hover { background: var(--bg-hover); border-color: var(--border-strong); }
+
+.model-selector-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 6px var(--success);
 }
 
 .header-spacer { flex: 1; }
 
 .header-btn {
-  width: 32px;
-  height: 32px;
+  width: 34px; height: 34px;
   display: grid;
   place-items: center;
   color: var(--text-secondary);
   border-radius: var(--r-sm);
   transition: all var(--t-fast);
   position: relative;
+  border: 1px solid transparent;
 }
 
-.header-btn:hover {
-  background: var(--bg-hover);
-  color: var(--text-primary);
-}
+.header-btn:hover { background: var(--bg-hover); color: var(--text-primary); border-color: var(--border); }
 
 .header-btn .badge {
   position: absolute;
-  top: 4px;
-  right: 4px;
-  width: 6px;
-  height: 6px;
+  top: 6px; right: 6px;
+  width: 6px; height: 6px;
   border-radius: 50%;
-  background: var(--accent);
+  background: var(--intel-light);
+  box-shadow: 0 0 4px var(--intel-light);
 }
 
 /* === CHAT AREA === */
-.chat-container {
-  flex: 1;
-  overflow-y: auto;
-  padding: var(--sp-6) var(--sp-4) var(--sp-4);
-  scroll-behavior: smooth;
-}
-
-.chat-messages {
-  max-width: var(--max-w-message);
-  margin: 0 auto;
-  position: relative;
-}
+.chat-container { flex: 1; overflow-y: auto; padding: var(--sp-6) var(--sp-4) var(--sp-4); scroll-behavior: smooth; }
+.chat-messages { max-width: var(--max-w-message); margin: 0 auto; position: relative; }
 
 /* === MESSAGE === */
-.message {
-  padding: var(--sp-5) 0;
-  animation: messageIn var(--t-slow) var(--ease-out);
-  position: relative;
-}
+.message { padding: var(--sp-5) 0; animation: msgIn var(--t-slow) var(--ease-out); position: relative; }
 
-@keyframes messageIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+@keyframes msgIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
-.message-head {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-3);
-  margin-bottom: var(--sp-2);
-}
+.message-head { display: flex; align-items: center; gap: var(--sp-3); margin-bottom: var(--sp-2); }
 
 .avatar {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
+  width: 30px; height: 30px;
+  border-radius: var(--r-sm);
   display: grid;
   place-items: center;
   flex-shrink: 0;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 12px;
   position: relative;
 }
 
-.avatar.user {
-  background: linear-gradient(135deg, #3b82f6, #6366f1);
-  color: white;
-}
+.avatar.user { background: linear-gradient(135deg, #4A6FA5, #2D4A6F); color: white; }
+.avatar.assistant { background: linear-gradient(135deg, var(--intel-primary), var(--intel-light)); color: white; box-shadow: var(--accent-glow); }
 
-.avatar.assistant {
-  background: var(--accent);
-  color: white;
-}
+.message-role { font-size: 13px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.01em; }
+.message-meta-extra { font-size: 11px; color: var(--text-muted); margin-left: auto; display: flex; align-items: center; gap: var(--sp-2); }
 
-.message-role {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.message-meta-extra {
-  font-size: 12px;
-  color: var(--text-muted);
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: var(--sp-2);
-}
-
-.message-body {
-  padding-left: 40px;
-  position: relative;
-}
+.message-body { padding-left: 44px; position: relative; }
 
 .message-content {
   color: var(--text-primary);
   line-height: 1.75;
-  font-size: 15px;
+  font-size: 14.5px;
   word-wrap: break-word;
   overflow-wrap: break-word;
   position: relative;
@@ -568,63 +474,51 @@ button:disabled {
   background: var(--surface-user);
   padding: var(--sp-3) var(--sp-4);
   border-radius: var(--r-lg);
+  border: 1px solid var(--border);
 }
 
 .message-content p { margin-bottom: var(--sp-3); }
 .message-content p:last-child { margin-bottom: 0; }
 
-.message-content h1,
-.message-content h2,
-.message-content h3 {
+.message-content h1, .message-content h2, .message-content h3 {
   margin: var(--sp-5) 0 var(--sp-3);
   font-weight: 700;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
   color: var(--text-primary);
 }
 
-.message-content h1 { font-size: 22px; }
-.message-content h2 { font-size: 19px; }
-.message-content h3 { font-size: 16px; }
+.message-content h1 { font-size: 20px; }
+.message-content h2 { font-size: 17px; }
+.message-content h3 { font-size: 15px; }
 
-.message-content ul,
-.message-content ol {
-  margin: var(--sp-3) 0 var(--sp-3) var(--sp-6);
-}
-
+.message-content ul, .message-content ol { margin: var(--sp-3) 0 var(--sp-3) var(--sp-6); }
 .message-content li { margin-bottom: var(--sp-2); }
-
-.message-content strong {
-  color: var(--text-primary);
-  font-weight: 700;
-}
-
+.message-content strong { color: var(--text-primary); font-weight: 700; }
 .message-content em { color: var(--text-secondary); }
 
 .message-content a {
-  color: var(--accent);
+  color: var(--text-accent);
   text-decoration: underline;
-  text-decoration-color: rgba(16, 163, 127, 0.3);
+  text-decoration-color: rgba(77, 184, 232, 0.3);
   text-underline-offset: 2px;
   transition: all var(--t-fast);
 }
 
-.message-content a:hover {
-  text-decoration-color: var(--accent);
-}
+.message-content a:hover { text-decoration-color: var(--text-accent); }
 
 .inline-code {
-  background: var(--bg-tertiary);
-  color: var(--text-primary);
+  background: var(--surface-code);
+  color: var(--intel-light);
   padding: 2px 6px;
-  border-radius: var(--r-sm);
+  border-radius: var(--r-xs);
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 12.5px;
   border: 1px solid var(--border);
 }
 
 .code-block {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
+  background: var(--surface-code);
+  border: 1px solid var(--border-strong);
   border-radius: var(--r-md);
   margin: var(--sp-4) 0;
   overflow: hidden;
@@ -636,31 +530,27 @@ button:disabled {
   justify-content: space-between;
   align-items: center;
   padding: var(--sp-2) var(--sp-3);
-  background: var(--bg-tertiary);
+  background: rgba(0, 113, 197, 0.06);
   border-bottom: 1px solid var(--border);
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-secondary);
 }
 
 .copy-code-btn {
-  padding: 4px 10px;
-  background: transparent;
+  padding: 3px 8px;
+  background: var(--bg-hover);
   color: var(--text-secondary);
   border: 1px solid var(--border);
-  border-radius: var(--r-sm);
-  font-family: var(--font-sans);
-  font-size: 12px;
+  border-radius: var(--r-xs);
+  font-size: 11px;
   display: flex;
   align-items: center;
   gap: 4px;
   transition: all var(--t-fast);
 }
 
-.copy-code-btn:hover {
-  background: var(--bg-hover);
-  color: var(--text-primary);
-}
+.copy-code-btn:hover { background: var(--bg-active); color: var(--text-primary); border-color: var(--border-accent); }
 
 .code-block pre {
   padding: var(--sp-4);
@@ -671,16 +561,10 @@ button:disabled {
   color: var(--text-primary);
 }
 
-.attachments {
-  display: flex;
-  gap: var(--sp-2);
-  flex-wrap: wrap;
-  margin: var(--sp-3) 0;
-}
+.attachments { display: flex; gap: var(--sp-2); flex-wrap: wrap; margin: var(--sp-3) 0; }
 
 .attachment-thumb {
-  width: 64px;
-  height: 64px;
+  width: 56px; height: 56px;
   border-radius: var(--r-sm);
   overflow: hidden;
   border: 1px solid var(--border);
@@ -688,7 +572,7 @@ button:disabled {
   display: grid;
   place-items: center;
   color: var(--text-muted);
-  font-size: 10px;
+  font-size: 9px;
   text-align: center;
   padding: var(--sp-1);
   font-family: var(--font-mono);
@@ -700,77 +584,43 @@ button:disabled {
   display: flex;
   gap: var(--sp-1);
   margin-top: var(--sp-2);
-  padding-left: 40px;
+  padding-left: 44px;
   opacity: 0;
   transition: opacity var(--t-fast);
 }
 
-.message:hover .message-actions {
-  opacity: 1;
-}
+.message:hover .message-actions { opacity: 1; }
 
 .action-btn {
   padding: 4px 8px;
-  border-radius: var(--r-sm);
+  border-radius: var(--r-xs);
   color: var(--text-muted);
-  font-size: 12px;
+  font-size: 11px;
   display: inline-flex;
   align-items: center;
   gap: 4px;
   transition: all var(--t-fast);
+  border: 1px solid transparent;
 }
 
-.action-btn:hover {
-  background: var(--bg-hover);
-  color: var(--text-primary);
-}
-
-.action-btn.active {
-  color: var(--accent);
-}
-
-.action-btn.active.dislike {
-  color: var(--error);
-}
-
-.follow-ups {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-2);
-  margin-top: var(--sp-4);
-  padding-left: 40px;
-}
-
-.follow-up-chip {
-  padding: var(--sp-3) var(--sp-4);
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border);
-  border-radius: var(--r-md);
-  color: var(--text-primary);
-  font-size: 14px;
-  transition: all var(--t-fast);
-  text-align: left;
-}
-
-.follow-up-chip:hover {
-  background: var(--bg-hover);
-  border-color: var(--border-strong);
-}
+.action-btn:hover { background: var(--bg-hover); color: var(--text-primary); border-color: var(--border); }
+.action-btn.active { color: var(--intel-light); border-color: var(--border-accent); background: var(--accent-light); }
+.action-btn.active.dislike { color: var(--error); border-color: var(--error); background: var(--error-light); }
 
 .streaming-caret {
   display: inline-block;
-  width: 6px;
-  height: 14px;
-  background: var(--accent);
+  width: 6px; height: 14px;
+  background: var(--intel-light);
   margin-left: 2px;
   vertical-align: middle;
   animation: caretBlink 1s steps(2) infinite;
   border-radius: 1px;
+  box-shadow: 0 0 4px var(--intel-light);
 }
 
 @keyframes caretBlink { 50% { opacity: 0; } }
 
-/* === EMPTY STATE (ChatGPT-style welcome) === */
+/* === EMPTY STATE === */
 .empty-state {
   display: flex;
   flex-direction: column;
@@ -784,41 +634,23 @@ button:disabled {
 }
 
 .empty-logo {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), #0d8a6a);
+  width: 64px; height: 64px;
+  border-radius: var(--r-lg);
+  background: linear-gradient(135deg, var(--intel-primary), var(--intel-light));
   display: grid;
   place-items: center;
   color: white;
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: var(--sp-5);
-  box-shadow: var(--shadow-md);
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: var(--sp-6);
+  box-shadow: var(--shadow-lg), var(--accent-glow);
+  letter-spacing: -0.03em;
 }
 
-.empty-title {
-  font-size: 28px;
-  font-weight: 600;
-  margin-bottom: var(--sp-2);
-  letter-spacing: -0.02em;
-}
+.empty-title { font-size: 26px; font-weight: 700; margin-bottom: var(--sp-2); letter-spacing: -0.03em; }
+.empty-subtitle { font-size: 14px; color: var(--text-secondary); margin-bottom: var(--sp-7); max-width: 480px; line-height: 1.7; }
 
-.empty-subtitle {
-  font-size: 15px;
-  color: var(--text-secondary);
-  margin-bottom: var(--sp-7);
-  max-width: 500px;
-}
-
-.prompt-suggestions {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: var(--sp-3);
-  max-width: 800px;
-  width: 100%;
-  margin-top: var(--sp-6);
-}
+.prompt-suggestions { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--sp-3); max-width: 720px; width: 100%; margin-top: var(--sp-6); }
 
 .prompt-card {
   padding: var(--sp-4);
@@ -830,49 +662,20 @@ button:disabled {
   cursor: pointer;
 }
 
-.prompt-card:hover {
-  background: var(--bg-hover);
-  border-color: var(--border-strong);
-  transform: translateY(-1px);
-}
+.prompt-card:hover { background: var(--bg-hover); border-color: var(--border-accent); transform: translateY(-2px); box-shadow: var(--shadow-md); }
 
-.prompt-card-title {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text-primary);
-  margin-bottom: var(--sp-1);
-}
-
-.prompt-card-desc {
-  font-size: 12px;
-  color: var(--text-muted);
-}
+.prompt-card-title { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: var(--sp-1); }
+.prompt-card-desc { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
 
 /* === INPUT AREA === */
-.input-area {
-  padding: var(--sp-3) var(--sp-4) var(--sp-4);
-  flex-shrink: 0;
-  background: var(--bg-primary);
-  border-top: 1px solid var(--border);
-}
+.input-area { padding: var(--sp-3) var(--sp-4) var(--sp-4); flex-shrink: 0; background: var(--bg-primary); border-top: 1px solid var(--border); }
+.input-wrap { max-width: var(--max-w-message); margin: 0 auto; }
 
-.input-wrap {
-  max-width: var(--max-w-message);
-  margin: 0 auto;
-}
-
-.attachment-bar {
-  display: flex;
-  gap: var(--sp-2);
-  margin-bottom: var(--sp-3);
-  flex-wrap: wrap;
-  animation: messageIn var(--t-normal) var(--ease-out);
-}
+.attachment-bar { display: flex; gap: var(--sp-2); margin-bottom: var(--sp-3); flex-wrap: wrap; }
 
 .att-item {
   position: relative;
-  width: 48px;
-  height: 48px;
+  width: 44px; height: 44px;
   border-radius: var(--r-sm);
   overflow: hidden;
   border: 1px solid var(--border);
@@ -886,20 +689,18 @@ button:disabled {
 
 .att-remove {
   position: absolute;
-  top: 2px;
-  right: 2px;
-  width: 16px;
-  height: 16px;
-  background: rgba(0, 0, 0, 0.8);
+  top: 2px; right: 2px;
+  width: 14px; height: 14px;
+  background: rgba(0, 0, 0, 0.85);
   border-radius: 50%;
   color: white;
   display: grid;
   place-items: center;
-  font-size: 10px;
+  font-size: 9px;
   transition: all var(--t-fast);
 }
 
-.att-remove:hover { background: var(--error); transform: scale(1.1); }
+.att-remove:hover { background: var(--error); transform: scale(1.15); }
 
 .input-box {
   background: var(--bg-tertiary);
@@ -913,160 +714,63 @@ button:disabled {
   gap: var(--sp-2);
 }
 
-.input-box:focus-within {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 1px var(--accent);
-}
+.input-box:focus-within { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-light), var(--accent-glow); }
 
 .msg-input {
   flex: 1;
   background: transparent;
   border: none;
   color: var(--text-primary);
-  font-size: 15px;
+  font-size: 14px;
   resize: none;
-  min-height: 28px;
-  max-height: 200px;
+  min-height: 24px;
+  max-height: 180px;
   padding: var(--sp-2) 0;
   line-height: 1.5;
-  font-family: var(--font-sans);
 }
 
 .msg-input:focus { outline: none; }
 .msg-input::placeholder { color: var(--text-muted); }
 
-.input-actions {
-  display: flex;
-  gap: 2px;
-  align-items: center;
-  flex-shrink: 0;
-}
+.input-actions { display: flex; gap: 2px; align-items: center; flex-shrink: 0; }
 
 .circle-btn {
-  width: 32px;
-  height: 32px;
+  width: 30px; height: 30px;
   display: grid;
   place-items: center;
   border-radius: var(--r-sm);
-  color: var(--text-secondary);
+  color: var(--text-muted);
   transition: all var(--t-fast);
 }
 
-.circle-btn:hover {
-  background: var(--bg-hover);
-  color: var(--text-primary);
-}
+.circle-btn:hover { background: var(--bg-hover); color: var(--text-primary); }
+.circle-btn.recording { color: var(--error); animation: recordPulse 1s ease-in-out infinite; }
 
-.circle-btn.recording {
-  color: var(--error);
-  animation: recordPulse 1s ease-in-out infinite;
-}
-
-@keyframes recordPulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.08); }
-}
+@keyframes recordPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
 
 .send-btn {
-  width: 32px;
-  height: 32px;
-  background: var(--text-primary);
-  color: var(--bg-primary);
+  width: 32px; height: 32px;
+  background: linear-gradient(135deg, var(--intel-primary), var(--intel-light));
+  color: white;
   border-radius: var(--r-sm);
   display: grid;
   place-items: center;
   transition: all var(--t-fast);
+  box-shadow: var(--shadow-sm);
 }
 
-.send-btn:hover:not(:disabled) {
-  opacity: 0.85;
-  transform: scale(1.02);
-}
+.send-btn:hover:not(:disabled) { transform: scale(1.05); box-shadow: var(--accent-glow); }
+.send-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.send-btn.stop { background: var(--error); box-shadow: 0 0 8px rgba(255, 77, 106, 0.4); }
 
-.send-btn:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-}
+.input-footer { margin-top: var(--sp-2); text-align: center; font-size: 10px; color: var(--text-disabled); letter-spacing: 0.3px; }
 
-.send-btn.stop {
-  background: var(--error);
-  color: white;
-}
-
-.input-footer {
-  margin-top: var(--sp-2);
-  text-align: center;
-  font-size: 11px;
-  color: var(--text-muted);
-}
-
-/* === PROVIDER SELECTOR MODAL === */
-.provider-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: var(--sp-3);
-}
-
-.provider-option {
-  padding: var(--sp-4);
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border);
-  border-radius: var(--r-md);
-  cursor: pointer;
-  transition: all var(--t-fast);
-}
-
-.provider-option:hover {
-  background: var(--bg-hover);
-  border-color: var(--border-strong);
-}
-
-.provider-option.active {
-  background: var(--accent-light);
-  border-color: var(--accent);
-}
-
-.provider-option-header {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-2);
-  margin-bottom: var(--sp-2);
-}
-
-.provider-option-name {
-  font-weight: 600;
-  font-size: 14px;
-}
-
-.provider-option-status {
-  margin-left: auto;
-  font-size: 11px;
-  padding: 2px 6px;
-  border-radius: var(--r-sm);
-}
-
-.provider-option-status.online {
-  background: var(--accent-light);
-  color: var(--accent);
-}
-
-.provider-option-status.offline {
-  background: var(--bg-hover);
-  color: var(--text-muted);
-}
-
-.provider-option-model {
-  font-size: 12px;
-  color: var(--text-secondary);
-  font-family: var(--font-mono);
-}
-
-/* === MODAL & TOAST === */
+/* === MODALS === */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
+  background: rgba(5, 10, 20, 0.75);
+  backdrop-filter: blur(8px);
   display: grid;
   place-items: center;
   z-index: 1000;
@@ -1081,47 +785,28 @@ button:disabled {
   border: 1px solid var(--border-strong);
   border-radius: var(--r-lg);
   padding: var(--sp-6);
-  max-width: 560px;
+  max-width: 580px;
   width: 100%;
   max-height: 85vh;
   overflow-y: auto;
   animation: modalIn var(--t-normal) var(--ease-spring);
-  box-shadow: var(--shadow-xl);
+  box-shadow: var(--shadow-xl), var(--accent-glow);
 }
 
-@keyframes modalIn {
-  from { transform: scale(0.96); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
+@keyframes modalIn { from { transform: scale(0.96) translateY(8px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
 
-.modal h2 {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: var(--sp-5);
-  color: var(--text-primary);
-  letter-spacing: -0.01em;
-}
+.modal h2 { font-size: 17px; font-weight: 700; margin-bottom: var(--sp-5); color: var(--text-primary); letter-spacing: -0.02em; display: flex; align-items: center; gap: var(--sp-2); }
+.modal h2::before { content: ''; width: 3px; height: 18px; background: var(--intel-primary); border-radius: 2px; }
+.modal h3 { font-size: 12px; font-weight: 700; margin-top: var(--sp-4); margin-bottom: var(--sp-2); color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
+.modal p { color: var(--text-secondary); font-size: 13px; line-height: 1.7; }
 
-.modal h3 {
-  font-size: 14px;
-  font-weight: 600;
-  margin-top: var(--sp-4);
-  margin-bottom: var(--sp-2);
-  color: var(--text-primary);
-}
-
-.modal-actions {
-  display: flex;
-  gap: var(--sp-2);
-  margin-top: var(--sp-5);
-  justify-content: flex-end;
-}
+.modal-actions { display: flex; gap: var(--sp-2); margin-top: var(--sp-5); justify-content: flex-end; }
 
 .btn {
   padding: var(--sp-2) var(--sp-4);
   border-radius: var(--r-sm);
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 600;
   transition: all var(--t-fast);
   display: inline-flex;
   align-items: center;
@@ -1129,87 +814,51 @@ button:disabled {
   border: 1px solid transparent;
 }
 
-.btn-primary {
-  background: var(--accent);
-  color: white;
-}
+.btn-primary { background: linear-gradient(135deg, var(--intel-primary), var(--intel-dark)); color: white; box-shadow: var(--shadow-sm); }
+.btn-primary:hover { background: linear-gradient(135deg, var(--intel-light), var(--intel-primary)); transform: translateY(-1px); }
+.btn-secondary-modal { background: var(--bg-tertiary); color: var(--text-primary); border-color: var(--border); }
+.btn-secondary-modal:hover { background: var(--bg-hover); border-color: var(--border-strong); }
+.btn-danger { background: var(--error); color: white; }
+.btn-danger:hover { background: #E63E5A; }
 
-.btn-primary:hover {
-  background: var(--accent-hover);
-}
-
-.btn-secondary-modal {
-  background: var(--bg-tertiary);
-  color: var(--text-primary);
-  border-color: var(--border);
-}
-
-.btn-secondary-modal:hover {
-  background: var(--bg-hover);
-}
-
-.btn-danger {
-  background: var(--error);
-  color: white;
-}
-
-.btn-danger:hover { background: #dc2626; }
-
-/* Toggle */
-.toggle-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--sp-3) 0;
-  border-bottom: 1px solid var(--border);
-}
-
+/* === TOGGLES/SLIDERS === */
+.toggle-row { display: flex; align-items: center; justify-content: space-between; padding: var(--sp-3) 0; border-bottom: 1px solid var(--border); }
 .toggle-row:last-of-type { border-bottom: none; }
-.toggle-label { font-size: 14px; color: var(--text-primary); }
-.toggle-desc { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.toggle-label { font-size: 13px; color: var(--text-primary); font-weight: 500; }
+.toggle-desc { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
 
 .toggle {
   position: relative;
-  width: 40px;
-  height: 22px;
+  width: 38px; height: 20px;
   background: var(--bg-tertiary);
-  border-radius: 11px;
+  border-radius: 10px;
   transition: background var(--t-fast);
   cursor: pointer;
   flex-shrink: 0;
   border: 1px solid var(--border);
 }
 
-.toggle.on {
-  background: var(--accent);
-  border-color: var(--accent);
-}
+.toggle.on { background: var(--intel-primary); border-color: var(--intel-primary); box-shadow: var(--accent-glow); }
 
 .toggle::after {
   content: '';
   position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 16px;
-  height: 16px;
+  top: 2px; left: 2px;
+  width: 14px; height: 14px;
   background: white;
   border-radius: 50%;
   transition: transform var(--t-normal) var(--ease-spring);
-  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
 }
 
-.toggle.on::after {
-  transform: translateX(18px);
-}
+.toggle.on::after { transform: translateX(18px); }
 
-/* Slider */
 .slider-row { padding: var(--sp-3) 0; border-bottom: 1px solid var(--border); }
 .slider-row-head { display: flex; justify-content: space-between; margin-bottom: var(--sp-2); }
-.slider-val { color: var(--accent); font-family: var(--font-mono); font-weight: 600; font-size: 13px; }
+.slider-val { color: var(--intel-light); font-family: var(--font-mono); font-weight: 700; font-size: 12px; }
 
 .range-slider {
-  width: 100%;
-  height: 4px;
+  width: 100%; height: 4px;
   background: var(--bg-tertiary);
   border-radius: 2px;
   -webkit-appearance: none;
@@ -1219,48 +868,26 @@ button:disabled {
 
 .range-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 16px;
-  height: 16px;
-  background: var(--accent);
+  width: 14px; height: 14px;
+  background: var(--intel-primary);
   border-radius: 50%;
   cursor: pointer;
-  transition: transform var(--t-fast);
+  box-shadow: 0 0 6px var(--intel-primary);
 }
 
-.range-slider::-webkit-slider-thumb:hover { transform: scale(1.15); }
-
-.range-slider::-moz-range-thumb {
-  width: 16px;
-  height: 16px;
-  background: var(--accent);
-  border-radius: 50%;
-  cursor: pointer;
-  border: none;
-}
+.range-slider::-moz-range-thumb { width: 14px; height: 14px; background: var(--intel-primary); border-radius: 50%; cursor: pointer; border: none; }
 
 /* === TOAST === */
-.toast-stack {
-  position: fixed;
-  bottom: var(--sp-5);
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-2);
-  z-index: 2000;
-  pointer-events: none;
-  align-items: center;
-}
+.toast-stack { position: fixed; bottom: var(--sp-5); left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; gap: var(--sp-2); z-index: 2000; pointer-events: none; align-items: center; }
 
 .toast {
-  min-width: 280px;
-  max-width: 400px;
+  min-width: 260px; max-width: 380px;
   padding: var(--sp-3) var(--sp-4);
   background: var(--bg-elevated);
   border: 1px solid var(--border-strong);
   border-radius: var(--r-md);
   color: var(--text-primary);
-  font-size: 14px;
+  font-size: 13px;
   box-shadow: var(--shadow-lg);
   display: flex;
   align-items: center;
@@ -1269,128 +896,48 @@ button:disabled {
   pointer-events: auto;
 }
 
-@keyframes toastIn {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
+@keyframes toastIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 .toast.out { animation: toastOut var(--t-normal) var(--ease-out) forwards; }
 @keyframes toastOut { to { transform: translateY(20px); opacity: 0; } }
-
 .toast-icon { flex-shrink: 0; }
-.toast.success .toast-icon { color: var(--accent); }
+.toast.success .toast-icon { color: var(--success); }
 .toast.error .toast-icon { color: var(--error); }
 .toast.warning .toast-icon { color: var(--warning); }
 .toast.info .toast-icon { color: var(--info); }
 
 /* === SCROLLBAR === */
-*::-webkit-scrollbar { width: 8px; height: 8px; }
+*::-webkit-scrollbar { width: 6px; height: 6px; }
 *::-webkit-scrollbar-track { background: transparent; }
-*::-webkit-scrollbar-thumb {
-  background: var(--border-strong);
-  border-radius: 4px;
-}
-*::-webkit-scrollbar-thumb:hover { background: var(--text-disabled); }
+*::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+*::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
 /* === SELECTION === */
-::selection {
-  background: var(--accent);
-  color: white;
-}
-
-/* === RESPONSIVE === */
-@media (max-width: 900px) {
-  .sidebar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    height: 100vh;
-    transform: translateX(-100%);
-    box-shadow: var(--shadow-xl);
-  }
-  .sidebar.open { transform: translateX(0); }
-  .menu-toggle { display: grid; }
-  .prompt-suggestions { grid-template-columns: 1fr; }
-}
-
-@media (max-width: 480px) {
-  .message-body { padding-left: 36px; }
-  .message-actions { padding-left: 36px; }
-  .input-box { border-radius: var(--r-lg); }
-}
-
-.sidebar-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 99;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--t-normal);
-}
-
-.sidebar-backdrop.show {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* === FOCUS VISIBLE === */
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-button:focus:not(:focus-visible),
-a:focus:not(:focus-visible),
-input:focus:not(:focus-visible),
-textarea:focus:not(:focus-visible),
-select:focus:not(:focus-visible) {
-  outline: none;
-}
+::selection { background: var(--intel-primary); color: white; }
 
 /* === INPUT FIELDS === */
-.input-field,
-.select-field,
-.textarea-field {
+.input-field, .select-field, .textarea-field {
   width: 100%;
   padding: var(--sp-2) var(--sp-3);
   background: var(--bg-tertiary);
   border: 1px solid var(--border);
   border-radius: var(--r-sm);
   color: var(--text-primary);
-  font-size: 14px;
+  font-size: 13px;
   transition: all var(--t-fast);
-  font-family: var(--font-sans);
 }
 
-.input-field:focus,
-.select-field:focus,
-.textarea-field:focus {
+.input-field:focus, .select-field:focus, .textarea-field:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 1px var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-light);
 }
 
-.input-label {
-  display: block;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-secondary);
-  margin-bottom: var(--sp-1);
-  margin-top: var(--sp-3);
-}
-
+.input-label { display: block; font-size: 11px; font-weight: 600; color: var(--text-secondary); margin-bottom: var(--sp-1); margin-top: var(--sp-3); text-transform: uppercase; letter-spacing: 0.4px; }
 .input-label:first-child { margin-top: 0; }
+.textarea-field { resize: vertical; min-height: 72px; font-family: var(--font-mono); font-size: 12px; }
 
-.textarea-field { resize: vertical; min-height: 80px; }
-
-/* === STATS DASHBOARD === */
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: var(--sp-3);
-  margin-bottom: var(--sp-4);
-}
+/* === STATS === */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: var(--sp-3); margin-bottom: var(--sp-4); }
 
 .stat-card {
   background: var(--bg-tertiary);
@@ -1398,107 +945,46 @@ select:focus:not(:focus-visible) {
   border-radius: var(--r-md);
   padding: var(--sp-4);
   text-align: center;
+  transition: all var(--t-fast);
 }
+
+.stat-card:hover { border-color: var(--border-accent); }
 
 .stat-value {
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--accent);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--intel-light);
   margin-bottom: var(--sp-1);
-  font-family: var(--font-sans);
-  letter-spacing: -0.02em;
-}
-
-.stat-label {
-  font-size: 11px;
-  color: var(--text-muted);
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  font-weight: 500;
-}
-
-/* === CODE EXEC === */
-.code-exec-output {
-  padding: var(--sp-3);
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: var(--r-sm);
   font-family: var(--font-mono);
-  font-size: 13px;
+  letter-spacing: -0.03em;
+}
+
+.stat-label { font-size: 10px; color: var(--text-muted); letter-spacing: 0.6px; text-transform: uppercase; font-weight: 600; }
+
+/* === TAGS === */
+.tag-pill { font-size: 9px; padding: 2px 6px; background: var(--accent-light); color: var(--intel-light); border-radius: var(--r-pill); font-weight: 600; letter-spacing: 0.3px; }
+
+/* === SHORTCUTS OVERLAY === */
+.shortcuts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--sp-3); }
+
+.shortcut-item { display: flex; align-items: center; justify-content: space-between; padding: var(--sp-2) 0; border-bottom: 1px solid var(--border); }
+.shortcut-item:last-child { border-bottom: none; }
+
+.kbd {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 6px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-xs);
+  font-family: var(--font-mono);
+  font-size: 11px;
   color: var(--text-primary);
-  max-height: 300px;
-  overflow-y: auto;
-  white-space: pre-wrap;
-  margin-top: var(--sp-3);
+  font-weight: 600;
 }
 
-.code-exec-output.error {
-  color: var(--error);
-  border-color: var(--error);
-}
-
-/* === REDUCED MOTION === */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-/* === TAG === */
-.tag-pill {
-  font-size: 10px;
-  padding: 2px 8px;
-  background: var(--accent-light);
-  color: var(--accent);
-  border-radius: var(--r-pill);
-  font-weight: 500;
-}
-
-.chat-item-tags {
-  display: flex;
-  gap: 2px;
-  margin-left: auto;
-  flex-shrink: 0;
-}
-
-/* === LOADING SHIMMER === */
-.loading-shimmer {
-  display: flex;
-  gap: var(--sp-3);
-  padding: var(--sp-5) 0;
-}
-
-.loading-shimmer-avatar {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: var(--accent);
-  flex-shrink: 0;
-}
-
-.loading-shimmer-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-2);
-}
-
-.loading-shimmer-line {
-  height: 12px;
-  background: linear-gradient(90deg, var(--bg-tertiary) 0%, var(--bg-hover) 50%, var(--bg-tertiary) 100%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-  border-radius: var(--r-sm);
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-/* === DROPDOWN MENU === */
+/* === DROPDOWN === */
 .dropdown-menu {
   position: absolute;
   top: calc(100% + 4px);
@@ -1507,16 +993,13 @@ select:focus:not(:focus-visible) {
   border: 1px solid var(--border-strong);
   border-radius: var(--r-md);
   padding: var(--sp-2);
-  min-width: 200px;
+  min-width: 180px;
   box-shadow: var(--shadow-lg);
   z-index: 500;
   animation: dropdownIn var(--t-fast) var(--ease-out);
 }
 
-@keyframes dropdownIn {
-  from { opacity: 0; transform: translateY(-4px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+@keyframes dropdownIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
 
 .dropdown-item {
   padding: var(--sp-2) var(--sp-3);
@@ -1525,32 +1008,97 @@ select:focus:not(:focus-visible) {
   align-items: center;
   gap: var(--sp-2);
   color: var(--text-primary);
-  font-size: 14px;
+  font-size: 13px;
   transition: background var(--t-fast);
   width: 100%;
   text-align: left;
 }
 
-.dropdown-item:hover {
-  background: var(--bg-hover);
-}
+.dropdown-item:hover { background: var(--bg-hover); }
+.dropdown-item.danger { color: var(--error); }
+.dropdown-divider { height: 1px; background: var(--border); margin: var(--sp-2) 0; }
 
-.dropdown-item.danger {
-  color: var(--error);
-}
-
-.dropdown-divider {
-  height: 1px;
-  background: var(--border);
+/* === BRANCHING === */
+.branch-indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-3);
   margin: var(--sp-2) 0;
+  background: var(--accent-light);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--r-sm);
+  font-size: 11px;
+  color: var(--text-accent);
 }
+
+/* === RESPONSIVE === */
+@media (max-width: 900px) {
+  .sidebar { position: fixed; left: 0; top: 0; height: 100vh; transform: translateX(-100%); box-shadow: var(--shadow-xl); }
+  .sidebar.open { transform: translateX(0); }
+  .menu-toggle { display: grid; }
+  .prompt-suggestions { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .message-body { padding-left: 38px; }
+  .message-actions { padding-left: 38px; }
+  .input-box { border-radius: var(--r-lg); }
+}
+
+.sidebar-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); z-index: 99; opacity: 0; pointer-events: none; transition: opacity var(--t-normal); }
+.sidebar-backdrop.show { opacity: 1; pointer-events: auto; }
+
+/* === FOCUS VISIBLE === */
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+button:focus:not(:focus-visible), a:focus:not(:focus-visible), input:focus:not(:focus-visible), textarea:focus:not(:focus-visible) { outline: none; }
+
+/* === REDUCED MOTION === */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* === FOLLOW UPS === */
+.follow-ups { display: flex; flex-direction: column; gap: var(--sp-2); margin-top: var(--sp-4); padding-left: 44px; }
+
+.follow-up-chip {
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  color: var(--text-primary);
+  font-size: 12px;
+  transition: all var(--t-fast);
+  text-align: left;
+}
+
+.follow-up-chip:hover { background: var(--bg-hover); border-color: var(--border-accent); }
+
+/* === EXPORT MODAL === */
+.export-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--sp-3); margin: var(--sp-4) 0; }
+
+.export-option {
+  padding: var(--sp-4);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--t-fast);
+}
+
+.export-option:hover { border-color: var(--border-accent); background: var(--bg-hover); }
+.export-option-icon { font-size: 24px; margin-bottom: var(--sp-2); }
+.export-option-label { font-size: 12px; font-weight: 600; }
+
+/* === EDITING MODE === */
+.message-content.editing { border: 1px solid var(--accent); border-radius: var(--r-md); padding: var(--sp-2); }
 </style>
 </head>
 <body>
 
 <div class="app">
-
-  <!-- ========== SIDEBAR ========== -->
+  <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar" aria-label="Chat history">
     <div class="sidebar-header">
       <div class="sidebar-logo">
@@ -1558,23 +1106,44 @@ select:focus:not(:focus-visible) {
         <span>NAXA</span>
       </div>
       <button class="sidebar-collapse-btn" id="btn-collapse-sidebar" type="button" aria-label="Collapse sidebar">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
       </button>
     </div>
 
+    <div class="sidebar-search">
+      <div class="search-input-wrap">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" class="search-input" id="search-input" placeholder="Search chats... (⌘K)" autocomplete="off">
+      </div>
+    </div>
+
     <button class="btn-new-chat" id="btn-new-mission" type="button">
-      <svg class="btn-new-chat-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-      <span>New chat</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      <span>New Chat</span>
     </button>
 
     <div class="sidebar-content">
+      <div class="sidebar-section" id="pinned-section">
+        <div class="sidebar-section-title">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5v6l1 1 1-1v-6h5v-2z"/></svg>
+          Pinned
+        </div>
+        <div class="chat-list" id="pinned-chat-list"></div>
+      </div>
+
       <div class="sidebar-section">
-        <div class="sidebar-section-title">Recent</div>
+        <div class="sidebar-section-title">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Recent
+        </div>
         <div class="chat-list" id="active-chat-list"></div>
       </div>
 
       <div class="sidebar-section">
-        <div class="sidebar-section-title">Saved</div>
+        <div class="sidebar-section-title">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          Saved
+        </div>
         <div class="chat-list" id="saved-chat-list"></div>
       </div>
     </div>
@@ -1582,36 +1151,40 @@ select:focus:not(:focus-visible) {
     <div class="sidebar-footer">
       <div class="user-menu" id="user-menu">
         <div class="user-avatar">U</div>
-        <div class="user-name">User</div>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-muted)"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+        <div class="user-name">Operator</div>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--text-muted)"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
     </div>
   </aside>
 
   <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
 
-  <!-- ========== MAIN ========== -->
+  <!-- MAIN -->
   <main class="main">
     <header class="main-header">
       <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Toggle sidebar">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
 
       <div class="model-selector" id="model-selector">
-        <span id="current-model-name">NAXA</span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-muted)"><polyline points="6 9 12 15 18 9"/></svg>
+        <span class="model-selector-dot"></span>
+        <span id="current-model-name">Select Provider</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--text-muted)"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
 
       <div class="header-spacer"></div>
 
-      <button class="header-btn" id="btn-share" type="button" aria-label="Share">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+      <button class="header-btn" id="btn-shortcuts" type="button" aria-label="Keyboard shortcuts" title="Keyboard Shortcuts">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M8 12h.01M12 12h.01M16 12h.01M7 16h10"/></svg>
       </button>
-      <button class="header-btn" id="btn-stats" type="button" aria-label="Statistics">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      <button class="header-btn" id="btn-export" type="button" aria-label="Export chat" title="Export Chat">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
       </button>
-      <button class="header-btn" id="btn-settings" type="button" aria-label="Settings">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      <button class="header-btn" id="btn-stats" type="button" aria-label="Statistics" title="Statistics">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      </button>
+      <button class="header-btn" id="btn-settings" type="button" aria-label="Settings" title="Settings">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
       </button>
     </header>
 
@@ -1622,29 +1195,22 @@ select:focus:not(:focus-visible) {
     <div class="input-area">
       <div class="input-wrap">
         <div class="attachment-bar" id="attachment-bar" hidden></div>
-
         <div class="input-box">
-          <button class="circle-btn" id="btn-attach" type="button" aria-label="Attach file">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+          <button class="circle-btn" id="btn-attach" type="button" aria-label="Attach file" title="Attach file">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
           </button>
           <input type="file" id="file-input" multiple accept="image/*,.pdf,.txt,.md,.json,.csv" hidden>
-
-          <button class="circle-btn" id="btn-voice" type="button" aria-label="Voice input">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          <button class="circle-btn" id="btn-voice" type="button" aria-label="Voice input" title="Voice input">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
           </button>
-
           <textarea class="msg-input" id="msg-input" placeholder="Message NAXA..." rows="1" aria-label="Message"></textarea>
-
           <div class="input-actions">
             <button class="send-btn" id="send-btn" type="button" aria-label="Send" disabled>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
             </button>
           </div>
         </div>
-
-        <div class="input-footer">
-          NAXA can make mistakes. Check important info.
-        </div>
+        <div class="input-footer">NAXA v6.0 — Intel Blue • Multi-provider AI</div>
       </div>
     </div>
   </main>
@@ -1656,2165 +1222,1454 @@ select:focus:not(:focus-visible) {
 'use strict';
 
 /* ==========================================================================
-   NAXA v5.0 — ChatGPT-style UI with Fixed AI Responses
+   NAXA v6.0 — Intel Blue Theme | Optimized Build
    ========================================================================== */
 
-/* ---------------- CONSTANTS ---------------- */
-
-const STORAGE_KEY = 'naxa-mission-control-v5';
-const MAX_SAVED_MISSIONS = 100;
-const TOAST_DURATION_MS = 3000;
-const DEBOUNCE_MS = 80;
-const FETCH_TIMEOUT_MS = 60000; // Increased from 30s to 60s
-const AUTO_SAVE_INTERVAL_MS = 30000;
-
-/* ---------------- SYSTEM PROMPTS ---------------- */
-
-const SYSTEM_PROMPTS = Object.freeze({
-  erik: `Sei ErikAI Developer, assistente senior di ingegneria software.
-
-PROCESSO OBBLIGATORIO prima del codice:
-1. ANALISI: cosa chiede l'utente, vincoli, criterio di successo.
-2. ARCHITETTURA: 2-3 approcci con pro/contro.
-3. PIANO: moduli, flusso dati, errori.
-4. IMPLEMENTAZIONE: codice completo, zero TODO, type hints, validazione input, errori espliciti.
-5. VERIFICA: casi limite, complessità O(n).
-
-REGOLE:
-- Mai codice incompleto o placeholder.
-- Null/empty gestiti esplicitamente.
-- Complessità dichiarata.
-- Italiano per testo, inglese per codice.
-- Se manca info critica, chiedi chiarimento.`,
-
-  assistant: `Sei un assistente AI utile e competente.
-Rispondi in modo chiaro e conciso.
-Adatta lo stile all'utente.
-Se non sei sicuro, ammettilo.
-Usa markdown per risposte lunghe.`,
-
-  coder: `Sei un esperto sviluppatore.
-- Versioni recenti e stabili.
-- SOLID e Clean Code.
-- Leggibile, testabile, ben commentato.
-- Casi limite gestiti esplicitamente.
-- Ottimizza solo quando rilevante.
-- Dichiara complessità O(n).`,
-
-  support: `Sei assistente di supporto tecnico paziente.
-- Comprendi con domande mirate.
-- Soluzioni passo-passo numerate.
-- Linguaggio semplice, evita jargon.
-- Verifica il risultato.
-- Offri alternative.`
+// === CONSTANTS ===
+const C = Object.freeze({
+  STORAGE_KEY: 'naxa-v6-intel-blue',
+  MAX_SAVED: 200,
+  TOAST_MS: 3200,
+  DEBOUNCE: 60,
+  FETCH_TIMEOUT: 45000,
+  AUTO_SAVE: 25000,
+  RENDER_LIMIT: 150,
+  SEARCH_DEBOUNCE: 200
 });
 
-/* ---------------- PROMPT SUGGESTIONS ---------------- */
+// === SYSTEM PROMPTS ===
+const SYSTEM_PROMPTS = Object.freeze({
+  erik: `Sei ErikAI Developer, assistente senior di ingegneria software.
+PROCESSO OBBLIGATORIO: 1.ANALISI 2.ARCHITETTURA 3.PIANO 4.IMPLEMENTAZIONE 5.VERIFICA.
+REGOLE: Mai codice incompleto. Null/empty gestiti. Complessità dichiarata. Italiano testo, inglese codice.`,
+  assistant: `Sei un assistente AI utile e competente. Rispondi chiaro e conciso. Adatta lo stile. Se non sicuro, ammettilo. Usa markdown.`,
+  coder: `Sei un esperto sviluppatore. Versioni recenti. SOLID. Leggibile. Casi limite gestiti. Ottimizza solo quando rilevante.`,
+  support: `Assistente supporto tecnico paziente. Comprendi con domande. Soluzioni passo-passo. Linguaggio semplice.`
+});
 
-const PROMPT_SUGGESTIONS = [
-  { title: 'Explain quantum computing', desc: 'in simple terms', prompt: 'Explain quantum computing in simple terms' },
-  { title: 'Write a Python script', desc: 'to automate file organization', prompt: 'Write a Python script to organize files by extension in a folder' },
-  { title: 'Create a meal plan', desc: 'for a week on a budget', prompt: 'Create a weekly meal plan on a budget' },
-  { title: 'Help me debug', desc: 'a piece of code', prompt: 'Help me debug this code:' }
+// === PROMPT SUGGESTIONS ===
+const PROMPTS = [
+  { title: 'Quantum Computing', desc: 'Explain in simple terms', prompt: 'Explain quantum computing in simple terms' },
+  { title: 'Python Automation', desc: 'File organization script', prompt: 'Write a Python script to organize files by extension' },
+  { title: 'System Design', desc: 'Architecture patterns', prompt: 'Explain microservices vs monolith architecture' },
+  { title: 'Debug Help', desc: 'Fix this code', prompt: 'Help me debug this code:' }
 ];
 
-/* ---------------- EVENT BUS ---------------- */
-
-const EventBus = {
-  _handlers: new Map(),
-  on(event, handler) {
-    if (!this._handlers.has(event)) this._handlers.set(event, new Set());
-    this._handlers.get(event).add(handler);
-    return () => this._handlers.get(event).delete(handler);
-  },
-  emit(event, payload) {
-    const handlers = this._handlers.get(event);
-    if (!handlers) return;
-    for (const h of handlers) {
-      try { h(payload); } catch (err) { console.error(`EventBus [${event}]:`, err); }
+// === EVENT BUS (optimized) ===
+const Bus = (() => {
+  const h = new Map();
+  return {
+    on(e, fn) {
+      if (!h.has(e)) h.set(e, new Set());
+      h.get(e).add(fn);
+      return () => h.get(e)?.delete(fn);
+    },
+    emit(e, p) {
+      h.get(e)?.forEach(fn => { try { fn(p); } catch(err) { console.error(`Bus[${e}]:`, err); } });
     }
-  }
-};
+  };
+})();
 
-/* ---------------- APP STATE ---------------- */
-
-const AppState = {
+// === APP STATE ===
+const State = {
   currentChatId: null,
   currentMode: 'assistant',
-  currentProvider: 'mistral', // active provider
-  currentModel: '',           // active model
+  currentProvider: 'mistral',
+  currentModel: '',
   theme: 'auto',
   sidebarOpen: true,
+  searchQuery: '',
   providers: {
     mistral: { name: 'Mistral', apiKey: '', models: [], selectedModel: '', baseUrl: 'https://api.mistral.ai/v1', compatible: 'openai' },
-    groq:    { name: 'Groq', apiKey: '', models: [], selectedModel: '', baseUrl: 'https://api.groq.com/openai/v1', compatible: 'openai', reasoning: 'none' },
-    google:  { name: 'Google AI', apiKey: '', models: [], selectedModel: '', baseUrl: 'https://generativelanguage.googleapis.com/v1beta', compatible: 'google' }
+    groq: { name: 'Groq', apiKey: '', models: [], selectedModel: '', baseUrl: 'https://api.groq.com/openai/v1', compatible: 'openai' },
+    google: { name: 'Google AI', apiKey: '', models: [], selectedModel: '', baseUrl: 'https://generativelanguage.googleapis.com/v1beta', compatible: 'google' },
+    openai: { name: 'OpenAI', apiKey: '', models: [], selectedModel: '', baseUrl: 'https://api.openai.com/v1', compatible: 'openai' }
   },
   customProviders: new Map(),
   settings: {
-    temperature: 0.7,
-    maxTokens: 2048,
-    followUpEnabled: false,
-    followUpCount: 3,
-    globalSystemPrompt: '',
-    ttsEnabled: false,
-    ttsVoice: null,
-    autoSaveDrafts: true,
-    sendOnEnter: true,
-    streamEnabled: true
+    temperature: 0.7, maxTokens: 2048, followUpEnabled: false, followUpCount: 3,
+    globalSystemPrompt: '', ttsEnabled: false, ttsVoice: null, autoSaveDrafts: true,
+    sendOnEnter: true, streamEnabled: true
   },
   chats: new Map(),
   attachments: [],
-  scheduledMessages: [],
   isLoading: false,
   abortController: null,
-  lastRenderedMessageCount: 0,
   missionCounter: 0,
-  stats: {
-    totalMessages: 0,
-    totalTokens: 0,
-    totalMissions: 0,
-    avgResponseTime: 0
-  }
+  stats: { totalMessages: 0, totalTokens: 0, totalMissions: 0, avgResponseTime: 0 },
+  // Cache for performance
+  _renderCache: new Map(),
+  _mdCache: new Map()
 };
 
-/* ---------------- DOM HELPERS ---------------- */
-
-const $ = (sel, root = document) => root.querySelector(sel);
-const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+// === DOM HELPERS (optimized) ===
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 
 function el(tag, attrs = {}, children = []) {
-  const node = document.createElement(tag);
-  for (const [k, v] of Object.entries(attrs || {})) {
+  const n = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
     if (v == null || v === false) continue;
-    if (k === 'class') node.className = v;
-    else if (k === 'html') node.innerHTML = v;
-    else if (k === 'text') node.textContent = v;
-    else if (k.startsWith('on') && typeof v === 'function') {
-      node.addEventListener(k.slice(2).toLowerCase(), v);
-    }
-    else node.setAttribute(k, String(v));
+    if (k === 'class') n.className = v;
+    else if (k === 'html') n.innerHTML = v;
+    else if (k === 'text') n.textContent = v;
+    else if (k.startsWith('on') && typeof v === 'function') n.addEventListener(k.slice(2).toLowerCase(), v);
+    else n.setAttribute(k, String(v));
   }
   (Array.isArray(children) ? children : [children]).forEach(c => {
     if (c == null) return;
-    node.appendChild(typeof c === 'string' ? document.createTextNode(c) : c);
+    n.appendChild(typeof c === 'string' ? document.createTextNode(c) : c);
   });
-  return node;
+  return n;
 }
 
-/* ---------------- MARKDOWN PARSER ---------------- */
-
-function escapeHtml(str) {
-  if (typeof str !== 'string') return '';
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
+// === MARKDOWN (cached) ===
+function escapeHtml(s) {
+  if (typeof s !== 'string') return '';
+  const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+  return s.replace(/[&<>"']/g, c => map[c]);
 }
 
-function parseMarkdown(text) {
+function parseMD(text) {
   if (typeof text !== 'string' || !text) return '';
+  
+  // Check cache
+  const cacheKey = text.slice(0, 500);
+  if (State._mdCache.has(cacheKey)) return State._mdCache.get(cacheKey);
+  
   let s = escapeHtml(text);
-
-  s = s.replace(/```(\w+)?\n([\s\S]*?)```/g, (_m, lang, code) => {
-    const language = (lang || 'text').toLowerCase();
-    const label = escapeHtml(language);
-    const copyBtn = `<button class="copy-code-btn" data-copy-code="1" type="button"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button>`;
-    return `<div class="code-block"><div class="code-block-head"><span>${label}</span>${copyBtn}</div><pre><code>${code.trim()}</code></pre></div>`;
+  
+  // Code blocks
+  s = s.replace(/```(\w+)?\n([\s\S]*?)```/g, (_, lang, code) => {
+    const label = escapeHtml((lang || 'text').toLowerCase());
+    const btn = `<button class="copy-code-btn" data-copy-code="1" type="button"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>`;
+    return `<div class="code-block"><div class="code-block-head"><span>${label}</span>${btn}</div><pre><code>${code.trim()}</code></pre></div>`;
   });
-
+  
+  // Inline code
   s = s.replace(/`([^`\n]+)`/g, '<span class="inline-code">$1</span>');
+  // Headers
   s = s.replace(/^### (.*$)/gim, '<h3>$1</h3>');
   s = s.replace(/^## (.*$)/gim, '<h2>$1</h2>');
   s = s.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+  // Bold/Italic
   s = s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
   s = s.replace(/\*(.+?)\*/g, '<em>$1</em>');
-
-  s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_m, label, url) => {
-    const safeUrl = /^(https?|mailto):/i.test(url) ? url : '#';
-    return `<a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${label}</a>`;
+  // Links
+  s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, l, u) => {
+    const safe = /^(https?|mailto):/i.test(u) ? u : '#';
+    return `<a href="${safe}" target="_blank" rel="noopener noreferrer">${l}</a>`;
   });
-
+  // Lists
   s = s.replace(/^(?:[-*+]) (.+)$/gim, '<li>$1</li>');
   s = s.replace(/(<li>[\s\S]*?<\/li>)(?!\s*<li>)/g, '<ul>$1</ul>');
-
+  // Paragraphs
   const blocks = s.split(/\n{2,}/).map(b => {
     const t = b.trim();
     if (!t) return '';
     if (/^<(h[1-3]|ul|ol|div|pre|code)/.test(t)) return t;
     return `<p>${t.replace(/\n/g, '<br>')}</p>`;
   });
-
-  return blocks.filter(Boolean).join('');
+  
+  const result = blocks.filter(Boolean).join('');
+  
+  // Cache (limit to 100 entries)
+  if (State._mdCache.size > 100) State._mdCache.clear();
+  State._mdCache.set(cacheKey, result);
+  
+  return result;
 }
 
-/* ---------------- TOAST ---------------- */
-
+// === TOAST ===
 const TOAST_ICONS = {
-  success: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
-  error: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>',
-  warning: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
-  info: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>'
+  success: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>',
+  error: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>',
+  warning: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+  info: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>'
 };
 
-function toast(message, type = 'info') {
+function toast(msg, type = 'info') {
   const stack = $('#toast-stack');
-  if (!stack || typeof message !== 'string' || !message) return;
-
-  const icon = TOAST_ICONS[type] || TOAST_ICONS.info;
-  const node = el('div', { class: `toast ${type}`, role: 'status' }, [
-    el('span', { class: 'toast-icon', html: icon }),
-    el('span', { text: message })
+  if (!stack || typeof msg !== 'string' || !msg) return;
+  const n = el('div', { class: `toast ${type}`, role: 'status' }, [
+    el('span', { class: 'toast-icon', html: TOAST_ICONS[type] || TOAST_ICONS.info }),
+    el('span', { text: msg })
   ]);
-
-  stack.appendChild(node);
-  setTimeout(() => {
-    node.classList.add('out');
-    setTimeout(() => node.remove(), 260);
-  }, TOAST_DURATION_MS);
+  stack.appendChild(n);
+  setTimeout(() => { n.classList.add('out'); setTimeout(() => n.remove(), 260); }, C.TOAST_MS);
 }
 
-/* ---------------- PERSISTENCE ---------------- */
-
-function serializeSavedState() {
-  const savedChats = Array.from(AppState.chats.values())
-    .filter(c => c.saved)
-    .map(c => ({
-      id: c.id,
-      title: c.title,
-      messages: c.messages,
-      mode: c.mode,
-      saved: true,
-      createdAt: c.createdAt,
-      updatedAt: c.updatedAt,
-      likeFeedback: c.likeFeedback,
-      dislikeFeedback: c.dislikeFeedback,
-      tags: c.tags || [],
-      provider: c.provider,
-      model: c.model
-    }));
+// === PERSISTENCE ===
+function serialize() {
+  const savedChats = [...State.chats.values()].filter(c => c.saved || c.pinned).map(c => ({
+    id: c.id, title: c.title, messages: c.messages, mode: c.mode, saved: c.saved,
+    pinned: c.pinned || false, createdAt: c.createdAt, updatedAt: c.updatedAt,
+    likeFeedback: c.likeFeedback, dislikeFeedback: c.dislikeFeedback,
+    tags: c.tags || [], provider: c.provider, model: c.model
+  }));
   
-  const customProviders = Array.from(AppState.customProviders.entries()).map(([id, p]) => ({
-    id,
-    name: p.name,
-    baseUrl: p.baseUrl,
-    apiKey: p.apiKey,
-    models: p.models,
-    selectedModel: p.selectedModel,
-    compatible: p.compatible || 'openai'
+  const customs = [...State.customProviders.entries()].map(([id, p]) => ({
+    id, name: p.name, baseUrl: p.baseUrl, apiKey: p.apiKey,
+    models: p.models, selectedModel: p.selectedModel, compatible: p.compatible || 'openai'
   }));
 
   return {
-    version: 5,
-    providers: AppState.providers,
-    customProviders,
-    settings: AppState.settings,
-    chats: savedChats,
-    currentProvider: AppState.currentProvider,
-    currentModel: AppState.currentModel,
-    currentMode: AppState.currentMode,
-    theme: AppState.theme,
-    sidebarOpen: AppState.sidebarOpen,
-    missionCounter: AppState.missionCounter,
-    stats: AppState.stats
+    version: 6, providers: State.providers, customProviders: customs, settings: State.settings,
+    chats: savedChats, currentProvider: State.currentProvider, currentModel: State.currentModel,
+    currentMode: State.currentMode, theme: State.theme, sidebarOpen: State.sidebarOpen,
+    missionCounter: State.missionCounter, stats: State.stats
   };
 }
 
 let saveTimer = null;
-function saveState() {
+function save() {
   if (saveTimer) clearTimeout(saveTimer);
   saveTimer = setTimeout(() => {
     try {
-      const data = serializeSavedState();
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      localStorage.setItem(C.STORAGE_KEY, JSON.stringify(serialize()));
     } catch (err) {
-      if (err && (err.name === 'QuotaExceededError' || /quota/i.test(err.message || ''))) {
+      if (err?.name === 'QuotaExceededError' || /quota/i.test(err.message || '')) {
         toast('Storage full: pruning old data', 'warning');
-        pruneOldSavedMissions();
-        try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(serializeSavedState()));
-        } catch (e) {
-          console.error('doSaveState retry failed:', e);
-        }
-      } else {
-        console.error('doSaveState error:', err);
+        pruneOld();
+        try { localStorage.setItem(C.STORAGE_KEY, JSON.stringify(serialize())); } catch {}
       }
     }
-  }, 300);
+  }, 250);
 }
 
-function pruneOldSavedMissions() {
-  const saved = Array.from(AppState.chats.values()).filter(c => c.saved);
-  if (saved.length <= MAX_SAVED_MISSIONS) return;
-  const sorted = saved.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
-  const toRemove = sorted.slice(MAX_SAVED_MISSIONS);
-  toRemove.forEach(c => {
-    const chat = AppState.chats.get(c.id);
+function pruneOld() {
+  const saved = [...State.chats.values()].filter(c => c.saved);
+  if (saved.length <= C.MAX_SAVED) return;
+  saved.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0)).slice(C.MAX_SAVED).forEach(c => {
+    const chat = State.chats.get(c.id);
     if (chat) chat.saved = false;
   });
 }
 
-function loadState() {
+function load() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(C.STORAGE_KEY);
     if (!raw) return false;
-    const data = JSON.parse(raw);
-    if (!data || typeof data !== 'object') return false;
+    const d = JSON.parse(raw);
+    if (!d || typeof d !== 'object') return false;
 
-    if (data.providers && typeof data.providers === 'object') {
-      for (const key of Object.keys(AppState.providers)) {
-        if (data.providers[key]) {
-          AppState.providers[key].apiKey = String(data.providers[key].apiKey || '');
-          AppState.providers[key].selectedModel = String(data.providers[key].selectedModel || '');
-          if (data.providers[key].reasoning) {
-            AppState.providers[key].reasoning = String(data.providers[key].reasoning);
-          }
+    if (d.providers) {
+      for (const k of Object.keys(State.providers)) {
+        if (d.providers[k]) {
+          State.providers[k].apiKey = String(d.providers[k].apiKey || '');
+          State.providers[k].selectedModel = String(d.providers[k].selectedModel || '');
         }
       }
     }
 
-    if (Array.isArray(data.customProviders)) {
-      AppState.customProviders = new Map();
-      for (const p of data.customProviders) {
-        if (p && typeof p.id === 'string') {
-          AppState.customProviders.set(p.id, {
-            name: String(p.name || 'Custom'),
-            baseUrl: String(p.baseUrl || ''),
-            apiKey: String(p.apiKey || ''),
-            models: Array.isArray(p.models) ? p.models : [],
-            selectedModel: String(p.selectedModel || ''),
-            compatible: String(p.compatible || 'openai')
-          });
-        }
+    if (Array.isArray(d.customProviders)) {
+      State.customProviders = new Map();
+      for (const p of d.customProviders) {
+        if (p?.id) State.customProviders.set(p.id, {
+          name: String(p.name || 'Custom'), baseUrl: String(p.baseUrl || ''),
+          apiKey: String(p.apiKey || ''), models: Array.isArray(p.models) ? p.models : [],
+          selectedModel: String(p.selectedModel || ''), compatible: String(p.compatible || 'openai')
+        });
       }
     }
 
-    if (data.settings && typeof data.settings === 'object') {
-      AppState.settings = { ...AppState.settings, ...data.settings };
-    }
+    if (d.settings) State.settings = { ...State.settings, ...d.settings };
 
-    if (Array.isArray(data.chats)) {
-      AppState.chats = new Map();
-      for (const c of data.chats) {
-        if (c && typeof c.id === 'string' && c.saved === true) {
-          AppState.chats.set(c.id, {
-            id: c.id,
-            title: String(c.title || 'Untitled'),
-            messages: Array.isArray(c.messages) ? c.messages : [],
-            mode: SYSTEM_PROMPTS[c.mode] ? c.mode : 'assistant',
-            saved: true,
-            createdAt: Number(c.createdAt) || Date.now(),
-            updatedAt: Number(c.updatedAt) || Date.now(),
-            likeFeedback: c.likeFeedback || null,
-            dislikeFeedback: c.dislikeFeedback || null,
-            tags: Array.isArray(c.tags) ? c.tags : [],
-            provider: c.provider || null,
-            model: c.model || null
-          });
-        }
+    if (Array.isArray(d.chats)) {
+      State.chats = new Map();
+      for (const c of d.chats) {
+        if (c?.id) State.chats.set(c.id, {
+          id: c.id, title: String(c.title || 'Untitled'),
+          messages: Array.isArray(c.messages) ? c.messages : [],
+          mode: SYSTEM_PROMPTS[c.mode] ? c.mode : 'assistant',
+          saved: !!c.saved, pinned: !!c.pinned,
+          createdAt: Number(c.createdAt) || Date.now(), updatedAt: Number(c.updatedAt) || Date.now(),
+          likeFeedback: c.likeFeedback || null, dislikeFeedback: c.dislikeFeedback || null,
+          tags: Array.isArray(c.tags) ? c.tags : [], provider: c.provider || null, model: c.model || null
+        });
       }
     }
 
-    if (typeof data.currentMode === 'string' && SYSTEM_PROMPTS[data.currentMode]) {
-      AppState.currentMode = data.currentMode;
-    }
-    if (typeof data.currentProvider === 'string') AppState.currentProvider = data.currentProvider;
-    if (typeof data.currentModel === 'string') AppState.currentModel = data.currentModel;
-    if (typeof data.theme === 'string') AppState.theme = data.theme;
-    if (typeof data.sidebarOpen === 'boolean') AppState.sidebarOpen = data.sidebarOpen;
-    if (typeof data.missionCounter === 'number') AppState.missionCounter = data.missionCounter;
-    if (data.stats && typeof data.stats === 'object') {
-      AppState.stats = { ...AppState.stats, ...data.stats };
-    }
-
+    if (d.currentMode && SYSTEM_PROMPTS[d.currentMode]) State.currentMode = d.currentMode;
+    if (typeof d.currentProvider === 'string') State.currentProvider = d.currentProvider;
+    if (typeof d.currentModel === 'string') State.currentModel = d.currentModel;
+    if (typeof d.theme === 'string') State.theme = d.theme;
+    if (typeof d.sidebarOpen === 'boolean') State.sidebarOpen = d.sidebarOpen;
+    if (typeof d.missionCounter === 'number') State.missionCounter = d.missionCounter;
+    if (d.stats) State.stats = { ...State.stats, ...d.stats };
     return true;
-  } catch (err) {
-    console.error('loadState error:', err);
-    return false;
-  }
+  } catch (err) { console.error('load:', err); return false; }
 }
 
-/* ---------------- CHAT MANAGEMENT ---------------- */
-
-function createNewMission() {
-  AppState.missionCounter++;
-  const id = `chat_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+// === CHAT MANAGEMENT ===
+function createNew() {
+  State.missionCounter++;
+  const id = `c_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
   const chat = {
-    id,
-    title: 'New chat',
-    messages: [],
-    mode: AppState.currentMode,
-    saved: false,
-    createdAt: Date.now(),
-    updatedAt: Date.now(),
-    likeFeedback: null,
-    dislikeFeedback: null,
-    tags: [],
-    provider: AppState.currentProvider,
-    model: AppState.currentModel
+    id, title: 'New chat', messages: [], mode: State.currentMode,
+    saved: false, pinned: false, createdAt: Date.now(), updatedAt: Date.now(),
+    likeFeedback: null, dislikeFeedback: null, tags: [],
+    provider: State.currentProvider, model: State.currentModel
   };
-  AppState.chats.set(id, chat);
-  AppState.currentChatId = id;
-  AppState.lastRenderedMessageCount = 0;
+  State.chats.set(id, chat);
+  State.currentChatId = id;
   return chat;
 }
 
-function getCurrentChat() {
-  if (!AppState.currentChatId || !AppState.chats.has(AppState.currentChatId)) {
-    return createNewMission();
-  }
-  return AppState.chats.get(AppState.currentChatId);
+function getChat() {
+  if (!State.currentChatId || !State.chats.has(State.currentChatId)) return createNew();
+  return State.chats.get(State.currentChatId);
 }
 
-function saveCurrentMission() {
-  const chat = getCurrentChat();
-  if (chat.messages.length === 0) {
-    toast('Empty chat cannot be saved', 'warning');
-    return;
-  }
-  chat.saved = true;
-  chat.updatedAt = Date.now();
-  saveState();
-  renderChatLists();
-  toast('Chat saved', 'success');
+function saveCurrent() {
+  const chat = getChat();
+  if (!chat.messages.length) { toast('Empty chat cannot be saved', 'warning'); return; }
+  chat.saved = true; chat.updatedAt = Date.now(); save(); renderLists(); toast('Chat saved', 'success');
 }
 
-function newMission() {
-  createNewMission();
-  renderChatLists();
-  renderMessages();
-  renderAttachmentBar();
-  toast('New chat started', 'info');
-}
+function newChat() { createNew(); renderLists(); renderMessages(); renderAttachBar(); toast('New chat started', 'info'); }
 
 function selectChat(id) {
-  if (typeof id !== 'string' || !AppState.chats.has(id)) return;
-  AppState.currentChatId = id;
-  AppState.lastRenderedMessageCount = 0;
-  const chat = AppState.chats.get(id);
+  if (typeof id !== 'string' || !State.chats.has(id)) return;
+  State.currentChatId = id;
+  const chat = State.chats.get(id);
   if (chat) {
     if (chat.mode) setMode(chat.mode, true);
-    if (chat.provider) AppState.currentProvider = chat.provider;
-    if (chat.model) AppState.currentModel = chat.model;
+    if (chat.provider) State.currentProvider = chat.provider;
+    if (chat.model) State.currentModel = chat.model;
   }
-  renderChatLists();
-  renderMessages();
-  closeSidebar();
-  updateModelSelector();
+  renderLists(); renderMessages(); closeSidebar(); updateModel();
 }
 
 function deleteChat(id, ev) {
   if (ev) ev.stopPropagation();
   if (typeof id !== 'string') return;
-  const chat = AppState.chats.get(id);
-  const wasSaved = chat && chat.saved;
-
-  openConfirmModal({
-    title: wasSaved ? 'Delete saved chat?' : 'Delete chat?',
-    message: wasSaved
-      ? 'This will permanently delete this chat from your saved items.'
-      : 'This chat will be permanently deleted.',
-    confirmText: 'Delete',
-    danger: true,
+  const chat = State.chats.get(id);
+  confirmModal({
+    title: 'Delete chat?',
+    message: chat?.saved ? 'This will permanently delete this saved chat.' : 'This chat will be permanently deleted.',
+    confirm: 'Delete', danger: true,
     onConfirm: () => {
-      AppState.chats.delete(id);
-      if (AppState.currentChatId === id) createNewMission();
-      saveState();
-      renderChatLists();
-      renderMessages();
-      toast('Chat deleted', 'success');
+      State.chats.delete(id);
+      if (State.currentChatId === id) createNew();
+      save(); renderLists(); renderMessages(); toast('Deleted', 'success');
     }
   });
 }
 
 function renameChat(id, ev) {
   if (ev) ev.stopPropagation();
-  if (typeof id !== 'string' || !AppState.chats.has(id)) return;
-  const chat = AppState.chats.get(id);
-  openPromptModal({
-    title: 'Rename chat',
-    placeholder: 'Chat title',
-    defaultValue: chat.title,
+  if (typeof id !== 'string' || !State.chats.has(id)) return;
+  const chat = State.chats.get(id);
+  promptModal({
+    title: 'Rename chat', placeholder: 'Chat title', value: chat.title,
     onSubmit: (val) => {
-      const trimmed = (val || '').trim();
-      if (!trimmed) return;
-      chat.title = trimmed.slice(0, 80);
-      chat.updatedAt = Date.now();
-      saveState();
-      renderChatLists();
-      toast('Chat renamed', 'success');
+      const t = (val || '').trim();
+      if (!t) return;
+      chat.title = t.slice(0, 80); chat.updatedAt = Date.now(); save(); renderLists(); toast('Renamed', 'success');
     }
   });
 }
 
-/* ---------------- RENDERING ---------------- */
-
-function renderChatLists() {
-  renderChatList($('#active-chat-list'), false);
-  renderChatList($('#saved-chat-list'), true);
+function togglePin(id, ev) {
+  if (ev) ev.stopPropagation();
+  if (typeof id !== 'string' || !State.chats.has(id)) return;
+  const chat = State.chats.get(id);
+  chat.pinned = !chat.pinned;
+  chat.updatedAt = Date.now();
+  save(); renderLists();
+  toast(chat.pinned ? 'Pinned' : 'Unpinned', 'info');
 }
 
-function renderChatList(container, savedOnly) {
+// === SEARCH ===
+function filterChats(query) {
+  State.searchQuery = (query || '').toLowerCase().trim();
+  renderLists();
+}
+
+function matchesSearch(chat) {
+  if (!State.searchQuery) return true;
+  const q = State.searchQuery;
+  if (chat.title.toLowerCase().includes(q)) return true;
+  return chat.messages.some(m => (m.content || '').toLowerCase().includes(q));
+}
+
+// === RENDERING ===
+function renderLists() {
+  renderList($('#pinned-chat-list'), 'pinned');
+  renderList($('#active-chat-list'), 'recent');
+  renderList($('#saved-chat-list'), 'saved');
+}
+
+function renderList(container, type) {
   if (!container) return;
   container.innerHTML = '';
 
-  const chats = Array.from(AppState.chats.values())
-    .filter(c => savedOnly ? c.saved : !c.saved)
-    .sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0))
-    .slice(0, 50); // Limit to 50 for performance
+  let chats = [...State.chats.values()];
+  
+  // Filter by type
+  if (type === 'pinned') chats = chats.filter(c => c.pinned);
+  else if (type === 'saved') chats = chats.filter(c => c.saved && !c.pinned);
+  else chats = chats.filter(c => !c.saved && !c.pinned);
+  
+  // Filter by search
+  chats = chats.filter(matchesSearch);
+  
+  // Sort & limit
+  chats.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0)).slice(0, 50);
 
-  if (chats.length === 0) {
-    const hint = savedOnly
-      ? 'No saved chats'
-      : 'No recent chats';
-    container.appendChild(el('div', { class: 'empty-hint', text: hint }));
+  if (!chats.length) {
+    const hints = { pinned: 'No pinned chats', saved: 'No saved chats', recent: State.searchQuery ? 'No results' : 'No recent chats' };
+    container.appendChild(el('div', { class: 'empty-hint', text: hints[type] }));
     return;
   }
 
+  const frag = document.createDocumentFragment();
   for (const chat of chats) {
-    const isActive = chat.id === AppState.currentChatId;
+    const active = chat.id === State.currentChatId;
     const item = el('div', {
-      class: 'chat-item' + (isActive ? ' active' : ''),
-      role: 'button',
-      tabindex: '0',
-      'aria-current': isActive ? 'true' : 'false'
+      class: `chat-item${active ? ' active' : ''}${chat.pinned ? ' pinned' : ''}`,
+      role: 'button', tabindex: '0'
     });
 
-    item.appendChild(el('span', {
-      class: 'chat-item-status ' + (chat.saved ? 'saved' : ''),
-      title: chat.saved ? 'Saved' : 'Recent'
-    }));
-    
+    item.appendChild(el('span', { class: 'chat-item-icon', html: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>' }));
     item.appendChild(el('span', { class: 'chat-item-title', text: chat.title }));
 
     const actions = el('div', { class: 'chat-item-actions' });
-
+    
+    const pinBtn = el('button', { class: `btn-icon${chat.pinned ? ' active' : ''}`, type: 'button', 'aria-label': 'Pin' },
+      [el('span', { html: '<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5v6l1 1 1-1v-6h5v-2z"/></svg>' })]);
+    pinBtn.addEventListener('click', (e) => togglePin(chat.id, e));
+    
     const renameBtn = el('button', { class: 'btn-icon', type: 'button', 'aria-label': 'Rename' },
-      [el('span', { html: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>' })]);
-    const deleteBtn = el('button', { class: 'btn-icon danger', type: 'button', 'aria-label': 'Delete' },
-      [el('span', { html: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6"/></svg>' })]);
-
+      [el('span', { html: '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>' })]);
     renameBtn.addEventListener('click', (e) => renameChat(chat.id, e));
-    deleteBtn.addEventListener('click', (e) => deleteChat(chat.id, e));
+    
+    const delBtn = el('button', { class: 'btn-icon danger', type: 'button', 'aria-label': 'Delete' },
+      [el('span', { html: '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6"/></svg>' })]);
+    delBtn.addEventListener('click', (e) => deleteChat(chat.id, e));
 
-    actions.appendChild(renameBtn);
-    actions.appendChild(deleteBtn);
+    actions.append(pinBtn, renameBtn, delBtn);
     item.appendChild(actions);
-
     item.addEventListener('click', () => selectChat(chat.id));
-    item.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectChat(chat.id); }
-    });
-
-    container.appendChild(item);
+    item.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectChat(chat.id); } });
+    frag.appendChild(item);
   }
+  container.appendChild(frag);
 }
 
 function renderMessages() {
   const container = $('#chat-messages');
   if (!container) return;
-
-  const chat = getCurrentChat();
+  const chat = getChat();
   const msgs = chat.messages || [];
 
-  if (msgs.length === 0) {
+  if (!msgs.length) {
     container.innerHTML = '';
-    renderEmptyState(container);
-    AppState.lastRenderedMessageCount = 0;
+    renderEmpty(container);
     return;
   }
 
-  if (msgs.length !== AppState.lastRenderedMessageCount) {
+  // Optimized: only re-render if changed
+  const cacheKey = `${chat.id}_${msgs.length}`;
+  if (State._renderCache.get('lastKey') !== cacheKey || State.isLoading) {
     container.innerHTML = '';
-    msgs.forEach((msg, idx) => container.appendChild(renderMessage(msg, idx)));
-    AppState.lastRenderedMessageCount = msgs.length;
+    const frag = document.createDocumentFragment();
+    msgs.slice(-C.RENDER_LIMIT).forEach((m, i) => frag.appendChild(renderMsg(m, i + Math.max(0, msgs.length - C.RENDER_LIMIT))));
+    container.appendChild(frag);
+    State._renderCache.set('lastKey', cacheKey);
   }
-  scrollToBottom();
+  requestAnimationFrame(scrollBottom);
 }
 
-function renderEmptyState(container) {
-  const wrap = el('div', { class: 'empty-state' });
+function renderEmpty(container) {
+  const w = el('div', { class: 'empty-state' });
+  w.appendChild(el('div', { class: 'empty-logo', text: 'N' }));
+  w.appendChild(el('h1', { class: 'empty-title', text: 'How can I help you today?' }));
+  w.appendChild(el('p', { class: 'empty-subtitle', text: 'Powered by multiple AI providers. Intel Blue edition.' }));
   
-  wrap.appendChild(el('div', { class: 'empty-logo', text: 'N' }));
-  wrap.appendChild(el('h1', { class: 'empty-title', text: 'How can I help you today?' }));
-  wrap.appendChild(el('p', { class: 'empty-subtitle', text: 'Ask me anything — I\'m powered by multiple AI providers.' }));
-
-  const suggestions = el('div', { class: 'prompt-suggestions' });
-  PROMPT_SUGGESTIONS.forEach(s => {
+  const sg = el('div', { class: 'prompt-suggestions' });
+  PROMPTS.forEach(s => {
     const card = el('button', { class: 'prompt-card', type: 'button' });
     card.appendChild(el('div', { class: 'prompt-card-title', text: s.title }));
     card.appendChild(el('div', { class: 'prompt-card-desc', text: s.desc }));
     card.addEventListener('click', () => {
-      const input = $('#msg-input');
-      if (input) {
-        input.value = s.prompt;
-        autoResizeInput();
-        input.focus();
-        updateSendButton();
-      }
+      const inp = $('#msg-input');
+      if (inp) { inp.value = s.prompt; autoResize(); inp.focus(); updateSend(); }
     });
-    suggestions.appendChild(card);
+    sg.appendChild(card);
   });
-  wrap.appendChild(suggestions);
-  container.appendChild(wrap);
+  w.appendChild(sg);
+  container.appendChild(w);
 }
 
-function renderMessage(msg, idx) {
+function renderMsg(msg, idx) {
   const isUser = msg.role === 'user';
-  const isAssistant = msg.role === 'assistant';
-  const chat = getCurrentChat();
-  const isLastAssistant = isAssistant && idx === chat.messages.length - 1;
+  const isAsst = msg.role === 'assistant';
+  const chat = getChat();
+  const isLast = isAsst && idx === chat.messages.length - 1;
 
-  const wrap = el('div', {
-    class: `message role-${isUser ? 'user' : 'assistant'}`,
-    'data-idx': String(idx)
-  });
-
+  const wrap = el('div', { class: `message role-${isUser ? 'user' : 'assistant'}`, 'data-idx': String(idx) });
+  
   const head = el('div', { class: 'message-head' });
-  const avatar = el('div', {
-    class: 'avatar ' + (isUser ? 'user' : 'assistant')
-  });
+  const avatar = el('div', { class: `avatar ${isUser ? 'user' : 'assistant'}` });
   avatar.appendChild(el('span', { text: isUser ? 'U' : 'N' }));
-  head.appendChild(avatar);
-
-  head.appendChild(el('span', { class: 'message-role', text: isUser ? 'You' : 'NAXA' }));
-
-  const metaExtra = el('div', { class: 'message-meta-extra' });
-  if (msg.createdAt) {
-    metaExtra.appendChild(el('span', { text: formatTime(msg.createdAt) }));
-  }
-  head.appendChild(metaExtra);
-
+  head.append(avatar, el('span', { class: 'message-role', text: isUser ? 'You' : 'NAXA' }));
+  
+  if (msg.createdAt) head.appendChild(el('div', { class: 'message-meta-extra' }, [el('span', { text: fmtTime(msg.createdAt) })]));
   wrap.appendChild(head);
 
   const body = el('div', { class: 'message-body' });
 
-  if (msg.attachments && msg.attachments.length > 0) {
+  // Attachments
+  if (msg.attachments?.length) {
     const atts = el('div', { class: 'attachments' });
-    msg.attachments.forEach(att => {
-      const thumb = el('div', { class: 'attachment-thumb' });
-      if (att.type && att.type.startsWith('image/') && att.data) {
-        thumb.appendChild(el('img', { src: att.data, alt: escapeHtml(att.name || 'image') }));
-      } else {
-        thumb.appendChild(el('span', { text: att.name ? att.name.slice(0, 8) : 'file' }));
-      }
-      atts.appendChild(thumb);
+    msg.attachments.forEach(a => {
+      const t = el('div', { class: 'attachment-thumb' });
+      if (a.type?.startsWith('image/') && a.data) t.appendChild(el('img', { src: a.data, alt: escapeHtml(a.name || '') }));
+      else t.appendChild(el('span', { text: (a.name || 'file').slice(0, 6) }));
+      atts.appendChild(t);
     });
     body.appendChild(atts);
   }
 
   const content = el('div', { class: 'message-content' });
-  if (isAssistant) {
-    content.innerHTML = parseMarkdown(msg.content || '');
-    if (AppState.isLoading && isLastAssistant) {
-      content.appendChild(el('span', { class: 'streaming-caret' }));
-    }
+  if (isAsst) {
+    content.innerHTML = parseMD(msg.content || '');
+    if (State.isLoading && isLast) content.appendChild(el('span', { class: 'streaming-caret' }));
   } else {
     content.textContent = msg.content || '';
   }
   body.appendChild(content);
 
-  // Message actions (hover)
-  if (!AppState.isLoading && msg.content) {
-    const actions = el('div', { class: 'message-actions' });
-
+  // Actions
+  if (!State.isLoading && msg.content) {
+    const acts = el('div', { class: 'message-actions' });
+    
     // Copy
-    const copyBtn = el('button', { class: 'action-btn', type: 'button', title: 'Copy' }, [
-      el('span', { html: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>' })
-    ]);
-    copyBtn.addEventListener('click', () => copyMessage(idx));
-    actions.appendChild(copyBtn);
+    acts.appendChild(el('button', { class: 'action-btn', type: 'button', title: 'Copy', onclick: () => copyMsg(idx) },
+      [el('span', { html: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>' }), ' Copy']));
 
-    if (isAssistant) {
-      // Like
-      const likeBtn = el('button', { class: 'action-btn' + (msg.like ? ' active' : ''), type: 'button', title: 'Like' }, [
-        el('span', { html: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>' })
-      ]);
-      likeBtn.addEventListener('click', () => toggleLike(idx));
-      actions.appendChild(likeBtn);
+    if (isUser) {
+      // Edit user message
+      acts.appendChild(el('button', { class: 'action-btn', type: 'button', title: 'Edit', onclick: () => editMsg(idx) },
+        [el('span', { html: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>' }), ' Edit']));
+    }
 
-      // Dislike
-      const disBtn = el('button', { class: 'action-btn' + (msg.dislike ? ' active dislike' : ''), type: 'button', title: 'Dislike' }, [
-        el('span', { html: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg>' })
-      ]);
-      disBtn.addEventListener('click', () => toggleDislike(idx));
-      actions.appendChild(disBtn);
-
-      if (isLastAssistant) {
-        // Regenerate
-        const regenBtn = el('button', { class: 'action-btn', type: 'button', title: 'Regenerate' }, [
-          el('span', { html: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>' })
-        ]);
-        regenBtn.addEventListener('click', () => regenerate(idx));
-        actions.appendChild(regenBtn);
-
-        // TTS
+    if (isAsst) {
+      acts.appendChild(el('button', { class: `action-btn${msg.like ? ' active' : ''}`, type: 'button', title: 'Like', onclick: () => toggleLike(idx) },
+        [el('span', { html: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>' })]));
+      acts.appendChild(el('button', { class: `action-btn${msg.dislike ? ' active dislike' : ''}`, type: 'button', title: 'Dislike', onclick: () => toggleDislike(idx) },
+        [el('span', { html: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg>' })]));
+      
+      if (isLast) {
+        acts.appendChild(el('button', { class: 'action-btn', type: 'button', title: 'Regenerate', onclick: () => regenerate(idx) },
+          [el('span', { html: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>' }), ' Retry']));
         if ('speechSynthesis' in window) {
-          const ttsBtn = el('button', { class: 'action-btn', type: 'button', title: 'Read aloud' }, [
-            el('span', { html: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>' })
-          ]);
-          ttsBtn.addEventListener('click', () => speakMessage(idx));
-          actions.appendChild(ttsBtn);
+          acts.appendChild(el('button', { class: 'action-btn', type: 'button', title: 'Read aloud', onclick: () => speakMsg(idx) },
+            [el('span', { html: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>' }), ' TTS']));
         }
       }
     }
-
-    wrap.appendChild(actions);
+    wrap.appendChild(acts);
   }
 
   // Follow-ups
-  if (isLastAssistant && !AppState.isLoading && AppState.settings.followUpEnabled && Array.isArray(msg.followUps) && msg.followUps.length > 0) {
-    const fwrap = el('div', { class: 'follow-ups' });
-    msg.followUps.slice(0, AppState.settings.followUpCount).forEach(q => {
+  if (isLast && !State.isLoading && State.settings.followUpEnabled && Array.isArray(msg.followUps) && msg.followUps.length) {
+    const fw = el('div', { class: 'follow-ups' });
+    msg.followUps.slice(0, State.settings.followUpCount).forEach(q => {
       const chip = el('button', { class: 'follow-up-chip', type: 'button', text: q });
-      chip.addEventListener('click', () => {
-        const input = $('#msg-input');
-        if (input) { input.value = q; autoResizeInput(); sendMessage(); }
-      });
-      fwrap.appendChild(chip);
+      chip.addEventListener('click', () => { const inp = $('#msg-input'); if (inp) { inp.value = q; autoResize(); send(); } });
+      fw.appendChild(chip);
     });
-    wrap.appendChild(fwrap);
+    wrap.appendChild(fw);
   }
 
   wrap.appendChild(body);
   return wrap;
 }
 
-function formatTime(ts) {
-  try {
-    const d = new Date(ts);
-    return d.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit', hour12: false });
-  } catch { return '--:--'; }
+function fmtTime(ts) {
+  try { return new Date(ts).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' }); } catch { return '--:--'; }
 }
 
-function scrollToBottom() {
-  const c = $('#chat-container');
-  if (c) c.scrollTop = c.scrollHeight;
-}
+function scrollBottom() { const c = $('#chat-container'); if (c) c.scrollTop = c.scrollHeight; }
 
-function updateStreamingContent(content) {
-  const chat = getCurrentChat();
+function updateStreaming(content) {
+  const chat = getChat();
   const lastIdx = chat.messages.length - 1;
-  const msgNode = document.querySelector(`.message[data-idx="${lastIdx}"] .message-content`);
-  if (!msgNode) return;
-  msgNode.innerHTML = parseMarkdown(content || '');
-  msgNode.appendChild(el('span', { class: 'streaming-caret' }));
-  scrollToBottom();
+  const node = $(`.message[data-idx="${lastIdx}"] .message-content`);
+  if (!node) return;
+  node.innerHTML = parseMD(content || '');
+  node.appendChild(el('span', { class: 'streaming-caret' }));
+  requestAnimationFrame(scrollBottom);
 }
 
-/* ---------------- MODE SWITCHING ---------------- */
-
+// === MODE ===
 function setMode(mode, silent = false) {
   if (!SYSTEM_PROMPTS[mode]) return;
-  AppState.currentMode = mode;
-  const chat = getCurrentChat();
-  chat.mode = mode;
-  chat.updatedAt = Date.now();
-  saveState();
+  State.currentMode = mode;
+  const chat = getChat();
+  chat.mode = mode; chat.updatedAt = Date.now(); save();
   if (!silent) toast(`Mode: ${modeLabel(mode)}`, 'info');
 }
 
-function modeLabel(m) {
-  return { erik: 'Erik', assistant: 'Assistant', coder: 'Coder', support: 'Support' }[m] || m;
-}
+function modeLabel(m) { return { erik: 'Erik', assistant: 'Assistant', coder: 'Coder', support: 'Support' }[m] || m; }
 
-/* ---------------- SYSTEM PROMPT BUILDER ---------------- */
-
-function buildSystemPrompt() {
-  const chat = getCurrentChat();
+// === SYSTEM PROMPT BUILDER ===
+function buildSystem() {
+  const chat = getChat();
   const parts = [];
-
-  const modePrompt = SYSTEM_PROMPTS[chat.mode || AppState.currentMode];
+  const modePrompt = SYSTEM_PROMPTS[chat.mode || State.currentMode];
   if (modePrompt) parts.push(modePrompt);
-
-  if (AppState.settings.globalSystemPrompt && AppState.settings.globalSystemPrompt.trim()) {
-    parts.push('--- GLOBAL INSTRUCTIONS ---');
-    parts.push(AppState.settings.globalSystemPrompt.trim());
-  }
-
-  if (chat.likeFeedback) {
-    parts.push(`--- POSITIVE FEEDBACK ---\n"${chat.likeFeedback}". Maintain this style.`);
-  }
-  if (chat.dislikeFeedback) {
-    parts.push(`--- NEGATIVE FEEDBACK ---\n"${chat.dislikeFeedback}". Avoid this approach.`);
-  }
-
+  if (State.settings.globalSystemPrompt?.trim()) { parts.push('--- GLOBAL ---'); parts.push(State.settings.globalSystemPrompt.trim()); }
+  if (chat.likeFeedback) parts.push(`--- POSITIVE ---\n"${chat.likeFeedback}"`);
+  if (chat.dislikeFeedback) parts.push(`--- NEGATIVE ---\n"${chat.dislikeFeedback}"`);
   return parts.join('\n\n');
 }
 
-/* ---------------- PROVIDER MANAGEMENT ---------------- */
-
-function getProviderConfig(providerName) {
-  if (AppState.providers[providerName]) {
-    return AppState.providers[providerName];
-  }
-  return AppState.customProviders.get(providerName);
-}
+// === PROVIDER ===
+function getProvider(name) { return State.providers[name] || State.customProviders.get(name); }
 
 function getCurrentProvider() {
-  // Use active provider
-  const providerName = AppState.currentProvider;
-  const config = getProviderConfig(providerName);
-  
-  if (!config || !config.apiKey || !config.selectedModel) {
-    // Fallback: find any configured provider
-    for (const [name, p] of Object.entries(AppState.providers)) {
-      if (p.apiKey && p.selectedModel) {
-        AppState.currentProvider = name;
-        return { name, config: p, isCustom: false };
-      }
+  const name = State.currentProvider;
+  const config = getProvider(name);
+  if (!config?.apiKey || !config.selectedModel) {
+    for (const [n, p] of Object.entries(State.providers)) {
+      if (p.apiKey && p.selectedModel) { State.currentProvider = n; return { name: n, config: p, isCustom: false }; }
     }
-    for (const [id, p] of AppState.customProviders) {
-      if (p.apiKey && p.selectedModel) {
-        AppState.currentProvider = id;
-        return { name: id, config: p, isCustom: true };
-      }
+    for (const [id, p] of State.customProviders) {
+      if (p.apiKey && p.selectedModel) { State.currentProvider = id; return { name: id, config: p, isCustom: true }; }
     }
     return null;
   }
-  
-  const isCustom = !AppState.providers[providerName];
-  return { name: providerName, config, isCustom };
+  return { name, config, isCustom: !State.providers[name] };
 }
 
-function updateModelSelector() {
-  const provider = getCurrentProvider();
-  const modelName = $('#current-model-name');
-  if (!modelName) return;
-  
-  if (provider) {
-    const displayName = provider.config.name || provider.name;
-    const model = provider.config.selectedModel || 'default';
-    modelName.textContent = `${displayName} ${model.split('-').pop().slice(0, 10)}`;
+function updateModel() {
+  const p = getCurrentProvider();
+  const el = $('#current-model-name');
+  if (!el) return;
+  if (p) {
+    const m = p.config.selectedModel || 'default';
+    el.textContent = `${p.config.name || p.name} ${m.split(/[-:.]/).pop().slice(0, 12)}`;
   } else {
-    modelName.textContent = 'Select provider';
+    el.textContent = 'Select Provider';
   }
 }
 
-async function loadModels(providerName) {
-  const config = getProviderConfig(providerName);
-  if (!config) return;
-  
-  const apiKey = config.apiKey;
-  if (!apiKey) { 
-    toast('API Key required', 'error'); 
-    return; 
-  }
-
+async function loadModels(name) {
+  const config = getProvider(name);
+  if (!config?.apiKey) { toast('API Key required', 'error'); return; }
   toast('Loading models...', 'info');
 
-  const timeoutController = new AbortController();
-  const timeoutId = setTimeout(() => timeoutController.abort(), FETCH_TIMEOUT_MS);
+  const ctrl = new AbortController();
+  const tid = setTimeout(() => ctrl.abort(), C.FETCH_TIMEOUT);
 
   try {
     let url, headers = {};
-    const compatible = config.compatible || 'openai';
-    
-    if (compatible === 'google') {
-      url = `${config.baseUrl}/models?key=${encodeURIComponent(apiKey)}`;
+    const compat = config.compatible || 'openai';
+    if (compat === 'google') {
+      url = `${config.baseUrl}/models?key=${encodeURIComponent(config.apiKey)}`;
     } else {
-      // OpenAI-compatible (Mistral, Groq, OpenAI, custom)
       url = `${config.baseUrl}/models`;
-      headers = { 'Authorization': `Bearer ${apiKey}` };
+      headers.Authorization = `Bearer ${config.apiKey}`;
     }
-
-    const res = await fetch(url, {
-      method: 'GET',
-      headers,
-      signal: timeoutController.signal
-    });
-
-    clearTimeout(timeoutId);
-
-    if (!res.ok) {
-      let errorMsg = `HTTP ${res.status}`;
-      try {
-        const errData = await res.json();
-        errorMsg = errData?.error?.message || errData?.message || errorMsg;
-      } catch { /* ignore */ }
-      throw new Error(errorMsg);
-    }
-    
+    const res = await fetch(url, { headers, signal: ctrl.signal });
+    clearTimeout(tid);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     let models = [];
-    
-    if (compatible === 'google') {
-      models = (data.models || [])
-        .filter(m => Array.isArray(m.supportedGenerationMethods) && m.supportedGenerationMethods.includes('generateContent'))
-        .map(m => (m.name || '').replace('models/', ''))
-        .filter(Boolean);
+    if (compat === 'google') {
+      models = (data.models || []).filter(m => m.supportedGenerationMethods?.includes('generateContent')).map(m => (m.name || '').replace('models/', '')).filter(Boolean);
     } else {
       models = (data.data || []).map(m => m.id).filter(Boolean);
     }
-
     config.models = models;
-    
-    if (!config.selectedModel && models.length > 0) {
-      config.selectedModel = models[0];
-      AppState.currentModel = models[0];
-    }
-    
-    if (config.selectedModel && models.includes(config.selectedModel)) {
-      AppState.currentModel = config.selectedModel;
-    }
-
-    saveState();
-    updateModelSelector();
-    toast(`${models.length} models loaded`, 'success');
+    if (!config.selectedModel && models.length) config.selectedModel = models[0];
+    if (config.selectedModel && models.includes(config.selectedModel)) State.currentModel = config.selectedModel;
+    save(); updateModel(); toast(`${models.length} models loaded`, 'success');
   } catch (err) {
-    clearTimeout(timeoutId);
-    console.error('loadModels:', err);
-    const msg = err.name === 'AbortError' ? 'Request timeout' : err.message;
-    toast(`Failed to load models: ${msg}`, 'error');
+    clearTimeout(tid);
+    toast(`Failed: ${err.name === 'AbortError' ? 'Timeout' : err.message}`, 'error');
   }
 }
 
-/* ---------------- API STREAMING (FIXED VERSION) ---------------- */
-
-async function streamChat(providerName, config, model, messages, { onChunk, onError, onComplete, signal }) {
-  if (!config || !config.apiKey || !model) {
-    onError(new Error('Provider or model not configured'));
-    return;
-  }
-
-  const compatible = config.compatible || 'openai';
+// === API STREAMING ===
+async function streamChat(name, config, model, messages, { onChunk, onError, onComplete, signal }) {
+  if (!config?.apiKey || !model) { onError(new Error('Not configured')); return; }
+  const compat = config.compatible || 'openai';
   let url, headers = { 'Content-Type': 'application/json' }, body;
 
-  if (compatible === 'google') {
+  if (compat === 'google') {
     url = `${config.baseUrl}/models/${model}:streamGenerateContent?alt=sse&key=${encodeURIComponent(config.apiKey)}`;
     body = {
-      contents: messages
-        .filter(m => m.role !== 'system')
-        .map(m => ({ 
-          role: m.role === 'assistant' ? 'model' : 'user', 
-          parts: [{ text: m.content }] 
-        })),
-      systemInstruction: messages.find(m => m.role === 'system')
-        ? { parts: [{ text: messages.find(m => m.role === 'system').content }] }
-        : undefined,
-      generationConfig: {
-        temperature: AppState.settings.temperature,
-        maxOutputTokens: AppState.settings.maxTokens
-      }
+      contents: messages.filter(m => m.role !== 'system').map(m => ({ role: m.role === 'assistant' ? 'model' : 'user', parts: [{ text: m.content }] })),
+      systemInstruction: messages.find(m => m.role === 'system') ? { parts: [{ text: messages.find(m => m.role === 'system').content }] } : undefined,
+      generationConfig: { temperature: State.settings.temperature, maxOutputTokens: State.settings.maxTokens }
     };
   } else {
-    // OpenAI-compatible (Mistral, Groq, OpenAI, custom)
     url = `${config.baseUrl}/chat/completions`;
     headers.Authorization = `Bearer ${config.apiKey}`;
-    body = {
-      model,
-      messages,
-      stream: AppState.settings.streamEnabled,
-      temperature: AppState.settings.temperature,
-      max_tokens: AppState.settings.maxTokens
-    };
-    if (providerName === 'groq' && config.reasoning && config.reasoning !== 'none') {
-      body.reasoning_effort = config.reasoning;
-    }
+    body = { model, messages, stream: State.settings.streamEnabled, temperature: State.settings.temperature, max_tokens: State.settings.maxTokens };
   }
 
   try {
-    const res = await fetch(url, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(body),
-      signal
-    });
+    const res = await fetch(url, { method: 'POST', headers, body: JSON.stringify(body), signal });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-    if (!res.ok) {
-      let msg = `HTTP ${res.status}`;
-      try {
-        const errData = await res.json();
-        msg = errData?.error?.message || errData?.message || msg;
-      } catch { /* ignore */ }
-      throw new Error(msg);
-    }
-
-    if (!AppState.settings.streamEnabled || !res.body) {
-      // Non-streaming response
+    if (!State.settings.streamEnabled || !res.body) {
       const data = await res.json();
-      let content = '';
-      if (compatible === 'google') {
-        content = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-      } else {
-        content = data?.choices?.[0]?.message?.content || '';
-      }
+      const content = compat === 'google' ? data?.candidates?.[0]?.content?.parts?.[0]?.text || '' : data?.choices?.[0]?.message?.content || '';
       if (content) onChunk(content);
-      onComplete();
-      return;
+      onComplete(); return;
     }
 
     const reader = res.body.getReader();
-    const decoder = new TextDecoder();
-    let buffer = '';
-
+    const dec = new TextDecoder();
+    let buf = '';
     while (true) {
       const { done, value } = await reader.read();
       if (done) break;
-      buffer += decoder.decode(value, { stream: true });
-      const lines = buffer.split('\n');
-      buffer = lines.pop() || '';
-
+      buf += dec.decode(value, { stream: true });
+      const lines = buf.split('\n');
+      buf = lines.pop() || '';
       for (const line of lines) {
-        const trimmed = line.trim();
-        if (!trimmed.startsWith('data:')) continue;
-        const payload = trimmed.slice(5).trim();
-        if (payload === '[DONE]') { 
-          onComplete(); 
-          return; 
-        }
+        const t = line.trim();
+        if (!t.startsWith('data:')) continue;
+        const payload = t.slice(5).trim();
+        if (payload === '[DONE]') { onComplete(); return; }
         try {
           const obj = JSON.parse(payload);
-          let delta = '';
-          if (compatible === 'google') {
-            delta = obj?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-          } else {
-            delta = obj?.choices?.[0]?.delta?.content || '';
-          }
+          const delta = compat === 'google' ? obj?.candidates?.[0]?.content?.parts?.[0]?.text || '' : obj?.choices?.[0]?.delta?.content || '';
           if (delta) onChunk(delta);
-        } catch { /* ignore parse errors */ }
+        } catch {}
       }
     }
     onComplete();
   } catch (err) {
-    if (err && err.name === 'AbortError') {
-      toast('Generation stopped', 'info');
-      return;
-    }
+    if (err?.name === 'AbortError') { toast('Stopped', 'info'); return; }
     onError(err);
   }
 }
 
-/* ---------------- SEND MESSAGE (FIXED) ---------------- */
-
-async function sendMessage() {
+// === SEND MESSAGE ===
+async function send() {
   const input = $('#msg-input');
   if (!input) return;
   const text = input.value.trim();
-  if (!text || AppState.isLoading) return;
+  if (!text || State.isLoading) return;
 
-  // 🔧 CRITICAL FIX: Get provider correctly
   const provider = getCurrentProvider();
-  if (!provider) {
-    toast('Please configure a provider first (click Settings → Providers)', 'error');
-    openProviderSetup();
-    return;
-  }
+  if (!provider) { toast('Configure a provider first', 'error'); openProviderSetup(); return; }
 
-  const chat = getCurrentChat();
-  const userMsg = {
-    role: 'user',
-    content: text,
-    attachments: [...AppState.attachments],
-    createdAt: Date.now()
-  };
+  const chat = getChat();
+  const userMsg = { role: 'user', content: text, attachments: [...State.attachments], createdAt: Date.now() };
   chat.messages.push(userMsg);
-  
-  // Auto-title from first message
-  if (chat.messages.filter(m => m.role === 'user').length === 1) {
-    chat.title = text.slice(0, 40) + (text.length > 40 ? '…' : '');
-  }
-  
-  // Save provider/model info with chat
-  chat.provider = provider.name;
-  chat.model = provider.config.selectedModel;
+  if (chat.messages.filter(m => m.role === 'user').length === 1) chat.title = text.slice(0, 40) + (text.length > 40 ? '…' : '');
+  chat.provider = provider.name; chat.model = provider.config.selectedModel;
 
-  AppState.attachments = [];
-  input.value = '';
-  autoResizeInput();
-  renderAttachmentBar();
-  updateSendButton();
+  State.attachments = [];
+  input.value = ''; autoResize(); renderAttachBar(); updateSend();
 
-  const assistantMsg = {
-    role: 'assistant',
-    content: '',
-    like: false,
-    dislike: false,
-    likeFeedback: null,
-    dislikeFeedback: null,
-    followUps: [],
-    createdAt: Date.now()
-  };
-  chat.messages.push(assistantMsg);
-  chat.updatedAt = Date.now();
-  saveState();
+  const asstMsg = { role: 'assistant', content: '', like: false, dislike: false, likeFeedback: null, dislikeFeedback: null, followUps: [], createdAt: Date.now() };
+  chat.messages.push(asstMsg); chat.updatedAt = Date.now(); save();
+  renderMessages(); renderLists();
 
-  renderMessages();
-  renderChatLists();
+  State.isLoading = true;
+  State.abortController = new AbortController();
+  updateSend();
 
-  AppState.isLoading = true;
-  AppState.abortController = new AbortController();
-  updateSendButton();
+  const apiMsgs = [{ role: 'system', content: buildSystem() }, ...chat.messages.filter(m => (m.role === 'user' || m.role === 'assistant') && m.content).map(m => ({ role: m.role, content: m.content }))];
+  let full = '';
+  const start = Date.now();
 
-  const systemPrompt = buildSystemPrompt();
-  const apiMessages = [
-    { role: 'system', content: systemPrompt },
-    ...chat.messages
-      .filter(m => (m.role === 'user' || m.role === 'assistant') && m.content)
-      .map(m => ({ role: m.role, content: m.content }))
-  ];
-
-  const model = provider.config.selectedModel;
-  let fullContent = '';
-  const startTime = Date.now();
-
-  await streamChat(provider.name, provider.config, model, apiMessages, {
-    signal: AppState.abortController.signal,
-    onChunk: (chunk) => {
-      fullContent += chunk;
-      assistantMsg.content = fullContent;
-      updateStreamingContent(fullContent);
-    },
+  await streamChat(provider.name, provider.config, provider.config.selectedModel, apiMsgs, {
+    signal: State.abortController.signal,
+    onChunk: (chunk) => { full += chunk; asstMsg.content = full; updateStreaming(full); },
     onError: (err) => {
-      console.error('Stream error:', err);
-      assistantMsg.content = `⚠️ **Error:** ${err.message}\n\nPlease check your API key and model selection in Settings.`;
-      AppState.isLoading = false;
-      AppState.abortController = null;
-      updateSendButton();
-      renderMessages();
-      toast(`Error: ${err.message}`, 'error');
+      asstMsg.content = `⚠️ **Error:** ${err.message}`;
+      State.isLoading = false; State.abortController = null; updateSend(); renderMessages(); toast(`Error: ${err.message}`, 'error');
     },
     onComplete: () => {
-      assistantMsg.content = fullContent;
-      assistantMsg.followUps = extractFollowUps(fullContent);
-      AppState.isLoading = false;
-      AppState.abortController = null;
-      updateSendButton();
-      chat.updatedAt = Date.now();
-      saveState();
-      renderMessages();
-      renderChatLists();
-      
-      // Update stats
-      const responseTime = Date.now() - startTime;
-      AppState.stats.totalMessages++;
-      AppState.stats.totalTokens += fullContent.split(/\s+/).length;
-      AppState.stats.avgResponseTime = Math.round(
-        (AppState.stats.avgResponseTime * (AppState.stats.totalMessages - 1) + responseTime) / AppState.stats.totalMessages
-      );
-      saveState();
+      asstMsg.content = full;
+      asstMsg.followUps = extractFollowUps(full);
+      State.isLoading = false; State.abortController = null; updateSend();
+      chat.updatedAt = Date.now(); save(); renderMessages(); renderLists();
+      const rt = Date.now() - start;
+      State.stats.totalMessages++;
+      State.stats.totalTokens += full.split(/\s+/).length;
+      State.stats.avgResponseTime = Math.round((State.stats.avgResponseTime * (State.stats.totalMessages - 1) + rt) / State.stats.totalMessages);
+      save();
     }
   });
 }
 
 function extractFollowUps(text) {
-  if (!AppState.settings.followUpEnabled) return [];
-  if (typeof text !== 'string') return [];
-  const out = [];
+  if (!State.settings.followUpEnabled || typeof text !== 'string') return [];
   const rx = /(?:\?|Vuoi|Posso|Dimmi|Spiegami)[^.?!]*\?/gi;
   const matches = text.match(rx) || [];
-  for (const m of matches) {
-    const q = m.trim();
-    if (q.length > 10 && q.length < 120 && out.length < AppState.settings.followUpCount) {
-      out.push(q);
-    }
-  }
-  return out;
+  return matches.filter(q => q.trim().length > 10 && q.trim().length < 120).slice(0, State.settings.followUpCount);
 }
 
-function stopGeneration() {
-  if (AppState.abortController) {
-    AppState.abortController.abort();
-    AppState.abortController = null;
-  }
-  AppState.isLoading = false;
-  updateSendButton();
+function stopGen() {
+  State.abortController?.abort();
+  State.abortController = null;
+  State.isLoading = false;
+  updateSend();
 }
 
-function updateSendButton() {
+function updateSend() {
   const btn = $('#send-btn');
   const input = $('#msg-input');
   if (!btn) return;
-  
-  const hasText = input && input.value.trim().length > 0;
-  
-  if (AppState.isLoading) {
-    btn.classList.add('stop');
-    btn.disabled = false;
-    btn.setAttribute('aria-label', 'Stop');
+  const has = input?.value.trim().length > 0;
+  if (State.isLoading) {
+    btn.classList.add('stop'); btn.disabled = false; btn.setAttribute('aria-label', 'Stop');
     btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>';
   } else {
-    btn.classList.remove('stop');
-    btn.disabled = !hasText;
-    btn.setAttribute('aria-label', 'Send');
-    btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>';
+    btn.classList.remove('stop'); btn.disabled = !has; btn.setAttribute('aria-label', 'Send');
+    btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>';
   }
 }
 
-/* ---------------- MESSAGE ACTIONS ---------------- */
-
+// === MESSAGE ACTIONS ===
 function toggleLike(idx) {
-  const chat = getCurrentChat();
-  const msg = chat.messages[idx];
-  if (!msg) return;
-  
-  msg.like = !msg.like;
-  if (msg.like) {
-    msg.dislike = false;
-  }
-  
-  chat.updatedAt = Date.now();
-  saveState();
-  renderMessages();
+  const msg = getChat().messages[idx]; if (!msg) return;
+  msg.like = !msg.like; if (msg.like) msg.dislike = false;
+  getChat().updatedAt = Date.now(); save(); renderMessages();
 }
 
 function toggleDislike(idx) {
-  const chat = getCurrentChat();
-  const msg = chat.messages[idx];
-  if (!msg) return;
-  
+  const msg = getChat().messages[idx]; if (!msg) return;
   msg.dislike = !msg.dislike;
   if (msg.dislike) {
     msg.like = false;
-    openPromptModal({
-      title: 'What went wrong?',
-      placeholder: 'Optional feedback to improve responses',
-      defaultValue: '',
-      optional: true,
-      onSubmit: (val) => {
-        msg.dislikeFeedback = val || null;
-        chat.dislikeFeedback = val || null;
-        chat.updatedAt = Date.now();
-        saveState();
-        if (val) toast('Feedback saved', 'success');
-      }
+    promptModal({
+      title: 'What went wrong?', placeholder: 'Optional feedback', value: '', optional: true,
+      onSubmit: (val) => { msg.dislikeFeedback = val || null; getChat().dislikeFeedback = val || null; getChat().updatedAt = Date.now(); save(); }
     });
   }
-  
-  chat.updatedAt = Date.now();
-  saveState();
-  renderMessages();
+  getChat().updatedAt = Date.now(); save(); renderMessages();
 }
 
 function regenerate(idx) {
-  if (AppState.isLoading) return;
-  const chat = getCurrentChat();
+  if (State.isLoading) return;
+  const chat = getChat();
   let userIdx = -1;
-  for (let i = idx - 1; i >= 0; i--) {
-    if (chat.messages[i] && chat.messages[i].role === 'user') { 
-      userIdx = i; 
-      break; 
-    }
-  }
-  if (userIdx < 0) { 
-    toast('Cannot regenerate', 'warning'); 
-    return; 
-  }
-  const userMsg = chat.messages[userIdx];
-  chat.messages = chat.messages.slice(0, idx);
-  chat.updatedAt = Date.now();
-  saveState();
+  for (let i = idx - 1; i >= 0; i--) { if (chat.messages[i]?.role === 'user') { userIdx = i; break; } }
+  if (userIdx < 0) { toast('Cannot regenerate', 'warning'); return; }
+  const um = chat.messages[userIdx];
+  chat.messages = chat.messages.slice(0, idx); chat.updatedAt = Date.now(); save();
   renderMessages();
   const input = $('#msg-input');
-  if (input) { 
-    input.value = userMsg.content; 
-    autoResizeInput(); 
-    updateSendButton();
-  }
-  sendMessage();
+  if (input) { input.value = um.content; autoResize(); updateSend(); }
+  send();
 }
 
-async function copyMessage(idx) {
-  const chat = getCurrentChat();
+async function copyMsg(idx) {
+  const msg = getChat().messages[idx]; if (!msg?.content) return;
+  try { await navigator.clipboard.writeText(msg.content); toast('Copied', 'success'); } catch { toast('Copy failed', 'error'); }
+}
+
+function editMsg(idx) {
+  const chat = getChat();
   const msg = chat.messages[idx];
-  if (!msg || !msg.content) return;
-  try {
-    await navigator.clipboard.writeText(msg.content);
-    toast('Copied to clipboard', 'success');
-  } catch {
-    toast('Copy failed', 'error');
-  }
-}
-
-function speakMessage(idx) {
-  if (!('speechSynthesis' in window)) {
-    toast('Text-to-speech not supported', 'error');
-    return;
-  }
-
-  const chat = getCurrentChat();
-  const msg = chat.messages[idx];
-  if (!msg || !msg.content) return;
-
-  speechSynthesis.cancel();
-
-  const utterance = new SpeechSynthesisUtterance(msg.content);
-  
-  if (AppState.settings.ttsVoice) {
-    const voices = speechSynthesis.getVoices();
-    const voice = voices.find(v => v.name === AppState.settings.ttsVoice);
-    if (voice) utterance.voice = voice;
-  }
-
-  utterance.rate = 1.0;
-  utterance.pitch = 1.0;
-  utterance.volume = 1.0;
-
-  speechSynthesis.speak(utterance);
-  toast('Speaking...', 'info');
-}
-
-/* ---------------- FILE ATTACHMENTS ---------------- */
-
-function handleFiles(files) {
-  if (!files || files.length === 0) return;
-  for (const file of files) {
-    if (file.size > 10 * 1024 * 1024) {
-      toast(`${file.name}: too large (max 10MB)`, 'warning');
-      continue;
+  if (!msg || msg.role !== 'user') return;
+  promptModal({
+    title: 'Edit message', placeholder: 'Message', value: msg.content,
+    onSubmit: (val) => {
+      if (!val.trim()) return;
+      msg.content = val.trim();
+      // Remove all messages after this one and regenerate
+      chat.messages = chat.messages.slice(0, idx + 1);
+      chat.updatedAt = Date.now(); save();
+      renderMessages();
+      const input = $('#msg-input');
+      if (input) { input.value = val; autoResize(); updateSend(); }
+      send();
     }
-    const reader = new FileReader();
-    reader.onload = () => {
-      AppState.attachments.push({
-        name: file.name,
-        type: file.type,
-        size: file.size,
-        data: reader.result
-      });
-      renderAttachmentBar();
-    };
-    reader.onerror = () => toast('File read error', 'error');
-    reader.readAsDataURL(file);
-  }
-}
-
-function renderAttachmentBar() {
-  const bar = $('#attachment-bar');
-  if (!bar) return;
-  if (AppState.attachments.length === 0) {
-    bar.hidden = true;
-    bar.innerHTML = '';
-    return;
-  }
-  bar.hidden = false;
-  bar.innerHTML = '';
-  AppState.attachments.forEach((att, i) => {
-    const item = el('div', { class: 'att-item' });
-    if (att.type && att.type.startsWith('image/') && att.data) {
-      item.appendChild(el('img', { src: att.data, alt: escapeHtml(att.name) }));
-    } else {
-      item.appendChild(el('span', {
-        html: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>'
-      }));
-    }
-    const remove = el('button', { class: 'att-remove', type: 'button', 'aria-label': 'Remove', text: '×' });
-    remove.addEventListener('click', () => {
-      AppState.attachments.splice(i, 1);
-      renderAttachmentBar();
-    });
-    item.appendChild(remove);
-    bar.appendChild(item);
   });
 }
 
-/* ---------------- TEXTAREA AUTO-RESIZE ---------------- */
+function speakMsg(idx) {
+  if (!('speechSynthesis' in window)) { toast('TTS not supported', 'error'); return; }
+  const msg = getChat().messages[idx]; if (!msg?.content) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(msg.content);
+  if (State.settings.ttsVoice) {
+    const v = speechSynthesis.getVoices().find(v => v.name === State.settings.ttsVoice);
+    if (v) u.voice = v;
+  }
+  speechSynthesis.speak(u); toast('Speaking...', 'info');
+}
 
+// === ATTACHMENTS ===
+function handleFiles(files) {
+  if (!files?.length) return;
+  for (const f of files) {
+    if (f.size > 10 * 1024 * 1024) { toast(`${f.name}: too large`, 'warning'); continue; }
+    const r = new FileReader();
+    r.onload = () => { State.attachments.push({ name: f.name, type: f.type, size: f.size, data: r.result }); renderAttachBar(); };
+    r.onerror = () => toast('File read error', 'error');
+    r.readAsDataURL(f);
+  }
+}
+
+function renderAttachBar() {
+  const bar = $('#attachment-bar'); if (!bar) return;
+  if (!State.attachments.length) { bar.hidden = true; bar.innerHTML = ''; return; }
+  bar.hidden = false; bar.innerHTML = '';
+  State.attachments.forEach((a, i) => {
+    const item = el('div', { class: 'att-item' });
+    if (a.type?.startsWith('image/') && a.data) item.appendChild(el('img', { src: a.data, alt: escapeHtml(a.name) }));
+    else item.appendChild(el('span', { html: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>' }));
+    const rm = el('button', { class: 'att-remove', type: 'button', text: '×', onclick: () => { State.attachments.splice(i, 1); renderAttachBar(); } });
+    item.appendChild(rm); bar.appendChild(item);
+  });
+}
+
+// === TEXTAREA ===
 let resizeTimer = null;
-function autoResizeInput() {
+function autoResize() {
   if (resizeTimer) clearTimeout(resizeTimer);
   resizeTimer = setTimeout(() => {
-    const input = $('#msg-input');
-    if (!input) return;
-    input.style.height = 'auto';
-    input.style.height = Math.min(input.scrollHeight, 200) + 'px';
-    updateSendButton();
-  }, DEBOUNCE_MS);
+    const inp = $('#msg-input'); if (!inp) return;
+    inp.style.height = 'auto';
+    inp.style.height = Math.min(inp.scrollHeight, 180) + 'px';
+    updateSend();
+  }, C.DEBOUNCE);
 }
 
-/* ---------------- VOICE INPUT ---------------- */
-
-function toggleVoiceInput() {
-  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-    toast('Speech recognition not supported', 'error');
-    return;
-  }
-
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  const recognition = new SpeechRecognition();
-  
-  recognition.continuous = false;
-  recognition.interimResults = false;
-  recognition.lang = 'it-IT';
-
+// === VOICE ===
+function toggleVoice() {
+  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) { toast('Not supported', 'error'); return; }
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const rec = new SR();
+  rec.continuous = false; rec.interimResults = false; rec.lang = 'it-IT';
   const btn = $('#btn-voice');
-
-  recognition.onstart = () => {
-    btn.classList.add('recording');
-    toast('Listening...', 'info');
+  rec.onstart = () => { btn.classList.add('recording'); toast('Listening...', 'info'); };
+  rec.onresult = (e) => {
+    const inp = $('#msg-input');
+    if (inp) { inp.value += (inp.value ? ' ' : '') + e.results[0][0].transcript; autoResize(); updateSend(); }
   };
-
-  recognition.onresult = (event) => {
-    const transcript = event.results[0][0].transcript;
-    const input = $('#msg-input');
-    if (input) {
-      input.value += (input.value ? ' ' : '') + transcript;
-      autoResizeInput();
-      updateSendButton();
-    }
-  };
-
-  recognition.onerror = (event) => {
-    toast('Speech error: ' + event.error, 'error');
-    btn.classList.remove('recording');
-  };
-
-  recognition.onend = () => {
-    btn.classList.remove('recording');
-  };
-
-  recognition.start();
+  rec.onerror = (e) => { toast('Error: ' + e.error, 'error'); btn.classList.remove('recording'); };
+  rec.onend = () => btn.classList.remove('recording');
+  rec.start();
 }
 
-/* ---------------- THEME ---------------- */
-
+// === THEME ===
 function toggleTheme() {
-  const current = AppState.theme;
-  if (current === 'auto') AppState.theme = 'light';
-  else if (current === 'light') AppState.theme = 'dark';
-  else AppState.theme = 'auto';
-  applyTheme();
-  saveState();
-  toast(`Theme: ${AppState.theme}`, 'info');
+  if (State.theme === 'auto') State.theme = 'light';
+  else if (State.theme === 'light') State.theme = 'dark';
+  else State.theme = 'auto';
+  applyTheme(); save(); toast(`Theme: ${State.theme}`, 'info');
 }
 
 function applyTheme() {
-  const theme = AppState.theme;
-  if (theme === 'auto') {
-    document.documentElement.removeAttribute('data-theme');
-  } else {
-    document.documentElement.setAttribute('data-theme', theme);
-  }
+  if (State.theme === 'auto') document.documentElement.removeAttribute('data-theme');
+  else document.documentElement.setAttribute('data-theme', State.theme);
 }
 
-/* ---------------- SIDEBAR ---------------- */
-
+// === SIDEBAR ===
 function toggleSidebar() {
-  AppState.sidebarOpen = !AppState.sidebarOpen;
-  const sidebar = $('#sidebar');
-  if (sidebar) {
-    sidebar.classList.toggle('open', AppState.sidebarOpen);
-  }
-  const backdrop = $('#sidebar-backdrop');
-  if (backdrop) {
-    backdrop.classList.toggle('show', AppState.sidebarOpen && window.innerWidth <= 900);
-  }
-  saveState();
+  State.sidebarOpen = !State.sidebarOpen;
+  const s = $('#sidebar');
+  if (s) s.classList.toggle('open', State.sidebarOpen);
+  const b = $('#sidebar-backdrop');
+  if (b) b.classList.toggle('show', State.sidebarOpen && window.innerWidth <= 900);
+  save();
 }
 
 function closeSidebar() {
   if (window.innerWidth <= 900) {
-    AppState.sidebarOpen = false;
-    const sidebar = $('#sidebar');
-    if (sidebar) sidebar.classList.remove('open');
-    const backdrop = $('#sidebar-backdrop');
-    if (backdrop) backdrop.classList.remove('show');
+    State.sidebarOpen = false;
+    $('#sidebar')?.classList.remove('open');
+    $('#sidebar-backdrop')?.classList.remove('show');
   }
 }
 
 function collapseSidebar() {
-  const sidebar = $('#sidebar');
-  if (sidebar) {
-    sidebar.classList.toggle('collapsed');
-    AppState.sidebarOpen = !sidebar.classList.contains('collapsed');
-    saveState();
-  }
+  const s = $('#sidebar');
+  if (s) { s.classList.toggle('collapsed'); State.sidebarOpen = !s.classList.contains('collapsed'); save(); }
 }
 
-/* ---------------- MODALS ---------------- */
-
-function openModal(contentBuilder) {
-  // Close any existing modal
-  const existing = document.querySelector('.modal-overlay');
-  if (existing) existing.remove();
-  
+// === MODALS ===
+function openModal(builder) {
+  $('.modal-overlay')?.remove();
   const overlay = el('div', { class: 'modal-overlay' });
   const modal = el('div', { class: 'modal', role: 'dialog', 'aria-modal': 'true' });
-  contentBuilder(modal, overlay);
+  builder(modal, overlay);
   overlay.appendChild(modal);
   overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.remove(); });
   document.body.appendChild(overlay);
   return { overlay, modal };
 }
 
-function openConfirmModal({ title, message, confirmText = 'Confirm', danger = false, onConfirm }) {
+function confirmModal({ title, message, confirm = 'Confirm', danger = false, onConfirm }) {
   openModal((modal, overlay) => {
     modal.appendChild(el('h2', { text: title }));
-    modal.appendChild(el('p', { text: message, style: 'color:var(--text-secondary);line-height:1.6;font-size:14px;' }));
-    const actions = el('div', { class: 'modal-actions' });
-    const cancel = el('button', { class: 'btn btn-secondary-modal', type: 'button', text: 'Cancel' });
-    cancel.addEventListener('click', () => overlay.remove());
-    const confirm = el('button', { class: 'btn ' + (danger ? 'btn-danger' : 'btn-primary'), type: 'button', text: confirmText });
-    confirm.addEventListener('click', () => { overlay.remove(); if (typeof onConfirm === 'function') onConfirm(); });
-    actions.appendChild(cancel);
-    actions.appendChild(confirm);
-    modal.appendChild(actions);
+    modal.appendChild(el('p', { text: message }));
+    const acts = el('div', { class: 'modal-actions' });
+    acts.appendChild(el('button', { class: 'btn btn-secondary-modal', type: 'button', text: 'Cancel', onclick: () => overlay.remove() }));
+    acts.appendChild(el('button', { class: `btn ${danger ? 'btn-danger' : 'btn-primary'}`, type: 'button', text: confirm, onclick: () => { overlay.remove(); onConfirm?.(); } }));
+    modal.appendChild(acts);
   });
 }
 
-function openPromptModal({ title, placeholder, defaultValue = '', optional = false, onSubmit }) {
+function promptModal({ title, placeholder, value = '', optional = false, onSubmit }) {
   openModal((modal, overlay) => {
     modal.appendChild(el('h2', { text: title }));
-    const textarea = el('textarea', {
-      class: 'textarea-field',
-      rows: '3',
-      placeholder: placeholder || ''
-    });
-    textarea.value = defaultValue || '';
-    modal.appendChild(textarea);
-    const actions = el('div', { class: 'modal-actions' });
-    const cancel = el('button', { class: 'btn btn-secondary-modal', type: 'button', text: 'Cancel' });
-    cancel.addEventListener('click', () => overlay.remove());
-    const submit = el('button', { class: 'btn btn-primary', type: 'button', text: 'Save' });
-    submit.addEventListener('click', () => {
-      const val = textarea.value.trim();
-      if (!val && !optional) { toast('Field cannot be empty', 'warning'); return; }
-      overlay.remove();
-      if (typeof onSubmit === 'function') onSubmit(val);
-    });
-    actions.appendChild(cancel);
-    actions.appendChild(submit);
-    modal.appendChild(actions);
-    setTimeout(() => textarea.focus(), 50);
+    const ta = el('textarea', { class: 'textarea-field', rows: '3', placeholder: placeholder || '' });
+    ta.value = value;
+    modal.appendChild(ta);
+    const acts = el('div', { class: 'modal-actions' });
+    acts.appendChild(el('button', { class: 'btn btn-secondary-modal', type: 'button', text: 'Cancel', onclick: () => overlay.remove() }));
+    acts.appendChild(el('button', { class: 'btn btn-primary', type: 'button', text: 'Save', onclick: () => {
+      const v = ta.value.trim();
+      if (!v && !optional) { toast('Required', 'warning'); return; }
+      overlay.remove(); onSubmit?.(v);
+    }}));
+    modal.appendChild(acts);
+    setTimeout(() => ta.focus(), 50);
   });
 }
 
-function openInfoModal({ title, body }) {
-  openModal((modal, overlay) => {
-    modal.appendChild(el('h2', { text: title }));
-    modal.appendChild(el('pre', { text: body, class: 'code-exec-output' }));
-    const actions = el('div', { class: 'modal-actions' });
-    const close = el('button', { class: 'btn btn-primary', type: 'button', text: 'Close' });
-    close.addEventListener('click', () => overlay.remove());
-    actions.appendChild(close);
-    modal.appendChild(actions);
-  });
-}
-
-/* ---------------- SETTINGS ---------------- */
-
+// === SETTINGS ===
 function openSettings() {
   openModal((modal, overlay) => {
     modal.appendChild(el('h2', { text: 'Settings' }));
-
-    // Provider selection
+    
+    // Provider
     modal.appendChild(el('h3', { text: 'AI Provider' }));
-    
-    const providerSelect = el('select', { class: 'select-field' });
-    
-    // Add built-in providers
-    for (const [key, p] of Object.entries(AppState.providers)) {
-      const opt = el('option', { value: key, text: p.name });
-      if (key === AppState.currentProvider) opt.selected = true;
-      providerSelect.appendChild(opt);
+    const sel = el('select', { class: 'select-field' });
+    for (const [k, p] of Object.entries(State.providers)) {
+      const o = el('option', { value: k, text: p.name }); if (k === State.currentProvider) o.selected = true; sel.appendChild(o);
     }
-    
-    // Add custom providers
-    AppState.customProviders.forEach((p, id) => {
-      const opt = el('option', { value: id, text: p.name + ' (Custom)' });
-      if (id === AppState.currentProvider) opt.selected = true;
-      providerSelect.appendChild(opt);
+    State.customProviders.forEach((p, id) => {
+      const o = el('option', { value: id, text: p.name + ' (Custom)' }); if (id === State.currentProvider) o.selected = true; sel.appendChild(o);
     });
+    sel.addEventListener('change', () => { State.currentProvider = sel.value; const c = getProvider(sel.value); if (c?.selectedModel) State.currentModel = c.selectedModel; save(); updateModel(); renderModelCfg(modal); });
+    modal.appendChild(sel);
     
-    providerSelect.addEventListener('change', () => {
-      AppState.currentProvider = providerSelect.value;
-      const config = getProviderConfig(providerSelect.value);
-      if (config && config.selectedModel) {
-        AppState.currentModel = config.selectedModel;
-      }
-      saveState();
-      updateModelSelector();
-      renderModelConfig(modal);
-    });
-    modal.appendChild(providerSelect);
+    const mcDiv = el('div', { id: 'model-cfg' });
+    modal.appendChild(mcDiv);
+    renderModelCfg(modal);
 
-    // Model config section
-    const modelConfigDiv = el('div', { id: 'model-config-section' });
-    modal.appendChild(modelConfigDiv);
-    renderModelConfig(modal);
-
-    // Temperature
-    modal.appendChild(el('h3', { text: 'Generation', style: 'margin-top:var(--sp-5)' }));
+    // Generation
+    modal.appendChild(el('h3', { text: 'Generation' }));
     
     const tempRow = el('div', { class: 'slider-row' });
-    const tempHead = el('div', { class: 'slider-row-head' });
-    tempHead.appendChild(el('span', { class: 'toggle-label', text: 'Temperature' }));
-    const tempVal = el('span', { class: 'slider-val', text: String(AppState.settings.temperature) });
-    tempHead.appendChild(tempVal);
-    tempRow.appendChild(tempHead);
-    const tempSlider = el('input', { type: 'range', class: 'range-slider', min: '0', max: '2', step: '0.1', value: String(AppState.settings.temperature) });
-    tempSlider.addEventListener('input', () => { tempVal.textContent = tempSlider.value; });
-    tempRow.appendChild(tempSlider);
-    modal.appendChild(tempRow);
+    const tempH = el('div', { class: 'slider-row-head' });
+    tempH.appendChild(el('span', { class: 'toggle-label', text: 'Temperature' }));
+    const tempV = el('span', { class: 'slider-val', text: String(State.settings.temperature) });
+    tempH.appendChild(tempV); tempRow.appendChild(tempH);
+    const tempS = el('input', { type: 'range', class: 'range-slider', min: '0', max: '2', step: '0.1', value: String(State.settings.temperature) });
+    tempS.addEventListener('input', () => { tempV.textContent = tempS.value; });
+    tempRow.appendChild(tempS); modal.appendChild(tempRow);
 
-    // Max tokens
-    const tokensRow = el('div', { class: 'slider-row' });
-    const tokensHead = el('div', { class: 'slider-row-head' });
-    tokensHead.appendChild(el('span', { class: 'toggle-label', text: 'Max Tokens' }));
-    const tokensVal = el('span', { class: 'slider-val', text: String(AppState.settings.maxTokens) });
-    tokensHead.appendChild(tokensVal);
-    tokensRow.appendChild(tokensHead);
-    const tokensSlider = el('input', { type: 'range', class: 'range-slider', min: '256', max: '8192', step: '256', value: String(AppState.settings.maxTokens) });
-    tokensSlider.addEventListener('input', () => { tokensVal.textContent = tokensSlider.value; });
-    tokensRow.appendChild(tokensSlider);
-    modal.appendChild(tokensRow);
+    const tokRow = el('div', { class: 'slider-row' });
+    const tokH = el('div', { class: 'slider-row-head' });
+    tokH.appendChild(el('span', { class: 'toggle-label', text: 'Max Tokens' }));
+    const tokV = el('span', { class: 'slider-val', text: String(State.settings.maxTokens) });
+    tokH.appendChild(tokV); tokRow.appendChild(tokH);
+    const tokS = el('input', { type: 'range', class: 'range-slider', min: '256', max: '8192', step: '256', value: String(State.settings.maxTokens) });
+    tokS.addEventListener('input', () => { tokV.textContent = tokS.value; });
+    tokRow.appendChild(tokS); modal.appendChild(tokRow);
 
-    // Toggle options
-    modal.appendChild(el('h3', { text: 'Options', style: 'margin-top:var(--sp-5)' }));
+    // Options
+    modal.appendChild(el('h3', { text: 'Options' }));
     
-    const followRow = el('div', { class: 'toggle-row' });
-    const followLabel = el('div', {});
-    followLabel.appendChild(el('div', { class: 'toggle-label', text: 'Follow-up suggestions' }));
-    followLabel.appendChild(el('div', { class: 'toggle-desc', text: 'Auto-generate suggested questions' }));
-    followRow.appendChild(followLabel);
-    const followToggle = el('div', { class: 'toggle' + (AppState.settings.followUpEnabled ? ' on' : '') });
-    followToggle.addEventListener('click', () => followToggle.classList.toggle('on'));
-    followRow.appendChild(followToggle);
-    modal.appendChild(followRow);
+    const mkToggle = (label, desc, on) => {
+      const row = el('div', { class: 'toggle-row' });
+      const lb = el('div', {});
+      lb.appendChild(el('div', { class: 'toggle-label', text: label }));
+      lb.appendChild(el('div', { class: 'toggle-desc', text: desc }));
+      row.appendChild(lb);
+      const t = el('div', { class: 'toggle' + (on ? ' on' : '') });
+      t.addEventListener('click', () => t.classList.toggle('on'));
+      row.appendChild(t);
+      return { row, toggle: t };
+    };
 
-    const streamRow = el('div', { class: 'toggle-row' });
-    const streamLabel = el('div', {});
-    streamLabel.appendChild(el('div', { class: 'toggle-label', text: 'Stream responses' }));
-    streamLabel.appendChild(el('div', { class: 'toggle-desc', text: 'Show responses as they generate' }));
-    streamRow.appendChild(streamLabel);
-    const streamToggle = el('div', { class: 'toggle' + (AppState.settings.streamEnabled ? ' on' : '') });
-    streamToggle.addEventListener('click', () => streamToggle.classList.toggle('on'));
-    streamRow.appendChild(streamToggle);
-    modal.appendChild(streamRow);
+    const fu = mkToggle('Follow-up suggestions', 'Auto-generate follow-ups', State.settings.followUpEnabled);
+    modal.appendChild(fu.row);
+    const st = mkToggle('Stream responses', 'Show as generating', State.settings.streamEnabled);
+    modal.appendChild(st.row);
+    const en = mkToggle('Send on Enter', 'Enter to send, Shift+Enter newline', State.settings.sendOnEnter);
+    modal.appendChild(en.row);
 
-    const enterRow = el('div', { class: 'toggle-row' });
-    const enterLabel = el('div', {});
-    enterLabel.appendChild(el('div', { class: 'toggle-label', text: 'Send on Enter' }));
-    enterLabel.appendChild(el('div', { class: 'toggle-desc', text: 'Press Enter to send, Shift+Enter for newline' }));
-    enterRow.appendChild(enterLabel);
-    const enterToggle = el('div', { class: 'toggle' + (AppState.settings.sendOnEnter ? ' on' : '') });
-    enterToggle.addEventListener('click', () => enterToggle.classList.toggle('on'));
-    enterRow.appendChild(enterToggle);
-    modal.appendChild(enterRow);
+    // System prompt
+    modal.appendChild(el('h3', { text: 'System Prompt' }));
+    const sp = el('textarea', { class: 'textarea-field', rows: '3', placeholder: 'Global system prompt' });
+    sp.value = State.settings.globalSystemPrompt || '';
+    modal.appendChild(sp);
 
-    // Global system prompt
-    modal.appendChild(el('h3', { text: 'System Prompt', style: 'margin-top:var(--sp-5)' }));
-    const promptArea = el('textarea', { class: 'textarea-field', rows: '4', placeholder: 'Global system prompt (optional)' });
-    promptArea.value = AppState.settings.globalSystemPrompt || '';
-    modal.appendChild(promptArea);
+    // Mode
+    modal.appendChild(el('h3', { text: 'AI Persona' }));
+    const ms = el('select', { class: 'select-field' });
+    Object.keys(SYSTEM_PROMPTS).forEach(m => { const o = el('option', { value: m, text: modeLabel(m) }); if (m === State.currentMode) o.selected = true; ms.appendChild(o); });
+    modal.appendChild(ms);
 
-    // Mode selection
-    modal.appendChild(el('h3', { text: 'AI Persona', style: 'margin-top:var(--sp-5)' }));
-    const modeSelect = el('select', { class: 'select-field' });
-    Object.keys(SYSTEM_PROMPTS).forEach(m => {
-      const opt = el('option', { value: m, text: modeLabel(m) });
-      if (m === AppState.currentMode) opt.selected = true;
-      modeSelect.appendChild(opt);
-    });
-    modal.appendChild(modeSelect);
-
-    const actions = el('div', { class: 'modal-actions' });
-    const cancel = el('button', { class: 'btn btn-secondary-modal', type: 'button', text: 'Cancel' });
-    cancel.addEventListener('click', () => overlay.remove());
-    
-    // Open provider management
-    const manageProviders = el('button', { class: 'btn btn-secondary-modal', type: 'button', text: 'Manage Providers' });
-    manageProviders.addEventListener('click', () => {
-      overlay.remove();
-      openProviderSetup();
-    });
-    
-    const save = el('button', { class: 'btn btn-primary', type: 'button', text: 'Save' });
-    save.addEventListener('click', () => {
-      AppState.settings.temperature = parseFloat(tempSlider.value);
-      AppState.settings.maxTokens = parseInt(tokensSlider.value, 10);
-      AppState.settings.followUpEnabled = followToggle.classList.contains('on');
-      AppState.settings.streamEnabled = streamToggle.classList.contains('on');
-      AppState.settings.sendOnEnter = enterToggle.classList.contains('on');
-      AppState.settings.globalSystemPrompt = promptArea.value;
-      setMode(modeSelect.value, true);
-      saveState();
-      overlay.remove();
-      toast('Settings saved', 'success');
-    });
-    
-    actions.appendChild(cancel);
-    actions.appendChild(manageProviders);
-    actions.appendChild(save);
-    modal.appendChild(actions);
+    const acts = el('div', { class: 'modal-actions' });
+    acts.appendChild(el('button', { class: 'btn btn-secondary-modal', type: 'button', text: 'Cancel', onclick: () => overlay.remove() }));
+    acts.appendChild(el('button', { class: 'btn btn-secondary-modal', type: 'button', text: 'Providers', onclick: () => { overlay.remove(); openProviderSetup(); } }));
+    acts.appendChild(el('button', { class: 'btn btn-primary', type: 'button', text: 'Save', onclick: () => {
+      State.settings.temperature = parseFloat(tempS.value);
+      State.settings.maxTokens = parseInt(tokS.value, 10);
+      State.settings.followUpEnabled = fu.toggle.classList.contains('on');
+      State.settings.streamEnabled = st.toggle.classList.contains('on');
+      State.settings.sendOnEnter = en.toggle.classList.contains('on');
+      State.settings.globalSystemPrompt = sp.value;
+      setMode(ms.value, true); save(); overlay.remove(); toast('Saved', 'success');
+    }}));
+    modal.appendChild(acts);
   });
 }
 
-function renderModelConfig(modal) {
-  const section = modal.querySelector('#model-config-section');
-  if (!section) return;
-  section.innerHTML = '';
-  
-  const providerName = AppState.currentProvider;
-  const config = getProviderConfig(providerName);
-  
-  if (!config) return;
+function renderModelCfg(modal) {
+  const sec = modal.querySelector('#model-cfg'); if (!sec) return; sec.innerHTML = '';
+  const config = getProvider(State.currentProvider); if (!config) return;
 
-  // API Key
-  section.appendChild(el('label', { class: 'input-label', text: 'API Key' }));
-  const apiKeyInput = el('input', { 
-    type: 'password', 
-    class: 'input-field', 
-    placeholder: 'Enter API key',
-    value: config.apiKey || ''
-  });
-  apiKeyInput.addEventListener('change', () => {
-    config.apiKey = apiKeyInput.value.trim();
-    saveState();
-  });
-  section.appendChild(apiKeyInput);
+  sec.appendChild(el('label', { class: 'input-label', text: 'API Key' }));
+  const ki = el('input', { type: 'password', class: 'input-field', placeholder: 'Enter API key', value: config.apiKey || '' });
+  ki.addEventListener('change', () => { config.apiKey = ki.value.trim(); save(); });
+  sec.appendChild(ki);
 
-  // Model select with sync button
-  const modelRow = el('div', { style: 'display:flex;gap:8px;margin-top:8px;' });
-  const modelSelect = el('select', { class: 'select-field', style: 'flex:1' });
-  
-  if (config.models && config.models.length > 0) {
-    config.models.forEach(m => {
-      const opt = el('option', { value: m, text: m });
-      if (m === config.selectedModel) opt.selected = true;
-      modelSelect.appendChild(opt);
-    });
-  } else {
-    modelSelect.appendChild(el('option', { value: '', text: 'No models loaded' }));
-  }
-  
-  modelSelect.addEventListener('change', () => {
-    config.selectedModel = modelSelect.value;
-    AppState.currentModel = modelSelect.value;
-    saveState();
-    updateModelSelector();
-  });
-  modelRow.appendChild(modelSelect);
-
-  const syncBtn = el('button', { class: 'btn btn-secondary-modal', type: 'button', text: 'Sync' });
-  syncBtn.addEventListener('click', () => {
-    config.apiKey = apiKeyInput.value.trim();
-    saveState();
-    loadModels(providerName);
-  });
-  modelRow.appendChild(syncBtn);
-  section.appendChild(modelRow);
+  const mr = el('div', { style: 'display:flex;gap:8px;margin-top:8px;' });
+  const ms = el('select', { class: 'select-field', style: 'flex:1' });
+  if (config.models?.length) config.models.forEach(m => { const o = el('option', { value: m, text: m }); if (m === config.selectedModel) o.selected = true; ms.appendChild(o); });
+  else ms.appendChild(el('option', { value: '', text: 'No models loaded' }));
+  ms.addEventListener('change', () => { config.selectedModel = ms.value; State.currentModel = ms.value; save(); updateModel(); });
+  mr.appendChild(ms);
+  mr.appendChild(el('button', { class: 'btn btn-secondary-modal', type: 'button', text: 'Sync', onclick: () => { config.apiKey = ki.value.trim(); save(); loadModels(State.currentProvider); } }));
+  sec.appendChild(mr);
 }
 
-/* ---------------- PROVIDER SETUP ---------------- */
-
+// === PROVIDER SETUP ===
 function openProviderSetup() {
   openModal((modal, overlay) => {
     modal.appendChild(el('h2', { text: 'AI Providers' }));
-    modal.appendChild(el('p', { text: 'Configure API keys for AI providers. Your keys are stored locally.', style: 'color:var(--text-secondary);font-size:13px;margin-bottom:16px;' }));
-
-    const providersList = el('div', {});
+    modal.appendChild(el('p', { text: 'Configure API keys. Stored locally.' }));
     
-    // Built-in providers
-    for (const [key, p] of Object.entries(AppState.providers)) {
-      providersList.appendChild(createProviderCard(key, p, false));
-    }
-    
-    // Custom providers
-    AppState.customProviders.forEach((p, id) => {
-      providersList.appendChild(createProviderCard(id, p, true));
-    });
-    
-    modal.appendChild(providersList);
+    const list = el('div', {});
+    for (const [k, p] of Object.entries(State.providers)) list.appendChild(providerCard(k, p, false));
+    State.customProviders.forEach((p, id) => list.appendChild(providerCard(id, p, true)));
+    modal.appendChild(list);
 
-    // Add custom provider
-    modal.appendChild(el('h3', { text: 'Add Custom Provider', style: 'margin-top:var(--sp-5)' }));
-    modal.appendChild(el('p', { text: 'Add OpenAI-compatible providers (LocalAI, Ollama, etc.)', style: 'color:var(--text-secondary);font-size:13px;margin-bottom:12px;' }));
-
-    const nameInput = el('input', { type: 'text', class: 'input-field', placeholder: 'Provider name' });
-    modal.appendChild(nameInput);
-
+    // Add custom
+    modal.appendChild(el('h3', { text: 'Add Custom Provider' }));
+    const ni = el('input', { type: 'text', class: 'input-field', placeholder: 'Provider name' });
+    modal.appendChild(ni);
     modal.appendChild(el('label', { class: 'input-label', text: 'Base URL' }));
-    const urlInput = el('input', { type: 'url', class: 'input-field', placeholder: 'https://api.example.com/v1' });
-    modal.appendChild(urlInput);
-
+    const ui = el('input', { type: 'url', class: 'input-field', placeholder: 'https://api.example.com/v1' });
+    modal.appendChild(ui);
     modal.appendChild(el('label', { class: 'input-label', text: 'Compatibility' }));
-    const compatSelect = el('select', { class: 'select-field' });
-    compatSelect.appendChild(el('option', { value: 'openai', text: 'OpenAI-compatible' }));
-    compatSelect.appendChild(el('option', { value: 'google', text: 'Google Gemini' }));
-    modal.appendChild(compatSelect);
+    const cs = el('select', { class: 'select-field' });
+    cs.appendChild(el('option', { value: 'openai', text: 'OpenAI-compatible' }));
+    cs.appendChild(el('option', { value: 'google', text: 'Google Gemini' }));
+    modal.appendChild(cs);
 
-    const actions = el('div', { class: 'modal-actions' });
-    const close = el('button', { class: 'btn btn-secondary-modal', type: 'button', text: 'Close' });
-    close.addEventListener('click', () => overlay.remove());
-    
-    const add = el('button', { class: 'btn btn-primary', type: 'button', text: 'Add Provider' });
-    add.addEventListener('click', () => {
-      const name = nameInput.value.trim();
-      const url = urlInput.value.trim();
-      const compat = compatSelect.value;
-
-      if (!name || !url) {
-        toast('Name and URL are required', 'error');
-        return;
-      }
-
-      if (!url.startsWith('http')) {
-        toast('URL must start with http:// or https://', 'error');
-        return;
-      }
-
-      const id = `custom_${Date.now()}`;
-      AppState.customProviders.set(id, {
-        name,
-        baseUrl: url,
-        apiKey: '',
-        models: [],
-        selectedModel: '',
-        compatible: compat
-      });
-      saveState();
-      overlay.remove();
-      openProviderSetup();
-      toast('Custom provider added', 'success');
-    });
-
-    actions.appendChild(close);
-    actions.appendChild(add);
-    modal.appendChild(actions);
+    const acts = el('div', { class: 'modal-actions' });
+    acts.appendChild(el('button', { class: 'btn btn-secondary-modal', type: 'button', text: 'Close', onclick: () => overlay.remove() }));
+    acts.appendChild(el('button', { class: 'btn btn-primary', type: 'button', text: 'Add', onclick: () => {
+      const n = ni.value.trim(), u = ui.value.trim();
+      if (!n || !u) { toast('Name & URL required', 'error'); return; }
+      if (!u.startsWith('http')) { toast('Invalid URL', 'error'); return; }
+      const id = `cp_${Date.now()}`;
+      State.customProviders.set(id, { name: n, baseUrl: u, apiKey: '', models: [], selectedModel: '', compatible: cs.value });
+      save(); overlay.remove(); openProviderSetup(); toast('Added', 'success');
+    }}));
+    modal.appendChild(acts);
   });
 }
 
-function createProviderCard(key, config, isCustom) {
-  const card = el('div', { 
-    style: 'background:var(--bg-tertiary);border:1px solid var(--border);border-radius:var(--r-md);padding:var(--sp-4);margin-bottom:var(--sp-3);'
-  });
-
-  const header = el('div', { style: 'display:flex;align-items:center;gap:8px;margin-bottom:var(--sp-3);' });
-  header.appendChild(el('div', { 
-    style: 'font-weight:600;font-size:14px;', 
-    text: config.name 
-  }));
+function providerCard(key, config, isCustom) {
+  const card = el('div', { style: 'background:var(--bg-tertiary);border:1px solid var(--border);border-radius:var(--r-md);padding:var(--sp-4);margin-bottom:var(--sp-3);' });
   
-  if (config.apiKey && config.selectedModel) {
-    header.appendChild(el('span', { class: 'tag-pill', text: 'Active' }));
-  }
-  
+  const h = el('div', { style: 'display:flex;align-items:center;gap:8px;margin-bottom:var(--sp-3);' });
+  h.appendChild(el('span', { style: 'font-weight:700;font-size:13px;', text: config.name }));
+  if (config.apiKey && config.selectedModel) h.appendChild(el('span', { class: 'tag-pill', text: 'Active' }));
+  if (isCustom) h.appendChild(el('span', { style: 'font-size:9px;padding:2px 5px;background:var(--warning-light);color:var(--warning);border-radius:var(--r-xs);font-weight:600;', text: 'Custom' }));
+  h.appendChild(el('div', { style: 'flex:1' }));
   if (isCustom) {
-    header.appendChild(el('span', { 
-      style: 'font-size:10px;padding:2px 6px;background:var(--warning-light);color:var(--warning);border-radius:var(--r-sm);font-weight:500;', 
-      text: 'Custom' 
-    }));
+    const db = el('button', { class: 'btn-icon danger', type: 'button', onclick: () => { State.customProviders.delete(key); save(); card.remove(); toast('Removed', 'success'); } },
+      [el('span', { html: '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6"/></svg>' })]);
+    h.appendChild(db);
   }
-  
-  const spacer = el('div', { style: 'flex:1' });
-  header.appendChild(spacer);
-  
-  if (isCustom) {
-    const deleteBtn = el('button', { class: 'btn-icon danger', type: 'button', 'aria-label': 'Delete' },
-      [el('span', { html: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6"/></svg>' })]);
-    deleteBtn.addEventListener('click', () => {
-      AppState.customProviders.delete(key);
-      saveState();
-      card.remove();
-      toast('Provider removed', 'success');
-    });
-    header.appendChild(deleteBtn);
-  }
-  
-  card.appendChild(header);
+  card.appendChild(h);
 
-  // API Key
   card.appendChild(el('label', { class: 'input-label', text: 'API Key', style: 'margin-top:0' }));
-  const keyInput = el('input', { 
-    type: 'password', 
-    class: 'input-field', 
-    placeholder: 'Enter API key',
-    value: config.apiKey || ''
-  });
-  keyInput.addEventListener('change', () => {
-    config.apiKey = keyInput.value.trim();
-    saveState();
-  });
-  card.appendChild(keyInput);
+  const ki = el('input', { type: 'password', class: 'input-field', placeholder: 'Enter API key', value: config.apiKey || '' });
+  ki.addEventListener('change', () => { config.apiKey = ki.value.trim(); save(); });
+  card.appendChild(ki);
 
-  // Model + Sync
-  const modelRow = el('div', { style: 'display:flex;gap:8px;margin-top:var(--sp-3);' });
-  const modelSelect = el('select', { class: 'select-field', style: 'flex:1' });
-  
-  if (config.models && config.models.length > 0) {
-    config.models.forEach(m => {
-      const opt = el('option', { value: m, text: m });
-      if (m === config.selectedModel) opt.selected = true;
-      modelSelect.appendChild(opt);
+  const mr = el('div', { style: 'display:flex;gap:8px;margin-top:var(--sp-3);' });
+  const ms = el('select', { class: 'select-field', style: 'flex:1' });
+  if (config.models?.length) config.models.forEach(m => { const o = el('option', { value: m, text: m }); if (m === config.selectedModel) o.selected = true; ms.appendChild(o); });
+  else ms.appendChild(el('option', { value: '', text: 'Click Sync' }));
+  ms.addEventListener('change', () => { config.selectedModel = ms.value; if (State.currentProvider === key) { State.currentModel = ms.value; updateModel(); } save(); });
+  mr.appendChild(ms);
+  mr.appendChild(el('button', { class: 'btn btn-secondary-modal', type: 'button', text: 'Sync', style: 'white-space:nowrap', onclick: () => {
+    config.apiKey = ki.value.trim(); save(); loadModels(key).then(() => {
+      ms.innerHTML = ''; config.models.forEach(m => { const o = el('option', { value: m, text: m }); if (m === config.selectedModel) o.selected = true; ms.appendChild(o); });
     });
-  } else {
-    modelSelect.appendChild(el('option', { value: '', text: 'Click Sync to load models' }));
-  }
-  
-  modelSelect.addEventListener('change', () => {
-    config.selectedModel = modelSelect.value;
-    if (AppState.currentProvider === key) {
-      AppState.currentModel = modelSelect.value;
-      updateModelSelector();
-    }
-    saveState();
-  });
-  modelRow.appendChild(modelSelect);
-
-  const syncBtn = el('button', { class: 'btn btn-secondary-modal', type: 'button', text: 'Sync', style: 'white-space:nowrap' });
-  syncBtn.addEventListener('click', () => {
-    config.apiKey = keyInput.value.trim();
-    saveState();
-    loadModels(key).then(() => {
-      // Refresh the select
-      modelSelect.innerHTML = '';
-      config.models.forEach(m => {
-        const opt = el('option', { value: m, text: m });
-        if (m === config.selectedModel) opt.selected = true;
-        modelSelect.appendChild(opt);
-      });
-    });
-  });
-  modelRow.appendChild(syncBtn);
-  card.appendChild(modelRow);
-
+  }}));
+  card.appendChild(mr);
   return card;
 }
 
-/* ---------------- STATISTICS ---------------- */
-
-function openStatistics() {
+// === STATISTICS ===
+function openStats() {
   openModal((modal, overlay) => {
     modal.appendChild(el('h2', { text: 'Statistics' }));
-    
     const grid = el('div', { class: 'stats-grid' });
-    
-    const stats = [
-      { label: 'Messages', value: AppState.stats.totalMessages },
-      { label: 'Tokens', value: AppState.stats.totalTokens.toLocaleString() },
-      { label: 'Chats', value: AppState.chats.size },
-      { label: 'Avg Response', value: `${AppState.stats.avgResponseTime}ms` },
-      { label: 'Saved', value: Array.from(AppState.chats.values()).filter(c => c.saved).length },
-      { label: 'Providers', value: Object.keys(AppState.providers).length + AppState.customProviders.size }
-    ];
-
-    stats.forEach(stat => {
+    [
+      { label: 'Messages', value: State.stats.totalMessages },
+      { label: 'Tokens', value: State.stats.totalTokens.toLocaleString() },
+      { label: 'Chats', value: State.chats.size },
+      { label: 'Avg Response', value: `${State.stats.avgResponseTime}ms` },
+      { label: 'Saved', value: [...State.chats.values()].filter(c => c.saved).length },
+      { label: 'Pinned', value: [...State.chats.values()].filter(c => c.pinned).length },
+      { label: 'Providers', value: Object.keys(State.providers).length + State.customProviders.size }
+    ].forEach(s => {
       const card = el('div', { class: 'stat-card' });
-      card.appendChild(el('div', { class: 'stat-value', text: String(stat.value) }));
-      card.appendChild(el('div', { class: 'stat-label', text: stat.label }));
+      card.appendChild(el('div', { class: 'stat-value', text: String(s.value) }));
+      card.appendChild(el('div', { class: 'stat-label', text: s.label }));
       grid.appendChild(card);
     });
     modal.appendChild(grid);
-
-    const actions = el('div', { class: 'modal-actions' });
-    const close = el('button', { class: 'btn btn-primary', type: 'button', text: 'Close' });
-    close.addEventListener('click', () => overlay.remove());
-    actions.appendChild(close);
-    modal.appendChild(actions);
+    const acts = el('div', { class: 'modal-actions' });
+    acts.appendChild(el('button', { class: 'btn btn-primary', type: 'button', text: 'Close', onclick: () => overlay.remove() }));
+    modal.appendChild(acts);
   });
 }
 
-/* ---------------- USER MENU ---------------- */
+// === KEYBOARD SHORTCUTS ===
+function openShortcuts() {
+  openModal((modal, overlay) => {
+    modal.appendChild(el('h2', { text: 'Keyboard Shortcuts' }));
+    const grid = el('div', { class: 'shortcuts-grid' });
+    
+    const shortcuts = [
+      { keys: ['⌘', 'N'], desc: 'New chat' },
+      { keys: ['⌘', 'S'], desc: 'Save chat' },
+      { keys: ['⌘', 'K'], desc: 'Search chats' },
+      { keys: ['⌘', '/'], desc: 'Shortcuts' },
+      { keys: ['⌘', 'E'], desc: 'Export chat' },
+      { keys: ['⌘', ','], desc: 'Settings' },
+      { keys: ['Enter'], desc: 'Send message' },
+      { keys: ['Shift', 'Enter'], desc: 'New line' },
+      { keys: ['Escape'], desc: 'Close modal' },
+      { keys: ['⌘', 'D'], desc: 'Toggle theme' }
+    ];
 
+    shortcuts.forEach(s => {
+      const item = el('div', { class: 'shortcut-item' });
+      item.appendChild(el('span', { text: s.desc }));
+      const keys = el('div', { style: 'display:flex;gap:3px;' });
+      s.keys.forEach(k => keys.appendChild(el('span', { class: 'kbd', text: k })));
+      item.appendChild(keys);
+      grid.appendChild(item);
+    });
+    
+    modal.appendChild(grid);
+    const acts = el('div', { class: 'modal-actions' });
+    acts.appendChild(el('button', { class: 'btn btn-primary', type: 'button', text: 'Close', onclick: () => overlay.remove() }));
+    modal.appendChild(acts);
+  });
+}
+
+// === EXPORT ===
+function openExport() {
+  openModal((modal, overlay) => {
+    modal.appendChild(el('h2', { text: 'Export Chat' }));
+    const chat = getChat();
+    modal.appendChild(el('p', { text: `Exporting: "${chat.title}"` }));
+    
+    const opts = el('div', { class: 'export-options' });
+    
+    // JSON
+    opts.appendChild(el('button', { class: 'export-option', type: 'button', onclick: () => { exportJSON(chat); overlay.remove(); } }, [
+      el('div', { class: 'export-option-icon', text: '📋' }),
+      el('div', { class: 'export-option-label', text: 'JSON' })
+    ]));
+    
+    // Markdown
+    opts.appendChild(el('button', { class: 'export-option', type: 'button', onclick: () => { exportMD(chat); overlay.remove(); } }, [
+      el('div', { class: 'export-option-icon', text: '📝' }),
+      el('div', { class: 'export-option-label', text: 'Markdown' })
+    ]));
+    
+    // Text
+    opts.appendChild(el('button', { class: 'export-option', type: 'button', onclick: () => { exportTXT(chat); overlay.remove(); } }, [
+      el('div', { class: 'export-option-icon', text: '📄' }),
+      el('div', { class: 'export-option-label', text: 'Plain Text' })
+    ]));
+    
+    // All data
+    opts.appendChild(el('button', { class: 'export-option', type: 'button', onclick: () => { exportAll(); overlay.remove(); } }, [
+      el('div', { class: 'export-option-icon', text: '💾' }),
+      el('div', { class: 'export-option-label', text: 'All Data' })
+    ]));
+    
+    modal.appendChild(opts);
+    const acts = el('div', { class: 'modal-actions' });
+    acts.appendChild(el('button', { class: 'btn btn-secondary-modal', type: 'button', text: 'Cancel', onclick: () => overlay.remove() }));
+    modal.appendChild(acts);
+  });
+}
+
+function downloadFile(name, content, type = 'text/plain') {
+  const blob = new Blob([content], { type });
+  const url = URL.createObjectURL(blob);
+  const a = el('a', { href: url, download: name });
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  toast('Exported', 'success');
+}
+
+function exportJSON(chat) { downloadFile(`${chat.title || 'chat'}.json`, JSON.stringify(chat, null, 2), 'application/json'); }
+
+function exportMD(chat) {
+  let md = `# ${chat.title}\n\n`;
+  md += `*Exported: ${new Date().toISOString()}*\n\n---\n\n`;
+  chat.messages.forEach(m => {
+    md += `## ${m.role === 'user' ? '👤 You' : '🤖 NAXA'}\n\n`;
+    md += `${m.content}\n\n---\n\n`;
+  });
+  downloadFile(`${chat.title || 'chat'}.md`, md, 'text/markdown');
+}
+
+function exportTXT(chat) {
+  let txt = `${chat.title}\n${'='.repeat(chat.title.length)}\n\n`;
+  chat.messages.forEach(m => {
+    txt += `[${m.role === 'user' ? 'You' : 'NAXA'}]\n${m.content}\n\n`;
+  });
+  downloadFile(`${chat.title || 'chat'}.txt`, txt);
+}
+
+function exportAll() { downloadFile(`naxa-export-${Date.now()}.json`, JSON.stringify(serialize(), null, 2), 'application/json'); }
+
+// === USER MENU ===
 function openUserMenu() {
   openModal((modal, overlay) => {
     modal.appendChild(el('h2', { text: 'Menu' }));
-    
-    const items = [
+    [
       { label: '🌓 Toggle Theme', action: toggleTheme },
-      { label: '⚙ Settings', action: openSettings },
+      { label: '⚙️ Settings', action: openSettings },
       { label: '🔌 Providers', action: openProviderSetup },
-      { label: '📊 Statistics', action: openStatistics },
-      { label: '💾 Save Current Chat', action: saveCurrentMission },
-      { label: '📤 Export All Data', action: exportAllData },
-      { label: '🗑 Clear All Chats', action: clearAllChats, danger: true }
-    ];
-
-    items.forEach(item => {
-      const btn = el('button', { 
-        class: 'dropdown-item' + (item.danger ? ' danger' : ''),
-        type: 'button',
-        text: item.label,
-        style: 'width:100%;padding:12px;margin-bottom:4px;'
-      });
-      btn.addEventListener('click', () => {
-        overlay.remove();
-        if (item.action) item.action();
-      });
+      { label: '📊 Statistics', action: openStats },
+      { label: '⌨️ Shortcuts', action: openShortcuts },
+      { label: '💾 Save Chat', action: saveCurrent },
+      { label: '📤 Export All', action: exportAll },
+      { label: '🗑 Clear All', action: clearAll, danger: true }
+    ].forEach(item => {
+      const btn = el('button', { class: `dropdown-item${item.danger ? ' danger' : ''}`, type: 'button', text: item.label, style: 'width:100%;padding:10px;margin-bottom:4px;' });
+      btn.addEventListener('click', () => { overlay.remove(); item.action?.(); });
       modal.appendChild(btn);
     });
-
-    const closeBtn = el('button', { class: 'btn btn-secondary-modal', type: 'button', text: 'Close', style: 'width:100%;margin-top:12px;' });
-    closeBtn.addEventListener('click', () => overlay.remove());
-    modal.appendChild(closeBtn);
+    modal.appendChild(el('button', { class: 'btn btn-secondary-modal', type: 'button', text: 'Close', style: 'width:100%;margin-top:12px;', onclick: () => overlay.remove() }));
   });
 }
 
-function exportAllData() {
-  const data = serializeSavedState();
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = el('a', { href: url, download: `naxa-export-${new Date().toISOString().slice(0,10)}.json` });
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-  toast('Data exported', 'success');
-}
-
-function clearAllChats() {
-  openConfirmModal({
-    title: 'Clear all chats?',
-    message: 'This will delete all chats (saved and unsaved). This cannot be undone.',
-    confirmText: 'Clear All',
-    danger: true,
-    onConfirm: () => {
-      AppState.chats.clear();
-      createNewMission();
-      saveState();
-      renderChatLists();
-      renderMessages();
-      toast('All chats cleared', 'success');
-    }
+function clearAll() {
+  confirmModal({
+    title: 'Clear all chats?', message: 'This will permanently delete all chats.', confirm: 'Clear All', danger: true,
+    onConfirm: () => { State.chats.clear(); createNew(); save(); renderLists(); renderMessages(); toast('Cleared', 'success'); }
   });
 }
 
-/* ---------------- EVENT BINDING ---------------- */
+// === EVENT BINDING ===
+function bind() {
+  const on = (t, e, h, o) => { if (t) t.addEventListener(e, h, o); };
 
-function bindEvents() {
-  const on = (target, event, handler, options) => {
-    if (!target) return;
-    target.addEventListener(event, handler, options);
-  };
-
-  on($('#btn-new-mission'), 'click', newMission);
+  on($('#btn-new-mission'), 'click', newChat);
   on($('#menu-toggle'), 'click', toggleSidebar);
   on($('#btn-collapse-sidebar'), 'click', collapseSidebar);
   on($('#sidebar-backdrop'), 'click', closeSidebar);
   on($('#btn-settings'), 'click', openSettings);
-  on($('#btn-stats'), 'click', openStatistics);
+  on($('#btn-stats'), 'click', openStats);
+  on($('#btn-export'), 'click', openExport);
+  on($('#btn-shortcuts'), 'click', openShortcuts);
   on($('#user-menu'), 'click', openUserMenu);
-  on($('#btn-share'), 'click', () => exportAllData());
   on($('#model-selector'), 'click', openProviderSetup);
+  on($('#btn-voice'), 'click', toggleVoice);
 
-  on($('#btn-voice'), 'click', toggleVoiceInput);
-
-  const msgInput = $('#msg-input');
-  on(msgInput, 'input', autoResizeInput);
-  on(msgInput, 'keydown', (e) => {
-    if (e.key === 'Enter' && !e.shiftKey && AppState.settings.sendOnEnter) {
-      e.preventDefault();
-      if (!AppState.isLoading) sendMessage();
-    }
+  // Search
+  let searchTimer = null;
+  on($('#search-input'), 'input', (e) => {
+    if (searchTimer) clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => filterChats(e.target.value), C.SEARCH_DEBOUNCE);
   });
 
-  on($('#send-btn'), 'click', () => {
-    if (AppState.isLoading) stopGeneration();
-    else sendMessage();
+  const mi = $('#msg-input');
+  on(mi, 'input', autoResize);
+  on(mi, 'keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey && State.settings.sendOnEnter) { e.preventDefault(); if (!State.isLoading) send(); }
   });
 
+  on($('#send-btn'), 'click', () => { State.isLoading ? stopGen() : send(); });
   on($('#btn-attach'), 'click', () => $('#file-input').click());
-  on($('#file-input'), 'change', (e) => {
-    handleFiles(e.target.files);
-    e.target.value = '';
-  });
+  on($('#file-input'), 'change', (e) => { handleFiles(e.target.files); e.target.value = ''; });
 
-  // Copy code (delegated)
+  // Delegated copy
   on(document, 'click', async (e) => {
     const btn = e.target.closest('[data-copy-code]');
     if (!btn) return;
     const block = btn.closest('.code-block');
-    const code = block && block.querySelector('code');
+    const code = block?.querySelector('code');
     if (!code) return;
     try {
       await navigator.clipboard.writeText(code.textContent || '');
-      const original = btn.innerHTML;
-      btn.textContent = '✓ Copied';
-      setTimeout(() => { btn.innerHTML = original; }, 1500);
+      const orig = btn.innerHTML; btn.textContent = '✓ Copied';
+      setTimeout(() => { btn.innerHTML = orig; }, 1500);
     } catch { toast('Copy failed', 'error'); }
   });
 
   // Keyboard shortcuts
   on(document, 'keydown', (e) => {
-    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'n') {
-      e.preventDefault();
-      newMission();
-    }
-    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
-      e.preventDefault();
-      saveCurrentMission();
-    }
-    if (e.key === 'Escape') {
-      const modal = document.querySelector('.modal-overlay');
-      if (modal) modal.remove();
-    }
+    const mod = e.ctrlKey || e.metaKey;
+    if (mod && e.key.toLowerCase() === 'n') { e.preventDefault(); newChat(); }
+    if (mod && e.key.toLowerCase() === 's') { e.preventDefault(); saveCurrent(); }
+    if (mod && e.key.toLowerCase() === 'k') { e.preventDefault(); $('#search-input')?.focus(); }
+    if (mod && e.key.toLowerCase() === 'e') { e.preventDefault(); openExport(); }
+    if (mod && e.key === ',') { e.preventDefault(); openSettings(); }
+    if (mod && e.key === '/') { e.preventDefault(); openShortcuts(); }
+    if (mod && e.key.toLowerCase() === 'd') { e.preventDefault(); toggleTheme(); }
+    if (e.key === 'Escape') { $('.modal-overlay')?.remove(); }
   });
 }
 
-/* ---------------- RESTORE UI STATE ---------------- */
-
-function restoreUiState() {
-  // Restore API keys to inputs (not needed with new modal approach)
-  setMode(AppState.currentMode || 'assistant', true);
-  applyTheme();
-  updateModelSelector();
-  
-  if (!AppState.sidebarOpen) {
-    const sidebar = $('#sidebar');
-    if (sidebar && window.innerWidth > 900) {
-      sidebar.classList.add('collapsed');
-    }
-  }
+// === RESTORE ===
+function restore() {
+  setMode(State.currentMode || 'assistant', true);
+  applyTheme(); updateModel();
+  if (!State.sidebarOpen) { const s = $('#sidebar'); if (s && window.innerWidth > 900) s.classList.add('collapsed'); }
 }
 
-/* ---------------- BOOTSTRAP ---------------- */
-
+// === BOOTSTRAP ===
 function init() {
-  loadState();
-  restoreUiState();
-
-  // Ensure an active chat exists
-  if (!AppState.currentChatId || !AppState.chats.has(AppState.currentChatId)) {
-    if (AppState.chats.size === 0) {
-      createNewMission();
-    } else {
-      const sorted = Array.from(AppState.chats.values())
-        .sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
-      AppState.currentChatId = sorted[0].id;
-    }
+  load(); restore();
+  if (!State.currentChatId || !State.chats.has(State.currentChatId)) {
+    if (!State.chats.size) createNew();
+    else { const s = [...State.chats.values()].sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0)); State.currentChatId = s[0].id; }
   }
+  renderLists(); renderMessages(); renderAttachBar(); bind(); updateSend();
 
-  renderChatLists();
-  renderMessages();
-  renderAttachmentBar();
-  bindEvents();
-  updateSendButton();
-
-  // Auto-save drafts
   setInterval(() => {
-    if (AppState.settings.autoSaveDrafts) {
-      const chat = getCurrentChat();
-      if (!chat.saved && chat.messages.length > 0) {
-        saveState();
-      }
-    }
-  }, AUTO_SAVE_INTERVAL_MS);
+    if (State.settings.autoSaveDrafts) { const c = getChat(); if (!c.saved && c.messages.length) save(); }
+  }, C.AUTO_SAVE);
 
-  // Focus input on desktop
-  setTimeout(() => {
-    const input = $('#msg-input');
-    if (input && window.innerWidth > 900) input.focus();
-  }, 300);
+  setTimeout(() => { const i = $('#msg-input'); if (i && window.innerWidth > 900) i.focus(); }, 300);
 
-  // Warn before leaving with unsaved chats
   window.addEventListener('beforeunload', (e) => {
-    const hasUnsavedWithMessages = Array.from(AppState.chats.values())
-      .some(c => !c.saved && c.messages.length > 0);
-    if (hasUnsavedWithMessages) {
-      e.preventDefault();
-      e.returnValue = 'You have unsaved chats.';
-      return e.returnValue;
-    }
+    const unsaved = [...State.chats.values()].some(c => !c.saved && c.messages.length);
+    if (unsaved) { e.preventDefault(); e.returnValue = 'Unsaved chats.'; }
   });
 }
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', init);
-} else {
-  init();
-}
+document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init();
 </script>
 </body>
 </html>
